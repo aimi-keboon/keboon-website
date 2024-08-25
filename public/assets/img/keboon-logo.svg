@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50">
+  <style>
+    .logo-text {
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      font-size: 40px;
+      fill: #FFFF;
+    }
+  </style>
+  <text x="10" y="40" class="logo-text">KEBOON.</text>
+</svg>
