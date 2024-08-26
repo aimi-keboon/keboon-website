@@ -52,3 +52,21 @@ window.addEventListener('DOMContentLoaded', event => {
     });
 
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
+    
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            const submitButton = form.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
+            
+            // Form will be submitted normally to Formspree
+            // This just changes the button state
+            
+            // If you want to show a success message, you can do so when the page reloads
+            // or use Formspree's AJAX API for a more dynamic approach
+        });
+    }
+});

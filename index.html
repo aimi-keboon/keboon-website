@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Agency - Start Bootstrap Theme</title>
+        <title>Keboon.</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
@@ -139,89 +139,62 @@
         </div>
         <div class="row">
             <div class="col-lg-8 mx-auto text-center">
-                <p class="large text-muted">Together, Aimi and Sherman bring a powerful combination of technological expertise and entrepreneurial success to Keboon, driving our mission to revolutionize local food ecosystems.</p>
+                <p class="large text-muted">Together, we bring a powerful combination of technological expertise and entrepreneurial success to Keboon, driving our mission to revolutionize local food ecosystems.</p>
             </div>
         </div>
     </div>
 </section>
         
+<!-- Contact-->
 <section class="page-section" id="contact">
     <div class="container">
         <div class="text-center">
             <h2 class="section-heading text-uppercase">Contact Us</h2>
-            <h3 class="section-subheading text-muted">We'd love to hear from you!</h3>
+            <h3 class="section-subheading text-muted">Get in touch with Keboon</h3>
         </div>
-        <form id="contactForm">
-            <div class="row align-items-stretch mb-5">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <input class="form-control" id="name" type="text" placeholder="Your Name *" required />
-                    </div>
-                    <div class="form-group">
-                        <input class="form-control" id="email" type="email" placeholder="Your Email *" required />
-                    </div>
-                    <div class="form-group mb-md-0">
-                        <input class="form-control" id="phone" type="tel" placeholder="Your Phone *" required />
+        <div class="row align-items-stretch mb-5">
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">Contact Information</h4>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-3">
+                                <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                                Kuala Lumpur, Malaysia
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-envelope text-primary me-2"></i>
+                                <a href="mailto:aimi@keboon.net" class="text-decoration-none">aimi@keboon.net</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group form-group-textarea mb-md-0">
-                        <textarea class="form-control" id="message" placeholder="Your Message *" required></textarea>
+            </div>
+            <div class="col-md-8">
+                <form id="contactForm" action="https://formspree.io/f/xzzpopkr" method="POST">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input class="form-control" type="text" id="name" name="name" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">Your Email</label>
+                            <input class="form-control" type="email" id="email" name="email" required />
+                        </div>
                     </div>
-                </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Your Message</label>
+                        <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-primary btn-xl text-uppercase" type="submit">Send Message</button>
+                    </div>
+                </form>
             </div>
-            <div class="text-center">
-                <button class="btn btn-primary btn-xl text-uppercase" id="submitButton" type="submit">Send Message</button>
-            </div>
-        </form>
-        <div id="submitSuccessMessage" style="display: none;">
-            <div class="text-center text-white mb-3">
-                <div class="fw-bolder">Form submission successful!</div>
-                Thank you for your message. We'll get back to you soon.
-            </div>
-        </div>
-        <div id="submitErrorMessage" style="display: none;">
-            <div class="text-center text-danger mb-3">Error sending message!</div>
         </div>
     </div>
 </section>
 
-<script>
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const formData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        message: document.getElementById('message').value
-    };
-
-    fetch('/api/send-email', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.text();
-    })
-    .then(data => {
-        document.getElementById('submitSuccessMessage').style.display = 'block';
-        document.getElementById('submitErrorMessage').style.display = 'none';
-        document.getElementById('contactForm').reset();
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-        document.getElementById('submitErrorMessage').style.display = 'block';
-        document.getElementById('submitSuccessMessage').style.display = 'none';
-    });
-});
-</script>
         <!-- Footer-->
         <footer class="footer py-4">
             <div class="container">
