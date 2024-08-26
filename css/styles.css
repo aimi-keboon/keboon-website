@@ -11331,17 +11331,26 @@ section#contact form#contactForm :-ms-input-placeholder {
   border-color: #fec810;
 }
 
-.social-icon {
-    width: 20px;
-    height: 20px;
-    object-fit: cover;
+
+@media (max-width: 991px) {
+  .footer .row > div {
+      margin-bottom: 1rem;
+  }
+  .footer .row > div:last-child {
+      margin-bottom: 0;
+  }
 }
 
 .btn-social {
-    padding: 10px;
-    border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 50%;
 }
 
-.btn-social:hover {
-    opacity: 0.8;
+.btn-social i {
+  font-size: 1.25rem;
 }
