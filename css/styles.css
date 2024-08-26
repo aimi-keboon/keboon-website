@@ -11330,3 +11330,18 @@ section#contact form#contactForm :-ms-input-placeholder {
   background-color: #fec810;
   border-color: #fec810;
 }
+
+.social-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+}
+
+.btn-social {
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.btn-social:hover {
+    opacity: 0.8;
+}
