@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keboon: Connecting Neighbours, Sharing Freshness</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #377E62;
+            --secondary-color: #52AE77;
+            --text-color: black;
+            --background-color: white;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--background-color);
+        }
+        header, footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2em;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+        header h1, footer h2 {
+            color: white;
+            margin: 0;
+        }
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+        .section {
+            background-color: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 20px;
+            flex: 1 1 calc(33.333% - 20px);
+            min-width: 250px;
+            transition: transform 0.3s ease;
+            box-sizing: border-box;
+            border: 1px solid var(--secondary-color);
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .feature-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        th, td {
+            border: 1px solid var(--secondary-color);
+            padding: 0.5rem;
+            text-align: left;
+        }
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .chart-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .journey-card {
+            position: relative;
+            padding-left: 50px;
+        }
+        .journey-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .card {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Keboon: Connecting Neighbours, Sharing Freshness</h1>
+    </header>
+
+    <div class="section">
+        <h2>Introduction</h2>
+        <p>Keboon is an innovative platform addressing the issue of excess home-grown produce going to waste. We connect local producers with consumers, ensuring no produce goes to waste and promoting local, organic food consumption.</p>
+    </div>
+
+    <div class="section">
+        <h2>Problem Statement</h2>
+        <div class="card-container">
+            <div class="card">
+                <h3>Issue</h3>
+                <p>Excess home-grown produce often goes to waste.</p>
+            </div>
+            <div class="card">
+                <h3>Common Solution</h3>
+                <p>Sharing with neighbours, but not everyone has the time or network to do so effectively.</p>
+            </div>
+            <div class="card">
+                <h3>Opportunity</h3>
+                <p>Create a platform where local producers can sell their surplus, ensuring no produce goes to waste and promoting local, organic food consumption.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Solution: Keboon</h2>
+        <p>An online marketplace connecting local producers with consumers.</p>
+        <div class="card-container">
+            <div class="card">
+                <div class="feature-icon">🌱</div>
+                <p>Sell surplus home-grown produce</p>
+            </div>
+            <div class="card">
+                <div class="feature-icon">🛒</div>
+                <p>Buy organic, fresh, and locally-sourced products</p>
+            </div>
+            <div class="card">
+                <div class="feature-icon">🤝</div>
+                <p>Connect with local community</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Target Market</h2>
+        <p>Keboon targets 3 million Malaysians:</p>
+        <div class="chart-container">
+            <canvas id="targetMarketChart"></canvas>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Target Market Profile</h2>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>Target Market</th>
+                    <th>Profile</th>
+                    <th>Needs</th>
+                    <th>Value Proposition</th>
+                </tr>
+                <tr>
+                    <td>Home Gardeners (1.5 million)</td>
+                    <td>Small-scale farmers, home gardeners, and individuals with surplus home-grown produce.</td>
+                    <td>A platform to sell excess produce, reduce waste, and earn additional income.</td>
+                    <td>Keboon provides an easy-to-use marketplace where producers can monetize their surplus, connect with local buyers, and contribute to the local economy.</td>
+                </tr>
+                <tr>
+                    <td>Urban Farmers (500,000)</td>
+                    <td>A mix of professional urbanites and part-time farmers focused on urban agriculture, primarily in urban areas with access to community gardens.</td>
+                    <td>A platform to market and sell produce directly to local consumers and connections with other urban farmers and potential buyers.</td>
+                    <td>Keboon provides a marketplace to reach local consumers, enhancing profitability and visibility. It supports their mission to contribute to urban food security and sustainability.</td>
+                </tr>
+                <tr>
+                    <td>Eco-conscious Consumers (2 million)</td>
+                    <td>Health-conscious individuals, families, and those who prefer organic, fresh, and locally-sourced food.</td>
+                    <td>Access to fresh, organic, and locally-grown produce with a clear understanding of the food's origin.</td>
+                    <td>Keboon offers a convenient way to buy trusted, local produce directly from growers, often at more competitive prices than traditional grocery stores.</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Why Keboon?</h2>
+        <div class="card-container">
+            <div class="card">
+                <h3>Cost-Effective for Everyone</h3>
+                <p>Lower prices for consumers and fair earnings for producers</p>
+            </div>
+            <div class="card">
+                <h3>Reduce Waste, Support Sustainability</h3>
+                <p>Minimize food waste and environmental impact</p>
+            </div>
+            <div class="card">
+                <h3>Access to Fresh, Organic Produce</h3>
+                <p>Direct access to local, organic products</p>
+            </div>
+            <div class="card">
+                <h3>Empower Local Producers</h3>
+                <p>Enable earning from surplus produce</p>
+            </div>
+            <div class="card">
+                <h3>Strengthen Community Connections</h3>
+                <p>Foster stronger local food networks</p>
+            </div>
+            <div class="card">
+                <h3>Convenient and Trustworthy</h3>
+                <p>Easy-to-use platform with transparency</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Revenue Model</h2>
+        <div class="card-container">
+            <div class="card">
+                <h3>Commission on Sales</h3>
+                <p>Percentage of each transaction</p>
+            </div>
+            <div class="card">
+                <h3>Subscription Plans</h3>
+                <p>Premium features for frequent users</p>
+            </div>
+            <div class="card">
+                <h3>Partnerships</h3>
+                <p>Collaborations with seed and fertilizer distributors</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Sales Targets</h2>
+        <div class="chart-container">
+            <canvas id="salesTargetChart"></canvas>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Keboon Journey: From Concept to Market Leader</h2>
+        <div class="card-container">
+            <div class="card journey-card">
+                <div class="journey-number">1</div>
+                <h3>Development and Launch</h3>
+                <ul>
+                    <li>Develop core functionalities</li>
+                    <li>Create user-friendly interface</li>
+                    <li>Implement secure payments</li>
+                    <li>Soft launch in select communities</li>
+                    <li>Gather and implement feedback</li>
+                </ul>
+            </div>
+            <div class="card journey-card">
+                <div class="journey-number">2</div>
+                <h3>Expand and Reward</h3>
+                <ul>
+                    <li>Launch marketing campaigns</li>
+                    <li>Implement rewards system</li>
+                    <li>Introduce referral program</li>
+                    <li>Enhance customer support</li>
+                    <li>Analyze and improve performance</li>
+                </ul>
+            </div>
+            <div class="card journey-card">
+                <div class="journey-number">3</div>
+                <h3>New Features</h3>
+                <ul>
+                    <li>Add planting scheduler</li>
+                    <li>Implement recycling integration</li>
+                    <li>Enhance sustainability metrics</li>
+                    <li>Partner with environmental orgs</li>
+                    <li>Launch educational content</li>
+                </ul>
+            </div>
+            <div class="card journey-card">
+                <div class="journey-number">4</div>
+                <h3>Scale and Explore</h3>
+                <ul>
+                    <li>Expand to new areas in Malaysia</li>
+                    <li>Introduce B2B features</li>
+                    <li>Develop new partnerships</li>
+                    <li>Explore international expansion</li>
+                    <li>Continuous innovation</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <h2>Contact Us</h2>
+        <p>Email: aimi@keboon.net</p>
+        <p>Company: Keboon Technology Solution</p>
+        <p>Business Registration Number: 003639101-D</p>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        // Target Market Chart
+        var ctx = document.getElementById('targetMarketChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Home Gardeners', 'Urban Farmers', 'Eco-conscious Consumers'],
+                datasets: [{
+                    data: [1.5, 0.5, 2],
+                    backgroundColor: ['#377E62', '#52AE77', '#8FD3A5']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Keboon Target Market (Millions)',
+                        color: 'black'
+                    },
+                    legend: {
+                        labels: {
+                            color: 'black'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Sales Target Chart
+        var salesCtx = document.getElementById('salesTargetChart').getContext('2d');
+        new Chart(salesCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Year 1', 'Year 2'],
+                datasets: [{
+                    label: 'Revenue (RM)',
+                    data: [375000, 1250000],
+                    backgroundColor: ['#377E62', '#52AE77']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Projected Sales Targets',
+                        color: 'black'
+                    },
+                    legend: {
+                        labels: {
+                            color: 'black'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Revenue (RM)',
+                            color: 'black'
+                        },
+                        ticks: {
+                            color: 'black'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: 'black'
+                        }
+                    }
+                }
+            }
+        });
+    });
+    </script>
+</body>
+</html>
