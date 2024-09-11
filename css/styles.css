@@ -11093,7 +11093,7 @@ header.masthead .masthead-heading {
   border-left-width: 0;
 }
 .timeline > li:last-child {
-  margin-bottom: 0;
+  margin-bottom: 1;
 }
 .timeline .timeline-heading h4, .timeline .timeline-heading .h4 {
   margin-top: 0;
