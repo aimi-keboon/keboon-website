@@ -19,12 +19,14 @@
             background-repeat: no-repeat;
             background-size: cover;
         }
+
         .market-graph {
             width: 300px;
             height: 300px;
             position: relative;
             margin: 20px auto;
         }
+
         .market-circle {
             border-radius: 50%;
             position: absolute;
@@ -34,16 +36,42 @@
             color: white;
             font-weight: bold;
         }
-        .tam { width: 100%; height: 100%; background-color: rgba(82, 174, 119, 0.3); }
-        .sam { width: 66%; height: 66%; background-color: rgba(82, 174, 119, 0.5); top: 17%; left: 17%; }
-        .som { width: 33%; height: 33%; background-color: rgba(82, 174, 119, 0.7); top: 33.5%; left: 33.5%; }
+
+        .tam {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(82, 174, 119, 0.3);
+        }
+
+        .sam {
+            width: 66%;
+            height: 66%;
+            background-color: rgba(82, 174, 119, 0.5);
+            top: 17%;
+            left: 17%;
+        }
+
+        .som {
+            width: 33%;
+            height: 33%;
+            background-color: rgba(82, 174, 119, 0.7);
+            top: 33.5%;
+            left: 33.5%;
+        }
+
         .icon-feature {
             font-size: 3rem;
             color: #52AE77;
             margin-bottom: 1rem;
         }
-        .bg-light-green { background-color: #e8f5e9; }
-        .bg-light-blue { background-color: #e3f2fd; }
+
+        .bg-light-green {
+            background-color: #e8f5e9;
+        }
+
+        .bg-light-blue {
+            background-color: #e3f2fd;
+        }
     </style>
 </head>
 
@@ -60,12 +88,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#problem">Problem</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#solution">Solution</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#target-market">Target Market</a></li>
                     <li class="nav-item"><a class="nav-link" href="#sdgs">SDGs</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#survey">Survey</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="https://app.keboon.net/">Keboon App</a></li>
                 </ul>
@@ -77,68 +100,118 @@
     <header class="masthead">
         <div class="container">
             <div class="masthead-subheading">Connecting Neighbours, Sharing Freshness</div>
-            <div class="masthead-heading text-uppercase">Welcome to<br><img src="assets/img/keboon-logo-white.png" width="300"></div>
-            <a class="btn btn-primary btn-xl text-uppercase" href="https://app.keboon.net/installation" target="_blank" rel="noopener noreferrer">Install Keboon App Now!</a>
+            <div class="masthead-heading text-uppercase">Welcome to<br><img src="assets/img/keboon-logo-white.png"
+                    width="300"></div>
+            <a class="btn btn-primary btn-xl text-uppercase" href="https://app.keboon.net/installation" target="_blank"
+                rel="noopener noreferrer">Install Keboon App Now!</a>
         </div>
     </header>
 
     <!-- About-->
-    <section class="page-section" id="about">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading text-uppercase">About<br><img src="assets/img/keboon-writing.png" width="160"></h2>
-                <h3 class="section-subheading text-muted">Revolutionizing local food systems through technology</h3>
+<section class="page-section" id="about">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-heading text-uppercase">About<br><img src="assets/img/keboon-writing.png" alt="Keboon" width="160"></h2>
+            <h3 class="section-subheading text-muted">Revolutionizing local food systems through technology</h3>
+        </div>
+        <div class="row align-items-center mb-5">
+            <div class="col-md-6">
+                <img src="assets/img/keboon-concept.png" alt="Keboon Concept" class="img-fluid rounded-circle mb-4">
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="text-center">
-                        <i class="fas fa-eye icon-feature"></i>
-                        <h4>Our Vision</h4>
+            <div class="col-md-6">
+                <h4 class="mb-3">What is Keboon?</h4>
+                <p>Keboon is an innovative mobile application designed to transform the way local communities interact with their food systems. By connecting home gardeners, urban farmers, and eco-conscious consumers, Keboon creates a vibrant marketplace for fresh, locally-grown produce.</p>
+                <p>Our platform addresses the challenges of food waste and disconnected communities by providing an easy-to-use interface for sharing, selling, and purchasing excess homegrown produce. With Keboon, we're not just building an app – we're cultivating a movement towards sustainable, community-centered food practices.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-eye icon-feature text-primary"></i>
+                            <h4>Our Vision</h4>
+                        </div>
+                        <p>We envision a world where communities thrive through sustainable, locally-sourced food systems, reducing waste and fostering connections between neighbors. Keboon aims to be at the forefront of this transformation, empowering individuals to take an active role in their local food ecosystem.</p>
                     </div>
-                    <p>A world where communities thrive through sustainable, locally-sourced food systems, reducing waste and fostering connections between neighbors.</p>
                 </div>
-                <div class="col-md-6">
-                    <div class="text-center">
-                        <i class="fas fa-bullseye icon-feature"></i>
-                        <h4>Our Mission</h4>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-bullseye icon-feature text-primary"></i>
+                            <h4>Our Mission</h4>
+                        </div>
+                        <p>Our mission is to create an innovative platform that seamlessly connects local producers with consumers, promoting sustainable living, reducing food waste, and strengthening community bonds. Through Keboon, we strive to make local food accessible, affordable, and beneficial for all.</p>
                     </div>
-                    <p>To create an innovative platform that connects local producers with consumers, promoting sustainable living, reducing food waste, and strengthening community bonds.</p>
                 </div>
             </div>
         </div>
-    </section>
+        <div class="text-center mt-4">
+            <h4 class="mb-3">How Keboon Works</h4>
+            <p>Keboon utilizes geolocation technology to connect users with nearby produce offerings. Producers can easily list their surplus fruits, vegetables, and herbs, while consumers can browse, purchase, or express interest in local produce. Our platform also incorporates features like a planting scheduler and a rewards system, encouraging continuous engagement and sustainable practices.</p>
+        </div>
+    </div>
+</section>
 
-    <!-- Problem -->
-    <section class="page-section bg-light-green" id="problem">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading text-uppercase">The Problem</h2>
-                <h3 class="section-subheading text-muted">Addressing food waste and disconnected communities</h3>
-            </div>
-            <div class="row align-items-center">
-                <div class="col-md-4">
-                    <img src="assets/img/food-waste.jpg" alt="Food Waste Illustration" class="img-fluid rounded mb-3">
-                </div>
-                <div class="col-md-8">
-                    <div class="mb-4">
-                        <h4><i class="fas fa-trash-alt text-primary me-2"></i>Food Waste</h4>
-                        <p>Excess home-grown produce often goes to waste, as producers lack efficient means to distribute their surplus to those who need it.</p>
+<!-- Problem -->
+<section class="page-section bg-light-green" id="problem">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-heading text-uppercase">The Problem</h2>
+            <h3 class="section-subheading text-muted">Addressing food waste and disconnected communities</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-0 shadow">
+                    <div class="card-body text-center">
+                        <i class="fas fa-trash-alt fa-3x text-primary mb-3"></i>
+                        <h4 class="card-title">Food Waste</h4>
+                        <p class="card-text">Excess home-grown produce often goes to waste, as producers lack efficient means to distribute their surplus to those who need it. This not only represents a loss of valuable resources but also contributes to environmental issues.</p>
                     </div>
-                    <div>
-                        <h4><i class="fas fa-share-alt text-primary me-2"></i>Common Solution</h4>
-                        <p>Sharing with neighbors is a common approach, but not everyone has the time and network to do so effectively.</p>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-0 shadow">
+                    <div class="card-body text-center">
+                        <i class="fas fa-share-alt fa-3x text-primary mb-3"></i>
+                        <h4 class="card-title">Inefficient Distribution</h4>
+                        <p class="card-text">While sharing with neighbors is a common approach, it's often limited and inefficient. Not everyone has the time, network, or means to effectively distribute their surplus produce, leading to missed opportunities for both producers and consumers.</p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+        <div class="row mt-4">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-0 shadow">
+                    <div class="card-body text-center">
+                        <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                        <h4 class="card-title">Disconnected Communities</h4>
+                        <p class="card-text">In our increasingly digital world, local food systems often struggle to maintain cohesion. There's a growing disconnect between food producers and consumers, leading to a lack of awareness about local food sources and sustainable practices.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 border-0 shadow">
+                    <div class="card-body text-center">
+                        <i class="fas fa-leaf fa-3x text-primary mb-3"></i>
+                        <h4 class="card-title">Sustainable Practices</h4>
+                        <p class="card-text">There's a growing need for platforms that not only connect producers and consumers but also promote sustainable farming practices and eco-friendly consumption habits. Current solutions often fall short in this aspect.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
     <!-- Solution -->
     <section class="page-section parallax" id="solution" style="background-image: url('assets/img/bg-solution.jpg');">
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase text-white">Our Solution</h2>
-                <h3 class="section-subheading text-white">Keboon: Bridging the gap between local producers and consumers</h3>
+                <h3 class="section-subheading text-white">Keboon: Bridging the gap between local producers and consumers
+                </h3>
             </div>
             <div class="row">
                 <div class="col-md-4 mb-4">
@@ -147,9 +220,12 @@
                             <i class="fas fa-carrot icon-feature"></i>
                             <h5 class="card-title">For Consumers</h5>
                             <ul class="list-unstyled">
-                                <li><i class="fas fa-check text-success me-2"></i>Access to fresh, organic, and nearby produce</li>
-                                <li><i class="fas fa-check text-success me-2"></i>Trust in knowing the source of their food</li>
-                                <li><i class="fas fa-check text-success me-2"></i>Potentially cheaper prices than grocery stores</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Access to fresh, organic, and nearby
+                                    produce</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Trust in knowing the source of their
+                                    food</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Potentially cheaper prices than
+                                    grocery stores</li>
                             </ul>
                         </div>
                     </div>
@@ -189,7 +265,8 @@
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Key Features</h2>
-                <h3 class="section-subheading text-muted">Empowering producers and consumers in the local food ecosystem</h3>
+                <h3 class="section-subheading text-muted">Empowering producers and consumers in the local food ecosystem
+                </h3>
             </div>
             <div class="row">
                 <div class="col-lg-4">
@@ -199,8 +276,10 @@
                         </div>
                         <div class="timeline-body">
                             <p class="text-muted">
-                                <i class="fas fa-shopping-cart text-primary me-2"></i>Platform to sell surplus home-grown produce<br>
-                                <i class="fas fa-leaf text-primary me-2"></i>Buy fresh, organic, locally-sourced products<br>
+                                <i class="fas fa-shopping-cart text-primary me-2"></i>Platform to sell surplus
+                                home-grown produce<br>
+                                <i class="fas fa-leaf text-primary me-2"></i>Buy fresh, organic, locally-sourced
+                                products<br>
                                 <i class="fas fa-map-marker-alt text-primary me-2"></i>Geolocation-based connection
                             </p>
                         </div>
@@ -213,8 +292,10 @@
                         </div>
                         <div class="timeline-body">
                             <p class="text-muted">
-                                <i class="fas fa-seedling text-primary me-2"></i>Monitor and manage plant growth with ML & AI<br>
-                                <i class="fas fa-bell text-primary me-2"></i>Receive reminders and tips for optimal farming
+                                <i class="fas fa-seedling text-primary me-2"></i>Monitor and manage plant growth with ML
+                                & AI<br>
+                                <i class="fas fa-bell text-primary me-2"></i>Receive reminders and tips for optimal
+                                farming
                             </p>
                         </div>
                     </div>
@@ -257,12 +338,14 @@
                         <p>Home gardeners, urban farmers & eco-conscious consumers in South East Asia</p>
                     </div>
                     <div class="mb-4">
-                        <h4><i class="fas fa-map-marker-alt text-primary me-2"></i>SAM (Serviceable Available Market)</h4>
+                        <h4><i class="fas fa-map-marker-alt text-primary me-2"></i>SAM (Serviceable Available Market)
+                        </h4>
                         <p>34 million total Malaysia population</p>
                     </div>
                     <div>
                         <h4><i class="fas fa-bullseye text-primary me-2"></i>SOM (Serviceable Obtainable Market)</h4>
-                        <p>4 million individuals: home gardeners, urban farmers & eco-conscious consumers in Malaysia</p>
+                        <p>4 million individuals: home gardeners, urban farmers & eco-conscious consumers in Malaysia
+                        </p>
                     </div>
                 </div>
             </div>
@@ -281,48 +364,59 @@
                     <div class="col-md-12 mb-4">
                         <div class="card h-100">
                             <div class="card-body">
-                                <h5 class="card-title"><i class="fas fa-utensils text-primary me-2"></i>Goal 2: Zero Hunger</h5>
-                                <p class="card-text">By promoting local food production and distribution, reducing waste, and improving access to fresh produce.</p>
+                                <h5 class="card-title"><i class="fas fa-utensils text-primary me-2"></i>Goal 2: Zero
+                                    Hunger</h5>
+                                <p class="card-text">By promoting local food production and distribution, reducing
+                                    waste, and improving access to fresh produce.</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12 mb-4">
                         <div class="card h-100">
                             <div class="card-body">
-                                <h5 class="card-title"><i class="fas fa-briefcase text-primary me-2"></i>Goal 8: Decent Work and Economic Growth</h5>
-                                <p class="card-text">By creating opportunities for local producers to earn income from their surplus produce.</p>
+                                <h5 class="card-title"><i class="fas fa-briefcase text-primary me-2"></i>Goal 8: Decent
+                                    Work and Economic Growth</h5>
+                                <p class="card-text">By creating opportunities for local producers to earn income from
+                                    their surplus produce.</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12 mb-4">
                         <div class="card h-100">
                             <div class="card-body">
-                                <h5 class="card-title"><i class="fas fa-city text-primary me-2"></i>Goal 11: Sustainable Cities and Communities</h5>
-                                <p class="card-text">By fostering local food networks and promoting sustainable urban farming practices.</p>
+                                <h5 class="card-title"><i class="fas fa-city text-primary me-2"></i>Goal 11: Sustainable
+                                    Cities and Communities</h5>
+                                <p class="card-text">By fostering local food networks and promoting sustainable urban
+                                    farming practices.</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12 mb-4">
                         <div class="card h-100">
                             <div class="card-body">
-                                <h5 class="card-title"><i class="fas fa-shopping-basket text-primary me-2"></i>Goal 12: Responsible Consumption and Production</h5>
-                                <p class="card-text">By reducing food waste and promoting sustainable consumption patterns.</p>
+                                <h5 class="card-title"><i class="fas fa-shopping-basket text-primary me-2"></i>Goal 12:
+                                    Responsible Consumption and Production</h5>
+                                <p class="card-text">By reducing food waste and promoting sustainable consumption
+                                    patterns.</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12 mb-4">
                         <div class="card h-100">
                             <div class="card-body">
-                                <h5 class="card-title"><i class="fas fa-leaf text-primary me-2"></i>Goal 13: Climate Action</h5>
-                                <p class="card-text">By reducing food miles and promoting local, sustainable agriculture practices.</p>
+                                <h5 class="card-title"><i class="fas fa-leaf text-primary me-2"></i>Goal 13: Climate
+                                    Action</h5>
+                                <p class="card-text">By reducing food miles and promoting local, sustainable agriculture
+                                    practices.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    
-        <!-- Survey -->
+    </section>
+
+    <!-- Survey -->
+    <!-- 
         <section class="page-section bg-light-green" id="survey">
             <div class="container">
                 <div class="text-center">
@@ -350,8 +444,9 @@
                 </div>
             </div>
         </section>
-    
-        <!-- Social Media Feeds -->
+    -->
+    <!-- Social Media Feeds -->
+    <!-- 
         <section id="social-media-feeds" class="page-section bg-light">
             <div class="container">
                 <div class="text-center mb-5">
@@ -389,8 +484,9 @@
                 </div>
             </div>
         </section>
-    
-        <!-- Team -->
+    -->
+    <!-- Team -->
+    <!--
         <section class="page-section bg-light-blue" id="team">
             <div class="container">
                 <div class="text-center">
@@ -409,67 +505,73 @@
                 </div>
             </div>
         </section>
-    
-        <!-- Contact -->
-        <section id="contact" class="page-section bg-light card-section">
-            <div class="container">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <div class="row justify-content-center">
-                            <div class="col-md-8 col-lg-6">
-                                <h3 class="card-title text-center">Send Us a Message</h3>
-                                <form id="contactForm" action="https://formspree.io/f/xzzpopkr" method="POST">
-                                    <div class="form-group mb-3">
-                                        <input class="form-control" type="text" placeholder="Your Name *"
-                                            required="required" name="name" />
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <input class="form-control" type="email" placeholder="Your Email *"
-                                            required="required" name="email" />
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <textarea class="form-control" placeholder="Your Message *" required="required"
-                                            name="message"></textarea>
-                                    </div>
-                                    <div class="text-center">
-                                        <button class="btn btn-primary btn-s text-uppercase" type="submit">
-                                            <i class="fas fa-paper-plane me-2"></i>Send Message
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
+    -->
+    <!-- Contact -->
+    <section id="contact" class="page-section bg-light card-section">
+        <div class="container">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8 col-lg-6">
+                            <h3 class="card-title text-center">Send Us a Message</h3>
+                            <form id="contactForm" action="https://formspree.io/f/xzzpopkr" method="POST">
+                                <div class="form-group mb-3">
+                                    <input class="form-control" type="text" placeholder="Your Name *"
+                                        required="required" name="name" />
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input class="form-control" type="email" placeholder="Your Email *"
+                                        required="required" name="email" />
+                                </div>
+                                <div class="form-group mb-3">
+                                    <textarea class="form-control" placeholder="Your Message *" required="required"
+                                        name="message"></textarea>
+                                </div>
+                                <div class="text-center">
+                                    <button class="btn btn-primary btn-s text-uppercase" type="submit">
+                                        <i class="fas fa-paper-plane me-2"></i>Send Message
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    
-        <!-- Footer -->
-        <footer class="footer py-4 bg-dark text-white">
-            <div class="container">
-                <div class="row align-items-center justify-content-between">
-                    <div class="col-lg-4 text-center text-lg-start mb-3 mb-lg-0">
-                        Copyright © KEBOON TECHNOLOGY SOLUTION<br />
-                        Business RN: 003639101-D
-                    </div>
-                    <div class="col-lg-4 d-flex justify-content-center mb-3 mb-lg-0">
-                        <a class="btn btn-light btn-social mx-2" href="https://instagram.com/keboonmy" aria-label="Keboon Instagram Profile" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
-                        <a class="btn btn-light btn-social mx-2" href="https://facebook.com/keboon.tech" aria-label="Keboon Facebook Profile" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-light btn-social mx-2" href="https://linkedin.com/company/keboon-tech/" aria-label="Keboon LinkedIn Profile" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                    <div class="col-lg-4 text-center text-lg-end">
-                        <!-- Uncomment these lines if you want to add Privacy Policy and Terms of Use links -->
-                        <!-- <a class="link-light text-decoration-none me-3" href="#!">Privacy Policy</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-4 bg-dark text-white">
+        <div class="container">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-lg-4 text-center text-lg-start mb-3 mb-lg-0">
+                    Copyright © KEBOON TECHNOLOGY SOLUTION<br />
+                    Business RN: 003639101-D
+                </div>
+                <div class="col-lg-4 d-flex justify-content-center mb-3 mb-lg-0">
+                    <a class="btn btn-light btn-social mx-2" href="https://instagram.com/keboonmy"
+                        aria-label="Keboon Instagram Profile" target="_blank" rel="noopener noreferrer"><i
+                            class="fab fa-instagram"></i></a>
+                    <a class="btn btn-light btn-social mx-2" href="https://facebook.com/keboon.tech"
+                        aria-label="Keboon Facebook Profile" target="_blank" rel="noopener noreferrer"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-light btn-social mx-2" href="https://linkedin.com/company/keboon-tech/"
+                        aria-label="Keboon LinkedIn Profile" target="_blank" rel="noopener noreferrer"><i
+                            class="fab fa-linkedin-in"></i></a>
+                </div>
+                <div class="col-lg-4 text-center text-lg-end">
+                    <!-- Uncomment these lines if you want to add Privacy Policy and Terms of Use links -->
+                    <!-- <a class="link-light text-decoration-none me-3" href="#!">Privacy Policy</a>
                         <a class="link-light text-decoration-none" href="#!">Terms of Use</a> -->
-                    </div>
                 </div>
             </div>
-        </footer>
-    
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-    </body>
-    
-    </html>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>
