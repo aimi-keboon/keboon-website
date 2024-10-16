@@ -12,6 +12,39 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
     <link href="css/styles.css" rel="stylesheet" />
+    <style>
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .market-graph {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            margin: 20px auto;
+        }
+        .market-circle {
+            border-radius: 50%;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+        }
+        .tam { width: 100%; height: 100%; background-color: rgba(82, 174, 119, 0.3); }
+        .sam { width: 66%; height: 66%; background-color: rgba(82, 174, 119, 0.5); top: 17%; left: 17%; }
+        .som { width: 33%; height: 33%; background-color: rgba(82, 174, 119, 0.7); top: 33.5%; left: 33.5%; }
+        .icon-feature {
+            font-size: 3rem;
+            color: #52AE77;
+            margin-bottom: 1rem;
+        }
+        .bg-light-green { background-color: #e8f5e9; }
+        .bg-light-blue { background-color: #e3f2fd; }
+    </style>
 </head>
 
 <body id="page-top">
@@ -27,8 +60,12 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#problem">Problem</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#solution">Solution</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#target-market">Target Market</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#sdgs">SDGs</a></li>
                     <li class="nav-item"><a class="nav-link" href="#survey">Survey</a></li>
-                    <!-- <li class="nav-item"><a class="nav-link" href="#pitch">Pitch Deck</a></li> -->
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="https://app.keboon.net/">Keboon App</a></li>
                 </ul>
@@ -39,346 +76,394 @@
     <!-- Masthead-->
     <header class="masthead">
         <div class="container">
-            <div class="card bg-transparent border-0">
-                <div class="card-body text-center">
-                    <img src="assets/img/keboon-logo-white.png" alt="Keboon" class="logo-image" style="width: 250px; height: auto; vertical-align: middle";>
-                    <div class="masthead-heading">Connecting Neighbours, <br>Sharing Freshness</div>
-                    <p class="masthead-description">Join our community of local producers and consumers to reduce food
-                        waste and enjoy fresh, local produce.</p>
-                    <div class="text-center">
-                        <a href="https://app.keboon.net/installation" target="_blank" rel="noopener noreferrer"
-                            class="btn btn-primary btn-s text-uppercase">
-                            Install Keboon App Now!
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <div class="masthead-subheading">Connecting Neighbours, Sharing Freshness</div>
+            <div class="masthead-heading text-uppercase">Welcome to<br><img src="/keboon-website/assets/img/keboon-logo-white.png" width="300"></div>
+            <a class="btn btn-primary btn-xl text-uppercase" href="https://app.keboon.net/installation" target="_blank" rel="noopener noreferrer">Install Keboon App Now!</a>
         </div>
     </header>
 
     <!-- About-->
-    <section class="page-section card-section" id="about">
+    <section class="page-section" id="about">
         <div class="container">
-            <div class="card shadow">
-                <div class="card-body">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">About<br><img src="/keboon-website/assets/img/keboon-writing.png" width="160"></h2>
+                <h3 class="section-subheading text-muted">Revolutionizing local food systems through technology</h3>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
                     <div class="text-center">
-                        <h3 class="section-heading text-uppercase">
-                            About <br>
-                            <img src="assets/img/keboon-writing.png" alt="Keboon" class="logo-image" style="width: 120px; height: auto; vertical-align: middle";>
-                          </h3>
-                          
-                        <h3 class="section-subheading text-muted">Keboon is An innovative online marketplace connecting
-                            local producers with consumers, reducing food waste and promoting sustainable local food
-                            ecosystems.</h3>
+                        <i class="fas fa-eye icon-feature"></i>
+                        <h4>Our Vision</h4>
                     </div>
-                    <div class="row text-center">
-                        <div class="col-md-4">
-                            <span class="fa-stack fa-4x">
-                                <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                                <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
-                            </span>
-                            <h5 class="my-3">Easy Marketplace</h5>
-                            <p class="text-muted">Buy and sell fresh, locally-grown produce with ease through our
-                                user-friendly platform.</p>
-                        </div>
-                        <div class="col-md-4">
-                            <span class="fa-stack fa-4x">
-                                <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                                <i class="fas fa-leaf fa-stack-1x fa-inverse"></i>
-                            </span>
-                            <h5 class="my-3">Sustainable Living</h5>
-                            <p class="text-muted">Reduce food waste and support local farmers while enjoying fresh,
-                                organic produce.</p>
-                        </div>
-                        <div class="col-md-4">
-                            <span class="fa-stack fa-4x">
-                                <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                                <i class="fas fa-users fa-stack-1x fa-inverse"></i>
-                            </span>
-                            <h5 class="my-3">Community Building</h5>
-                            <p class="text-muted">Connect with your neighbors and strengthen local food networks.</p>
-                        </div>
+                    <p>A world where communities thrive through sustainable, locally-sourced food systems, reducing waste and fostering connections between neighbors.</p>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <i class="fas fa-bullseye icon-feature"></i>
+                        <h4>Our Mission</h4>
                     </div>
+                    <p>To create an innovative platform that connects local producers with consumers, promoting sustainable living, reducing food waste, and strengthening community bonds.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Problem -->
-    <section class="page-section card-section" id="problem">
+    <section class="page-section bg-light-green" id="problem">
         <div class="container">
-            <div class="card shadow">
-                <div class="card-body">
-                    <ul class="timeline">
-                        <li>
-                            <div class="timeline-image"><img class="rounded-circle img-fluid"
-                                    src="assets/img/about/1.jpg" alt="Problem" /></div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h3>The Problem</h3>
-                                    <h5 class="subheading">Excess Produce Waste</h5>
-                                </div>
-                                <div class="timeline-body">
-                                    <p class="text-muted">Excess home-grown produce often goes to waste, despite efforts
-                                        to share with neighbors. Not everyone has the time or network to effectively
-                                        distribute their surplus.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="timeline-inverted">
-                            <div class="timeline-image"><img class="rounded-circle img-fluid"
-                                    src="assets/img/keboon-logo-2.png" alt="Solution" /></div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h3>Our Solution</h3>
-                                    <h5 class="subheading">Keboon Marketplace</h5>
-                                </div>
-                                <div class="timeline-body">
-                                    <p class="text-muted">Keboon is an innovative online marketplace designed to connect
-                                        local producers with consumers, providing a platform to sell surplus home-grown
-                                        produce and buy fresh, organic, locally-sourced products.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="timeline-image"><img class="rounded-circle img-fluid"
-                                    src="assets/img/about/3.jpg" alt="Mission" /></div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h3>Our Mission</h3>
-                                    <h5 class="subheading">Sustainable Local Food Ecosystem</h5>
-                                </div>
-                                <div class="timeline-body">
-                                    <p class="text-muted">We're committed to reducing food waste, supporting local
-                                        farmers and gardeners, promoting the consumption of fresh, organic produce, and
-                                        strengthening community bonds through the sharing of locally-grown food.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="timeline-inverted">
-                            <div class="timeline-image"><img class="rounded-circle img-fluid"
-                                    src="assets/img/about/4.jpg" alt="Features" /></div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h3>Key Features</h3>
-                                    <h5 class="subheading">Empowering Producers and Consumers</h5>
-                                </div>
-                                <div class="timeline-body">
-                                    <p class="text-muted">Keboon offers a user-friendly platform for producers to easily
-                                        list and sell surplus produce, while consumers can browse and buy fresh, local
-                                        products. We're building a community of individuals passionate about
-                                        sustainable, locally-grown food.</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="timeline-inverted">
-                            <div class="timeline-image">
-                                <h4>
-                                    Join Our
-                                    <br />
-                                    Sustainable
-                                    <br />
-                                    Movement!
-                                </h4>
-                            </div>
-                        </li>
-                    </ul>
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">The Problem</h2>
+                <h3 class="section-subheading text-muted">Addressing food waste and disconnected communities</h3>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <img src="assets/img/food-waste.jpg" alt="Food Waste Illustration" class="img-fluid rounded mb-3">
+                </div>
+                <div class="col-md-8">
+                    <div class="mb-4">
+                        <h4><i class="fas fa-trash-alt text-primary me-2"></i>Food Waste</h4>
+                        <p>Excess home-grown produce often goes to waste, as producers lack efficient means to distribute their surplus to those who need it.</p>
+                    </div>
+                    <div>
+                        <h4><i class="fas fa-share-alt text-primary me-2"></i>Common Solution</h4>
+                        <p>Sharing with neighbors is a common approach, but not everyone has the time and network to do so effectively.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="page-section bg-light card-section" id="survey">
+    <!-- Solution -->
+    <section class="page-section parallax" id="solution" style="background-image: url('assets/img/bg-solution.jpg');">
         <div class="container">
-            <div class="card shadow">
-                <div class="card-body">
-                    <div class="text-center">
-                        <h3 class="section-heading text-uppercase">Help Shape the Future of Local Produce Shopping!</h3>
-                        <h3 class="section-subheading text-muted mb-5">Your input is invaluable in creating an app that
-                            truly serves your needs.</h3>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8 col-xl-7">
-                            <h6 class="card-title mb-4">In this quick 5-minute survey, you'll share your thoughts on:
-                            </h6>
-                            <ul class="list-unstyled mb-4">
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Your current produce
-                                    buying habits</li>
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Your interest in a local
-                                    produce app</li>
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Features you'd find most
-                                    useful</li>
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase text-white">Our Solution</h2>
+                <h3 class="section-subheading text-white">Keboon: Bridging the gap between local producers and consumers</h3>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-carrot icon-feature"></i>
+                            <h5 class="card-title">For Consumers</h5>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Access to fresh, organic, and nearby produce</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Trust in knowing the source of their food</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Potentially cheaper prices than grocery stores</li>
                             </ul>
-                            <p class="mb-4">Your responses will guide our development and help support local
-                                agriculture. Together, we can create a more sustainable and connected local food system!
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-hand-holding-usd icon-feature"></i>
+                            <h5 class="card-title">For Producers</h5>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Earn money from surplus produce</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Reduce waste</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Connect with the local community</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="fas fa-users icon-feature"></i>
+                            <h5 class="card-title">For the Community</h5>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Strengthen the local economy</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Promote sustainable practices</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Encourage local food networks</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="page-section bg-light" id="features">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Key Features</h2>
+                <h3 class="section-subheading text-muted">Empowering producers and consumers in the local food ecosystem</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4>Product Marketplace</h4>
+                        </div>
+                        <div class="timeline-body">
+                            <p class="text-muted">
+                                <i class="fas fa-shopping-cart text-primary me-2"></i>Platform to sell surplus home-grown produce<br>
+                                <i class="fas fa-leaf text-primary me-2"></i>Buy fresh, organic, locally-sourced products<br>
+                                <i class="fas fa-map-marker-alt text-primary me-2"></i>Geolocation-based connection
                             </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4>Planting Scheduler (Coming Soon)</h4>
+                        </div>
+                        <div class="timeline-body">
+                            <p class="text-muted">
+                                <i class="fas fa-seedling text-primary me-2"></i>Monitor and manage plant growth with ML & AI<br>
+                                <i class="fas fa-bell text-primary me-2"></i>Receive reminders and tips for optimal farming
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4>Rewards System (Coming Soon)</h4>
+                        </div>
+                        <div class="timeline-body">
+                            <p class="text-muted">
+                                <i class="fas fa-star text-primary me-2"></i>Earn points for transactions<br>
+                                <i class="fas fa-gift text-primary me-2"></i>Redeem points for gardening supplies
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Market -->
+    <section class="page-section bg-light-blue" id="target-market">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Target Market</h2>
+                <h3 class="section-subheading text-muted">Understanding our market segments</h3>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="market-graph">
+                        <div class="market-circle tam">TAM</div>
+                        <div class="market-circle sam">SAM</div>
+                        <div class="market-circle som">SOM</div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <h4><i class="fas fa-globe text-primary me-2"></i>TAM (Total Available Market)</h4>
+                        <p>Home gardeners, urban farmers & eco-conscious consumers in South East Asia</p>
+                    </div>
+                    <div class="mb-4">
+                        <h4><i class="fas fa-map-marker-alt text-primary me-2"></i>SAM (Serviceable Available Market)</h4>
+                        <p>34 million total Malaysia population</p>
+                    </div>
+                    <div>
+                        <h4><i class="fas fa-bullseye text-primary me-2"></i>SOM (Serviceable Obtainable Market)</h4>
+                        <p>4 million individuals: home gardeners, urban farmers & eco-conscious consumers in Malaysia</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SDGs -->
+    <section class="page-section" id="sdgs">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Sustainable Development Goals</h2>
+                <h3 class="section-subheading text-muted">Keboon's Contribution to UN SDGs</h3>
+            </div>
+            <div class="row">
+                <div class="col-md-20 mb-4">
+                    <div class="col-md-12 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-utensils text-primary me-2"></i>Goal 2: Zero Hunger</h5>
+                                <p class="card-text">By promoting local food production and distribution, reducing waste, and improving access to fresh produce.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-briefcase text-primary me-2"></i>Goal 8: Decent Work and Economic Growth</h5>
+                                <p class="card-text">By creating opportunities for local producers to earn income from their surplus produce.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-city text-primary me-2"></i>Goal 11: Sustainable Cities and Communities</h5>
+                                <p class="card-text">By fostering local food networks and promoting sustainable urban farming practices.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-shopping-basket text-primary me-2"></i>Goal 12: Responsible Consumption and Production</h5>
+                                <p class="card-text">By reducing food waste and promoting sustainable consumption patterns.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-leaf text-primary me-2"></i>Goal 13: Climate Action</h5>
+                                <p class="card-text">By reducing food miles and promoting local, sustainable agriculture practices.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Survey -->
+        <section class="page-section bg-light-green" id="survey">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Help Shape the Future of Local Produce Shopping!</h2>
+                    <h3 class="section-subheading text-muted mb-5">Your input is invaluable in creating an app that truly serves your needs.</h3>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-xl-7">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <h4 class="card-title mb-4">In this quick 5-minute survey, you'll share your thoughts on:</h4>
+                                <ul class="list-unstyled mb-4">
+                                    <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Your current produce buying habits</li>
+                                    <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Your interest in a local produce app</li>
+                                    <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Features you'd find most useful</li>
+                                </ul>
+                                <p class="mb-4">Your responses will guide our development and help support local agriculture. Together, we can create a more sustainable and connected local food system!</p>
+                                <div class="text-center">
+                                    <a href="https://forms.gle/izSca25JVmVqmyr49" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-xl text-uppercase">Take the Survey Now</a>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-muted text-center mt-3">Thank you for your time and valuable feedback!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Social Media Feeds -->
+        <section id="social-media-feeds" class="page-section bg-light">
+            <div class="container">
+                <div class="text-center mb-5">
+                    <h2 class="section-heading text-uppercase">Follow Our Journey</h2>
+                    <h3 class="section-subheading text-muted">Stay updated with Keboon's latest activities on social media</h3>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 col-lg-6 mb-4">
+                        <div class="card shadow h-100">
+                            <div class="card-body">
+                                <h4 class="card-title text-center mb-3">Instagram</h4>
+                                <div class="embed-container d-flex justify-content-center">
+                                    <script async defer src="https://www.instagram.com/embed.js"></script>
+                                    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/keboonmy/" data-instgrm-version="14" style="max-width:100%; width:100%">
+                                        <a href="https://www.instagram.com/keboonmy/"></a>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-4 mb-4">
+                        <div class="card shadow h-100">
+                            <div class="card-body">
+                                <h4 class="card-title text-center mb-3">Facebook</h4>
+                                <div id="fb-root"></div>
+                                <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v14.0"></script>
+                                <div class="fb-page" data-href="https://www.facebook.com/keboon.tech" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                                    <blockquote cite="https://www.facebook.com/keboon.tech" class="fb-xfbml-parse-ignore">
+                                        <a href="https://www.facebook.com/keboon.tech">Keboon</a>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Team -->
+        <section class="page-section bg-light-blue" id="team">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Our Team</h2>
+                    <h3 class="section-subheading text-muted">The minds behind Keboon</h3>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="team-member text-center">
+                            <img class="mx-auto rounded-circle mb-4" src="assets/img/team/aimi_misman.jpg" alt="Aimi Misman" />
+                            <h4>Aimi Misman</h4>
+                            <p class="text-muted">Founder, CEO</p>
+                            <p class="text-justify">A passionate advocate for sustainable living and local economies, Aimi is the driving force behind Keboon, a platform dedicated to connecting home growers and producers with their neighbors and consumers. With a deep commitment to leveraging technology for social good, she envisions a world where communities thrive through access to fresh, locally-sourced produce, reducing carbon footprints, and fostering resilience in local economies. As a visionary technology leader, she combines her expertise in software development, project management, and business strategy to turn this vision into reality. She is skilled in guiding cross-functional teams and integrating innovative solutions that align with Keboon's mission. Her work is not just about creating software—it's about making a lasting, positive impact on how people connect, consume, and support their local communities. She believes that through technology, we can empower individuals to contribute to a healthier planet and a more connected society.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Contact -->
+        <section id="contact" class="page-section">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="section-heading text-uppercase">Contact Us</h2>
+                    <h3 class="section-subheading text-muted">Get in touch with the Keboon team</h3>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-xl-7">
+                        <form id="contactForm">
+                            <div class="form-group mb-3">
+                                <input class="form-control" type="text" placeholder="Your Name *" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <input class="form-control" type="email" placeholder="Your Email *" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <textarea class="form-control" placeholder="Your Message *" style="height: 150px;" required></textarea>
+                            </div>
                             <div class="text-center">
-                                <a href="https://forms.gle/izSca25JVmVqmyr49" target="_blank" rel="noopener noreferrer"
-                                    class="btn btn-primary btn-s text-uppercase">
-                                    Take the Survey Now
-                                </a>
+                                <button class="btn btn-primary btn-xl text-uppercase" type="submit">Send Message</button>
                             </div>
-                        </div>
-                    </div>
-                    <p class="text-muted text-center mt-3">Thank you for your time and valuable feedback!</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="social-media-feeds" class="page-section bg-light">
-        <div class="container">
-            <div class="card shadow">
-                <div class="card-body">
-                    <div class="text-center mb-5">
-                        <h3 class="section-heading text-uppercase">Follow Our Journey</h3>
-                        <h3 class="section-subheading text-muted">Stay updated with Keboon's latest activities on social
-                            media</h3>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="col-12 col-lg-6">
-                            <h4 class="text-center mb-3">Instagram</h4>
-                            <div class="embed-container d-flex justify-content-center">
-                                <!-- Instagram embed code -->
-                                <script async defer src="https://www.instagram.com/embed.js"></script>
-                                <blockquote class="instagram-media"
-                                    data-instgrm-permalink="https://www.instagram.com/keboonmy/"
-                                    data-instgrm-version="14" style="max-width:100%; width:100%">
-                                    <a href="https://www.instagram.com/keboonmy/"></a>
-                                </blockquote>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-4">
-                            <h4 class="text-center mb-3">Facebook</h4>
-                            <!-- Facebook embed code -->
-                            <div id="fb-root"></div>
-                            <script async defer crossorigin="anonymous"
-                                src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v14.0"></script>
-                            <div class="fb-page" data-href="https://www.facebook.com/keboon.tech" data-tabs="timeline"
-                                data-width="" data-height="" data-small-header="false" data-adapt-container-width="true"
-                                data-hide-cover="false" data-show-facepile="true">
-                                <blockquote cite="https://www.facebook.com/keboon.tech" class="fb-xfbml-parse-ignore">
-                                    <a href="https://www.facebook.com/keboon.tech">Keboon</a>
-                                </blockquote>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
-    </section>
-
-    <style>
-        .embed-container {
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-            min-height: 500px;
-        }
-
-        .embed-container iframe,
-        .embed-container blockquote {
-            max-width: 100% !important;
-            width: 100% !important;
-            height: 500px !important;
-        }
-
-        @media (max-width: 575.98px) {
-            .embed-container {
-                padding: 0 15px;
-            }
-        }
-    </style>
-
-    <script async defer crossorigin="anonymous"
-        src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v14.0"></script>
-
-
-    <!-- Download Pitch Deck -->
-    <!--<section id="pitch" class="page-section bg-light card-section">
-        <div class="container">
-            <div class="card shadow">
-                <div class="card-body">
-                    <div class="text-center">
-                        <h3 class="section-heading text-uppercase">Download Our Pitch Deck</h3>
-                        <h3 class="section-subheading text-muted">Learn more about Keboon's vision and business model</h3>
-                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                            <a href="keboon-pitch.html" class="btn btn-primary btn-s text-uppercase mb-2" target="_blank">Summarised Pitch</a>
-                            <a href="Keboon-Pitch.pdf" class="btn btn-primary btn-s text-uppercase mb-2" target="_blank">Detailed Pitch</a>
-                        </div>
+        </section>
+    
+        <!-- Footer -->
+        <footer class="footer py-4 bg-dark text-white">
+            <div class="container">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-lg-4 text-center text-lg-start mb-3 mb-lg-0">
+                        Copyright © KEBOON TECHNOLOGY SOLUTION<br />
+                        Business RN: 003639101-D
+                    </div>
+                    <div class="col-lg-4 d-flex justify-content-center mb-3 mb-lg-0">
+                        <a class="btn btn-light btn-social mx-2" href="https://instagram.com/keboonmy" aria-label="Keboon Instagram Profile" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                        <a class="btn btn-light btn-social mx-2" href="https://facebook.com/keboon.tech" aria-label="Keboon Facebook Profile" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-light btn-social mx-2" href="https://linkedin.com/company/keboon-tech/" aria-label="Keboon LinkedIn Profile" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <div class="col-lg-4 text-center text-lg-end">
+                        <!-- Uncomment these lines if you want to add Privacy Policy and Terms of Use links -->
+                        <!-- <a class="link-light text-decoration-none me-3" href="#!">Privacy Policy</a>
+                        <a class="link-light text-decoration-none" href="#!">Terms of Use</a> -->
                     </div>
                 </div>
             </div>
-        </div>
-    </section> -->
-
-    <section class="page-section bg-light card-section" id="team">
-        <div class="container">
-            <div class="card shadow">
-                <div class="card-body">
-                    <div class="text-center">
-                        <h3 class="section-heading text-uppercase">Our Team</h3>
-                        <h3 class="section-subheading text-muted">The minds behind Keboon</h3>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8">
-                            <div class="team-member">
-                                <img class="mx-auto rounded-circle" src="assets/img/team/aimi_misman.jpg"
-                                    alt="Aimi Misman" />
-                                <h5>Aimi Misman</h5>
-                                <p class="text-muted">Founder, CEO</p>
-                                <p style="text-align: justify;">A passionate advocate for sustainable living and local economies, Aimi is the driving
-                                    force behind Keboon, a platform dedicated to connecting home growers and producers
-                                    with their neighbors and consumers. With a deep commitment to leveraging technology
-                                    for social good, she envisions a world where communities thrive through access to
-                                    fresh, locally-sourced produce, reducing carbon footprints, and fostering resilience
-                                    in local economies. As a visionary technology leader, she combines her expertise in
-                                    software development, project management, and business strategy to turn this vision
-                                    into reality. She is skilled in guiding cross-functional teams and integrating
-                                    innovative solutions that align with Keboon's mission. Her work is not just about
-                                    creating software—it's about making a lasting, positive impact on how people
-                                    connect, consume, and support their local communities. She believes that through
-                                    technology, we can empower individuals to contribute to a healthier planet and a
-                                    more connected society.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer py-4">
-        <div class="container">
-            <div class="row align-items-center justify-content-between">
-                <div class="col-lg-4 text-center text-lg-start mb-3 mb-lg-0">
-                    Copyright © KEBOON TECHNOLOGY SOLUTION
-                    <br />
-                    Business RN: 003639101-D
-                </div>
-                <div class="col-lg-4 d-flex justify-content-center mb-3 mb-lg-0">
-                    <a class="btn btn-dark btn-social mx-2" href="https://instagram.com/keboonmy"
-                        aria-label="Keboon Instagram Profile" target="_blank" rel="noopener noreferrer"><i
-                            class="fab fa-instagram"></i></a>
-                    <a class="btn btn-dark btn-social mx-2" href="https://facebook.com/keboon.tech"
-                        aria-label="Keboon Facebook Profile" target="_blank" rel="noopener noreferrer"><i
-                            class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-dark btn-social mx-2" href="https://linkedin.com/company/keboon-tech/"
-                        aria-label="Keboon LinkedIn Profile" target="_blank" rel="noopener noreferrer"><i
-                            class="fab fa-linkedin-in"></i></a>
-                </div>
-                <div class="col-lg-4 text-center text-lg-end">
-                    <!-- Uncomment these lines if you want to add Privacy Policy and Terms of Use links -->
-                    <!-- <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
-                    <a class="link-dark text-decoration-none" href="#!">Terms of Use</a> -->
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
-</body>
-
-</html>
+        </footer>
+    
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+    
+    </html>
