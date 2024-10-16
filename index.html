@@ -411,28 +411,34 @@
         </section>
     
         <!-- Contact -->
-        <section id="contact" class="page-section">
+        <section id="contact" class="page-section bg-light card-section">
             <div class="container">
-                <div class="text-center">
-                    <h2 class="section-heading text-uppercase">Contact Us</h2>
-                    <h3 class="section-subheading text-muted">Get in touch with the Keboon team</h3>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-lg-8 col-xl-7">
-                        <form id="contactForm">
-                            <div class="form-group mb-3">
-                                <input class="form-control" type="text" placeholder="Your Name *" required>
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8 col-lg-6">
+                                <h3 class="card-title text-center">Send Us a Message</h3>
+                                <form id="contactForm" action="https://formspree.io/f/xzzpopkr" method="POST">
+                                    <div class="form-group mb-3">
+                                        <input class="form-control" type="text" placeholder="Your Name *"
+                                            required="required" name="name" />
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input class="form-control" type="email" placeholder="Your Email *"
+                                            required="required" name="email" />
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <textarea class="form-control" placeholder="Your Message *" required="required"
+                                            name="message"></textarea>
+                                    </div>
+                                    <div class="text-center">
+                                        <button class="btn btn-primary btn-s text-uppercase" type="submit">
+                                            <i class="fas fa-paper-plane me-2"></i>Send Message
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="form-group mb-3">
-                                <input class="form-control" type="email" placeholder="Your Email *" required>
-                            </div>
-                            <div class="form-group mb-3">
-                                <textarea class="form-control" placeholder="Your Message *" style="height: 150px;" required></textarea>
-                            </div>
-                            <div class="text-center">
-                                <button class="btn btn-primary btn-xl text-uppercase" type="submit">Send Message</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
