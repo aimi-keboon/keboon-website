@@ -80,6 +80,15 @@
             animation-play-state: running;
         }
 
+        #carousel-row-1 {
+            animation: scroll 30s linear infinite;
+        }
+
+        #carousel-row-2 {
+            animation: scroll 30s linear infinite reverse;
+        }
+
+
         .carousel-card {
             white-space: normal;
             /* 💥 THIS FIXES THE WRAPPING ISSUE */
@@ -562,62 +571,64 @@
     </section>
 
     <!-- Our Ecosystem of Support (Floating Carousel Style) -->
+    <!-- Our Ecosystem of Support (2-Line Carousel Style) -->
     <section class="page-section bg-light py-5" id="sponsors" style="overflow: hidden;">
         <div class="container text-center">
             <h2 class="section-heading text-uppercase">Our Ecosystem of Support</h2>
             <h3 class="section-subheading text-muted mb-4">Resources helping us build and scale Keboon</h3>
         </div>
 
-        <div class="carousel-wrapper">
-            <div class="carousel-track">
-
-                <!-- Card 1 -->
+        <!-- Carousel Row 1 -->
+        <div class="carousel-wrapper mb-4">
+            <div class="carousel-track" id="carousel-row-1">
                 <div class="carousel-card">
                     <img src="assets/img/partner/Artem.png" alt="Artem Ventures">
                     <p>Selected for a curated program supporting early-stage founders with fundraising, scaling, and
                         validation strategies.</p>
                 </div>
-
-                <!-- Card 2 -->
                 <div class="carousel-card">
                     <img src="assets/img/partner/cip_spark.png" alt="Cradle Fund">
                     <p>Shortlisted for a government-backed grant program that identifies and funds high-potential
                         Malaysian startups.</p>
                 </div>
-
-                <!-- Card 3 -->
                 <div class="carousel-card">
                     <img src="assets/img/partner/google.png" alt="Google for Startups">
                     <p>Received Google Cloud credits to support our infrastructure and scale efficiently during early
                         growth.</p>
                 </div>
+            </div>
+        </div>
 
-                <!-- Card 4 -->
+        <!-- Carousel Row 2 -->
+        <div class="carousel-wrapper">
+            <div class="carousel-track" id="carousel-row-2">
                 <div class="carousel-card">
                     <img src="assets/img/partner/github.png" alt="GitHub Student Developer Pack">
                     <p>Using GitHub’s tools and cloud services to support prototyping and streamline our developer
                         workflow.</p>
                 </div>
 
-                <!-- Card 5 -->
                 <div class="carousel-card">
                     <img src="assets/img/partner/keboon_technology_solution.png" alt="Keboon Technology Solution">
                     <p>The team behind Keboon’s MVP and prototype — delivering full-stack development, UI/UX design, and
                         deployment.</p>
                 </div>
-
-
-                <!-- Card 6 -->
                 <div class="carousel-card">
                     <img src="assets/img/partner/MADCash-Color.png" alt="MADCash">
                     <p>A fintech supporting women entrepreneurs. Keboon joined their Investor Network program in
                         Singapore, engaging with investors including Schroders.</p>
                 </div>
             </div>
+        </div>
 
-
-
+        <div class="container text-center mt-5">
+            <p class="text-muted" style="font-size: 0.9rem;">Some of these are public programs available to eligible
+                participants.</p>
+            <p class="text-muted">Interested in working with us? <a href="#contact">Get in touch</a> to explore
+                collaboration opportunities.</p>
+        </div>
     </section>
+
 
 
     <!-- Contact -->
@@ -688,17 +699,19 @@
     <script src="js/scripts.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const track = document.querySelector(".carousel-track");
-            const cards = Array.from(track.children);
+            const rows = document.querySelectorAll(".carousel-track");
 
-            // Clone the first few cards for smooth infinite scroll
-            const clonesNeeded = Math.min(6, cards.length); // clone 3 or fewer
-            for (let i = 0; i < clonesNeeded; i++) {
-                const clone = cards[i].cloneNode(true);
-                track.appendChild(clone);
-            }
+            rows.forEach((track) => {
+                const cards = Array.from(track.children);
+                const clonesNeeded = Math.min(3, cards.length);
+                for (let i = 0; i < clonesNeeded; i++) {
+                    const clone = cards[i].cloneNode(true);
+                    track.appendChild(clone);
+                }
+            });
         });
     </script>
+
 
 </body>
 
