@@ -77,6 +77,7 @@
             display: inline-flex;
             animation: scroll 90s linear infinite;
             white-space: nowrap;
+            animation-play-state: running;
         }
 
         .carousel-card {
@@ -111,12 +112,8 @@
             filter: grayscale(0.3);
         }
 
-        .carousel-card h5 {
-            font-size: 1.05rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #2c3e50;
-            min-height: 50px;
+        .carousel-wrapper:hover .carousel-track {
+            animation-play-state: paused !important;
         }
 
         .carousel-card p {
@@ -125,7 +122,6 @@
             line-height: 1.4;
             display: -webkit-box;
             -webkit-box-orient: vertical;
-            -webkit-line-clamp: 5;
             overflow: hidden;
             text-overflow: ellipsis;
             height: calc(1.4em * 5);
@@ -135,8 +131,10 @@
             white-space: nowrap;
             overflow: hidden;
             position: relative;
-            padding: 0 1rem;
+            padding: 1rem 1rem 0 1rem;
+            /* add top padding */
         }
+
 
 
         @keyframes scroll {
@@ -568,12 +566,11 @@
         <div class="container text-center">
             <h2 class="section-heading text-uppercase">Our Ecosystem of Support</h2>
             <h3 class="section-subheading text-muted mb-4">Resources helping us build and scale Keboon</h3>
-
         </div>
 
-        <div class="carousel-track" style="display: inline-flex; animation: scroll 30s linear infinite;">
-
+        <div class="carousel-wrapper">
             <div class="carousel-track">
+
                 <!-- Card 1 -->
                 <div class="carousel-card">
                     <img src="assets/img/partner/Artem.png" alt="Artem Ventures">
@@ -608,15 +605,15 @@
                     <p>The team behind Keboon’s MVP and prototype — delivering full-stack development, UI/UX design, and
                         deployment.</p>
                 </div>
-            
 
-            <!-- Card 6 -->
-            <div class="carousel-card">
-                <img src="assets/img/partner/MADCash-Color.png" alt="MADCash">
-                <p>A fintech social enterprise supporting women entrepreneurs. Keboon joined MADCash’s Investor Network
-                    program in Singapore, engaging with early-stage investors including Schroders.</p>
+
+                <!-- Card 6 -->
+                <div class="carousel-card">
+                    <img src="assets/img/partner/MADCash-Color.png" alt="MADCash">
+                    <p>A fintech supporting women entrepreneurs. Keboon joined their Investor Network program in
+                        Singapore, engaging with investors including Schroders.</p>
+                </div>
             </div>
-        </div>
 
 
 
