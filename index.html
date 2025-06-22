@@ -13,6 +13,80 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
     <link href="css/styles.css" rel="stylesheet" />
     <style>
+        
+   /* allow both lines to be visible */
+.slogan {
+  overflow: visible;
+}
+
+/* base styling for both lines */
+.line1, .line2 {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: .15em solid #FFDE59; /* caret */
+  color: #fff;
+  font-size: clamp(1rem, 5vw, 1.5rem);
+}
+
+/* line1: type over 2s, blink caret 3× then stop */
+.line1 {
+  width: 0;
+  animation:
+    typing1    2s steps(22,end)    forwards,
+    blink-caret .75s step-end       3;
+}
+
+/* line2: wait 2s, type over 2s, then blink indefinitely */
+.line2 {
+  width: 0;
+  /* start with an invisible caret */
+  border-right: .15em solid transparent;
+  /* 
+    1. typing2 runs after 2s delay (after line1), takes 2s 
+    2. blink-caret only kicks in at 4s (when typing2 is done)
+  */
+  animation:
+    typing2      2s steps(17,end)    forwards 2s,
+    blink-caret  .75s step-end infinite 4s;
+}
+
+/* reveal widths */
+@keyframes typing1 {
+  to { width: 21ch; }  /* length of “Connecting Neighbours,” */
+}
+@keyframes typing2 {
+  to { width: 17ch; }  /* length of “Sharing Freshness” */
+}
+
+/* caret blink */
+@keyframes blink-caret {
+  0%,100% { border-right-color: transparent; }
+  50%     { border-right-color: #FFDE59; }
+}
+
+
+
+
+
+
+
+        /* MAKE BUTTON MORE APPEALING */
+        .cta-btn {
+            background: linear-gradient(135deg, #52AE77, #2C9A5A);
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+        }
+
         .parallax {
             background-attachment: fixed;
             background-position: center;
@@ -212,14 +286,22 @@
 
     <!-- Masthead-->
     <header class="masthead">
-        <div class="container">
-            <div class="masthead-subheading">Connecting Neighbours, Sharing Freshness</div>
-            <div class="masthead-heading text-uppercase">Welcome to<br><img src="assets/img/keboon-logo-white.png"
-                    width="300"></div>
-            <a class="btn btn-primary btn-xl text-uppercase" href="https://app.keboon.net/installation" target="_blank"
-                rel="noopener noreferrer">TRY KEBOON APP DEMO NOW!</a>
+        <div class="container text-center">
+            <div class="masthead-subheading slogan">
+                <span class="line1">Connecting Neighbours,</span><br>
+                <span class="line2">Sharing Freshness</span>
+              </div>
+              
+              
+            <div class="masthead-heading">
+                <img src="assets/img/keboon-logo-white.png" width="300" alt="Keboon Logo">
+            </div>
+            <a class="btn btn-primary btn-xl cta-btn" href="https://app.keboon.net/installation" target="_blank">
+                TRY KEBOON APP DEMO NOW!
+            </a>
         </div>
     </header>
+
 
     <!-- About-->
     <section class="page-section" id="about">
@@ -728,6 +810,21 @@
             });
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          const line1 = document.querySelector('.line1');
+          // After typing finishes...
+          line1.addEventListener('animationend', e => {
+            if (e.animationName === 'typing1') {
+              // wait one more blink cycle (0.75s) then hide the caret
+              setTimeout(() => {
+                line1.style.borderRight = 'none';
+              }, 0);
+            }
+          });
+        });
+        </script>
+        
 
 
 </body>
