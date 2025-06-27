@@ -1,829 +1,1122 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="Keboon - Connecting Neighbours, Sharing Freshness" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta
+      name="description"
+      content="Keboon - Connecting Neighbours, Sharing Freshness"
+    />
     <meta name="author" content="Keboon" />
     <title>Keboon - Local Produce Marketplace</title>
     <link rel="icon" type="image/png" href="assets/img/ICN-LOGO-1.png" />
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    <script
+      src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700"
+      rel="stylesheet"
+      type="text/css"
+    />
     <link href="css/styles.css" rel="stylesheet" />
     <style>
+      .fade-in,
+      .fade-in-left,
+      .fade-in-right,
+      .fade-in-up {
+        opacity: 0;
+        transition: all 0.8s ease-out;
+      }
+      .fade-in {
+        transform: translateY(20px);
+      }
+      .fade-in-left {
+        transform: translateX(-50px);
+      }
+      .fade-in-right {
+        transform: translateX(50px);
+      }
+      .fade-in-up {
+        transform: translateY(50px);
+      }
 
-.fade-in, .fade-in-left, .fade-in-right, .fade-in-up {
-  opacity: 0;
-  transition: all 0.8s ease-out;
-}
-.fade-in      { transform: translateY(20px); }
-.fade-in-left { transform: translateX(-50px); }
-.fade-in-right{ transform: translateX(50px); }
-.fade-in-up   { transform: translateY(50px); }
+      .visible {
+        opacity: 1 !important;
+        transform: none !important;
+      }
 
-.visible {
-  opacity: 1 !important;
-  transform: none !important;
-}
+      /* allow both lines to be visible */
+      .slogan {
+        overflow: visible;
+      }
 
-        /* allow both lines to be visible */
-        .slogan {
-            overflow: visible;
+      /* base styling for both lines */
+      .line1,
+      .line2 {
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+        border-right: 0.15em solid #ffde59;
+        /* caret */
+        color: #fff;
+        font-size: clamp(1rem, 5vw, 1.5rem);
+      }
 
-        }
+      /* line1: type over 2s, blink caret 3× then stop */
+      .line1 {
+        width: 0;
+        animation: typing1 2s steps(22, end) forwards,
+          blink-caret 0.75s step-end 3;
+      }
 
-        /* base styling for both lines */
-        .line1,
-        .line2 {
-            display: inline-block;
-            overflow: hidden;
-            white-space: nowrap;
-            border-right: .15em solid #FFDE59;
-            /* caret */
-            color: #fff;
-            font-size: clamp(1rem, 5vw, 1.5rem);
-        }
-
-        /* line1: type over 2s, blink caret 3× then stop */
-        .line1 {
-            width: 0;
-            animation:
-                typing1 2s steps(22, end) forwards,
-                blink-caret .75s step-end 3;
-        }
-
-        /* line2: wait 2s, type over 2s, then blink indefinitely */
-        .line2 {
-            width: 0;
-            /* start with an invisible caret */
-            border-right: .15em solid transparent;
-            /* 
+      /* line2: wait 2s, type over 2s, then blink indefinitely */
+      .line2 {
+        width: 0;
+        /* start with an invisible caret */
+        border-right: 0.15em solid transparent;
+        /* 
     1. typing2 runs after 2s delay (after line1), takes 2s 
     2. blink-caret only kicks in at 4s (when typing2 is done)
   */
-            animation:
-                typing2 2s steps(17, end) forwards 2s,
-                blink-caret .75s step-end infinite 4s;
+        animation: typing2 2s steps(17, end) forwards 2s,
+          blink-caret 0.75s step-end infinite 4s;
+      }
+
+      /* reveal widths */
+      @keyframes typing1 {
+        to {
+          width: 21ch;
         }
 
-        /* reveal widths */
-        @keyframes typing1 {
-            to {
-                width: 21ch;
-            }
+        /* length of “Connecting Neighbours,” */
+      }
 
-            /* length of “Connecting Neighbours,” */
+      @keyframes typing2 {
+        to {
+          width: 17ch;
         }
 
-        @keyframes typing2 {
-            to {
-                width: 17ch;
-            }
+        /* length of “Sharing Freshness” */
+      }
 
-            /* length of “Sharing Freshness” */
+      /* caret blink */
+      @keyframes blink-caret {
+        0%,
+        100% {
+          border-right-color: transparent;
         }
 
-        /* caret blink */
-        @keyframes blink-caret {
+        50% {
+          border-right-color: #ffde59;
+        }
+      }
 
-            0%,
-            100% {
-                border-right-color: transparent;
-            }
+      /* MAKE BUTTON MORE APPEALING */
+      .cta-btn {
+        background: linear-gradient(135deg, #52ae77, #2c9a5a);
+        border: none;
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+        border-radius: 50px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
 
-            50% {
-                border-right-color: #FFDE59;
-            }
+      .cta-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+      }
+
+      .parallax {
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      .market-graph {
+        width: 300px;
+        height: 300px;
+        position: relative;
+        margin: 20px auto;
+      }
+
+      .market-circle {
+        border-radius: 50%;
+        position: absolute;
+        display: flex;
+        justify-content: baseline;
+        align-items: center;
+        color: white;
+        font-weight: bold;
+      }
+
+      .tam {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(82, 174, 119, 0.3);
+      }
+
+      .sam {
+        width: 66%;
+        height: 66%;
+        background-color: rgba(82, 174, 119, 0.5);
+        top: 17%;
+        left: 17%;
+      }
+
+      .som {
+        width: 33%;
+        height: 33%;
+        background-color: rgba(82, 174, 119, 0.7);
+        top: 33.5%;
+        left: 33.5%;
+      }
+
+      .icon-feature {
+        font-size: 3rem;
+        color: #52ae77;
+        margin-bottom: 1rem;
+      }
+
+      .bg-light-green {
+        background-color: #e8f5e9;
+      }
+
+      .bg-light-blue {
+        background-color: #e3f2fd;
+      }
+
+      .carousel-track {
+        display: inline-flex;
+        animation: scroll 30s linear infinite;
+        white-space: nowrap;
+        animation-play-state: running;
+      }
+
+      #carousel-row-1 {
+        animation: scroll 30s linear infinite;
+      }
+
+      #carousel-row-2 {
+        animation: scroll 30s linear infinite reverse;
+      }
+
+      .carousel-card h5 {
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+        min-height: 50px;
+        text-align: center;
+      }
+
+      .carousel-card {
+        white-space: normal;
+        /* 💥 THIS FIXES THE WRAPPING ISSUE */
+        background: white;
+        border-radius: 1rem;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        margin: 0 1rem;
+        padding: 2rem 1.5rem;
+        width: 300px;
+        flex: 0 0 auto;
+        text-align: center;
+        transition: transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        height: 100%;
+      }
+
+      .carousel-card:hover {
+        transform: translateY(-10px);
+      }
+
+      .carousel-card img {
+        max-height: 60px;
+        max-width: 100%;
+        margin-bottom: 1.2rem;
+        object-fit: contain;
+        filter: grayscale(0.3);
+      }
+
+      .carousel-wrapper:hover .carousel-track {
+        animation-play-state: paused !important;
+      }
+
+      .carousel-card p {
+        font-size: 0.88rem;
+        color: #6c757d;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: calc(1.4em * 5);
+      }
+
+      .carousel-wrapper {
+        white-space: nowrap;
+        overflow: hidden;
+        position: relative;
+        padding: 1rem 1rem 0 1rem;
+        /* add top padding */
+      }
+
+      @keyframes scroll {
+        0% {
+          transform: translateX(0%);
         }
 
-
-
-
-
-
-
-        /* MAKE BUTTON MORE APPEALING */
-        .cta-btn {
-            background: linear-gradient(135deg, #52AE77, #2C9A5A);
-            border: none;
-            padding: 0.8rem 2rem;
-            font-size: 1rem;
-            border-radius: 50px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        100% {
+          transform: translateX(-50%);
         }
+      }
 
-        .cta-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-        }
-
-        .parallax {
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-        }
-
-        .market-graph {
-            width: 300px;
-            height: 300px;
-            position: relative;
-            margin: 20px auto;
-        }
-
-        .market-circle {
-            border-radius: 50%;
-            position: absolute;
-            display: flex;
-            justify-content: baseline;
-            align-items: center;
-            color: white;
-            font-weight: bold;
-        }
-
-        .tam {
-            width: 100%;
-            height: 100%;
-            background-color: rgba(82, 174, 119, 0.3);
-        }
-
-        .sam {
-            width: 66%;
-            height: 66%;
-            background-color: rgba(82, 174, 119, 0.5);
-            top: 17%;
-            left: 17%;
-        }
-
-        .som {
-            width: 33%;
-            height: 33%;
-            background-color: rgba(82, 174, 119, 0.7);
-            top: 33.5%;
-            left: 33.5%;
-        }
-
-        .icon-feature {
-            font-size: 3rem;
-            color: #52AE77;
-            margin-bottom: 1rem;
-        }
-
-        .bg-light-green {
-            background-color: #e8f5e9;
-        }
-
-        .bg-light-blue {
-            background-color: #e3f2fd;
-        }
-
-        .carousel-track {
-            display: inline-flex;
-            animation: scroll 30s linear infinite;
-            white-space: nowrap;
-            animation-play-state: running;
-        }
-
-        #carousel-row-1 {
-            animation: scroll 30s linear infinite;
-        }
-
-        #carousel-row-2 {
-            animation: scroll 30s linear infinite reverse;
-        }
-
-        .carousel-card h5 {
-            font-size: 1.05rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #2c3e50;
-            min-height: 50px;
-            text-align: center;
-        }
-
-
-
+      @media (max-width: 768px) {
         .carousel-card {
-            white-space: normal;
-            /* 💥 THIS FIXES THE WRAPPING ISSUE */
-            background: white;
-            border-radius: 1rem;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            margin: 0 1rem;
-            padding: 2rem 1.5rem;
-            width: 300px;
-            flex: 0 0 auto;
-            text-align: center;
-            transition: transform 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: start;
-            height: 100%;
-        }
-
-
-        .carousel-card:hover {
-            transform: translateY(-10px);
+          width: 250px;
+          padding: 1.5rem 1rem;
         }
 
         .carousel-card img {
-            max-height: 60px;
-            max-width: 100%;
-            margin-bottom: 1.2rem;
-            object-fit: contain;
-            filter: grayscale(0.3);
+          max-height: 50px;
         }
 
-        .carousel-wrapper:hover .carousel-track {
-            animation-play-state: paused !important;
+        .carousel-card h5 {
+          font-size: 1rem;
+          min-height: auto;
         }
 
         .carousel-card p {
-            font-size: 0.88rem;
-            color: #6c757d;
-            line-height: 1.4;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            height: calc(1.4em * 5);
+          font-size: 0.85rem;
+          height: calc(1.4em * 4);
         }
-
-        .carousel-wrapper {
-            white-space: nowrap;
-            overflow: hidden;
-            position: relative;
-            padding: 1rem 1rem 0 1rem;
-            /* add top padding */
-        }
-
-
-
-        @keyframes scroll {
-            0% {
-                transform: translateX(0%);
-            }
-
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .carousel-card {
-                width: 250px;
-                padding: 1.5rem 1rem;
-            }
-
-            .carousel-card img {
-                max-height: 50px;
-            }
-
-            .carousel-card h5 {
-                font-size: 1rem;
-                min-height: auto;
-            }
-
-            .carousel-card p {
-                font-size: 0.85rem;
-                height: calc(1.4em * 4);
-            }
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body id="page-top">
+  <body id="page-top">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand" href="#page-top"><img src="assets/img/keboon-writing.png" alt="Keboon Logo" /></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars ms-1"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://app.keboon.net/">Keboon App</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://ai.keboon.net/">Keboon AI</a></li>
-                </ul>
-            </div>
+      <div class="container">
+        <a class="navbar-brand" href="#page-top"
+          ><img src="assets/img/keboon-writing.png" alt="Keboon Logo"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          Menu
+          <i class="fas fa-bars ms-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#team">Team</a>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://app.keboon.net/">Keboon App</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://ai.keboon.net/">Keboon AI</a>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
 
     <!-- Masthead-->
     <header class="masthead">
-        <div class="container text-center">
-            <div class="masthead-heading">
-                <img src="assets/img/keboon-logo-white.png" width="300" alt="Keboon Logo">
-            </div>
-            <div class="masthead-subheading slogan">
-                <span class="line1">Connecting Neighbours,</span><br>
-                <span class="line2">Sharing Freshness</span>
-            </div>
-
-
-
-            <a class="btn btn-primary btn-xl cta-btn" href="https://app.keboon.net/" target="_blank">
-                SIGN UP AND EXPLORE NOW!
-            </a>
+      <div class="container text-center">
+        <div class="masthead-heading">
+          <img
+            src="assets/img/keboon-logo-white.png"
+            width="300"
+            alt="Keboon Logo"
+          />
         </div>
-    </header>
+        <div class="masthead-subheading slogan">
+          <span class="line1">Connecting Neighbours,</span><br />
+          <span class="line2">Sharing Freshness</span>
+        </div>
 
+        <a
+          class="btn btn-primary btn-xl cta-btn"
+          href="https://app.keboon.net/"
+          target="_blank"
+        >
+          SIGN UP AND EXPLORE NOW!
+        </a>
+      </div>
+    </header>
 
     <!-- About-->
     <section class="page-section" id="about">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-heading text-uppercase">About<br><img src="assets/img/keboon-writing.png"
-                        alt="Keboon" width="160"></h2>
-                <h3 class="section-subheading text-muted">Revolutionizing local food systems through technology</h3>
-            </div>
-            <div class="row align-items-center mb-5">
-                <div class="col-md-6 fade-in-left">
-                    <img src="assets/img/keboon-concept.png" alt="Keboon Concept" class="img-fluid rounded-circle mb-4">
-                </div>
-                <div class="col-md-6 fade-in-right">
-                    <h4 class="mb-3">What is Keboon?</h4>
-                    <p class="fade-in">Keboon is an innovative mobile and web application designed to transform the way local
-                        communities interact with their food systems. By connecting home gardeners, urban farmers, and
-                        eco-conscious consumers, Keboon creates a vibrant marketplace for fresh, locally-grown produce.
-                    </p>
-                    <p>Our platform addresses the challenges of food waste and disconnected communities by providing an
-                        easy-to-use interface for sharing, selling, and purchasing excess homegrown produce. With
-                        Keboon, we're not just building an app – we're cultivating a movement towards sustainable,
-                        community-centered food practices.</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 mb-4 fade-in-up">
-                    <div class="card h-100 border-0 shadow-sm">
-                        <div class="card-body">
-                            <div class="text-center mb-3">
-                                <i class="fas fa-eye icon-feature text-primary"></i>
-                                <h4>Our Vision</h4>
-                            </div>
-                            <p>We envision a world where communities thrive through sustainable, locally-sourced food
-                                systems, reducing waste and fostering connections between neighbors. Keboon aims to be
-                                at the forefront of this transformation, empowering individuals to take an active role
-                                in their local food ecosystem.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-4 fade-in-up">
-                    <div class="card h-100 border-0 shadow-sm">
-                        <div class="card-body">
-                            <div class="text-center mb-3">
-                                <i class="fas fa-bullseye icon-feature text-primary"></i>
-                                <h4>Our Mission</h4>
-                            </div>
-                            <p>Our mission is to create an innovative platform that seamlessly connects local producers
-                                with consumers, promoting sustainable living, reducing food waste, and strengthening
-                                community bonds. Through Keboon, we strive to make local food accessible, affordable,
-                                and beneficial for all.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center mt-4 fade-in">
-                <h4 class="mb-3">How Keboon Works</h4>
-                <p>Keboon utilizes geolocation technology to connect users with nearby produce offerings. Producers can
-                    easily list their surplus fruits, vegetables, and herbs, while consumers can browse, purchase, or
-                    express interest in local produce. Our platform also incorporates features like a planting scheduler
-                    and a rewards system, encouraging continuous engagement and sustainable practices.</p>
-            </div>
+      <div class="container">
+        <div class="text-center mb-5">
+          <h2 class="section-heading text-uppercase">
+            About<br /><img
+              src="assets/img/keboon-writing.png"
+              alt="Keboon"
+              width="160"
+            />
+          </h2>
+          <h3 class="section-subheading text-muted">
+            Revolutionizing local food systems through technology
+          </h3>
         </div>
+        <div class="row align-items-center mb-5">
+          <div class="col-md-6 fade-in-left">
+            <img
+              src="assets/img/keboon-concept.png"
+              alt="Keboon Concept"
+              class="img-fluid rounded-circle mb-4"
+            />
+          </div>
+          <div class="col-md-6 fade-in-right">
+            <h4 class="mb-3">What is Keboon?</h4>
+            <p class="fade-in">
+              Keboon is an innovative mobile and web application designed to
+              transform the way local communities interact with their food
+              systems. By connecting home gardeners, urban farmers, and
+              eco-conscious consumers, Keboon creates a vibrant marketplace for
+              fresh, locally-grown produce.
+            </p>
+            <p>
+              Our platform addresses the challenges of food waste and
+              disconnected communities by providing an easy-to-use interface for
+              sharing, selling, and purchasing excess homegrown produce. With
+              Keboon, we're not just building an app – we're cultivating a
+              movement towards sustainable, community-centered food practices.
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-4 fade-in-up">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body">
+                <div class="text-center mb-3">
+                  <i class="fas fa-eye icon-feature text-primary"></i>
+                  <h4>Our Vision</h4>
+                </div>
+                <p>
+                  We envision a world where communities thrive through
+                  sustainable, locally-sourced food systems, reducing waste and
+                  fostering connections between neighbors. Keboon aims to be at
+                  the forefront of this transformation, empowering individuals
+                  to take an active role in their local food ecosystem.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-4 fade-in-up">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body">
+                <div class="text-center mb-3">
+                  <i class="fas fa-bullseye icon-feature text-primary"></i>
+                  <h4>Our Mission</h4>
+                </div>
+                <p>
+                  Our mission is to create an innovative platform that
+                  seamlessly connects local producers with consumers, promoting
+                  sustainable living, reducing food waste, and strengthening
+                  community bonds. Through Keboon, we strive to make local food
+                  accessible, affordable, and beneficial for all.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-4 fade-in">
+          <h4 class="mb-3">How Keboon Works</h4>
+          <p>
+            Keboon utilizes geolocation technology to connect users with nearby
+            produce offerings. Producers can easily list their surplus fruits,
+            vegetables, and herbs, while consumers can browse, purchase, or
+            express interest in local produce. Our platform also incorporates
+            features like a planting scheduler and a rewards system, encouraging
+            continuous engagement and sustainable practices.
+          </p>
+        </div>
+      </div>
     </section>
 
-    <!-- Problem -->
-    <section class="page-section bg-light-green" id="problem">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-heading text-uppercase">The Problem</h2>
-                <h3 class="section-subheading text-muted">Addressing food waste and disconnected communities</h3>
-            </div>
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <div class="card h-100 border-0 shadow">
-                        <div class="card-body text-center">
-                            <i class="fas fa-trash-alt fa-3x text-primary mb-3"></i>
-                            <h4 class="card-title">Food Waste</h4>
-                            <p class="card-text">Excess home-grown produce often goes to waste, as producers lack
-                                efficient means to distribute their surplus to those who need it. This not only
-                                represents a loss of valuable resources but also contributes to environmental issues.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <div class="card h-100 border-0 shadow">
-                        <div class="card-body text-center">
-                            <i class="fas fa-share-alt fa-3x text-primary mb-3"></i>
-                            <h4 class="card-title">Inefficient Distribution</h4>
-                            <p class="card-text">While sharing with neighbors is a common approach, it's often limited
-                                and inefficient. Not everyone has the time, network, or means to effectively distribute
-                                their surplus produce, leading to missed opportunities for both producers and consumers.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-md-6 mb-4">
-                    <div class="card h-100 border-0 shadow">
-                        <div class="card-body text-center">
-                            <i class="fas fa-users fa-3x text-primary mb-3"></i>
-                            <h4 class="card-title">Disconnected Communities</h4>
-                            <p class="card-text">In our increasingly digital world, local food systems often struggle to
-                                maintain cohesion. There's a growing disconnect between food producers and consumers,
-                                leading to a lack of awareness about local food sources and sustainable practices.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <div class="card h-100 border-0 shadow">
-                        <div class="card-body text-center">
-                            <i class="fas fa-leaf fa-3x text-primary mb-3"></i>
-                            <h4 class="card-title">Sustainable Practices</h4>
-                            <p class="card-text">There's a growing need for platforms that not only connect producers
-                                and consumers but also promote sustainable farming practices and eco-friendly
-                                consumption habits. Current solutions often fall short in this aspect.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- The Problem Section -->
+    <section class="page-section bg-light-green fade-in-up" id="problem">
+      <div class="container">
+        <div class="text-center mb-5 fade-in-down">
+          <h2 class="section-heading text-uppercase">The Problem</h2>
+          <h3 class="section-subheading text-muted">
+            Addressing food waste and disconnected communities
+          </h3>
         </div>
+        <div class="row">
+          <!-- Food Waste Card -->
+          <div class="col-md-6 mb-4 fade-in-left">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body text-center">
+                <i class="fas fa-trash-alt fa-3x text-primary mb-3"></i>
+                <h4 class="card-title">Food Waste</h4>
+                <p class="card-text">
+                  Excess home-grown produce often goes to waste, as producers
+                  lack efficient means to distribute their surplus to those who
+                  need it. This not only represents a loss of valuable resources
+                  but also contributes to environmental issues.
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Inefficient Distribution Card -->
+          <div class="col-md-6 mb-4 fade-in-right">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body text-center">
+                <i class="fas fa-share-alt fa-3x text-primary mb-3"></i>
+                <h4 class="card-title">Inefficient Distribution</h4>
+                <p class="card-text">
+                  While sharing with neighbors is a common approach, it's often
+                  limited and inefficient. Not everyone has the time, network,
+                  or means to effectively distribute their surplus produce,
+                  leading to missed opportunities for both producers and
+                  consumers.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <!-- Disconnected Communities Card -->
+          <div class="col-md-6 mb-4 fade-in-left">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body text-center">
+                <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                <h4 class="card-title">Disconnected Communities</h4>
+                <p class="card-text">
+                  In our increasingly digital world, local food systems often
+                  struggle to maintain cohesion. There's a growing disconnect
+                  between food producers and consumers, leading to a lack of
+                  awareness about local food sources and sustainable practices.
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Sustainable Practices Card -->
+          <div class="col-md-6 mb-4 fade-in-right">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body text-center">
+                <i class="fas fa-leaf fa-3x text-primary mb-3"></i>
+                <h4 class="card-title">Sustainable Practices</h4>
+                <p class="card-text">
+                  Current solutions often fall short in promoting eco-friendly
+                  consumption habits. Keboon encourages sustainable farming
+                  practices and community-driven exchange of garden waste,
+                  closing the loop in the local food ecosystem.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Solution -->
-    <section class="page-section parallax" id="solution" style="background-image: url('assets/img/bg-solution.jpg');">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading text-uppercase text-white">Our Solution</h2>
-                <h3 class="section-subheading text-white">Keboon: Bridging the gap between local producers and consumers
-                </h3>
-            </div>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-carrot icon-feature"></i>
-                            <h5 class="card-title">For Consumers</h5>
-                            <ul class="list-unstyled">
-                                <li><i class="fas fa-check text-success me-2"></i>Access to fresh, organic, and nearby
-                                    produce</li>
-                                <li><i class="fas fa-check text-success me-2"></i>Trust in knowing the source of their
-                                    food</li>
-                                <li><i class="fas fa-check text-success me-2"></i>Potentially cheaper prices than
-                                    grocery stores</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-hand-holding-usd icon-feature"></i>
-                            <h5 class="card-title">For Producers</h5>
-                            <ul class="list-unstyled">
-                                <li><i class="fas fa-check text-success me-2"></i>Earn money from surplus produce</li>
-                                <li><i class="fas fa-check text-success me-2"></i>Reduce waste</li>
-                                <li><i class="fas fa-check text-success me-2"></i>Connect with the local community</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body text-center">
-                            <i class="fas fa-users icon-feature"></i>
-                            <h5 class="card-title">For the Community</h5>
-                            <ul class="list-unstyled">
-                                <li><i class="fas fa-check text-success me-2"></i>Strengthen the local economy</li>
-                                <li><i class="fas fa-check text-success me-2"></i>Promote sustainable practices</li>
-                                <li><i class="fas fa-check text-success me-2"></i>Encourage local food networks</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Our Solution Section -->
+    <section
+      class="page-section parallax fade-in-up"
+      id="solution"
+      style="background-image: url('assets/img/bg-solution.jpg')"
+    >
+      <div class="container">
+        <div class="text-center mb-5 fade-in-down">
+          <h2 class="section-heading text-uppercase text-white">
+            Our Solution
+          </h2>
+          <h3 class="section-subheading text-white">
+            Keboon: Bridging the gap between local producers and consumers
+          </h3>
         </div>
+        <div class="row">
+          <!-- For Consumers Card -->
+          <div class="col-md-4 mb-4 fade-in-left">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body text-center">
+                <i class="fas fa-carrot icon-feature"></i>
+                <h5 class="card-title">For Consumers</h5>
+                <ul class="list-unstyled">
+                  <li>
+                    <i class="fas fa-check text-success me-2"></i>Access to
+                    fresh, organic, and nearby produce
+                  </li>
+                  <li>
+                    <i class="fas fa-check text-success me-2"></i>Trust in
+                    knowing the source of their food
+                  </li>
+                  <li>
+                    <i class="fas fa-check text-success me-2"></i>Potentially
+                    cheaper prices than grocery stores
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- For Producers Card -->
+          <div class="col-md-4 mb-4 fade-in-up">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body text-center">
+                <i class="fas fa-hand-holding-usd icon-feature"></i>
+                <h5 class="card-title">For Producers</h5>
+                <ul class="list-unstyled">
+                  <li>
+                    <i class="fas fa-check text-success me-2"></i>Earn money
+                    from surplus produce
+                  </li>
+                  <li>
+                    <i class="fas fa-check text-success me-2"></i>Reduce waste
+                  </li>
+                  <li>
+                    <i class="fas fa-check text-success me-2"></i>Connect with
+                    the local community
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- For the Community Card -->
+          <div class="col-md-4 mb-4 fade-in-right">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body text-center">
+                <i class="fas fa-users icon-feature"></i>
+                <h5 class="card-title">For the Community</h5>
+                <ul class="list-unstyled">
+                  <li>
+                    <i class="fas fa-check text-success me-2"></i>Strengthen the
+                    local economy
+                  </li>
+                  <li>
+                    <i class="fas fa-check text-success me-2"></i>Promote
+                    sustainable practices
+                  </li>
+                  <li>
+                    <i class="fas fa-check text-success me-2"></i>Encourage
+                    local food networks
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Features -->
-    <section class="page-section bg-light" id="features">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading text-uppercase">Key Features</h2>
-                <h3 class="section-subheading text-muted">Empowering producers and consumers in the local food ecosystem
-                </h3>
-            </div>
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="timeline-panel">
-                        <div class="timeline-heading">
-                            <h4>Product Marketplace</h4>
-                        </div>
-                        <div class="timeline-body">
-                            <p class="text-muted">
-                                <i class="fas fa-shopping-cart text-primary me-2"></i>Platform to sell surplus
-                                home-grown produce<br>
-                                <i class="fas fa-leaf text-primary me-2"></i>Buy fresh, organic, locally-sourced
-                                products<br>
-                                <i class="fas fa-map-marker-alt text-primary me-2"></i>Geolocation-based connection
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="timeline-panel">
-                        <div class="timeline-heading">
-                            <h4>Planting Scheduler<br>(Coming Soon)</h4>
-                        </div>
-                        <div class="timeline-body">
-                            <p class="text-muted">
-                                <i class="fas fa-seedling text-primary me-2"></i>Monitor and manage plant growth with ML
-                                & AI<br>
-                                <i class="fas fa-bell text-primary me-2"></i>Receive reminders and tips for optimal
-                                farming
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="timeline-panel">
-                        <div class="timeline-heading">
-                            <h4>Rewards System<br>(Coming Soon)</h4>
-                        </div>
-                        <div class="timeline-body">
-                            <p class="text-muted">
-                                <i class="fas fa-star text-primary me-2"></i>Earn points for transactions<br>
-                                <i class="fas fa-gift text-primary me-2"></i>Redeem points for gardening supplies
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="timeline-panel">
-                        <div class="timeline-heading">
-                            <h4>Compost Exchange<br>(Coming Soon)</h4>
-                        </div>
-                        <div class="timeline-body">
-                            <p class="text-muted">
-                                <i class="fas fa-recycle text-primary me-2"></i>Find and share compost materials<br>
-                                <i class="fas fa-trash-alt text-primary me-2"></i>Exchange garden waste and
-                                trimmings<br>
-                                <i class="fas fa-handshake text-primary me-2"></i>Buy, sell, or trade composting
-                                supplies
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Key Features Section -->
+    <section class="page-section bg-light fade-in-up" id="features">
+      <div class="container">
+        <div class="text-center mb-5 fade-in-down">
+          <h2 class="section-heading text-uppercase">Key Features</h2>
+          <h3 class="section-subheading text-muted">
+            Empowering producers and consumers in the local food ecosystem
+          </h3>
         </div>
+        <div class="row">
+          <!-- Product Marketplace -->
+          <div class="col-lg-3 fade-in-up">
+            <div class="timeline-panel h-100 border-0 shadow-sm">
+              <div class="timeline-heading text-center mb-3">
+                <h4>Product Marketplace</h4>
+              </div>
+              <div class="timeline-body text-muted px-3">
+                <p>
+                  <i class="fas fa-shopping-cart text-primary me-2"></i>Platform
+                  to sell surplus home-grown produce
+                </p>
+                <p>
+                  <i class="fas fa-leaf text-primary me-2"></i>Buy fresh,
+                  organic, locally-sourced products
+                </p>
+                <p>
+                  <i class="fas fa-map-marker-alt text-primary me-2"></i
+                  >Geolocation-based connection
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Planting Scheduler -->
+          <div class="col-lg-3 fade-in-up">
+            <div class="timeline-panel h-100 border-0 shadow-sm">
+              <div class="timeline-heading text-center mb-3">
+                <h4>Planting Scheduler<br />(Coming Soon)</h4>
+              </div>
+              <div class="timeline-body text-muted px-3">
+                <p>
+                  <i class="fas fa-seedling text-primary me-2"></i>Monitor and
+                  manage plant growth with ML & AI
+                </p>
+                <p>
+                  <i class="fas fa-bell text-primary me-2"></i>Receive reminders
+                  and tips for optimal farming
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Rewards System -->
+          <div class="col-lg-3 fade-in-up">
+            <div class="timeline-panel h-100 border-0 shadow-sm">
+              <div class="timeline-heading text-center mb-3">
+                <h4>Rewards System<br />(Coming Soon)</h4>
+              </div>
+              <div class="timeline-body text-muted px-3">
+                <p>
+                  <i class="fas fa-star text-primary me-2"></i>Earn points for
+                  transactions
+                </p>
+                <p>
+                  <i class="fas fa-gift text-primary me-2"></i>Redeem points for
+                  gardening supplies
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Compost Exchange -->
+          <div class="col-lg-3 fade-in-up">
+            <div class="timeline-panel h-100 border-0 shadow-sm">
+              <div class="timeline-heading text-center mb-3">
+                <h4>Compost Exchange<br />(Coming Soon)</h4>
+              </div>
+              <div class="timeline-body text-muted px-3">
+                <p>
+                  <i class="fas fa-recycle text-primary me-2"></i>Find and share
+                  compost materials
+                </p>
+                <p>
+                  <i class="fas fa-trash-alt text-primary me-2"></i>Exchange
+                  garden waste & trimmings
+                </p>
+                <p>
+                  <i class="fas fa-handshake text-primary me-2"></i>Buy, sell,
+                  or trade composting supplies
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Target Market -->
-    <section class="page-section bg-light-blue" id="target-market">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading text-uppercase">Target Market</h2>
-                <h3 class="section-subheading text-muted">Understanding Our Market Segments</h3>
-            </div>
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <div class="market-graph">
-                        <div class="market-circle tam">TAM</div>
-                        <div class="market-circle sam">SAM</div>
-                        <div class="market-circle som">SOM</div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-4">
-                        <h4><i class="fas fa-globe text-primary me-2"></i>TAM (Total Available Market)</h4>
-                        <p>Eco-conscious consumers, home gardeners, and urban farmers across Southeast Asia, with an
-                            estimated revenue potential of RM 15 billion annually.</p>
-                    </div>
-                    <div class="mb-4">
-                        <h4><i class="fas fa-map-marker-alt text-primary me-2"></i>SAM (Serviceable Available Market)
-                        </h4>
-                        <p>Malaysian eco-conscious consumers, home gardeners, and urban farmers. Estimated annual
-                            revenue potential: RM 500 million.</p>
-                    </div>
-                    <div>
-                        <h4><i class="fas fa-bullseye text-primary me-2"></i>SOM (Serviceable Obtainable Market)</h4>
-                        <p>Projected initial target of 1 million Malaysian consumers within the first few years, aiming
-                            for an annual revenue potential of RM 120 million.</p>
-                    </div>
-                </div>
-            </div>
+    <!-- Target Market Section -->
+    <section class="page-section bg-light-blue fade-in-up" id="target-market">
+      <div class="container">
+        <div class="text-center mb-5 fade-in-down">
+          <h2 class="section-heading text-uppercase">Target Market</h2>
+          <h3 class="section-subheading text-muted">
+            Understanding Our Market Segments
+          </h3>
         </div>
+        <div class="row align-items-center">
+          <!-- Market Graph -->
+          <div class="col-md-6 fade-in-left">
+            <div class="market-graph">
+              <div class="market-circle tam">TAM</div>
+              <div class="market-circle sam">SAM</div>
+              <div class="market-circle som">SOM</div>
+            </div>
+          </div>
+          <!-- Descriptions -->
+          <div class="col-md-6 fade-in-right">
+            <div class="mb-4">
+              <h4>
+                <i class="fas fa-globe text-primary me-2"></i>TAM (Total
+                Available Market)
+              </h4>
+              <p>
+                Eco-conscious consumers, home gardeners, and urban farmers
+                across Southeast Asia, with an estimated revenue potential of
+                RM 15 billion annually.
+              </p>
+            </div>
+            <div class="mb-4">
+              <h4>
+                <i class="fas fa-map-marker-alt text-primary me-2"></i>SAM
+                (Serviceable Available Market)
+              </h4>
+              <p>
+                Malaysian eco-conscious consumers, home gardeners, and urban
+                farmers. Estimated annual revenue potential: RM 500 million.
+              </p>
+            </div>
+            <div>
+              <h4>
+                <i class="fas fa-bullseye text-primary me-2"></i>SOM
+                (Serviceable Obtainable Market)
+              </h4>
+              <p>
+                Projected initial target of 1 million Malaysian consumers within
+                the first few years, aiming for an annual revenue potential of
+                RM 120 million.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-
-    <!-- SDGs -->
-    <section class="page-section" id="sdgs">
-        <div class="container">
-            <div class="text-center">
-                <h2 class="section-heading text-uppercase">Sustainable Development Goals</h2>
-                <h3 class="section-subheading text-muted">Keboon's Contribution to UN SDGs</h3>
+    <!-- Sustainable Development Goals Section -->
+    <section class="page-section fade-in-up" id="sdgs">
+      <div class="container">
+        <div class="text-center mb-5 fade-in-down">
+          <h2 class="section-heading text-uppercase">
+            Sustainable Development Goals
+          </h2>
+          <h3 class="section-subheading text-muted">
+            Keboon's Contribution to UN SDGs
+          </h3>
+        </div>
+        <div class="row">
+          <!-- Goal 2: Zero Hunger -->
+          <div class="col-md-12 mb-4 fade-in-up">
+            <div class="card h-100 border-0 shadow-sm">
+              <div
+                class="card-body d-flex flex-column justify-content-center align-items-center text-center"
+              >
+                <h5 class="card-title">
+                  <i class="fas fa-utensils text-primary me-2"></i>Goal 2: Zero
+                  Hunger
+                </h5>
+                <p class="card-text">
+                  By promoting local food production and distribution, reducing
+                  waste, and improving access to fresh produce.
+                </p>
+              </div>
             </div>
-            <div class="row">
-                <div class="col-md-20 mb-4">
-                    <div class="col-md-12 mb-4">
-                        <div class="card h-100">
-                            <div
-                                class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                                <h5 class="card-title"><i class="fas fa-utensils text-primary me-2"></i>Goal 2: Zero
-                                    Hunger</h5>
-                                <p class="card-text">By promoting local food production and distribution, reducing
-                                    waste, and improving access to fresh produce.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="card h-100">
-                            <div
-                                class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                                <h5 class="card-title"><i class="fas fa-briefcase text-primary me-2"></i>Goal 8: Decent
-                                    Work and Economic Growth</h5>
-                                <p class="card-text">By creating opportunities for local producers to earn income from
-                                    their surplus produce.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="card h-100">
-                            <div
-                                class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                                <h5 class="card-title"><i class="fas fa-city text-primary me-2"></i>Goal 11: Sustainable
-                                    Cities and Communities</h5>
-                                <p class="card-text">By fostering local food networks and promoting sustainable urban
-                                    farming practices.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="card h-100">
-                            <div
-                                class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                                <h5 class="card-title"><i class="fas fa-shopping-basket text-primary me-2"></i>Goal 12:
-                                    Responsible Consumption and Production</h5>
-                                <p class="card-text">By reducing food waste and promoting sustainable consumption
-                                    patterns.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="card h-100">
-                            <div
-                                class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                                <h5 class="card-title"><i class="fas fa-leaf text-primary me-2"></i>Goal 13: Climate
-                                    Action</h5>
-                                <p class="card-text">By reducing food miles and promoting local, sustainable agriculture
-                                    practices.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          </div>
+          <!-- Goal 8: Decent Work and Economic Growth -->
+          <div class="col-md-12 mb-4 fade-in-up">
+            <div class="card h-100 border-0 shadow-sm">
+              <div
+                class="card-body d-flex flex-column justify-content-center align-items-center text-center"
+              >
+                <h5 class="card-title">
+                  <i class="fas fa-briefcase text-primary me-2"></i>Goal 8:
+                  Decent Work and Economic Growth
+                </h5>
+                <p class="card-text">
+                  By creating opportunities for local producers to earn income
+                  from their surplus produce.
+                </p>
+              </div>
             </div>
+          </div>
+          <!-- Goal 11: Sustainable Cities and Communities -->
+          <div class="col-md-12 mb-4 fade-in-up">
+            <div class="card h-100 border-0 shadow-sm">
+              <div
+                class="card-body d-flex flex-column justify-content-center align-items-center text-center"
+              >
+                <h5 class="card-title">
+                  <i class="fas fa-city text-primary me-2"></i>Goal 11:
+                  Sustainable Cities and Communities
+                </h5>
+                <p class="card-text">
+                  By fostering local food networks and promoting sustainable
+                  urban farming practices.
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Goal 12: Responsible Consumption and Production -->
+          <div class="col-md-12 mb-4 fade-in-up">
+            <div class="card h-100 border-0 shadow-sm">
+              <div
+                class="card-body d-flex flex-column justify-content-center align-items-center text-center"
+              >
+                <h5 class="card-title">
+                  <i class="fas fa-shopping-basket text-primary me-2"></i>Goal
+                  12: Responsible Consumption and Production
+                </h5>
+                <p class="card-text">
+                  By reducing food waste and promoting sustainable consumption
+                  patterns.
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Goal 13: Climate Action -->
+          <div class="col-md-12 mb-4 fade-in-up">
+            <div class="card h-100 border-0 shadow-sm">
+              <div
+                class="card-body d-flex flex-column justify-content-center align-items-center text-center"
+              >
+                <h5 class="card-title">
+                  <i class="fas fa-leaf text-primary me-2"></i>Goal 13: Climate
+                  Action
+                </h5>
+                <p class="card-text">
+                  By reducing food miles and promoting local, sustainable
+                  agriculture practices.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Our Ecosystem of Support (Floating Carousel Style) -->
     <!-- Our Ecosystem of Support (2-Line Carousel Style) -->
-    <section class="page-section bg-light py-5" id="sponsors" style="overflow: hidden;">
-        <div class="container text-center">
-            <h2 class="section-heading text-uppercase">Our Ecosystem of Support</h2>
-            <h3 class="section-subheading text-muted mb-4">Resources helping us build and scale Keboon</h3>
-        </div>
+    <section
+      class="page-section bg-light py-5"
+      id="sponsors"
+      style="overflow: hidden"
+    >
+      <div class="container text-center">
+        <h2 class="section-heading text-uppercase">Our Ecosystem of Support</h2>
+        <h3 class="section-subheading text-muted mb-4">
+          Resources helping us build and scale Keboon
+        </h3>
+      </div>
 
-        <!-- Carousel Row 1 -->
-        <div class="carousel-wrapper mb-4">
-            <div class="carousel-track" id="carousel-row-1">
-                <div class="carousel-card">
-                    <h5>PACE by Artem Ventures</h5>
-                    <img src="assets/img/partner/Artem.png" alt="Artem Ventures">
-                    <p>Selected for a curated program supporting early-stage founders with fundraising, scaling, and
-                        validation strategies.</p>
-                </div>
-                <div class="carousel-card">
-                    <h5>Cradle Fund CIP Spark</h5>
-                    <img src="assets/img/partner/cip_spark.png" alt="Cradle Fund">
-                    <p>Shortlisted for a government-backed grant program that identifies and funds high-potential
-                        Malaysian startups.</p>
-                </div>
-                <div class="carousel-card">
-                    <h5>Google for Startups</h5>
-                    <img src="assets/img/partner/google.png" alt="Google for Startups">
-                    <p>Received Google Cloud credits to support our infrastructure and scale efficiently during early
-                        growth.</p>
-                </div>
-            </div>
+      <!-- Carousel Row 1 -->
+      <div class="carousel-wrapper mb-4">
+        <div class="carousel-track" id="carousel-row-1">
+          <div class="carousel-card">
+            <h5>PACE by Artem Ventures</h5>
+            <img src="assets/img/partner/Artem.png" alt="Artem Ventures" />
+            <p>
+              Selected for a curated program supporting early-stage founders
+              with fundraising, scaling, and validation strategies.
+            </p>
+          </div>
+          <div class="carousel-card">
+            <h5>Cradle Fund CIP Spark</h5>
+            <img src="assets/img/partner/cip_spark.png" alt="Cradle Fund" />
+            <p>
+              Shortlisted for a government-backed grant program that identifies
+              and funds high-potential Malaysian startups.
+            </p>
+          </div>
+          <div class="carousel-card">
+            <h5>Google for Startups</h5>
+            <img
+              src="assets/img/partner/google.png"
+              alt="Google for Startups"
+            />
+            <p>
+              Received Google Cloud credits to support our infrastructure and
+              scale efficiently during early growth.
+            </p>
+          </div>
         </div>
+      </div>
 
-        <!-- Carousel Row 2 -->
-        <div class="carousel-wrapper">
-            <div class="carousel-track" id="carousel-row-2">
-                <div class="carousel-card">
-                    <h5>
-                        GitHub Student Developer Pack
-                    </h5>
-                    <img src="assets/img/partner/github.png" alt="GitHub Student Developer Pack">
-                    <p>Using GitHub’s tools and cloud services to support prototyping and streamline our developer
-                        workflow.</p>
-                </div>
+      <!-- Carousel Row 2 -->
+      <div class="carousel-wrapper">
+        <div class="carousel-track" id="carousel-row-2">
+          <div class="carousel-card">
+            <h5>GitHub Student Developer Pack</h5>
+            <img
+              src="assets/img/partner/github.png"
+              alt="GitHub Student Developer Pack"
+            />
+            <p>
+              Using GitHub’s tools and cloud services to support prototyping and
+              streamline our developer workflow.
+            </p>
+          </div>
 
-                <div class="carousel-card">
-                    <h5>Keboon Technology Solution</h5>
-                    <img src="assets/img/partner/keboon_technology_solution.png" alt="Keboon Technology Solution">
-                    <p>The team behind Keboon’s MVP and prototype — delivering full-stack development, UI/UX design, and
-                        deployment.</p>
-                </div>
-                <div class="carousel-card">
-                    <h5>MADCash</h5>
-                    <img src="assets/img/partner/MADCash-Color.png" alt="MADCash">
-                    <p>A fintech supporting women entrepreneurs. Keboon joined their Investor Network program, engaging
-                        with investors.</p>
-                </div>
-            </div>
+          <div class="carousel-card">
+            <h5>Keboon Technology Solution</h5>
+            <img
+              src="assets/img/partner/keboon_technology_solution.png"
+              alt="Keboon Technology Solution"
+            />
+            <p>
+              The team behind Keboon’s MVP and prototype — delivering full-stack
+              development, UI/UX design, and deployment.
+            </p>
+          </div>
+          <div class="carousel-card">
+            <h5>MADCash</h5>
+            <img src="assets/img/partner/MADCash-Color.png" alt="MADCash" />
+            <p>
+              A fintech supporting women entrepreneurs. Keboon joined their
+              Investor Network program, engaging with investors.
+            </p>
+          </div>
         </div>
+      </div>
 
-        <div class="container text-center mt-5">
-            <p class="text-muted" style="font-size: 0.9rem;">Some of these are public programs available to eligible
-                participants.</p>
-            <p class="text-muted">Interested in working with us? <a href="#contact">Get in touch</a> to explore
-                collaboration opportunities.</p>
-        </div>
+      <div class="container text-center mt-5">
+        <p class="text-muted" style="font-size: 0.9rem">
+          Some of these are public programs available to eligible participants.
+        </p>
+        <p class="text-muted">
+          Interested in working with us? <a href="#contact">Get in touch</a> to
+          explore collaboration opportunities.
+        </p>
+      </div>
     </section>
 
-
-
+ <!-- Team Section -->
+<section class="page-section fade-in-up bg-light py-5" id="team">
+    <div class="container">
+      <div class="text-center mb-5 fade-in-down">
+        <h2 class="section-heading text-uppercase">Meet the Team</h2>
+        <h3 class="section-subheading text-muted">Our passionate founders and contributors</h3>
+      </div>
+      <div class="d-flex justify-content-center mb-4 fade-in-up">
+        <div class="team-card bg-white rounded-3 shadow-lg p-5 mx-auto" style="display:inline-block;">
+          <div class="row g-4 justify-content-center">
+            <!-- Aimi Misman -->
+            <div class="col-auto d-flex flex-column align-items-start">
+              <div class="badge-base LI-profile-badge mb-3"  
+                   data-locale="en_US" data-size="medium" data-theme="light" data-type="vertical" 
+                   data-vanity="aimi-misman-065b2a150" data-version="v1"></div>
+              <p class="mb-0 fw-bold text-start">Aimi Misman</p>
+              <p class="text-primary small text-start">Founder &amp; Software Developer</p>
+            </div>
+            <!-- Farah Diyana Firhad -->
+            <div class="col-auto d-flex flex-column align-items-start">
+              <div class="badge-base LI-profile-badge mb-3"  
+                   data-locale="en_US" data-size="medium" data-theme="light" data-type="vertical" 
+                   data-vanity="farahdiyanafirhad" data-version="v1"></div>
+              <p class="mb-0 fw-bold text-start">NurFarah Diyana Firhad</p>
+              <p class="text-primary small text-start">Marketing &amp; Communication Advisor</p>
+            </div>
+            <!-- Faiz Misman -->
+            <div class="col-auto d-flex flex-column align-items-start">
+              <div class="badge-base LI-profile-badge mb-3"  
+                   data-locale="en_US" data-size="medium" data-theme="light" data-type="vertical" 
+                   data-vanity="faizmisman" data-version="v1"></div>
+              <p class="mb-0 fw-bold text-start">Faiz Misman</p>
+              <p class="text-primary small text-start">Artificial Intelligence Advisor</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- LinkedIn Badge Script -->
+  <script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
+  
+  
+  
     <!-- Contact -->
     <section id="contact" class="page-section bg-light card-section">
-        <div class="container">
-            <div class="card shadow">
-                <div class="card-body">
-                    <div class="row justify-content-center">
-                        <div class="col-md-8 col-lg-6">
-                            <h3 class="card-title text-center">Send Us a Message</h3>
-                            <form id="contactForm" action="https://formspree.io/f/xzzpopkr" method="POST">
-                                <div class="form-group mb-3">
-                                    <input class="form-control" type="text" placeholder="Your Name *"
-                                        required="required" name="name" />
-                                </div>
-                                <div class="form-group mb-3">
-                                    <input class="form-control" type="email" placeholder="Your Email *"
-                                        required="required" name="email" />
-                                </div>
-                                <div class="form-group mb-3">
-                                    <textarea class="form-control" placeholder="Your Message *" required="required"
-                                        name="message"></textarea>
-                                </div>
-                                <div class="text-center">
-                                    <button class="btn btn-primary btn-s text-uppercase" type="submit">
-                                        <i class="fas fa-paper-plane me-2"></i>Send Message
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="card shadow">
+          <div class="card-body">
+            <div class="row justify-content-center">
+              <div class="col-md-8 col-lg-6">
+                <h3 class="card-title text-center">Send Us a Message</h3>
+                <form
+                  id="contactForm"
+                  action="https://formspree.io/f/xzzpopkr"
+                  method="POST"
+                >
+                  <div class="form-group mb-3">
+                    <input
+                      class="form-control"
+                      type="text"
+                      placeholder="Your Name *"
+                      required="required"
+                      name="name"
+                    />
+                  </div>
+                  <div class="form-group mb-3">
+                    <input
+                      class="form-control"
+                      type="email"
+                      placeholder="Your Email *"
+                      required="required"
+                      name="email"
+                    />
+                  </div>
+                  <div class="form-group mb-3">
+                    <textarea
+                      class="form-control"
+                      placeholder="Your Message *"
+                      required="required"
+                      name="message"
+                    ></textarea>
+                  </div>
+                  <div class="text-center">
+                    <button
+                      class="btn btn-primary btn-s text-uppercase"
+                      type="submit"
+                    >
+                      <i class="fas fa-paper-plane me-2"></i>Send Message
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer py-4 bg-dark text-white">
-        <div class="container">
-            <div class="row align-items-center justify-content-between">
-                <div class="col-lg-4 text-center text-lg-start mb-3 mb-lg-0">
-                    Copyright © KEBOON TECHNOLOGY SOLUTION<br />
-                    Business RN: 003639101-D
-                </div>
-                <div class="col-lg-4 d-flex justify-content-center mb-3 mb-lg-0">
-                    <a class="btn btn-light btn-social mx-2" href="https://instagram.com/keboonmy"
-                        aria-label="Keboon Instagram Profile" target="_blank" rel="noopener noreferrer"><i
-                            class="fab fa-instagram"></i></a>
-                    <a class="btn btn-light btn-social mx-2" href="https://facebook.com/keboon.tech"
-                        aria-label="Keboon Facebook Profile" target="_blank" rel="noopener noreferrer"><i
-                            class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-light btn-social mx-2" href="https://linkedin.com/company/keboon-tech/"
-                        aria-label="Keboon LinkedIn Profile" target="_blank" rel="noopener noreferrer"><i
-                            class="fab fa-linkedin-in"></i></a>
-                </div>
-                <div class="col-lg-4 text-center text-lg-end">
-                    <!-- Uncomment these lines if you want to add Privacy Policy and Terms of Use links -->
-                    <!-- <a class="link-light text-decoration-none me-3" href="#!">Privacy Policy</a>
+      <div class="container">
+        <div class="row align-items-center justify-content-between">
+          <div class="col-lg-4 text-center text-lg-start mb-3 mb-lg-0">
+            Copyright © KEBOON TECHNOLOGY SOLUTION<br />
+            Business RN: 003639101-D
+          </div>
+          <div class="col-lg-4 d-flex justify-content-center mb-3 mb-lg-0">
+            <a
+              class="btn btn-light btn-social mx-2"
+              href="https://instagram.com/keboonmy"
+              aria-label="Keboon Instagram Profile"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a
+              class="btn btn-light btn-social mx-2"
+              href="https://facebook.com/keboon.tech"
+              aria-label="Keboon Facebook Profile"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a
+              class="btn btn-light btn-social mx-2"
+              href="https://linkedin.com/company/keboon-tech/"
+              aria-label="Keboon LinkedIn Profile"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><i class="fab fa-linkedin-in"></i
+            ></a>
+          </div>
+          <div class="col-lg-4 text-center text-lg-end">
+            <!-- Uncomment these lines if you want to add Privacy Policy and Terms of Use links -->
+            <!-- <a class="link-light text-decoration-none me-3" href="#!">Privacy Policy</a>
                         <a class="link-light text-decoration-none" href="#!">Terms of Use</a> -->
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </footer>
 
     <!-- Bootstrap core JS-->
@@ -831,53 +1124,53 @@
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const rows = document.querySelectorAll(".carousel-track");
+      document.addEventListener("DOMContentLoaded", () => {
+        const rows = document.querySelectorAll(".carousel-track");
 
-            rows.forEach((track) => {
-                const cards = Array.from(track.children);
-                const clonesNeeded = Math.min(3, cards.length);
-                for (let i = 0; i < clonesNeeded; i++) {
-                    const clone = cards[i].cloneNode(true);
-                    track.appendChild(clone);
-                }
-            });
+        rows.forEach((track) => {
+          const cards = Array.from(track.children);
+          const clonesNeeded = Math.min(3, cards.length);
+          for (let i = 0; i < clonesNeeded; i++) {
+            const clone = cards[i].cloneNode(true);
+            track.appendChild(clone);
+          }
         });
+      });
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const line1 = document.querySelector('.line1');
-            // After typing finishes...
-            line1.addEventListener('animationend', e => {
-                if (e.animationName === 'typing1') {
-                    // wait one more blink cycle (0.75s) then hide the caret
-                    setTimeout(() => {
-                        line1.style.borderRight = 'none';
-                    }, 0);
-                }
-            });
+      document.addEventListener("DOMContentLoaded", () => {
+        const line1 = document.querySelector(".line1");
+        // After typing finishes...
+        line1.addEventListener("animationend", (e) => {
+          if (e.animationName === "typing1") {
+            // wait one more blink cycle (0.75s) then hide the caret
+            setTimeout(() => {
+              line1.style.borderRight = "none";
+            }, 0);
+          }
         });
+      });
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-          const obs = new IntersectionObserver((entries) => {
-            entries.forEach(e => {
+      document.addEventListener("DOMContentLoaded", () => {
+        const obs = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
               if (e.isIntersecting) {
-                e.target.classList.add('visible');
+                e.target.classList.add("visible");
                 obs.unobserve(e.target);
               }
             });
-          }, { threshold: 0.2 });
-        
-          document.querySelectorAll(
-            '.fade-in, .fade-in-left, .fade-in-right, .fade-in-up'
-          ).forEach(el => obs.observe(el));
-        });
-        </script>
-        
+          },
+          { threshold: 0.2 }
+        );
 
-
-
-</body>
-
+        document
+          .querySelectorAll(
+            ".fade-in, .fade-in-left, .fade-in-right, .fade-in-up"
+          )
+          .forEach((el) => obs.observe(el));
+      });
+    </script>
+  </body>
 </html>
