@@ -215,23 +215,192 @@
   </section>
   
 
-  <!-- PRICING & PACKAGES -->
-  <section id="pricing" class="page-section" data-aos="fade-right">
+<!-- Pricing & Packages as Hero Cards with SVG Icons -->
+<style>
+    /* Hero-style package cards */
+    .package-card {
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .package-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    }
+    .package-card .card-header {
+      background: transparent;
+      border-bottom: none;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .package-card .package-price {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+    .package-card .optional-note {
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
+    .package-card ul li {
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: flex-start;
+    }
+    .package-card ul li svg {
+      flex-shrink: 0;
+      margin-right: 0.75rem;
+      margin-top: 0.125rem;
+    }
+  </style>
+  
+  <section id="pricing" class="page-section bg-light" data-aos="fade-up">
     <div class="container">
-      <h2 class="section-heading text-center">Pricing &amp; Packages</h2>
-      <table class="table table-bordered text-center mt-4" data-aos="fade-up" data-aos-delay="100">
-        <thead class="table-dark">
-          <tr><th>Package</th><th>One-Time Setup</th><th>Monthly Maintenance*</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>Basic</strong><br><small>Starter web presence</small></td><td>RM 5 000</td><td>Optional RM 1 000</td></tr>
-          <tr><td><strong>Standard</strong><br><small>Enhanced site</small></td><td>RM 8 000</td><td>Optional RM 2 000</td></tr>
-          <tr><td><strong>Premium</strong><br><small>Unlimited &amp; priority</small></td><td>RM 12 000</td><td>Optional RM 3 000</td></tr>
-        </tbody>
-      </table>
-      <p class="fst-italic text-center mb-5">*Opt out of monthly maintenance? Add a one-time RM 2 000 fee for full source-code &amp; system transfer.<br>Monthly plan includes unlimited change requests &amp; site updates.</p>
+      <h2 class="section-heading text-center mb-5">Pricing &amp; Packages</h2>
+      <div class="row gx-4 gy-4 justify-content-center">
+        
+        <!-- Basic Package -->
+        <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="100">
+          <div class="card package-card h-100 text-center">
+            <div class="card-header text-primary">Basic</div>
+            <div class="card-body d-flex flex-column">
+              <div class="package-price text-primary mb-2">RM 5,000</div>
+              <div class="optional-note mb-3">(Optional RM 1,000/mo for unlimited support)</div>
+              <ul class="list-unstyled text-start mb-4 flex-grow-1">
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
+                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
+                  </svg>
+                  Up to 3 static pages
+                </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
+                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
+                  </svg>
+                  1 mailbox
+                </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
+                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
+                  </svg>
+                  Contact form
+                </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
+                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
+                  </svg>
+                  Mobile-friendly design
+                </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
+                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
+                  </svg>
+                  Hosting setup
+                </li>
+              </ul>
+              <a href="#contact" class="btn btn-outline-primary mt-auto">Select Basic</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Standard Package -->
+        <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="200">
+          <div class="card package-card h-100 text-center">
+            <div class="card-header text-success">Standard</div>
+            <div class="card-body d-flex flex-column">
+              <div class="package-price text-success mb-2">RM 8,000</div>
+              <div class="optional-note mb-3">(Optional RM 2,000/mo for unlimited support)</div>
+              <ul class="list-unstyled text-start mb-4 flex-grow-1">
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
+                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
+                  </svg>
+                  Up to 8 static pages
+                </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
+                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
+                  </svg>
+                  Up to 3 mailboxes
+                </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
+                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
+                  </svg>
+                  Form &amp; analytics
+                </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
+                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
+                  </svg>
+                  Hosting &amp; backups
+                </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
+                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
+                  </svg>
+                  SEO-friendly structure
+                </li>
+              </ul>
+              <a href="#contact" class="btn btn-outline-success mt-auto">Select Standard</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Premium Package -->
+        <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="300">
+          <div class="card package-card h-100 text-center">
+            <div class="card-header text-dark">Premium</div>
+            <div class="card-body d-flex flex-column">
+              <div class="package-price text-dark mb-2">RM 12,000</div>
+              <div class="optional-note mb-3">(Optional RM 3,000/mo for unlimited support)</div>
+              <ul class="list-unstyled text-start mb-4 flex-grow-1">
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
+                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
+                  </svg>
+                  Unlimited pages
+                </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
+                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
+                  </svg>
+                  Unlimited mailboxes
+                </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
+                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
+                  </svg>
+                  Priority support during setup
+                </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
+                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
+                  </svg>
+                  Advanced integrations
+                </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
+                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
+                  </svg>
+                  Hosting &amp; backups
+                </li>
+              </ul>
+              <a href="#contact" class="btn btn-outline-dark mt-auto">Select Premium</a>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+  
+      <p class="fst-italic text-center mt-5 mb-0">
+        Prefer no monthly fee? Add RM 1,500 for a complete handover—including full source-code—so you can maintain the system yourself.<br>
+        Otherwise, opt for our monthly subscription to receive unlimited change requests &amp; ongoing support.
+      </p>
+      
     </div>
   </section>
+      
 
   <!-- PORTFOLIO -->
   <section id="portfolio" class="page-section bg-light" data-aos="fade-up">
