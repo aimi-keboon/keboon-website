@@ -217,8 +217,21 @@
   </section>
   
 
-<!-- Pricing & Packages as Hero Cards with SVG Icons -->
-<style>
+<!-- Early Bird Promo Banner -->
+<div class="promo-banner text-center mb-5">
+    🎉 Early Bird Special! Use code <strong>EARLYBIRD</strong> for <strong>5% off</strong> all base prices.
+  </div>
+  
+  <!-- Pricing & Packages as Hero Cards with SVG Icons -->
+  <style>
+    /* Promo banner */
+    .promo-banner {
+      background: #fffbea;
+      border: 1px solid #ffe58f;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      font-size: 1.25rem;
+    }
     /* Hero-style package cards */
     .package-card {
       border: none;
@@ -239,6 +252,11 @@
     .package-card .package-price {
       font-size: 2.5rem;
       font-weight: bold;
+    }
+    .package-card .package-price del {
+      font-size: 1.5rem;
+      color: #6c757d;
+      margin-right: 0.5rem;
     }
     .package-card .optional-note {
       font-size: 0.9rem;
@@ -266,7 +284,10 @@
           <div class="card package-card h-100 text-center">
             <div class="card-header text-primary">Basic</div>
             <div class="card-body d-flex flex-column">
-              <div class="package-price text-primary mb-2">From RM 2,500</div>
+              <div class="package-price text-primary mb-2">
+                <del>From RM 2,500</del>
+                RM 2,375
+              </div>
               <div class="optional-note mb-3">(Optional RM 200/mo for unlimited support)</div>
               <ul class="list-unstyled text-start mb-4 flex-grow-1">
                 <li>
@@ -310,7 +331,10 @@
           <div class="card package-card h-100 text-center">
             <div class="card-header text-success">Standard</div>
             <div class="card-body d-flex flex-column">
-              <div class="package-price text-success mb-2">From RM 5,000</div>
+              <div class="package-price text-success mb-2">
+                <del>From RM 5,000</del>
+                RM 4,750
+              </div>
               <div class="optional-note mb-3">(Optional RM 350/mo for unlimited support)</div>
               <ul class="list-unstyled text-start mb-4 flex-grow-1">
                 <li>
@@ -354,7 +378,10 @@
           <div class="card package-card h-100 text-center">
             <div class="card-header text-dark">Premium</div>
             <div class="card-body d-flex flex-column">
-              <div class="package-price text-dark mb-2">From RM 8,000</div>
+              <div class="package-price text-dark mb-2">
+                <del>From RM 8,000</del>
+                RM 7,600
+              </div>
               <div class="optional-note mb-3">(Optional RM 500/mo for unlimited support)</div>
               <ul class="list-unstyled text-start mb-4 flex-grow-1">
                 <li>
@@ -399,9 +426,9 @@
         Prefer no monthly fee? Add RM 1,500 for a complete handover—including full source-code—so you can maintain the system yourself.<br>
         Otherwise, opt for our monthly subscription to receive unlimited change requests &amp; ongoing support.
       </p>
-      
     </div>
   </section>
+  
       
 
   <!-- PORTFOLIO -->
