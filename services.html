@@ -216,204 +216,77 @@
     </div>
   </section>
   
-
-<!-- Early Bird Promo Banner -->
+<!-- Promo Banner: Limited Discount for First 100 Clients -->
 <div class="promo-banner text-center mb-5">
-    🎉 Early Bird Special! Use code <strong>EARLYBIRD</strong> for <strong>5% off</strong> all base prices.
+    🎉 Discounted pricing is available only to the first <strong>15 clients</strong> with a valid promo code.
   </div>
   
-  <!-- Pricing & Packages as Hero Cards with SVG Icons -->
-  <style>
-    /* Promo banner */
-    .promo-banner {
-      background: #fffbea;
-      border: 1px solid #ffe58f;
-      padding: 1rem;
-      border-radius: 0.5rem;
-      font-size: 1.25rem;
-    }
-    /* Hero-style package cards */
-    .package-card {
-      border: none;
-      border-radius: 1rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .package-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-    }
-    .package-card .card-header {
-      background: transparent;
-      border-bottom: none;
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
-    .package-card .package-price {
-      font-size: 2.5rem;
-      font-weight: bold;
-    }
-    .package-card .package-price del {
-      font-size: 1.5rem;
-      color: #6c757d;
-      margin-right: 0.5rem;
-    }
-    .package-card .optional-note {
-      font-size: 0.9rem;
-      color: #6c757d;
-    }
-    .package-card ul li {
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: flex-start;
-    }
-    .package-card ul li svg {
-      flex-shrink: 0;
-      margin-right: 0.75rem;
-      margin-top: 0.125rem;
-    }
-  </style>
-  
+<!-- Pricing & Packages Section -->
   <section id="pricing" class="page-section bg-light" data-aos="fade-up">
     <div class="container">
       <h2 class="section-heading text-center mb-5">Pricing &amp; Packages</h2>
       <div class="row gx-4 gy-4 justify-content-center">
-        
-        <!-- Basic Package -->
+  
+        <!-- Basic -->
         <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="100">
           <div class="card package-card h-100 text-center">
             <div class="card-header text-primary">Basic</div>
             <div class="card-body d-flex flex-column">
               <div class="package-price text-primary mb-2">
                 <del>From RM 2,500</del>
-                RM 2,375
+                RM 1,800
               </div>
               <div class="optional-note mb-3">(Optional RM 200/mo for unlimited support)</div>
               <ul class="list-unstyled text-start mb-4 flex-grow-1">
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
-                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
-                  </svg>
-                  Up to 3 static pages
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
-                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
-                  </svg>
-                  1 mailbox
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
-                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
-                  </svg>
-                  Contact form
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
-                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
-                  </svg>
-                  Mobile-friendly design
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
-                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
-                  </svg>
-                  Hosting setup
-                </li>
+                <li>Up to 3 static pages</li>
+                <li>1 mailbox</li>
+                <li>Contact form</li>
+                <li>Mobile-friendly design</li>
+                <li>Hosting setup</li>
               </ul>
               <a href="#contact" class="btn btn-outline-primary mt-auto">Select Basic</a>
             </div>
           </div>
         </div>
-        
-        <!-- Standard Package -->
+  
+        <!-- Standard -->
         <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="200">
           <div class="card package-card h-100 text-center">
             <div class="card-header text-success">Standard</div>
             <div class="card-body d-flex flex-column">
               <div class="package-price text-success mb-2">
                 <del>From RM 5,000</del>
-                RM 4,750
+                RM 3,200
               </div>
               <div class="optional-note mb-3">(Optional RM 350/mo for unlimited support)</div>
               <ul class="list-unstyled text-start mb-4 flex-grow-1">
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
-                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
-                  </svg>
-                  Up to 8 static pages
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
-                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
-                  </svg>
-                  Up to 3 mailboxes
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
-                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
-                  </svg>
-                  Form &amp; analytics
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
-                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
-                  </svg>
-                  Hosting &amp; backups
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
-                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
-                  </svg>
-                  SEO-friendly structure
-                </li>
+                <li>Up to 8 static pages</li>
+                <li>Up to 3 mailboxes</li>
+                <li>Form &amp; analytics</li>
+                <li>Hosting &amp; backups</li>
+                <li>SEO-friendly structure</li>
               </ul>
               <a href="#contact" class="btn btn-outline-success mt-auto">Select Standard</a>
             </div>
           </div>
         </div>
-        
-        <!-- Premium Package -->
+  
+        <!-- Premium -->
         <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="300">
           <div class="card package-card h-100 text-center">
             <div class="card-header text-dark">Premium</div>
             <div class="card-body d-flex flex-column">
               <div class="package-price text-dark mb-2">
                 <del>From RM 8,000</del>
-                RM 7,600
+                RM 5,400
               </div>
               <div class="optional-note mb-3">(Optional RM 500/mo for unlimited support)</div>
               <ul class="list-unstyled text-start mb-4 flex-grow-1">
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
-                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
-                  </svg>
-                  Unlimited pages
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
-                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
-                  </svg>
-                  Unlimited mailboxes
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
-                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
-                  </svg>
-                  Priority support during setup
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
-                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
-                  </svg>
-                  Advanced integrations
-                </li>
-                <li>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--color-secondary)" viewBox="0 0 16 16">
-                    <path d="M10.97 4.97a.75.75 0 010 1.06L7.5 9.5 5.47 7.47a.75.75 0 111.06-1.06L7.5 7.94l2.41-2.41a.75.75 0 011.06 0z"/>
-                  </svg>
-                  Hosting &amp; backups
-                </li>
+                <li>Unlimited pages</li>
+                <li>Unlimited mailboxes</li>
+                <li>Priority support during setup</li>
+                <li>Advanced integrations</li>
+                <li>Hosting &amp; backups</li>
               </ul>
               <a href="#contact" class="btn btn-outline-dark mt-auto">Select Premium</a>
             </div>
@@ -429,8 +302,7 @@
     </div>
   </section>
   
-      
-
+  
   <!-- PORTFOLIO -->
   <section id="portfolio" class="page-section bg-light" data-aos="fade-up">
     <div class="container">
