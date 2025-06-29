@@ -1073,7 +1073,7 @@
 
         rows.forEach((track) => {
           const cards = Array.from(track.children);
-          const clonesNeeded = Math.min(3, cards.length);
+          const clonesNeeded = Math.min(6, cards.length);
           for (let i = 0; i < clonesNeeded; i++) {
             const clone = cards[i].cloneNode(true);
             track.appendChild(clone);
