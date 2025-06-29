@@ -5,13 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Keboon Technology Solution — Web &amp; IT Services</title>
   <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
   <!-- Font Awesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  />
   <!-- AOS for scroll animations -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+    rel="stylesheet"
+  />
   <!-- LinkedIn Badge Script -->
-  <script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
+  <script
+    src="https://platform.linkedin.com/badges/js/profile.js"
+    async
+    defer
+  ></script>
 
   <style>
     :root {
@@ -21,8 +34,6 @@
       --color-bg: #F5F5F5;
       --color-text: #212121;
     }
-  
-    /* Global */
     html {
       scroll-behavior: smooth;
     }
@@ -43,8 +54,6 @@
     .text-accent {
       color: var(--color-accent) !important;
     }
-  
-    /* Hero */
     #hero {
       position: relative;
       display: flex;
@@ -52,9 +61,10 @@
       justify-content: center;
       min-height: 100vh;
       padding: 0 1rem;
-      background: 
+      background:
         linear-gradient(rgba(26,35,126,0.8), rgba(26,35,126,0.8)),
-        url('https://source.unsplash.com/1600x900/?office,technology') center/cover no-repeat;
+        url('https://source.unsplash.com/1600x900/?office,technology')
+          center/cover no-repeat;
       text-align: center;
       color: #fff;
     }
@@ -82,8 +92,6 @@
       transform: scale(1.05);
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
-  
-    /* Section Headings & Layout */
     .section-heading {
       margin-bottom: 1rem;
       font-weight: 600;
@@ -92,8 +100,6 @@
     .page-section {
       padding: 60px 0;
     }
-  
-    /* Cards */
     .card {
       transition: transform 0.3s, box-shadow 0.3s;
     }
@@ -110,8 +116,6 @@
     .card-header.bg-dark {
       background-color: var(--color-accent) !important;
     }
-  
-    /* Footer */
     footer {
       background-color: var(--color-primary);
       color: #fff;
@@ -122,8 +126,6 @@
       color: #fff;
       text-decoration: underline;
     }
-  
-    /* Responsive typography */
     @media (min-width: 768px) {
       #hero h1 {
         font-size: 3.5rem;
@@ -133,13 +135,10 @@
       }
     }
   </style>
-  
 </head>
 <body>
-
   <!-- HERO -->
   <header id="hero" data-aos="fade-in">
-    <div class="overlay"></div>
     <div class="container" data-aos="fade-up" data-aos-delay="200">
       <h1 class="fw-bold" data-aos="fade-down" data-aos-delay="100">
         Custom Websites &amp; Branded Emails
@@ -147,10 +146,16 @@
       <p class="lead" data-aos="fade-up" data-aos-delay="200">
         Everything you need for a professional online presence<br>
         Websites, domains, emails &amp; support—handled end to end.
-        <p class="fst-italic text-center mt-5 mb-0">By Keboon Technology Solution</p>
       </p>
-      
-      <a href="#contact" class="btn btn-light btn-lg" data-aos="zoom-in" data-aos-delay="300">
+      <p class="fst-italic text-center mt-3 mb-0">
+        By Keboon Technology Solution
+      </p>
+      <a
+        href="#contact"
+        class="btn btn-light btn-lg mt-4"
+        data-aos="zoom-in"
+        data-aos-delay="300"
+      >
         Get Started Today
       </a>
     </div>
@@ -160,7 +165,6 @@
   <section id="about" class="page-section bg-light" data-aos="fade-up">
     <div class="container">
       <div class="row gy-4 justify-content-center">
-        <!-- Who It’s For -->
         <div class="col-md-6 col-lg-5">
           <h2 class="section-heading">We Help</h2>
           <ul class="list-unstyled">
@@ -186,7 +190,6 @@
             </li>
           </ul>
         </div>
-        <!-- Why Work With Me -->
         <div class="col-md-6 col-lg-5">
           <h2 class="section-heading">Why Work With Us</h2>
           <ul class="list-unstyled">
@@ -215,18 +218,19 @@
       </div>
     </div>
   </section>
-  
-<!-- Promo Banner: Limited Discount for First 100 Clients -->
-<div class="promo-banner text-center mb-5">
-    🎉 Discounted pricing is available only to the first <strong>15 clients</strong> with a valid promo code.
+
+  <!-- Promo Banner -->
+  <div class="promo-banner text-center mb-5">
+    🎉 Discounted pricing is available only to the first
+    <strong>100 clients</strong> with a valid promo code.
   </div>
-  
+
   <!-- Pricing & Packages Section -->
   <section id="pricing" class="page-section bg-light" data-aos="fade-up">
     <div class="container">
       <h2 class="section-heading text-center mb-5">Pricing &amp; Packages</h2>
       <div class="row gx-4 gy-4 justify-content-center">
-  
+
         <!-- Basic -->
         <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="100">
           <div class="card package-card h-100 text-center">
@@ -236,19 +240,107 @@
                 <del>From RM 1,800</del>
                 RM 1,710
               </div>
-              <div class="optional-note mb-3">(Optional RM 200/mo for unlimited support)</div>
+              <div class="optional-note mb-3">
+                (Optional RM 200/mo for unlimited support)
+              </div>
               <ul class="list-unstyled text-start mb-4 flex-grow-1">
-                <li>Up to 3 static pages</li>
-                <li>1 mailbox</li>
-                <li>Contact form</li>
-                <li>Mobile-friendly design</li>
-                <li>Hosting setup</li>
+                <li class="d-flex align-items-start mb-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    fill="currentColor"
+                    class="bi bi-check-circle me-2 text-primary"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 1 1
+                         .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1
+                         .708.708L7.707 10l-4.061-4.061Z"
+                    />
+                  </svg>
+                  Up to 3 static pages
+                </li>
+                <li class="d-flex align-items-start mb-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    fill="currentColor"
+                    class="bi bi-check-circle me-2 text-primary"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 1 1
+                         .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1
+                         .708.708L7.707 10l-4.061-4.061Z"
+                    />
+                  </svg>
+                  1 mailbox
+                </li>
+                <li class="d-flex align-items-start mb-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    fill="currentColor"
+                    class="bi bi-check-circle me-2 text-primary"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 1 1
+                         .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1
+                         .708.708L7.707 10l-4.061-4.061Z"
+                    />
+                  </svg>
+                  Contact form
+                </li>
+                <li class="d-flex align-items-start mb-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    fill="currentColor"
+                    class="bi bi-check-circle me-2 text-primary"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 1 1
+                         .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1
+                         .708.708L7.707 10l-4.061-4.061Z"
+                    />
+                  </svg>
+                  Mobile-friendly design
+                </li>
+                <li class="d-flex align-items-start">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    fill="currentColor"
+                    class="bi bi-check-circle me-2 text-primary"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 1 1
+                         .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1
+                         .708.708L7.707 10l-4.061-4.061Z"
+                    />
+                  </svg>
+                  Hosting setup
+                </li>
               </ul>
-              <a href="#contact" class="btn btn-outline-primary mt-auto">Select Basic</a>
+              <a
+                href="#contact"
+                class="btn btn-outline-primary mt-auto"
+                onclick="populatePackage('Basic')"
+              >
+                Select Basic
+              </a>
             </div>
           </div>
         </div>
-  
+
         <!-- Standard -->
         <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="200">
           <div class="card package-card h-100 text-center">
@@ -258,19 +350,107 @@
                 <del>From RM 3,500</del>
                 RM 3,325
               </div>
-              <div class="optional-note mb-3">(Optional RM 350/mo for unlimited support)</div>
+              <div class="optional-note mb-3">
+                (Optional RM 350/mo for unlimited support)
+              </div>
               <ul class="list-unstyled text-start mb-4 flex-grow-1">
-                <li>Up to 8 static pages</li>
-                <li>Up to 3 mailboxes</li>
-                <li>Form &amp; analytics</li>
-                <li>Hosting &amp; backups</li>
-                <li>SEO-friendly structure</li>
+                <li class="d-flex align-items-start mb-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    fill="currentColor"
+                    class="bi bi-check-circle me-2 text-success"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 1 1
+                         .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1
+                         .708.708L7.707 10l-4.061-4.061Z"
+                    />
+                  </svg>
+                  Up to 8 static pages
+                </li>
+                <li class="d-flex align-items-start mb-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    fill="currentColor"
+                    class="bi bi-check-circle me-2 text-success"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 1 1
+                         .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1
+                         .708.708L7.707 10l-4.061-4.061Z"
+                    />
+                  </svg>
+                  Up to 3 mailboxes
+                </li>
+                <li class="d-flex align-items-start mb-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    fill="currentColor"
+                    class="bi bi-check-circle me-2 text-success"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 1 1
+                         .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1
+                         .708.708L7.707 10l-4.061-4.061Z"
+                    />
+                  </svg>
+                  Form &amp; analytics
+                </li>
+                <li class="d-flex align-items-start mb-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    fill="currentColor"
+                    class="bi bi-check-circle me-2 text-success"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 1 1
+                         .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1
+                         .708.708L7.707 10l-4.061-4.061Z"
+                    />
+                  </svg>
+                  Hosting &amp; backups
+                </li>
+                <li class="d-flex align-items-start">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    fill="currentColor"
+                    class="bi bi-check-circle me-2 text-success"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 1 1
+                         .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1
+                         .708.708L7.707 10l-4.061-4.061Z"
+                    />
+                  </svg>
+                  SEO-friendly structure
+                </li>
               </ul>
-              <a href="#contact" class="btn btn-outline-success mt-auto">Select Standard</a>
+              <a
+                href="#contact"
+                class="btn btn-outline-success mt-auto"
+                onclick="populatePackage('Standard')"
+              >
+                Select Standard
+              </a>
             </div>
           </div>
         </div>
-  
+
         <!-- Premium -->
         <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="300">
           <div class="card package-card h-100 text-center">
@@ -280,85 +460,142 @@
                 <del>From RM 5,500</del>
                 RM 5,225
               </div>
-              <div class="optional-note mb-3">(Optional RM 500/mo for unlimited support)</div>
+              <div class="optional-note mb-3">
+                (Optional RM 500/mo for unlimited support)
+              </div>
               <ul class="list-unstyled text-start mb-4 flex-grow-1">
-                <li>Unlimited pages</li>
-                <li>Unlimited mailboxes</li>
-                <li>Priority support during setup</li>
-                <li>Advanced integrations</li>
-                <li>Hosting &amp; backups</li>
+                <li class="d-flex align-items-start mb-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    fill="currentColor"
+                    class="bi bi-check-circle me-2 text-dark"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 1 1
+                         .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1
+                         .708.708L7.707 10l-4.061-4.061Z"
+                    />
+                  </svg>
+                  Unlimited pages
+                </li>
+                <li class="d-flex align-items-start mb-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    fill="currentColor"
+                    class="bi bi-check-circle me-2 text-dark"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 1 1
+                         .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1
+                         .708.708L7.707 10l-4.061-4.061Z"
+                    />
+                  </svg>
+                  Unlimited mailboxes
+                </li>
+                <li class="d-flex align-items-start mb-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    fill="currentColor"
+                    class="bi bi-check-circle me-2 text-dark"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 1 1
+                         .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1
+                         .708.708L7.707 10l-4.061-4.061Z"
+                    />
+                  </svg>
+                  Priority support during setup
+                </li>
+                <li class="d-flex align-items-start mb-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    fill="currentColor"
+                    class="bi bi-check-circle me-2 text-dark"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 1 1
+                         .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1
+                         .708.708L7.707 10l-4.061-4.061Z"
+                    />
+                  </svg>
+                  Advanced integrations
+                </li>
+                <li class="d-flex align-items-start">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    fill="currentColor"
+                    class="bi bi-check-circle me-2 text-dark"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 1 1
+                         .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1
+                         .708.708L7.707 10l-4.061-4.061Z"
+                    />
+                  </svg>
+                  Hosting &amp; backups
+                </li>
               </ul>
-              <a href="#contact" class="btn btn-outline-dark mt-auto">Select Premium</a>
+              <a
+                href="#contact"
+                class="btn btn-outline-dark mt-auto"
+                onclick="populatePackage('Premium')"
+              >
+                Select Premium
+              </a>
             </div>
           </div>
         </div>
-  
+
       </div>
-  
       <p class="fst-italic text-center mt-5 mb-0">
-        Prefer no monthly fee? Add RM 1,500 for a complete handover—including full source-code—so you can maintain the system yourself.<br>
-        Otherwise, opt for our monthly subscription to receive unlimited change requests &amp; ongoing support.
+        Prefer no monthly fee? Add RM 1,500 for a complete handover—including full
+        source-code—so you can maintain the system yourself.<br>
+        Otherwise, opt for our monthly subscription to receive unlimited change
+        requests &amp; ongoing support.
       </p>
     </div>
   </section>
-  
-  
-  
-  <!-- PORTFOLIO -->
-  <section id="portfolio" class="page-section bg-light" data-aos="fade-up">
+
+  <!-- Developer Profile -->
+  <section id="developer-profile" class="text-center page-section">
     <div class="container">
-      <h2 class="section-heading text-center">Portfolio</h2>
-      <div class="row justify-content-center mt-4">
-        <div class="col-md-8" data-aos="fade-up" data-aos-delay="200">
-          <div class="card h-100 shadow-sm">
-            <div class="card-header bg-primary text-white text-center">
-              <img src="assets/img/keboon-writing.png" alt="Keboon Logo" class="img-fluid mb-2" style="max-height:60px;">
-            </div>
-            <div class="card-body text-center">
-              <p class="card-text mb-3">Local Produce Marketplace connecting neighbours to share fresh, home-grown produce.</p>
-              <div class="d-flex justify-content-center gap-2">
-                <a href="https://keboon.net" target="_blank" class="btn btn-outline-primary">Visit keboon.net</a>
-                <a href="https://app.keboon.net" target="_blank" class="btn btn-outline-secondary">Visit app.keboon.net</a>
-              </div>
-            </div>
-          </div>
+      <h2 class="section-heading mb-4">Developer Profile</h2>
+      <div class="d-flex justify-content-center mb-4">
+        <div
+          class="badge-base LI-profile-badge"
+          data-locale="en_US"
+          data-size="medium"
+          data-theme="light"
+          data-type="VERTICAL"
+          data-vanity="aimi-misman-065b2a150"
+          data-version="v1"
+        >
+          <a
+            class="badge-base__link LI-simple-link"
+            href="https://www.linkedin.com/in/aimi-misman-065b2a150?trk=profile-badge"
+          >
+            Aimi Misman
+          </a>
         </div>
       </div>
+      <p>We’re expanding our team! Contact us below if you’d like to join.</p>
     </div>
   </section>
-
-  <!-- DEVELOPER PROFILE -->
-  <!-- LinkedIn Badge Script (place in your <head> if not already) -->
-<script src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
-
-<!-- DEVELOPER PROFILE -->
-<section id="developer-profile" class="text-center page-section">
-  <div class="container">
-    <h2 class="section-heading text-center mb-4">Developer Profile</h2>
-    
-
-    <!-- Centered LinkedIn Badge -->
-    <div class="d-flex justify-content-center mb-4">
-      <div class="badge-base LI-profile-badge"
-           data-locale="en_US"
-           data-size="medium"
-           data-theme="light"
-           data-type="VERTICAL"
-           data-vanity="aimi-misman-065b2a150"
-           data-version="v1">
-        <a class="badge-base__link LI-simple-link"
-           href="https://www.linkedin.com/in/aimi-misman-065b2a150?trk=profile-badge">
-          Aimi Misman
-        </a>
-      </div>
-      
-    </div>
-    <p>
-      We’re expanding our team! Contact us below if you’d like to join.
-    </p>
-  </div>
-</section>
-
 
   <!-- FAQ -->
   <section id="faq" class="page-section py-5" data-aos="fade-up">
@@ -367,130 +604,212 @@
       <div class="accordion" id="faqAccordion">
         <div class="accordion-item">
           <h2 class="accordion-header" id="faq1Heading">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1">How long will it take?</button>
+            <button
+              class="accordion-button"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#faq1"
+              aria-expanded="true"
+              aria-controls="faq1"
+            >
+              How long will it take?
+            </button>
           </h2>
-          <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion"><div class="accordion-body">Usually 4–12 weeks for full setup. Simpler sites can be faster.</div></div>
+          <div
+            id="faq1"
+            class="accordion-collapse collapse show"
+            data-bs-parent="#faqAccordion"
+          >
+            <div class="accordion-body">
+              Usually 4–12 weeks for full setup. Simpler sites can be faster.
+            </div>
+          </div>
         </div>
         <div class="accordion-item">
           <h2 class="accordion-header" id="faq2Heading">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">Can I use my own domain?</button>
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#faq2"
+              aria-expanded="false"
+              aria-controls="faq2"
+            >
+              Can I use my own domain?
+            </button>
           </h2>
-          <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Yes — or I can help you purchase and manage one.</div></div>
+          <div
+            id="faq2"
+            class="accordion-collapse collapse"
+            data-bs-parent="#faqAccordion"
+          >
+            <div class="accordion-body">
+              Yes — or I can help you purchase and manage one.
+            </div>
+          </div>
         </div>
         <div class="accordion-item">
           <h2 class="accordion-header" id="faq3Heading">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">What if I only need a website?</button>
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#faq3"
+              aria-expanded="false"
+              aria-controls="faq3"
+            >
+              What if I only need a website?
+            </button>
           </h2>
-          <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">No problem — I’ll tailor the scope to your needs and budget.</div></div>
+          <div
+            id="faq3"
+            class="accordion-collapse collapse"
+            data-bs-parent="#faqAccordion"
+          >
+            <div class="accordion-body">
+              No problem — I’ll tailor the scope to your needs and budget.
+            </div>
+          </div>
         </div>
         <div class="accordion-item">
           <h2 class="accordion-header" id="faq4Heading">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">Is there a long-term contract?</button>
+            <button
+              class="accordion-button collapsed"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#faq4"
+              aria-expanded="false"
+              aria-controls="faq4"
+            >
+              Is there a long-term contract?
+            </button>
           </h2>
-          <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Nope. Cancel anytime, though most clients stay because of the value.</div></div>
+          <div
+            id="faq4"
+            class="accordion-collapse collapse"
+            data-bs-parent="#faqAccordion"
+          >
+            <div class="accordion-body">
+              Nope. Cancel anytime, though most clients stay because of the value.
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- CONTACT FORM -->
-<section id="contact" class="page-section bg-light mb-5">
-  <div class="container">
-    <h2 class="section-heading text-center mb-4">Let’s Talk</h2>
-    <form
-      id="contactForm"
-      action="https://formspree.io/f/xzzpopkr"
-      method="POST"
-    >
-      <!-- hidden subject & disable captcha -->
-      <input type="hidden" name="_subject" id="_subject" value="">
-      <input type="hidden" name="_captcha" value="false">
+  <section id="contact" class="page-section bg-light mb-5">
+    <div class="container">
+      <h2 class="section-heading text-center mb-4">Let’s Talk</h2>
+      <form
+        id="contactForm"
+        action="https://formspree.io/f/xzzpopkr"
+        method="POST"
+      >
+        <input type="hidden" name="_subject" id="_subject" value="" />
+        <input type="hidden" name="_captcha" value="false" />
 
-      <div class="form-group mb-3">
-        <input
-          class="form-control"
-          type="text"
-          placeholder="Your Name *"
-          required
-          name="name"
-        />
-      </div>
+        <div class="form-group mb-3">
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Your Name *"
+            required
+            name="name"
+          />
+        </div>
+        <div class="form-group mb-3">
+          <input
+            class="form-control"
+            type="email"
+            placeholder="Your Business Email *"
+            required
+            name="email"
+          />
+        </div>
+        <div class="form-group mb-3">
+          <select
+            class="form-select"
+            id="inquiryType"
+            name="inquiryType"
+            required
+          >
+            <option value="Client Inquiry">I am a Potential Client</option>
+            <option value="Join the Team">I want to Join the Team</option>
+          </select>
+        </div>
+        <div class="form-group mb-3">
+          <textarea
+            id="messageField"
+            class="form-control"
+            placeholder="Your Message (include your business type or website needs) *"
+            required
+            name="message"
+            rows="4"
+          ></textarea>
+        </div>
+        <div class="text-center">
+          <button
+            class="btn btn-primary btn-s text-uppercase"
+            type="submit"
+          >
+            <i class="fas fa-paper-plane me-2"></i>Send Message
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
 
-      <div class="form-group mb-3">
-        <input
-          class="form-control"
-          type="email"
-          placeholder="Your Business Email *"
-          required
-          name="email"
-        />
-      </div>
+  <!-- FOOTER -->
+  <footer class="text-center py-4">
+    <div class="container">
+      <p class="mb-1">© <span id="year"></span> Keboon Technology Solution.</p>
+    </div>
+  </footer>
 
-      <div class="form-group mb-3">
-        <select
-          class="form-select"
-          id="inquiryType"
-          name="inquiryType"
-          required
-        >
-          <option value="Client Inquiry">I am a Potential Client</option>
-          <option value="Join the Team">I want to Join the Team</option>
-        </select>
-      </div>
+  <!-- Populate & Submit Scripts -->
+  <script>
+    // set current year
+    document.getElementById('year').textContent =
+      new Date().getFullYear();
 
-      <div class="form-group mb-3">
-        <textarea
-          class="form-control"
-          placeholder="Your Message (include your business type or website needs) *"
-          required
-          name="message"
-          rows="4"
-        ></textarea>
-      </div>
+    // populate package on click
+    function populatePackage(pkg) {
+      document.getElementById('_subject').value =
+        'Package Inquiry: ' + pkg;
+      document.getElementById('inquiryType').value =
+        'Client Inquiry';
+      const msg = document.getElementById('messageField');
+      msg.value =
+        'Hello—\n\nI’m interested in the ' +
+        pkg +
+        ' package. Could you please share more details and next steps?\n\nThanks!';
+      msg.focus();
+    }
 
-      <div class="text-center">
-        <button
-          class="btn btn-primary btn-s text-uppercase"
-          type="submit"
-        >
-          <i class="fas fa-paper-plane me-2"></i>Send Message
-        </button>
-      </div>
-    </form>
-  </div>
-</section>
+    // fallback: ensure subject on manual submit
+    document
+      .getElementById('contactForm')
+      .addEventListener('submit', () => {
+        if (!document.getElementById('_subject').value) {
+          const type =
+            document.getElementById('inquiryType').value;
+          document.getElementById('_subject').value =
+            type + ' from Website';
+        }
+      });
+  </script>
 
-<!-- FOOTER -->
-<footer class="text-center py-4">
-  <div class="container">
-    <p class="mb-1">© <span id="year"></span> Keboon Technology Solution.</p>
-  </div>
-</footer>
-
-<script>
-  // dynamically set the current year
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
-
-
-<!-- Bootstrap JS & AOS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-<script>
-  AOS.init({ duration: 800, once: true });
-
-  document
-    .getElementById('contactForm')
-    .addEventListener('submit', function () {
-      const type = document.getElementById('inquiryType').value;
-      document.getElementById('_subject').value = `${type} from Website`;
-    });
-</script>
-
-
-  <!-- Bootstrap JS & AOS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-  <script>AOS.init({ duration: 800, once: true });</script>
+  <!-- Bootstrap & AOS JS -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"
+  ></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+  </script>
 </body>
 </html>
