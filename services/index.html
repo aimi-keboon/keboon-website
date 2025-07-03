@@ -875,67 +875,113 @@
   
 
   <!-- CONTACT FORM -->
-  <section id="contact" class="page-section bg-light mb-5">
-    <div class="container">
-      <h2 class="section-heading text-center mb-4">Let’s Talk</h2>
-      <form
-        id="contactForm"
-        action="https://formspree.io/f/xzzpopkr"
-        method="POST"
-      >
-        <input type="hidden" name="_subject" id="_subject" value="" />
-        <input type="hidden" name="_captcha" value="false" />
+<section id="contact" class="page-section bg-light mb-5">
+  <div class="container">
+    <h2 class="section-heading text-center mb-4">Let’s Talk</h2>
+    <form
+      id="contactForm"
+      action="https://formspree.io/f/xzzpopkr"
+      method="POST"
+    >
+      <input type="hidden" name="_subject" id="_subject" value="" />
+      <input type="hidden" name="_captcha" value="false" />
 
-        <div class="form-group mb-3">
-          <input
-            class="form-control"
-            type="text"
-            placeholder="Your Name *"
-            required
-            name="name"
-          />
-        </div>
-        <div class="form-group mb-3">
-          <input
-            class="form-control"
-            type="email"
-            placeholder="Your Business Email *"
-            required
-            name="email"
-          />
-        </div>
-        <div class="form-group mb-3">
-          <select
-            class="form-select"
-            id="inquiryType"
-            name="inquiryType"
-            required
-          >
-            <option value="Client Inquiry">I am a Potential Client</option>
-            <option value="Join the Team">I want to Join the Team</option>
-          </select>
-        </div>
-        <div class="form-group mb-3">
-          <textarea
-            id="messageField"
-            class="form-control"
-            placeholder="Your Message (include your business type or website needs) *"
-            required
-            name="message"
-            rows="4"
-          ></textarea>
-        </div>
-        <div class="text-center">
-          <button
-            class="btn btn-primary btn-s text-uppercase"
-            type="submit"
-          >
-            <i class="fas fa-paper-plane me-2"></i>Send Message
-          </button>
-        </div>
-      </form>
-    </div>
-  </section>
+      <div class="form-group mb-3">
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Your Name *"
+          required
+          name="name"
+        />
+      </div>
+      <div class="form-group mb-3">
+        <input
+          class="form-control"
+          type="email"
+          placeholder="Your Business Email *"
+          required
+          name="email"
+        />
+      </div>
+      <div class="form-group mb-3">
+        <input
+          class="form-control"
+          type="tel"
+          placeholder="Your Contact Number *"
+          name="contactNumber"
+          id="contactNumber"
+          required
+        />
+      </div>
+      
+      <div class="form-group mb-3">
+        <select
+          class="form-select"
+          id="inquiryType"
+          name="inquiryType"
+          required
+        >
+          <option value="Client Inquiry">I am a Potential Client</option>
+          <option value="Join the Team">I want to Join the Team</option>
+        </select>
+      </div>
+      <div class="form-group mb-3">
+        <textarea
+          id="messageField"
+          class="form-control"
+          placeholder="Your Message (include your business type or website needs) *"
+          required
+          name="message"
+          rows="4"
+        ></textarea>
+      </div>
+      <div class="text-center">
+        <button
+          class="btn btn-primary btn-s text-uppercase"
+          type="submit"
+        >
+          <i class="fas fa-paper-plane me-2"></i>Send Message
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Populate & Submit Scripts -->
+<script>
+  // set current year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // prefill form when package selected
+  function populatePackage(pkg) {
+    document.getElementById('_subject').value = 'Package Inquiry: ' + pkg;
+    document.getElementById('inquiryType').value = 'Client Inquiry';
+
+    const contact = document.getElementById('contactNumber').value;
+    const msg = document.getElementById('messageField');
+    msg.value =
+      'Hello—\n\nI’m interested in the ' +
+      pkg +
+      ' package. Could you please share more details and next steps?\n\nThanks!';
+
+    if (contact) {
+      msg.value += '\n\nMy contact number is: ' + contact;
+    }
+
+    msg.focus();
+  }
+
+  // fallback for manual submit
+  document.getElementById('contactForm').addEventListener('submit', () => {
+    if (!document.getElementById('_subject').value) {
+      const type = document.getElementById('inquiryType').value;
+      document.getElementById('_subject').value = type + ' from Website';
+    }
+  });
+</script>
+
+
 
   <!-- FOOTER -->
   <footer class="text-center py-4">
@@ -943,38 +989,6 @@
       <p class="mb-1">© <span id="year"></span> Keboon Technology Solution.</p>
     </div>
   </footer>
-
-  <!-- Populate & Submit Scripts -->
-  <script>
-    // set current year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // prefill form when package selected
-    function populatePackage(pkg) {
-      document.getElementById('_subject').value =
-        'Package Inquiry: ' + pkg;
-      document.getElementById('inquiryType').value =
-        'Client Inquiry';
-      const msg = document.getElementById('messageField');
-      msg.value =
-        'Hello—\n\nI’m interested in the ' +
-        pkg +
-        ' package. Could you please share more details and next steps?\n\nThanks!';
-      msg.focus();
-    }
-
-    // fallback for manual submit
-    document
-      .getElementById('contactForm')
-      .addEventListener('submit', () => {
-        if (!document.getElementById('_subject').value) {
-          const type =
-            document.getElementById('inquiryType').value;
-          document.getElementById('_subject').value =
-            type + ' from Website';
-        }
-      });
-  </script>
 
   <!-- Bootstrap JS & AOS Init -->
   <script
