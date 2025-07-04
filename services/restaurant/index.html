@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bella Cucina Restaurant</title>
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- Font Awesome for icons -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --bg-light: #fff9f0;
+      --text-dark: #333;
+      --accent-red: #c0392b;
+      --accent-red-dark: #922b21;
+      --table-border: #e0d7cc;
+    }
+    body {
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      font-family: "Segoe UI", sans-serif;
+    }
+    .btn-accent {
+      background-color: var(--accent-red);
+      color: #fff;
+      border: none;
+    }
+    .btn-accent:hover {
+      background-color: var(--accent-red-dark);
+    }
+    /* HERO */
+    #hero {
+      background-color: var(--accent-red-dark);
+      color: #fff;
+      padding: 120px 0;
+      text-align: center;
+      position: relative;
+    }
+    #hero svg {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 1rem;
+    }
+    /* ABOUT placeholder */
+    #about svg {
+      width: 100%;
+      max-height: 400px;
+      background: #e0d7cc;
+      border-radius: 4px;
+    }
+    /* MENU table */
+    #menu-table th,
+    #menu-table td {
+      border-color: var(--table-border);
+    }
+    /* GALLERY placeholders */
+    .gallery svg {
+      width: 100%;
+      background: #e0d7cc;
+      border-radius: 4px;
+    }
+    /* CHEFS */
+    #chefs .card {
+      border: 1px solid var(--table-border);
+      background: #fff;
+    }
+    #chefs svg.avatar {
+      width: 80px; height: 80px;
+      background: #e0d7cc;
+      border-radius: 50%;
+    }
+    /* LOCATION map placeholder */
+    #location svg {
+      width: 100%;
+      max-height: 300px;
+      background: #e0d7cc;
+      border-radius: 4px;
+    }
+    /* HOURS table */
+    #hours th, #hours td {
+      border-color: var(--table-border);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">Bella Cucina</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#menu">Menu</a></li>
+          <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="#chefs">Our Chefs</a></li>
+          <li class="nav-item"><a class="nav-link" href="#hours">Hours</a></li>
+          <li class="nav-item"><a class="nav-link" href="#location">Location</a></li>
+          <li class="nav-item"><a class="nav-link" href="#reviews">Reviews</a></li>
+          <li class="nav-item"><a class="nav-link" href="#reserve">Reserve</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="hero">
+    <div class="container">
+      <svg viewBox="0 0 120 120" aria-label="Logo">
+        <circle cx="60" cy="60" r="50" fill="#fff1f0" stroke="var(--accent-red)" stroke-width="4"/>
+        <rect x="55" y="30" width="4" height="60" fill="var(--accent-red)"/>
+        <rect x="70" y="30" width="4" height="60" fill="var(--accent-red)"/>
+      </svg>
+      <h1 class="display-4 fw-bold">Bella Cucina</h1>
+      <p class="lead">Authentic Italian Flavors in Every Bite</p>
+      <a href="#reserve" class="btn btn-accent btn-lg mt-3">Book a Table</a>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-4">About Us</h2>
+      <div class="row align-items-center">
+        <div class="col-md-6 mb-4 mb-md-0">
+          <svg role="img" aria-label="About placeholder" viewBox="0 0 400 300">
+            <rect width="400" height="300" fill="#e0d7cc"/>
+            <text x="200" y="160" text-anchor="middle" font-size="24" fill="#aaa">About Image</text>
+          </svg>
+        </div>
+        <div class="col-md-6">
+          <p>Founded in 2010, Bella Cucina brings the taste of Italy to your table. From handcrafted pasta to wood-fired pizzas, every dish is made with love and the finest ingredients.</p>
+          <ul class="list-unstyled">
+            <li><i class="fas fa-check-circle text-success me-2"></i>Family recipes passed down generations</li>
+            <li><i class="fas fa-check-circle text-success me-2"></i>Locally-sourced, organic produce</li>
+            <li><i class="fas fa-check-circle text-success me-2"></i>Cozy ambiance &amp; friendly service</li>
+          </ul>          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu" class="py-5 bg-white">
+    <div class="container">
+      <h2 class="text-center mb-4">Our Menu</h2>
+      <div class="table-responsive">
+        <table id="menu-table" class="table table-borderless text-center">
+          <thead>
+            <tr>
+              <th>Dish</th>
+              <th>Description</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><i class="fas fa-pizza-slice fa-lg text-accent-red me-2"></i>Margherita Pizza</td>
+              <td>Classic tomato, mozzarella &amp; fresh basil</td>
+              <td>RM 35</td>
+            </tr>
+            <tr>
+              <td><i class="fas fa-utensils fa-lg text-accent-red me-2"></i>Spaghetti Carbonara</td>
+              <td>Egg yolk, pancetta &amp; pecorino cheese</td>
+              <td>RM 42</td>
+            </tr>
+            <tr>
+              <td><i class="fas fa-fish fa-lg text-accent-red me-2"></i>Seafood Linguine</td>
+              <td>Mixed seafood in garlic-white wine sauce</td>
+              <td>RM 48</td>
+            </tr>
+            <tr>
+              <td><i class="fas fa-cheese fa-lg text-accent-red me-2"></i>Tiramisu</td>
+              <td>Ladyfingers, mascarpone &amp; espresso</td>
+              <td>RM 22</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Gallery</h2>
+      <div class="row g-3 gallery">
+        <div class="col-sm-6 col-md-4">
+          <svg role="img" aria-label="Placeholder" viewBox="0 0 400 300">
+            <rect width="400" height="300" fill="#e0d7cc"/>
+            <text x="200" y="160" text-anchor="middle" font-size="24" fill="#aaa">Image</text>
+          </svg>
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <svg role="img" aria-label="Placeholder" viewBox="0 0 400 300">
+            <rect width="400" height="300" fill="#e0d7cc"/>
+            <text x="200" y="160" text-anchor="middle" font-size="24" fill="#aaa">Image</text>
+          </svg>
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <svg role="img" aria-label="Placeholder" viewBox="0 0 400 300">
+            <rect width="400" height="300" fill="#e0d7cc"/>
+            <text x="200" y="160" text-anchor="middle" font-size="24" fill="#aaa">Image</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUR CHEFS -->
+  <section id="chefs" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Meet Our Chefs</h2>
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-4">
+          <div class="card text-center h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+              <svg class="avatar mb-3" viewBox="0 0 100 100">
+                <circle cx="50" cy="30" r="20" fill="#e0d7cc"/>
+                <rect x="30" y="55" width="40" height="30" fill="#e0d7cc"/>
+              </svg>
+              <h5 class="card-title">Chef Marco Rossi</h5>
+              <p class="flex-grow-1">Head Chef &amp; Pasta Maestro with 15 years of Italian culinary experience.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card text-center h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+              <svg class="avatar mb-3" viewBox="0 0 100 100">
+                <circle cx="50" cy="30" r="20" fill="#e0d7cc"/>
+                <rect x="30" y="55" width="40" height="30" fill="#e0d7cc"/>
+              </svg>
+              <h5 class="card-title">Chef Li Wei</h5>
+              <p class="flex-grow-1">Pastry Chef crafting desserts that are both beautiful and delicious.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card text-center h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+              <svg class="avatar mb-3" viewBox="0 0 100 100">
+                <circle cx="50" cy="30" r="20" fill="#e0d7cc"/>
+                <rect x="30" y="55" width="40" height="30" fill="#e0d7cc"/>
+              </svg>
+              <h5 class="card-title">Chef Nadia Ahmed</h5>
+              <p class="flex-grow-1">Sous Chef specializing in flavor infusions and seasonal menus.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews" class="py-5 bg-white">
+    <div class="container">
+      <h2 class="text-center mb-4">Customer Reviews</h2>
+      <div class="row g-4 justify-content-center">
+        <!-- Review 1 -->
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+              <p class="flex-grow-1">“The pasta carbonara was divine! Authentic flavors and excellent service.”</p>
+              <div class="d-flex align-items-center mt-3">
+                <svg width="40" height="40" class="me-3" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="48" fill="#e0d7cc"/>
+                  <text x="50" y="57" text-anchor="middle" font-size="36" fill="#aaa">A</text>
+                </svg>
+                <div>
+                  <h5 class="mb-1">Alice</h5>
+                  <div>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star-half-alt text-warning"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Review 2 -->
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+              <p class="flex-grow-1">“Amazing ambiance and the wood-fired pizza is a must-try!”</p>
+              <div class="d-flex align-items-center mt-3">
+                <svg width="40" height="40" class="me-3" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="48" fill="#e0d7cc"/>
+                  <text x="50" y="57" text-anchor="middle" font-size="36" fill="#aaa">B</text>
+                </svg>
+                <div>
+                  <h5 class="mb-1">Bob</h5>
+                  <div>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Review 3 -->
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body d-flex flex-column">
+              <p class="flex-grow-1">“Desserts were heavenly—tiramisu stole the show!”</p>
+              <div class="d-flex align-items-center mt-3">
+                <svg width="40" height="40" class="me-3" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="48" fill="#e0d7cc"/>
+                  <text x="50" y="57" text-anchor="middle" font-size="36" fill="#aaa">C</text>
+                </svg>
+                <div>
+                  <h5 class="mb-1">Carol</h5>
+                  <div>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star-half-alt text-warning"></i>
+                    <i class="far fa-star text-warning"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPENING HOURS -->
+  <section id="hours" class="py-5 bg-white">
+    <div class="container">
+      <h2 class="text-center mb-4">Opening Hours</h2>
+      <table class="table table-borderless text-center mx-auto" style="max-width:400px;">
+        <tbody>
+          <tr><td>Monday – Friday</td><td>11:00 AM – 10:00 PM</td></tr>
+          <tr><td>Saturday</td><td>10:00 AM – 11:00 PM</td></tr>
+          <tr><td>Sunday</td><td>10:00 AM – 9:00 PM</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section id="location" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Find Us</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <svg role="img" aria-label="Map placeholder" viewBox="0 0 600 300">
+            <rect width="600" height="300" fill="#e0d7cc"/>
+            <text x="300" y="160" text-anchor="middle" font-size="24" fill="#aaa">Map</text>
+          </svg>
+          <p class="text-center mt-3">123 Flavor Street, Foodville</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESERVATION FORM -->
+  <section id="reserve" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Reserve a Table</h2>
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <form>
+            <div class="mb-3">
+              <input type="text" class="form-control" placeholder="Name *" required />
+            </div>
+            <div class="mb-3">
+              <input type="email" class="form-control" placeholder="Email *" required />
+            </div>
+            <div class="mb-3">
+              <input type="tel" class="form-control" placeholder="Phone *" required />
+            </div>
+            <div class="mb-3">
+              <input type="date" class="form-control" required />
+            </div>
+            <div class="mb-3">
+              <input type="time" class="form-control" required />
+            </div>
+            <div class="mb-3">
+              <select class="form-select" required>
+                <option value="" disabled selected>Number of Guests *</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4+</option>
+              </select>
+            </div>
+            <div class="text-center">
+              <button class="btn btn-accent px-5" type="submit">Book Now</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-4 bg-white text-center">
+    <div class="container">
+      <p class="mb-1">&copy; <span id="year"></span> Bella Cucina Restaurant</p>
+      <small>123 Flavor Street, Foodville • (012) 345-6789</small>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS & Year Script -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
