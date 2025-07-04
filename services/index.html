@@ -110,10 +110,10 @@
         background-color: var(--color-primary) !important;
       }
       .card-header.bg-success {
-        background-color: var(--color-secondary) !important;
+        background-color: var(--color-primary) !important;
       }
       .card-header.bg-dark {
-        background-color: var(--color-accent) !important;
+        background-color: var(--color-primary) !important;
       }
       /* Promo banner */
       .promo-banner {
@@ -145,6 +145,84 @@
     </style>
   </head>
   <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#">Keboon Technology Solution</a>
+    
+        <!-- Toggler now launches offcanvas -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasNav"
+          aria-controls="offcanvasNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <!-- Desktop Menu (still visible on lg+) -->
+        <div class="collapse navbar-collapse d-none d-lg-flex" id="mainNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+            <li class="nav-item"><a class="nav-link" href="#support">Support</a></li>
+            <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+            <li class="nav-item"><a class="nav-link" href="#portfolio">Demos</a></li>
+            <li class="nav-item"><a class="nav-link" href="#developer-profile">Team</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          </ul>
+        </div>
+    
+        <!-- Offcanvas (mobile) -->
+        <div
+          class="offcanvas offcanvas-end"
+          tabindex="-1"
+          id="offcanvasNav"
+          aria-labelledby="offcanvasNavLabel"
+        >
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavLabel">
+              Menu
+            </h5>
+            <button
+              type="button"
+              class="btn-close text-reset"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <li class="nav-item"><a class="nav-link" href="#hero" data-bs-dismiss="offcanvas">Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="#about" data-bs-dismiss="offcanvas">About</a></li>
+              <li class="nav-item"><a class="nav-link" href="#pricing" data-bs-dismiss="offcanvas">Pricing</a></li>
+              <li class="nav-item"><a class="nav-link" href="#support" data-bs-dismiss="offcanvas">Support</a></li>
+              <li class="nav-item"><a class="nav-link" href="#faq" data-bs-dismiss="offcanvas">FAQ</a></li>
+              <li class="nav-item"><a class="nav-link" href="#portfolio" data-bs-dismiss="offcanvas">Demos</a></li>
+              <li class="nav-item"><a class="nav-link" href="#developer-profile" data-bs-dismiss="offcanvas">Team</a></li>
+              <li class="nav-item"><a class="nav-link" href="#contact" data-bs-dismiss="offcanvas">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+    
+    <style>
+      /* prevent hero from hiding behind fixed navbar */
+      body {
+        padding-top: 70px;
+      }
+    
+      /* Override the offcanvas width */
+      #offcanvasNav {
+        --bs-offcanvas-width: 150px; /* whatever width you like */
+      }
+    </style>
+    
+    
+
     <!-- HERO -->
     <header id="hero" data-aos="fade-in">
       <div class="container" data-aos="fade-up" data-aos-delay="200">
@@ -1134,7 +1212,7 @@
                 <a
                   href="law-firm/index.html"
                   target="_blank"
-                  class="btn btn-outline-primary btn-sm"
+                  class="btn btn-outline-dark btn-sm"
                 >
                   View Demo
                 </a>
@@ -1168,7 +1246,7 @@
                 <a
                   href="restaurant/index.html"
                   target="_blank"
-                  class="btn btn-outline-success btn-sm"
+                  class="btn btn-outline-dark btn-sm"
                 >
                   View Demo
                 </a>
@@ -1220,7 +1298,7 @@
         <div class="row justify-content-center">
           <div class="col-md-8" data-aos="fade-up" data-aos-delay="200">
             <div class="card h-100 shadow-sm">
-              <div class="card-header bg-primary text-white text-center">
+              <div class="card-header --bg-light text-white text-center">
                 <img
                   src="../assets/img/keboon-writing.png"
                   alt="Keboon Logo"
