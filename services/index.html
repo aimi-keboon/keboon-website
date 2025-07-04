@@ -142,6 +142,20 @@
           font-size: 1.25rem;
         }
       }
+      /* Hide desktop menu on mobile */
+@media (max-width: 991.98px) {
+  #mainNav {
+    display: none !important;
+  }
+}
+
+/* Hide mobile offcanvas on desktop */
+@media (min-width: 992px) {
+  #offcanvasNav {
+    display: none !important;
+  }
+}
+
     </style>
   </head>
   <body>
@@ -150,9 +164,9 @@
       <div class="container">
         <a class="navbar-brand fw-bold" href="#">Keboon Technology Solution</a>
     
-        <!-- Toggler now launches offcanvas -->
+        <!-- toggler only on mobile -->
         <button
-          class="navbar-toggler"
+          class="navbar-toggler d-lg-none"
           type="button"
           data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasNav"
@@ -161,11 +175,10 @@
           <span class="navbar-toggler-icon"></span>
         </button>
     
-        <!-- Desktop Menu (still visible on lg+) -->
+        <!-- desktop menu -->
         <div class="collapse navbar-collapse d-none d-lg-flex" id="mainNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
             <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
             <li class="nav-item"><a class="nav-link" href="#support">Support</a></li>
             <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
@@ -175,17 +188,16 @@
           </ul>
         </div>
     
-        <!-- Offcanvas (mobile) -->
+        <!-- offcanvas for mobile -->
         <div
           class="offcanvas offcanvas-end"
           tabindex="-1"
           id="offcanvasNav"
           aria-labelledby="offcanvasNavLabel"
+          style="--bs-offcanvas-width:150px;"
         >
           <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasNavLabel">
-              Menu
-            </h5>
+            <h5 class="offcanvas-title" id="offcanvasNavLabel">Menu</h5>
             <button
               type="button"
               class="btn-close text-reset"
@@ -194,15 +206,28 @@
             ></button>
           </div>
           <div class="offcanvas-body">
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-              <li class="nav-item"><a class="nav-link" href="#hero" data-bs-dismiss="offcanvas">Home</a></li>
-              <li class="nav-item"><a class="nav-link" href="#about" data-bs-dismiss="offcanvas">About</a></li>
-              <li class="nav-item"><a class="nav-link" href="#pricing" data-bs-dismiss="offcanvas">Pricing</a></li>
-              <li class="nav-item"><a class="nav-link" href="#support" data-bs-dismiss="offcanvas">Support</a></li>
-              <li class="nav-item"><a class="nav-link" href="#faq" data-bs-dismiss="offcanvas">FAQ</a></li>
-              <li class="nav-item"><a class="nav-link" href="#portfolio" data-bs-dismiss="offcanvas">Demos</a></li>
-              <li class="nav-item"><a class="nav-link" href="#developer-profile" data-bs-dismiss="offcanvas">Team</a></li>
-              <li class="nav-item"><a class="nav-link" href="#contact" data-bs-dismiss="offcanvas">Contact</a></li>
+            <ul class="navbar-nav flex-grow-1 pe-3">
+              <li class="nav-item">
+                <a class="nav-link" href="#hero" data-bs-dismiss="offcanvas">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#pricing" data-bs-dismiss="offcanvas">Pricing</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#support" data-bs-dismiss="offcanvas">Support</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#faq" data-bs-dismiss="offcanvas">FAQ</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#portfolio" data-bs-dismiss="offcanvas">Demos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#developer-profile" data-bs-dismiss="offcanvas">Team</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#contact" data-bs-dismiss="offcanvas">Contact</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -210,16 +235,15 @@
     </nav>
     
     <style>
-      /* prevent hero from hiding behind fixed navbar */
+      /* push content down past fixed navbar */
       body {
         padding-top: 70px;
       }
-    
-      /* Override the offcanvas width */
-      #offcanvasNav {
-        --bs-offcanvas-width: 150px; /* whatever width you like */
-      }
+      
+      /* you can also globally override all offcanvas panels: */
+      /* .offcanvas-end { --bs-offcanvas-width: 150px !important; } */
     </style>
+    
     
     
 
