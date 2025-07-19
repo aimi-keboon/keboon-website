@@ -3,167 +3,893 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jordan Lee — Designer Portfolio</title>
+  <title>Jordan Lee — Creative Designer</title>
   <!-- Bootstrap CSS -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
-  <!-- Font Awesome for icons -->
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    rel="stylesheet"
-  />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --color-primary: #2c3e50;
-      --color-secondary: #42a5f5;
-      --color-accent: #ff7043;
-      --color-bg: #ffffff;
-      --color-text: #333333;
+      --bg-primary: #0f0f0f;
+      --bg-secondary: #1a1a1a;
+      --bg-card: #202020;
+      --text-primary: #ffffff;
+      --text-secondary: #b0b0b0;
+      --text-muted: #707070;
+      --accent-primary: #6366f1;
+      --accent-secondary: #a855f7;
+      --accent-tertiary: #ec4899;
+      --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+      --accent-gradient-hover: linear-gradient(135deg, #5b5bf6 0%, #b864fc 50%, #f159a6 100%);
+      --border-color: #2a2a2a;
+      --border-hover: #3a3a3a;
+      --shadow-glow: rgba(99, 102, 241, 0.3);
+      --glass-bg: rgba(32, 32, 32, 0.8);
     }
-    body {
+
+    * {
       margin: 0;
-      font-family: "Segoe UI", sans-serif;
-      background: var(--color-bg);
-      color: var(--color-text);
-    }
-    a { text-decoration: none; color: var(--color-primary); }
-    a:hover { color: var(--color-secondary); }
-    .navbar { background: var(--color-primary); }
-    .navbar-brand,
-    .nav-link { color: #fff !important; }
-    .nav-link:hover { color: var(--color-accent) !important; }
-    #hero {
-      background: var(--color-secondary);
-      color: #fff;
-      text-align: center;
-      padding: 120px 1rem;
-    }
-    #hero svg {
-      width: 100px;
-      height: 100px;
-      margin-bottom: 1rem;
-      fill: #fff;
-    }
-    .section-heading {
-      color: var(--color-primary);
-      margin-bottom: 1rem;
-      font-weight: 600;
-    }
-    .project-card {
-      border: 1px solid #e0e0e0;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .project-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .project-card svg {
-      width: 100%;
-      height: auto;
-      background: #f0f0f0;
-      border-radius: 4px;
-    }
-    .skill-bar {
-      height: 8px;
-      background: #e0e0e0;
-      border-radius: 4px;
-      overflow: hidden;
-      margin-bottom: 1rem;
-    }
-    .skill-bar .fill {
-      height: 100%;
-      background: var(--color-secondary);
-    }
-    .testimonial {
-      border: 1px solid #e0e0e0;
-      padding: 1.5rem;
-      border-radius: 8px;
-      background: #fafafa;
-    }
-    #contact .form-control:focus {
-      border-color: var(--color-secondary);
-      box-shadow: none;
-    }
-    #education .timeline {
-      position: relative;
-      list-style: none;
       padding: 0;
-      margin: 0;
+      box-sizing: border-box;
     }
-    #education .timeline::before {
-      content: "";
-      position: absolute;
-      left: 20px;
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Standard cursor behavior */
+    body {
+      cursor: default;
+    }
+
+    /* Enhanced Navigation */
+    .navbar {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 0;
+      position: fixed;
+      width: 100%;
       top: 0;
-      bottom: 0;
-      width: 2px;
-      background: var(--color-secondary);
+      z-index: 1000;
+      transition: all 0.3s ease;
     }
-    #education .timeline-item {
+
+    .navbar.scrolled {
+      background: rgba(15, 15, 15, 0.95);
+      backdrop-filter: blur(30px);
+      padding: 0.5rem 0;
+    }
+
+    .navbar-brand {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-nav .nav-link {
+      color: var(--text-secondary) !important;
+      font-weight: 500;
+      margin: 0 0.5rem;
+      padding: 0.5rem 1rem !important;
+      border-radius: 25px;
+      transition: all 0.3s ease;
       position: relative;
-      margin-bottom: 2rem;
-      padding-left: 50px;
+      overflow: hidden;
     }
-    #education .timeline-item::before {
-      content: "";
+
+    .navbar-nav .nav-link::before {
+      content: '';
       position: absolute;
-      left: 14px;
-      top: 5px;
-      width: 12px;
-      height: 12px;
-      background: var(--color-secondary);
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--accent-gradient);
+      opacity: 0.1;
+      transition: left 0.3s ease;
+      border-radius: 25px;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: var(--text-primary) !important;
+      transform: translateY(-2px);
+    }
+
+    .navbar-nav .nav-link:hover::before {
+      left: 0;
+    }
+
+    /* Hero Section */
+    #hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background: radial-gradient(ellipse at center, rgba(99, 102, 241, 0.05) 0%, transparent 70%);
+      overflow: hidden;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .hero-avatar {
+      width: 150px;
+      height: 150px;
+      margin: 0 auto 2rem;
+      border-radius: 50%;
+      background: var(--accent-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      box-shadow: 0 0 50px var(--shadow-glow);
+      animation: float 6s ease-in-out infinite;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-avatar::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: rotate 4s linear infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+
+    .hero-subtitle {
+      font-size: 1.5rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      line-height: 1.7;
+    }
+
+    /* Animated Background Elements */
+    .floating-shapes {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .shape {
+      position: absolute;
+      opacity: 0.1;
+      animation: float-shapes 15s ease-in-out infinite;
+    }
+
+    .shape:nth-child(1) {
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .shape:nth-child(2) {
+      top: 60%;
+      right: 10%;
+      animation-delay: 5s;
+    }
+
+    .shape:nth-child(3) {
+      bottom: 20%;
+      left: 20%;
+      animation-delay: 10s;
+    }
+
+    @keyframes float-shapes {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      25% { transform: translateY(-30px) rotate(90deg); }
+      50% { transform: translateY(-60px) rotate(180deg); }
+      75% { transform: translateY(-30px) rotate(270deg); }
+    }
+
+    /* Button Styles */
+    .btn-gradient {
+      background: var(--accent-gradient);
+      border: none;
+      color: var(--text-primary);
+      font-weight: 600;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-gradient::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-gradient:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+      background: var(--accent-gradient-hover);
+      color: var(--text-primary);
+    }
+
+    .btn-gradient:hover::before {
+      left: 100%;
+    }
+
+    /* Section Styles */
+    section {
+      padding: 6rem 0;
+      position: relative;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 4rem;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 4px;
+      background: var(--accent-gradient);
+      border-radius: 2px;
+    }
+
+    /* About Section */
+    .about-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 3rem;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent-gradient);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+
+    .about-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .about-avatar {
+      width: 150px;
+      height: 150px;
+      background: var(--accent-gradient);
+      border-radius: 50%;
+      margin: 0 auto 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-avatar::after {
+      content: '';
+      position: absolute;
+      top: 10%;
+      left: 10%;
+      width: 80%;
+      height: 80%;
+      background: var(--bg-card);
       border-radius: 50%;
     }
-    #education .timeline-item h6 {
-      margin-bottom: 0.25rem;
+
+    /* Project Cards */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      position: relative;
+      group: hover;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--accent-gradient);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 1;
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+      border-color: transparent;
+    }
+
+    .project-card:hover::before {
+      opacity: 0.05;
+    }
+
+    .project-image {
+      height: 250px;
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--accent-gradient);
+      opacity: 0.1;
+      transform: scale(0);
+      transition: transform 0.3s ease;
+      border-radius: 50%;
+    }
+
+    .project-card:hover .project-image::before {
+      transform: scale(2);
+    }
+
+    .project-content {
+      padding: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .project-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
       font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
     }
-    #education .timeline-item p {
-      margin: 0;
-      color: #555;
+
+    .project-description {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
     }
-    #awards .award-card {
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-tag {
+      background: var(--glass-bg);
+      color: var(--text-secondary);
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-outline-gradient {
+      background: transparent;
+      border: 2px solid;
+      border-image: var(--accent-gradient) 1;
+      color: var(--text-primary);
+      padding: 0.5rem 1.5rem;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .btn-outline-gradient:hover {
+      background: var(--accent-gradient);
+      color: var(--text-primary);
+      transform: translateY(-2px);
+    }
+
+    /* Skills Section */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2rem;
       text-align: center;
-      padding: 1.5rem;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      transition: background 0.2s;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
-    #awards .award-card:hover {
-      background: #fafafa;
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--accent-gradient);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
     }
-    #awards .award-card svg {
-      width: 40px;
-      height: 40px;
-      margin-bottom: 0.5rem;
-      fill: var(--color-secondary);
+
+    .skill-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-primary);
     }
+
+    .skill-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .skill-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--accent-gradient);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      font-size: 1.5rem;
+      color: var(--text-primary);
+    }
+
+    .skill-level {
+      width: 100%;
+      height: 6px;
+      background: var(--bg-secondary);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+
+    .skill-progress {
+      height: 100%;
+      background: var(--accent-gradient);
+      border-radius: 3px;
+      transition: width 2s ease;
+      width: 0;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: var(--accent-gradient);
+      border-radius: 2px;
+      transform: translateX(-50%);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin: 3rem 0;
+      padding: 0 2rem;
+    }
+
+    .timeline-item:nth-child(odd) {
+      text-align: right;
+      margin-left: 50%;
+    }
+
+    .timeline-item:nth-child(even) {
+      text-align: left;
+      margin-right: 50%;
+    }
+
+    .timeline-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2rem;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .timeline-content:hover {
+      transform: scale(1.02);
+      border-color: var(--accent-primary);
+    }
+
+    .timeline-dot {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: var(--accent-gradient);
+      border-radius: 50%;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-dot {
+      left: -34px;
+    }
+
+    .timeline-item:nth-child(even) .timeline-dot {
+      right: -34px;
+    }
+
+    /* Testimonials */
+    .testimonial-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2.5rem;
+      position: relative;
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      font-size: 4rem;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-family: serif;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-primary);
+    }
+
+    /* Awards */
+    .awards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .award-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .award-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--accent-gradient);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .award-card:hover {
+      transform: translateY(-5px);
+      color: var(--text-primary);
+    }
+
+    .award-card:hover::before {
+      opacity: 0.1;
+    }
+
+    .award-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--accent-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      font-size: 1.5rem;
+      color: var(--text-primary);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Contact Form */
+    .contact-form {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 3rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .form-floating .form-control {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .form-floating .form-control:focus {
+      background: var(--bg-secondary);
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+      color: var(--text-primary);
+    }
+
+    .form-floating label {
+      color: var(--text-muted);
+    }
+
+    .form-floating .form-control:focus ~ label,
+    .form-floating .form-control:not(:placeholder-shown) ~ label {
+      color: var(--accent-primary);
+    }
+
+    /* Footer */
     footer {
-      background: var(--color-primary);
-      color: #fff;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      padding: 3rem 0 2rem;
       text-align: center;
-      padding: 1rem 0;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .social-link {
+      width: 50px;
+      height: 50px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .social-link:hover {
+      background: var(--accent-gradient);
+      color: var(--text-primary);
+      transform: translateY(-3px);
+      border-color: transparent;
+    }
+
+    /* Animation Classes */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .slide-in-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: all 0.8s ease;
+    }
+
+    .slide-in-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .slide-in-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: all 0.8s ease;
+    }
+
+    .slide-in-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .timeline::before {
+        left: 20px;
+      }
+      
+      .timeline-item {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 3rem;
+        text-align: left !important;
+      }
+      
+      .timeline-item .timeline-dot {
+        left: 12px !important;
+        right: auto !important;
+      }
+      
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .awards-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .skills-grid,
+      .awards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-secondary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent-gradient);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-gradient-hover);
     }
   </style>
 </head>
 <body>
-
-  <!-- NAVBAR -->
+  <!-- Navigation -->
   <nav class="navbar navbar-expand-lg">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="#">Jordan Lee</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-        <span class="navbar-toggler-icon" style="filter: invert(1)"></span>
+      <a class="navbar-brand" href="#hero">Jordan Lee</a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <i class="fas fa-bars text-light"></i>
       </button>
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
           <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
           <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
           <li class="nav-item"><a class="nav-link" href="#testimonials">Testimonials</a></li>
-          <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
           <li class="nav-item"><a class="nav-link" href="#awards">Awards</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
         </ul>
@@ -171,121 +897,493 @@
     </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- Hero Section -->
   <section id="hero">
+    <div class="floating-shapes">
+      <div class="shape">
+        <svg width="100" height="100" viewBox="0 0 100 100">
+          <polygon points="50,5 90,25 90,75 50,95 10,75 10,25" fill="url(#gradient1)" />
+          <defs>
+            <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#6366f1"/>
+              <stop offset="100%" style="stop-color:#a855f7"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="shape">
+        <svg width="80" height="80" viewBox="0 0 80 80">
+          <circle cx="40" cy="40" r="35" fill="url(#gradient2)" />
+          <defs>
+            <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#a855f7"/>
+              <stop offset="100%" style="stop-color:#ec4899"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="shape">
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <rect x="10" y="10" width="100" height="100" rx="20" fill="url(#gradient3)" />
+          <defs>
+            <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#ec4899"/>
+              <stop offset="100%" style="stop-color:#6366f1"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+    </div>
+    
     <div class="container">
-      <svg viewBox="0 0 100 100" aria-label="Logo">
-        <circle cx="50" cy="50" r="48" stroke="#fff" stroke-width="4" fill="none"/>
-        <text x="50" y="60" text-anchor="middle" font-size="36" fill="#fff">JL</text>
-      </svg>
-      <h1 class="display-4 fw-bold">Jordan Lee</h1>
-      <p class="lead">Creative Designer &amp; Visual Storyteller</p>
+      <div class="hero-content">
+        <div class="hero-avatar fade-in">JL</div>
+        <h1 class="hero-title fade-in">Jordan Lee</h1>
+        <p class="hero-subtitle fade-in">Creative Designer & Visual Storyteller</p>
+        <p class="hero-description fade-in">
+          Crafting exceptional digital experiences through innovative design, strategic thinking, and meticulous attention to detail. Specializing in brand identity, web design, and creative direction.
+        </p>
+        <div class="fade-in">
+          <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center align-items-center">
+            <a href="#projects" class="btn-gradient">View My Work</a>
+            <a href="#contact" class="btn-gradient">Get In Touch</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about" class="page-section py-5">
+  <!-- About Section -->
+  <section id="about">
     <div class="container">
-      <h2 class="section-heading text-center">About Me</h2>
+      <h2 class="section-title fade-in">About Me</h2>
       <div class="row align-items-center">
-        <div class="col-md-4 text-center mb-4 mb-md-0">
-          <svg viewBox="0 0 200 200" aria-label="Avatar placeholder">
-            <circle cx="100" cy="100" r="80" fill="#e0e0e0"/>
-          </svg>
+        <div class="col-lg-4 fade-in">
+          <div class="about-avatar"></div>
         </div>
-        <div class="col-md-8">
-          <p>Hello! I’m Jordan, a passionate designer with over 8 years of experience crafting engaging digital experiences. I specialize in branding, web design, and illustration. My goal is to tell your story through compelling visuals.</p>
-          <ul class="list-unstyled">
-            <li><i class="fas fa-check-circle text-secondary me-2"></i>Expert in Adobe Creative Suite</li>
-            <li><i class="fas fa-check-circle text-secondary me-2"></i>Strong UX/UI background</li>
-            <li><i class="fas fa-check-circle text-secondary me-2"></i>Illustration &amp; iconography</li>
-          </ul>
+        <div class="col-lg-8">
+          <div class="about-card slide-in-right">
+            <h3 style="color: var(--accent-primary); margin-bottom: 1.5rem; font-family: 'Space Grotesk', sans-serif;">Passionate About Design Excellence</h3>
+            <p class="mb-4">
+              Hello! I'm Jordan, a creative designer with over 8 years of experience transforming ideas into compelling visual narratives. My passion lies in creating designs that not only look stunning but also solve real problems and drive meaningful engagement.
+            </p>
+            <p class="mb-4">
+              I believe great design is the intersection of aesthetics, functionality, and user experience. Every project I undertake is approached with strategic thinking, creative problem-solving, and an unwavering commitment to excellence.
+            </p>
+            
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="d-flex align-items-center mb-3">
+                  <i class="fas fa-palette me-3" style="color: var(--accent-primary);"></i>
+                  <span>Brand Identity Design</span>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                  <i class="fas fa-mobile-alt me-3" style="color: var(--accent-secondary);"></i>
+                  <span>UI/UX Design</span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex align-items-center mb-3">
+                  <i class="fas fa-paint-brush me-3" style="color: var(--accent-tertiary);"></i>
+                  <span>Digital Illustration</span>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                  <i class="fas fa-globe me-3" style="color: var(--accent-primary);"></i>
+                  <span>Web Design</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-4">
+              <a href="#contact" class="btn-gradient">Let's Collaborate</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PROJECTS -->
-  <section id="projects" class="page-section bg-light py-5">
+  <!-- Projects Section -->
+  <section id="projects" style="background: var(--bg-secondary);">
     <div class="container">
-      <h2 class="section-heading text-center">Selected Projects</h2>
+      <h2 class="section-title fade-in">Featured Projects</h2>
+      <div class="project-grid">
+        <div class="project-card fade-in">
+          <div class="project-image">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="projectGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#6366f1"/>
+                  <stop offset="100%" style="stop-color:#a855f7"/>
+                </linearGradient>
+              </defs>
+              <rect x="10" y="30" width="80" height="40" rx="8" fill="url(#projectGrad1)"/>
+              <circle cx="30" cy="50" r="8" fill="white" opacity="0.3"/>
+              <rect x="45" y="42" width="30" height="4" fill="white" opacity="0.5"/>
+              <rect x="45" y="50" width="20" height="4" fill="white" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">FinTech Rebranding</h3>
+            <p class="project-description">
+              Complete brand overhaul for a growing fintech startup, including logo design, visual identity system, and comprehensive style guide.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Branding</span>
+              <span class="project-tag">Logo Design</span>
+              <span class="project-tag">Style Guide</span>
+            </div>
+            <a href="#" class="btn-outline-gradient">View Case Study</a>
+          </div>
+        </div>
+
+        <div class="project-card fade-in">
+          <div class="project-image">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="projectGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#a855f7"/>
+                  <stop offset="100%" style="stop-color:#ec4899"/>
+                </linearGradient>
+              </defs>
+              <rect x="15" y="20" width="70" height="50" rx="6" fill="url(#projectGrad2)"/>
+              <rect x="20" y="25" width="15" height="8" fill="white" opacity="0.3"/>
+              <rect x="40" y="25" width="25" height="3" fill="white" opacity="0.5"/>
+              <rect x="40" y="30" width="20" height="3" fill="white" opacity="0.5"/>
+              <rect x="20" y="40" width="50" height="3" fill="white" opacity="0.4"/>
+              <rect x="20" y="45" width="45" height="3" fill="white" opacity="0.4"/>
+              <rect x="20" y="50" width="40" height="3" fill="white" opacity="0.4"/>
+            </svg>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Boutique Agency Website</h3>
+            <p class="project-description">
+              Responsive web design for a creative agency, featuring custom animations, mobile optimization, and seamless user experience.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Web Design</span>
+              <span class="project-tag">UX/UI</span>
+              <span class="project-tag">Responsive</span>
+            </div>
+            <a href="#" class="btn-outline-gradient">View Case Study</a>
+          </div>
+        </div>
+
+        <div class="project-card fade-in">
+          <div class="project-image">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="projectGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#ec4899"/>
+                  <stop offset="100%" style="stop-color:#6366f1"/>
+                </linearGradient>
+              </defs>
+              <path d="M30 20 Q50 10 70 20 Q80 40 70 60 Q50 70 30 60 Q20 40 30 20" fill="url(#projectGrad3)"/>
+              <circle cx="40" cy="35" r="3" fill="white" opacity="0.6"/>
+              <circle cx="60" cy="35" r="3" fill="white" opacity="0.6"/>
+              <path d="M45 45 Q50 50 55 45" stroke="white" stroke-width="2" fill="none" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Children's Book Illustrations</h3>
+            <p class="project-description">
+              Whimsical and vibrant illustrations for a children's book series, bringing characters to life with playful storytelling.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Illustration</span>
+              <span class="project-tag">Character Design</span>
+              <span class="project-tag">Storytelling</span>
+            </div>
+            <a href="#" class="btn-outline-gradient">View Case Study</a>
+          </div>
+        </div>
+
+        <div class="project-card fade-in">
+          <div class="project-image">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="projectGrad4" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#6366f1"/>
+                  <stop offset="100%" style="stop-color:#ec4899"/>
+                </linearGradient>
+              </defs>
+              <rect x="25" y="15" width="50" height="70" rx="8" fill="url(#projectGrad4)"/>
+              <rect x="30" y="25" width="40" height="20" rx="4" fill="white" opacity="0.3"/>
+              <rect x="30" y="50" width="25" height="3" fill="white" opacity="0.5"/>
+              <rect x="30" y="55" width="30" height="3" fill="white" opacity="0.5"/>
+              <rect x="30" y="60" width="20" height="3" fill="white" opacity="0.5"/>
+              <circle cx="65" cy="70" r="6" fill="white" opacity="0.4"/>
+            </svg>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Eco-Packaging Design</h3>
+            <p class="project-description">
+              Sustainable packaging concept for a natural skincare line, emphasizing eco-friendly materials and minimalist aesthetics.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Packaging</span>
+              <span class="project-tag">Sustainability</span>
+              <span class="project-tag">Print Design</span>
+            </div>
+            <a href="#" class="btn-outline-gradient">View Case Study</a>
+          </div>
+        </div>
+
+        <div class="project-card fade-in">
+          <div class="project-image">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="projectGrad5" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#a855f7"/>
+                  <stop offset="100%" style="stop-color:#6366f1"/>
+                </linearGradient>
+              </defs>
+              <rect x="20" y="30" width="60" height="40" rx="8" fill="url(#projectGrad5)"/>
+              <rect x="25" y="35" width="10" height="6" fill="white" opacity="0.4"/>
+              <rect x="40" y="35" width="15" height="3" fill="white" opacity="0.5"/>
+              <rect x="40" y="40" width="12" height="3" fill="white" opacity="0.5"/>
+              <rect x="25" y="50" width="20" height="3" fill="white" opacity="0.4"/>
+              <rect x="25" y="55" width="25" height="3" fill="white" opacity="0.4"/>
+              <circle cx="65" cy="55" r="8" fill="white" opacity="0.3"/>
+            </svg>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Mobile App Prototype</h3>
+            <p class="project-description">
+              Interactive prototype for a fitness tracking app, featuring intuitive navigation, user-tested flows, and modern interface design.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">UI/UX</span>
+              <span class="project-tag">Prototyping</span>
+              <span class="project-tag">Mobile Design</span>
+            </div>
+            <a href="#" class="btn-outline-gradient">View Case Study</a>
+          </div>
+        </div>
+
+        <div class="project-card fade-in">
+          <div class="project-image">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="projectGrad6" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#ec4899"/>
+                  <stop offset="100%" style="stop-color:#a855f7"/>
+                </linearGradient>
+              </defs>
+              <rect x="15" y="25" width="70" height="50" rx="4" fill="url(#projectGrad6)"/>
+              <rect x="20" y="30" width="25" height="15" fill="white" opacity="0.3"/>
+              <rect x="50" y="32" width="15" height="3" fill="white" opacity="0.5"/>
+              <rect x="50" y="37" width="20" height="3" fill="white" opacity="0.5"/>
+              <rect x="50" y="42" width="12" height="3" fill="white" opacity="0.5"/>
+              <rect x="20" y="55" width="30" height="3" fill="white" opacity="0.4"/>
+              <rect x="20" y="60" width="25" height="3" fill="white" opacity="0.4"/>
+              <rect x="20" y="65" width="35" height="3" fill="white" opacity="0.4"/>
+            </svg>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Real Estate Marketing</h3>
+            <p class="project-description">
+              Comprehensive marketing collateral for a luxury real estate agency, including brochures, flyers, and digital assets.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">Print Design</span>
+              <span class="project-tag">Marketing</span>
+              <span class="project-tag">Branding</span>
+            </div>
+            <a href="#" class="btn-outline-gradient">View Case Study</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title fade-in">Skills & Expertise</h2>
+      <div class="skills-grid">
+        <div class="skill-card fade-in">
+          <div class="skill-icon">
+            <i class="fab fa-figma"></i>
+          </div>
+          <h4 style="color: var(--text-primary); margin-bottom: 1rem;">UI/UX Design</h4>
+          <p style="color: var(--text-secondary);">Creating intuitive and engaging user experiences</p>
+          <div class="skill-level">
+            <div class="skill-progress" data-level="95"></div>
+          </div>
+        </div>
+
+        <div class="skill-card fade-in">
+          <div class="skill-icon">
+            <i class="fas fa-palette"></i>
+          </div>
+          <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Brand Identity</h4>
+          <p style="color: var(--text-secondary);">Developing cohesive visual brand systems</p>
+          <div class="skill-level">
+            <div class="skill-progress" data-level="90"></div>
+          </div>
+        </div>
+
+        <div class="skill-card fade-in">
+          <div class="skill-icon">
+            <i class="fas fa-code"></i>
+          </div>
+          <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Web Design</h4>
+          <p style="color: var(--text-secondary);">Responsive and interactive web interfaces</p>
+          <div class="skill-level">
+            <div class="skill-progress" data-level="85"></div>
+          </div>
+        </div>
+
+        <div class="skill-card fade-in">
+          <div class="skill-icon">
+            <i class="fas fa-paint-brush"></i>
+          </div>
+          <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Illustration</h4>
+          <p style="color: var(--text-secondary);">Digital illustration and iconography</p>
+          <div class="skill-level">
+            <div class="skill-progress" data-level="88"></div>
+          </div>
+        </div>
+
+        <div class="skill-card fade-in">
+          <div class="skill-icon">
+            <i class="fas fa-print"></i>
+          </div>
+          <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Print Design</h4>
+          <p style="color: var(--text-secondary);">Marketing collateral and packaging design</p>
+          <div class="skill-level">
+            <div class="skill-progress" data-level="82"></div>
+          </div>
+        </div>
+
+        <div class="skill-card fade-in">
+          <div class="skill-icon">
+            <i class="fas fa-video"></i>
+          </div>
+          <h4 style="color: var(--text-primary); margin-bottom: 1rem;">Motion Graphics</h4>
+          <p style="color: var(--text-secondary);">Animated graphics and video content</p>
+          <div class="skill-level">
+            <div class="skill-progress" data-level="75"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Timeline -->
+  <section id="experience" style="background: var(--bg-secondary);">
+    <div class="container">
+      <h2 class="section-title fade-in">Experience & Education</h2>
+      <div class="timeline">
+        <div class="timeline-item slide-in-left">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h4 style="color: var(--accent-primary); margin-bottom: 0.5rem;">Freelance Creative Director</h4>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">2019 - Present</p>
+            <p>Leading creative projects for clients across tech, publishing, and retail sectors. Specializing in brand strategy, digital experiences, and creative direction for high-impact campaigns.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item slide-in-right">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h4 style="color: var(--accent-secondary); margin-bottom: 0.5rem;">Senior Designer at Creative Agency XYZ</h4>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">2016 - 2019</p>
+            <p>Led branding and digital campaign initiatives, mentored junior designers, and collaborated with cross-functional teams to deliver award-winning creative solutions.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item slide-in-left">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h4 style="color: var(--accent-tertiary); margin-bottom: 0.5rem;">Junior Designer at Design Studio</h4>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">2014 - 2016</p>
+            <p>Developed foundational design skills while working on diverse projects including print design, web graphics, and brand identity development.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item slide-in-right">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h4 style="color: var(--accent-primary); margin-bottom: 0.5rem;">B.A. in Visual Arts</h4>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">2012 - 2014</p>
+            <p>Graduated with honors from Art University with a major in Graphic Design. Specialized in visual communication, typography, and design theory.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials">
+    <div class="container">
+      <h2 class="section-title fade-in">What Clients Say</h2>
       <div class="row g-4">
-        <!-- Project Cards -->
-        <div class="col-md-4">
-          <div class="project-card h-100">
-            <svg viewBox="0 0 400 250" aria-label="Project 1 placeholder">
-              <rect width="400" height="250" fill="#f0f0f0"/>
-              <text x="200" y="130" text-anchor="middle" font-size="24" fill="#aaa">Project 1</text>
-            </svg>
-            <div class="p-3">
-              <h5>Brand Identity</h5>
-              <p>Rebranding for a fintech startup, including logo &amp; style guide.</p>
-              <a href="#" class="btn btn-outline-secondary btn-sm">Case Study</a>
+        <div class="col-lg-6 fade-in">
+          <div class="testimonial-card">
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-style: italic; line-height: 1.7;">
+              Jordan delivered an outstanding brand identity that perfectly captured our vision and exceeded our expectations. The attention to detail and creative approach was remarkable.
+            </p>
+            <div class="d-flex align-items-center">
+              <div class="me-3">
+                <div style="width: 50px; height: 50px; background: var(--accent-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">SD</div>
+              </div>
+              <div>
+                <h6 style="color: var(--text-primary); margin-bottom: 0;">Samantha Doe</h6>
+                <small style="color: var(--text-muted);">CEO, FinTech Co.</small>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="project-card h-100">
-            <svg viewBox="0 0 400 250" aria-label="Project 2 placeholder">
-              <rect width="400" height="250" fill="#f0f0f0"/>
-              <text x="200" y="130" text-anchor="middle" font-size="24" fill="#aaa">Project 2</text>
-            </svg>
-            <div class="p-3">
-              <h5>Web Design</h5>
-              <p>Responsive website for a boutique agency, optimized for mobile.</p>
-              <a href="#" class="btn btn-outline-secondary btn-sm">Case Study</a>
+
+        <div class="col-lg-6 fade-in">
+          <div class="testimonial-card">
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-style: italic; line-height: 1.7;">
+              Creative, reliable, and detail-oriented. Jordan's design work significantly improved our user engagement and brand perception. Highly recommended!
+            </p>
+            <div class="d-flex align-items-center">
+              <div class="me-3">
+                <div style="width: 50px; height: 50px; background: var(--accent-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">AN</div>
+              </div>
+              <div>
+                <h6 style="color: var(--text-primary); margin-bottom: 0;">Alex Ng</h6>
+                <small style="color: var(--text-muted);">Founder, Creative Studio</small>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="project-card h-100">
-            <svg viewBox="0 0 400 250" aria-label="Project 3 placeholder">
-              <rect width="400" height="250" fill="#f0f0f0"/>
-              <text x="200" y="130" text-anchor="middle" font-size="24" fill="#aaa">Project 3</text>
-            </svg>
-            <div class="p-3">
-              <h5>Illustration</h5>
-              <p>Custom illustrations for a children’s book, playful &amp; vibrant.</p>
-              <a href="#" class="btn btn-outline-secondary btn-sm">Case Study</a>
+
+        <div class="col-lg-6 fade-in">
+          <div class="testimonial-card">
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-style: italic; line-height: 1.7;">
+              Working with Jordan was a game-changer for our brand. The strategic thinking combined with exceptional design skills delivered results beyond our expectations.
+            </p>
+            <div class="d-flex align-items-center">
+              <div class="me-3">
+                <div style="width: 50px; height: 50px; background: var(--accent-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">MJ</div>
+              </div>
+              <div>
+                <h6 style="color: var(--text-primary); margin-bottom: 0;">Maria Johnson</h6>
+                <small style="color: var(--text-muted);">Marketing Director, Tech Startup</small>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="project-card h-100">
-            <svg viewBox="0 0 400 250" aria-label="Project 4 placeholder">
-              <rect width="400" height="250" fill="#f0f0f0"/>
-              <text x="200" y="130" text-anchor="middle" font-size="24" fill="#aaa">Project 4</text>
-            </svg>
-            <div class="p-3">
-              <h5>Packaging Design</h5>
-              <p>Concept packaging for a natural skincare line, eco-friendly materials.</p>
-              <a href="#" class="btn btn-outline-secondary btn-sm">Case Study</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="project-card h-100">
-            <svg viewBox="0 0 400 250" aria-label="Project 5 placeholder">
-              <rect width="400" height="250" fill="#f0f0f0"/>
-              <text x="200" y="130" text-anchor="middle" font-size="24" fill="#aaa">Project 5</text>
-            </svg>
-            <div class="p-3">
-              <h5>UI Prototype</h5>
-              <p>Interactive prototype for a mobile app, user-tested &amp; validated.</p>
-              <a href="#" class="btn btn-outline-secondary btn-sm">Case Study</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="project-card h-100">
-            <svg viewBox="0 0 400 250" aria-label="Project 6 placeholder">
-              <rect width="400" height="250" fill="#f0f0f0"/>
-              <text x="200" y="130" text-anchor="middle" font-size="24" fill="#aaa">Project 6</text>
-            </svg>
-            <div class="p-3">
-              <h5>Marketing Collateral</h5>
-              <p>Brochure &amp; flyer designs for a real estate agency.</p>
-              <a href="#" class="btn btn-outline-secondary btn-sm">Case Study</a>
+
+        <div class="col-lg-6 fade-in">
+          <div class="testimonial-card">
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-style: italic; line-height: 1.7;">
+              Jordan's ability to translate complex ideas into beautiful, functional designs is truly impressive. Professional, creative, and always delivers on time.
+            </p>
+            <div class="d-flex align-items-center">
+              <div class="me-3">
+                <div style="width: 50px; height: 50px; background: var(--accent-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">DW</div>
+              </div>
+              <div>
+                <h6 style="color: var(--text-primary); margin-bottom: 0;">David Wilson</h6>
+                <small style="color: var(--text-muted);">Product Manager, E-commerce</small>
+              </div>
             </div>
           </div>
         </div>
@@ -293,93 +1391,115 @@
     </div>
   </section>
 
-  <!-- EDUCATION & EXPERIENCE -->
-  <section id="education" class="page-section py-5">
+  <!-- Awards -->
+  <section id="awards" style="background: var(--bg-secondary);">
     <div class="container">
-      <h2 class="section-heading text-center">Education &amp; Experience</h2>
-      <ul class="timeline list-unstyled">
-        <li class="timeline-item mb-4">
-          <h6>2014–2016: B.A. in Visual Arts</h6>
-          <p>Art University — Major in Graphic Design</p>
-        </li>
-        <li class="timeline-item mb-4">
-          <h6>2016–2019: Senior Designer</h6>
-          <p>Creative Agency XYZ — Branding &amp; Digital Campaigns</p>
-        </li>
-        <li class="timeline-item mb-4">
-          <h6>2019–Present: Freelance Designer</h6>
-          <p>Clients across tech, publishing, and retail sectors.</p>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- TESTIMONIALS -->
-  <section id="testimonials" class="page-section bg-light py-5">
-    <div class="container">
-      <h2 class="section-heading text-center">Testimonials</h2>
-      <div class="row g-4 justify-content-center">
-        <div class="col-md-6">
-          <div class="testimonial">
-            <p>“Jordan delivered an outstanding brand identity that perfectly captured our vision.”</p>
-            <p class="fw-bold mb-0">— Samantha Doe, CEO of FinTech Co.</p>
+      <h2 class="section-title fade-in">Awards & Recognition</h2>
+      <div class="awards-grid">
+        <div class="award-card fade-in">
+          <div class="award-icon">
+            <i class="fas fa-trophy"></i>
           </div>
+          <h5 style="color: var(--text-primary); margin-bottom: 0.5rem;">Design Excellence Award</h5>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">International Design Awards 2023</p>
         </div>
-        <div class="col-md-6">
-          <div class="testimonial">
-            <p>“Creative, reliable, and detail-oriented. Our user engagement improved dramatically.”</p>
-            <p class="fw-bold mb-0">— Alex Ng, Founder of Creative Studio</p>
+
+        <div class="award-card fade-in">
+          <div class="award-icon">
+            <i class="fas fa-medal"></i>
           </div>
+          <h5 style="color: var(--text-primary); margin-bottom: 0.5rem;">UX Innovation Prize</h5>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">UX Design Conference 2022</p>
+        </div>
+
+        <div class="award-card fade-in">
+          <div class="award-icon">
+            <i class="fas fa-star"></i>
+          </div>
+          <h5 style="color: var(--text-primary); margin-bottom: 0.5rem;">Creative Director of the Year</h5>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Creative Industry Awards 2021</p>
+        </div>
+
+        <div class="award-card fade-in">
+          <div class="award-icon">
+            <i class="fas fa-award"></i>
+          </div>
+          <h5 style="color: var(--text-primary); margin-bottom: 0.5rem;">Best Brand Identity</h5>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Branding Excellence Awards 2020</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- AWARDS -->
-  <section id="awards" class="page-section py-5">
+  <!-- Contact -->
+  <section id="contact">
     <div class="container">
-      <h2 class="section-heading text-center">Awards &amp; Recognition</h2>
-      <div class="row g-4 justify-content-center">
-        <div class="col-md-3">
-          <div class="award-card">
-            <svg viewBox="0 0 64 64" aria-label="Award icon">
-              <circle cx="32" cy="32" r="30" stroke="#42a5f5" stroke-width="4" fill="none"/>
-              <path d="M20 32 L28 40 L44 24" stroke="#42a5f5" stroke-width="4" fill="none"/>
-            </svg>
-            <p class="mt-2 mb-0">Design Award 2020</p>
+      <h2 class="section-title fade-in">Let's Create Something Amazing</h2>
+      <div class="fade-in">
+        <div class="contact-form">
+          <div class="text-center mb-4">
+            <p style="color: var(--text-secondary); font-size: 1.1rem;">
+              Ready to bring your vision to life? Let's discuss your next project and create something extraordinary together.
+            </p>
           </div>
-        </div>
-        <div class="col-md-3">
-          <div class="award-card">
-            <svg viewBox="0 0 64 64" aria-label="Award icon">
-              <rect x="10" y="10" width="44" height="44" stroke="#42a5f5" stroke-width="4" fill="none"/>
-              <text x="32" y="38" text-anchor="middle" font-size="18" fill="#42a5f5">UX</text>
-            </svg>
-            <p class="mt-2 mb-0">UX Excellence 2021</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="page-section py-5">
-    <div class="container">
-      <h2 class="section-heading text-center">Get In Touch</h2>
-      <div class="row justify-content-center">
-        <div class="col-lg-6">
-          <form>
-            <div class="mb-3">
-              <input type="text" class="form-control" placeholder="Your Name *" required />
+          
+          <form id="contactForm">
+            <div class="row g-3 mb-4">
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
+                  <label for="firstName">First Name *</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
+                  <label for="lastName">Last Name *</label>
+                </div>
+              </div>
             </div>
-            <div class="mb-3">
-              <input type="email" class="form-control" placeholder="Your Email *" required />
+            
+            <div class="row g-3 mb-4">
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input type="email" class="form-control" id="email" placeholder="Email" required>
+                  <label for="email">Email Address *</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input type="tel" class="form-control" id="phone" placeholder="Phone">
+                  <label for="phone">Phone Number</label>
+                </div>
+              </div>
             </div>
-            <div class="mb-3">
-              <textarea class="form-control" rows="4" placeholder="Your Message *" required></textarea>
+            
+            <div class="mb-4">
+              <div class="form-floating">
+                <select class="form-control" id="projectType">
+                  <option value="">Select Project Type</option>
+                  <option value="branding">Brand Identity</option>
+                  <option value="web">Web Design</option>
+                  <option value="ui-ux">UI/UX Design</option>
+                  <option value="illustration">Illustration</option>
+                  <option value="print">Print Design</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
             </div>
+            
+            <div class="mb-4">
+              <div class="form-floating">
+                <textarea class="form-control" id="message" style="height: 120px" placeholder="Message" required></textarea>
+                <label for="message">Tell me about your project *</label>
+              </div>
+            </div>
+            
             <div class="text-center">
-              <button class="btn btn-accent px-5" type="submit">Send Message</button>
+              <button type="submit" class="btn-gradient px-5">
+                <i class="fas fa-paper-plane me-2"></i>
+                Send Message
+              </button>
             </div>
           </form>
         </div>
@@ -387,15 +1507,275 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- Footer -->
   <footer>
-    <div class="container text-center">
-      <p>&copy; <span id="year"></span> Jordan Lee. All rights reserved.</p>
+    <div class="container">
+      <div class="social-links">
+        <a href="#" class="social-link"><i class="fab fa-dribbble"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-behance"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-6 text-md-start">
+          <p style="color: var(--text-muted); margin-bottom: 0;">&copy; <span id="year"></span> Jordan Lee. All rights reserved.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p style="color: var(--text-muted); margin-bottom: 0;">Crafted with passion and creativity</p>
+        </div>
+      </div>
     </div>
   </footer>
 
-  <!-- Bootstrap JS & Year Script -->
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="btn-gradient position-fixed bottom-0 end-0 m-4 rounded-circle" style="width: 50px; height: 50px; display: none; z-index: 1000; border: none;">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+  <script>
+    // Set current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 100) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          
+          // Animate skill progress bars
+          if (entry.target.classList.contains('skill-card')) {
+            const progressBar = entry.target.querySelector('.skill-progress');
+            const level = progressBar.getAttribute('data-level');
+            setTimeout(() => {
+              progressBar.style.width = level + '%';
+            }, 300);
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Observe all animated elements
+    document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Observe skill cards for progress animation
+    document.querySelectorAll('.skill-card').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Back to top button
+    const backToTopBtn = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 300) {
+        backToTopBtn.style.display = 'block';
+      } else {
+        backToTopBtn.style.display = 'none';
+      }
+    });
+
+    backToTopBtn.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Form submission handling
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const submitBtn = this.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+      submitBtn.disabled = true;
+      
+      // Simulate form submission
+      setTimeout(function() {
+        submitBtn.innerHTML = '<i class="fas fa-check me-2"></i>Message Sent!';
+        submitBtn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+        
+        setTimeout(function() {
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+          submitBtn.style.background = 'var(--accent-gradient)';
+          document.getElementById('contactForm').reset();
+        }, 2000);
+      }, 1500);
+    });
+
+    // Enhanced project card interactions
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-10px) scale(1.02)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) scale(1)';
+      });
+    });
+
+    // Parallax effect for floating shapes
+    window.addEventListener('scroll', function() {
+      const scrolled = window.pageYOffset;
+      const shapes = document.querySelectorAll('.shape');
+      
+      shapes.forEach((shape, index) => {
+        const rate = scrolled * (0.2 + index * 0.1);
+        shape.style.transform = `translateY(${rate}px) rotate(${rate * 0.5}deg)`;
+      });
+    });
+
+    // Typewriter effect for hero subtitle
+    const subtitle = document.querySelector('.hero-subtitle');
+    const text = 'Creative Designer & Visual Storyteller';
+    subtitle.textContent = '';
+    
+    let i = 0;
+    function typeWriter() {
+      if (i < text.length) {
+        subtitle.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 100);
+      }
+    }
+    
+    // Start typewriter effect after hero loads
+    setTimeout(typeWriter, 1000);
+
+    // Add loading animation delay to elements
+    document.querySelectorAll('.fade-in').forEach((el, index) => {
+      el.style.animationDelay = `${index * 0.1}s`;
+    });
+
+    // Enhanced mobile menu
+    const navbarToggler = document.querySelector('.navbar-toggler');
+    const navbarCollapse = document.querySelector('.navbar-collapse');
+    
+    navbarToggler.addEventListener('click', function() {
+      this.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+      link.addEventListener('click', function() {
+        navbarCollapse.classList.remove('show');
+        navbarToggler.classList.remove('active');
+      });
+    });
+
+    // Random floating animation for shapes
+    function randomFloat() {
+      document.querySelectorAll('.shape').forEach(shape => {
+        const randomX = Math.random() * 20 - 10;
+        const randomY = Math.random() * 20 - 10;
+        const randomRotate = Math.random() * 360;
+        
+        shape.style.transform += ` translate(${randomX}px, ${randomY}px) rotate(${randomRotate}deg)`;
+      });
+    }
+
+    setInterval(randomFloat, 5000);
+
+    // Project filter functionality (if needed later)
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    // Add stagger effect to project cards
+    projectCards.forEach((card, index) => {
+      card.style.animationDelay = `${index * 0.1}s`;
+    });
+
+    // Skills animation trigger
+    function animateSkills() {
+      const skillCards = document.querySelectorAll('.skill-card');
+      skillCards.forEach((card, index) => {
+        setTimeout(() => {
+          card.style.transform = 'translateY(-5px)';
+          setTimeout(() => {
+            card.style.transform = 'translateY(0)';
+          }, 200);
+        }, index * 100);
+      });
+    }
+
+    // Trigger skills animation when skills section is visible
+    const skillsObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateSkills();
+          skillsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    const skillsSection = document.querySelector('#skills');
+    if (skillsSection) {
+      skillsObserver.observe(skillsSection);
+    }
+
+    // Easter egg: Konami code
+    let konamiCode = [];
+    const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // Up Up Down Down Left Right Left Right B A
+
+    document.addEventListener('keydown', function(e) {
+      konamiCode.push(e.keyCode);
+      if (konamiCode.length > konamiSequence.length) {
+        konamiCode.shift();
+      }
+      
+      if (JSON.stringify(konamiCode) === JSON.stringify(konamiSequence)) {
+        // Easter egg activated
+        document.body.style.animation = 'rainbow 2s infinite';
+        setTimeout(() => {
+          document.body.style.animation = '';
+        }, 5000);
+      }
+    });
+
+    // Add rainbow animation keyframes
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes rainbow {
+        0% { filter: hue-rotate(0deg); }
+        100% { filter: hue-rotate(360deg); }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
 </body>
-</html>
+</html> 

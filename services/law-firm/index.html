@@ -1,355 +1,1304 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Smith &amp; Partners Law Firm</title>
+  <title>Smith & Partners Law Firm</title>
   <!-- Bootstrap CSS -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
-  <!-- Font Awesome for icons -->
-  <link
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    rel="stylesheet"
-  />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark: #000;
-      --text-light: #f5f5f5;
-      --accent-gold: #d4af37;
-      --table-bg: #111;
-      --table-border: #222;
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #111111;
+      --bg-card: #1a1a1a;
+      --text-primary: #ffffff;
+      --text-secondary: #e0e0e0;
+      --text-muted: #b8b8b8;
+      --accent-gold: #c9a96e;
+      --accent-gold-hover: #b8965a;
+      --accent-gold-light: rgba(201, 169, 110, 0.1);
+      --border-color: #2a2a2a;
+      --border-hover: #3a3a3a;
+      --shadow-light: rgba(201, 169, 110, 0.15);
+      --gradient-gold: linear-gradient(135deg, #c9a96e 0%, #b8965a 100%);
+      --glass-bg: rgba(26, 26, 26, 0.8);
     }
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-light);
-      font-family: "Segoe UI", sans-serif;
-    }
-    a.btn-accent {
-      color: var(--bg-dark);
-      background-color: var(--accent-gold);
-      border: none;
-    }
-    a.btn-accent:hover {
-      background-color: #c39b2a;
-    }
-    nav.navbar { background-color: #111; }
-    nav .navbar-brand svg {
-      width: 32px; height: 32px;
-      fill: var(--accent-gold);
-    }
-    #hero {
-      background: url('https://source.unsplash.com/1600x900/?law,justice') center/cover no-repeat;
-      padding: 120px 0;
-      text-align: center;
-      position: relative;
-    }
-    #hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-    }
-    #hero .container { position: relative; z-index: 1; }
-    #hero h1, #hero p { color: var(--accent-gold); }
-    .card {
-      background-color: #111;
-      border: 1px solid #222;
-    }
-    .card-header {
-      background-color: #111;
-      color: var(--accent-gold);
-      font-weight: bold;
-      border-bottom: 1px solid var(--table-border);
-    }
-    .table-dark {
-      background-color: var(--table-bg);
-      color: var(--text-light);
-    }
-    .table-dark th, .table-dark td {
-      border-color: var(--table-border);
-    }
-    .form-control-dark {
-      background-color: #111;
-      color: var(--text-light);
-      border: 1px solid #222;
-    }
-    .legend {
-      list-style: none;
+
+    * {
+      margin: 0;
       padding: 0;
-      margin: 0 auto;
-      display: inline-block;
-      text-align: left;
+      box-sizing: border-box;
     }
-    .legend li {
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Smooth scrolling and animations */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Enhanced Navigation */
+    .navbar {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 0;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .navbar.scrolled {
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(30px);
+      padding: 0.5rem 0;
+    }
+
+    .navbar-brand {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      font-size: 1.5rem;
+      color: var(--accent-gold) !important;
+      transition: all 0.3s ease;
+    }
+
+    .navbar-brand:hover {
+      transform: scale(1.05);
+    }
+
+    .navbar-nav .nav-link {
+      color: var(--text-secondary) !important;
+      font-weight: 500;
+      margin: 0 0.5rem;
+      padding: 0.5rem 1rem !important;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .navbar-nav .nav-link::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-gold);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: var(--text-primary) !important;
+      background: var(--accent-gold-light);
+    }
+
+    .navbar-nav .nav-link:hover::before {
+      width: 80%;
+    }
+
+    /* Hero Section */
+    #hero {
+      height: 100vh;
+      background: linear-gradient(135deg, rgba(10, 10, 10, 0.8) 0%, rgba(26, 26, 26, 0.6) 100%),
+                  url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center center/cover no-repeat;
+      background-attachment: fixed;
+      background-position: center center;
       display: flex;
       align-items: center;
-      margin-bottom: 0.5rem;
+      position: relative;
+      overflow: hidden;
     }
-    .legend span {
-      display: inline-block;
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 30% 50%, rgba(201, 169, 110, 0.1) 0%, transparent 50%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 700;
+      background: var(--gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .hero-subtitle {
+      font-size: 1.3rem;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+    }
+
+    .btn-primary-gold {
+      background: var(--gradient-gold);
+      border: none;
+      color: var(--bg-primary);
+      font-weight: 600;
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary-gold::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-primary-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px var(--shadow-light);
+      color: var(--bg-primary);
+    }
+
+    .btn-primary-gold:hover::before {
+      left: 100%;
+    }
+
+    /* Statistics Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .stat-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      padding: 2rem;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: var(--gradient-gold);
+      transition: left 0.5s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-gold);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+
+    .stat-card:hover::before {
+      left: 0;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      display: block;
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    /* Services Section */
+    .service-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2.5rem;
+      height: 100%;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--accent-gold-light) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent-gold);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--gradient-gold);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    .service-card:hover .service-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .service-icon i {
+      font-size: 2rem;
+      color: var(--bg-primary);
+    }
+
+    .service-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+      position: relative;
+      z-index: 2;
+    }
+
+    .service-description {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Chart Container */
+    .chart-container {
+      background: var(--bg-card);
+      border-radius: 24px;
+      padding: 3rem;
+      border: 1px solid var(--border-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .chart-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, var(--accent-gold-light) 0%, transparent 70%);
+      opacity: 0.3;
+    }
+
+    .donut-chart {
+      position: relative;
+      z-index: 2;
+    }
+
+    .chart-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.8rem;
+      background: var(--glass-bg);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .legend-item:hover {
+      background: var(--accent-gold-light);
+      transform: translateX(5px);
+    }
+
+    .legend-color {
       width: 16px;
       height: 16px;
-      margin-right: 8px;
+      border-radius: 4px;
+    }
+
+    .legend-text {
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .legend-item small {
+      color: var(--text-muted) !important;
+    }
+
+    /* Team Cards */
+    .team-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .team-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--gradient-gold);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+
+    .team-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--accent-gold);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+    }
+
+    .team-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .team-avatar {
+      width: 120px;
+      height: 120px;
+      background: var(--gradient-gold);
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: var(--bg-primary);
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .team-card:hover .team-avatar {
+      transform: scale(1.05);
+    }
+
+    .team-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--accent-gold);
+    }
+
+    .team-role {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .team-description {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Contact Form */
+    .contact-form {
+      background: var(--bg-card);
+      border-radius: 24px;
+      padding: 3rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .contact-form h5 {
+      color: var(--accent-gold) !important;
+    }
+
+    .contact-info strong {
+      color: var(--text-primary) !important;
+    }
+
+    .contact-info .text-muted {
+      color: var(--text-muted) !important;
+    }
+
+    .social-links h6 {
+      color: var(--accent-gold) !important;
+    }
+
+    .social-links a {
+      color: var(--text-muted) !important;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--accent-gold) !important;
+    }
+
+    .form-floating .form-control {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-primary);
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .form-floating .form-control:focus {
+      background: var(--bg-secondary);
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 0 0.2rem var(--accent-gold-light);
+      color: var(--text-primary);
+    }
+
+    .form-floating label {
+      color: var(--text-muted);
+    }
+
+    .form-floating .form-control:focus ~ label,
+    .form-floating .form-control:not(:placeholder-shown) ~ label {
+      color: var(--accent-gold);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      padding: 3rem 0 2rem;
+    }
+
+    footer h5,
+    footer h6 {
+      color: var(--accent-gold) !important;
+    }
+
+    footer p {
+      color: var(--text-secondary) !important;
+    }
+
+    footer .text-muted {
+      color: var(--text-muted) !important;
+    }
+
+    footer a.text-muted {
+      color: var(--text-muted) !important;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    footer a.text-muted:hover {
+      color: var(--accent-gold) !important;
+    }
+
+    footer .social-links a {
+      color: var(--text-muted) !important;
+      transition: color 0.3s ease;
+    }
+
+    footer .social-links a:hover {
+      color: var(--accent-gold) !important;
+    }
+
+    /* Section Styling */
+    section {
+      padding: 6rem 0;
+      position: relative;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 4rem;
+      background: var(--gradient-gold);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+      
+      .stat-card {
+        padding: 1.5rem;
+      }
+      
+      .service-card,
+      .team-card,
+      .contact-form {
+        padding: 2rem;
+      }
+    }
+
+    /* Loading Animation */
+    .loading {
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-secondary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent-gold);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-gold-hover);
     }
   </style>
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark py-3">
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg">
     <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="#">
-        <svg viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="48" stroke="var(--accent-gold)" stroke-width="4" fill="none"/>
-          <text x="50" y="58" text-anchor="middle" font-size="48" fill="var(--accent-gold)" font-family="Segoe UI">SP</text>
-        </svg>
-        <span class="ms-2">Smith &amp; Partners</span>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-        <span class="navbar-toggler-icon"></span>
+      <a class="navbar-brand" href="#hero">Smith & Partners</a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <i class="fas fa-bars text-light"></i>
       </button>
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-          <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
           <li class="nav-item"><a class="nav-link" href="#insights">Insights</a></li>
-          <li class="nav-item"><a class="nav-link" href="#team">Our Lawyers</a></li>
+          <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <!-- HERO -->
-  <header id="hero">
+  <!-- Hero Section -->
+  <section id="hero">
     <div class="container">
-      <h1 class="display-4 fw-bold">Smith &amp; Partners</h1>
-      <p class="lead">Premium Legal Services in Corporate, Litigation &amp; Family Law</p>
-      <a href="#contact" class="btn btn-accent btn-lg mt-3">Request Consultation</a>
-    </div>
-  </header>
-
-  <!-- SERVICES & QUICK STATS -->
-  <section id="services" class="py-5">
-    <div class="container">
-      <h2 class="text-center mb-4" style="color: var(--accent-gold);">Our Practice Areas</h2>
-      <div class="row g-4 text-center">
-        <div class="col-md-4">
-          <i class="fas fa-balance-scale fa-3x mb-2" style="color: var(--accent-gold);"></i>
-          <h5>Corporate Law</h5>
+      <div class="row align-items-center" style="min-height: 80vh; padding-top: 100px;">
+        <div class="col-lg-8">
+          <div class="hero-content loading">
+            <h1 class="hero-title">Excellence in Legal Advocacy</h1>
+            <p class="hero-subtitle">
+              Delivering sophisticated legal solutions across corporate law, litigation, and family matters with unwavering commitment to our clients' success.
+            </p>
+            <a href="#contact" class="btn btn-primary-gold">
+              Schedule Consultation
+              <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+          </div>
         </div>
-        <div class="col-md-4">
-          <i class="fas fa-gavel fa-3x mb-2" style="color: var(--accent-gold);"></i>
-          <h5>Litigation</h5>
-        </div>
-        <div class="col-md-4">
-          <i class="fas fa-user-shield fa-3x mb-2" style="color: var(--accent-gold);"></i>
-          <h5>Family Law</h5>
-        </div>
-      </div>
-      <div class="table-responsive mt-5">
-        <table class="table table-dark table-striped text-center">
-          <thead>
-            <tr>
-              <th>Metric</th>
-              <th>Value</th>
-              <th>Growth</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Cases Handled</td>
-              <td>1,200+</td>
-              <td>+15% YoY</td>
-            </tr>
-            <tr>
-              <td>Clients Served</td>
-              <td>850+</td>
-              <td>+10% YoY</td>
-            </tr>
-            <tr>
-              <td>Success Rate</td>
-              <td>92%</td>
-              <td>—</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     </div>
   </section>
 
-  <!-- INSIGHTS: DONUT CHART -->
-  <section id="insights" class="py-5 bg-black">
+  <!-- Statistics Section -->
+  <section class="py-5" style="background: var(--bg-primary); margin-top: -50px; position: relative; z-index: 10;">
     <div class="container">
-      <h2 class="text-center mb-4" style="color: var(--accent-gold);">Case Distribution</h2>
+      <div class="stats-grid loading" style="animation-delay: 0.3s;">
+        <div class="stat-card">
+          <span class="stat-number">1,200+</span>
+          <div class="stat-label">Cases Resolved</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">92%</span>
+          <div class="stat-label">Success Rate</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">25+</span>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">850+</span>
+          <div class="stat-label">Satisfied Clients</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services">
+    <div class="container">
+      <h2 class="section-title fade-in">Our Practice Areas</h2>
+      <div class="row g-4">
+        <div class="col-lg-4 fade-in" style="animation-delay: 0.1s;">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-building"></i>
+            </div>
+            <h3 class="service-title">Corporate Law</h3>
+            <p class="service-description">
+              Comprehensive corporate legal services including mergers & acquisitions, compliance, governance, and strategic business planning for companies of all sizes.
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-4 fade-in" style="animation-delay: 0.2s;">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-gavel"></i>
+            </div>
+            <h3 class="service-title">Commercial Litigation</h3>
+            <p class="service-description">
+              Expert representation in complex commercial disputes, contract litigation, and business conflicts with a proven track record of favorable outcomes.
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-4 fade-in" style="animation-delay: 0.3s;">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3 class="service-title">Family Law</h3>
+            <p class="service-description">
+              Compassionate and skilled representation in family matters including divorce, custody, estate planning, and domestic relations with discretion and care.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Insights Section -->
+  <section id="insights" style="background: var(--bg-secondary);">
+    <div class="container">
+      <h2 class="section-title fade-in">Practice Distribution</h2>
       <div class="row justify-content-center">
-        <div class="col-md-6 text-center">
-          <svg viewBox="0 0 32 32" width="200" height="200" preserveAspectRatio="xMidYMid meet">
-            <circle
-              r="12" cx="16" cy="16"
-              fill="none"
-              stroke="#d4af37"
-              stroke-width="8"
-              stroke-dasharray="30.16 45.24"
-              transform="rotate(-90 16 16)"
-            />
-            <circle
-              r="12" cx="16" cy="16"
-              fill="none"
-              stroke="#555"
-              stroke-width="8"
-              stroke-dasharray="26.39 48.99"
-              stroke-dashoffset="-30.16"
-              transform="rotate(-90 16 16)"
-            />
-            <circle
-              r="12" cx="16" cy="16"
-              fill="none"
-              stroke="#888"
-              stroke-width="8"
-              stroke-dasharray="18.85 56.55"
-              stroke-dashoffset="-56.55"
-              transform="rotate(-90 16 16)"
-            />
-          </svg>
-          <ul class="legend mt-3">
-            <li><span style="background:#d4af37;"></span>Corporate (40%)</li>
-            <li><span style="background:#555;"></span>Litigation (35%)</li>
-            <li><span style="background:#888;"></span>Family (25%)</li>
-          </ul>
+        <div class="col-lg-8">
+          <div class="chart-container fade-in">
+            <div class="row align-items-center">
+              <div class="col-md-6 text-center">
+                <div class="donut-chart">
+                  <svg viewBox="0 0 32 32" width="280" height="280" preserveAspectRatio="xMidYMid meet">
+                    <!-- Corporate (40%) -->
+                    <circle
+                      r="12" cx="16" cy="16"
+                      fill="none"
+                      stroke="#c9a96e"
+                      stroke-width="6"
+                      stroke-dasharray="30.16 45.24"
+                      transform="rotate(-90 16 16)"
+                      opacity="0"
+                    >
+                      <animate attributeName="stroke-dasharray" values="0 75.4;30.16 45.24" dur="2s" begin="0.5s" fill="freeze"/>
+                      <animate attributeName="opacity" values="0;1" dur="0.5s" begin="0.5s" fill="freeze"/>
+                    </circle>
+                    <!-- Litigation (35%) -->
+                    <circle
+                      r="12" cx="16" cy="16"
+                      fill="none"
+                      stroke="#888"
+                      stroke-width="6"
+                      stroke-dasharray="26.39 48.99"
+                      stroke-dashoffset="-30.16"
+                      transform="rotate(-90 16 16)"
+                      opacity="0"
+                    >
+                      <animate attributeName="stroke-dasharray" values="0 75.4;26.39 48.99" dur="2s" begin="1s" fill="freeze"/>
+                      <animate attributeName="opacity" values="0;1" dur="0.5s" begin="1s" fill="freeze"/>
+                    </circle>
+                    <!-- Family (25%) -->
+                    <circle
+                      r="12" cx="16" cy="16"
+                      fill="none"
+                      stroke="#555"
+                      stroke-width="6"
+                      stroke-dasharray="18.85 56.55"
+                      stroke-dashoffset="-56.55"
+                      transform="rotate(-90 16 16)"
+                      opacity="0"
+                    >
+                      <animate attributeName="stroke-dasharray" values="0 75.4;18.85 56.55" dur="2s" begin="1.5s" fill="freeze"/>
+                      <animate attributeName="opacity" values="0;1" dur="0.5s" begin="1.5s" fill="freeze"/>
+                    </circle>
+                  </svg>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="chart-legend">
+                  <div class="legend-item">
+                    <div class="legend-color" style="background: #c9a96e;"></div>
+                    <div>
+                      <div class="legend-text">Corporate Law</div>
+                      <small>40% of our practice</small>
+                    </div>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-color" style="background: #888;"></div>
+                    <div>
+                      <div class="legend-text">Commercial Litigation</div>
+                      <small>35% of our practice</small>
+                    </div>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-color" style="background: #555;"></div>
+                    <div>
+                      <div class="legend-text">Family Law</div>
+                      <small>25% of our practice</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about" class="py-5">
+  <!-- About Section -->
+  <section id="about">
     <div class="container">
-      <h2 class="text-center mb-4" style="color: var(--accent-gold);">About Us</h2>
+      <h2 class="section-title fade-in">About Smith & Partners</h2>
       <div class="row align-items-center">
-        <div class="col-md-6 mb-4 mb-md-0">
-          <svg width="100%" height="auto" viewBox="0 0 200 120">
-            <rect width="200" height="120" fill="#111" />
-            <circle cx="60" cy="60" r="40" fill="#d4af37" opacity="0.3"/>
-            <circle cx="140" cy="60" r="40" fill="#d4af37" opacity="0.3"/>
-            <text x="100" y="68" fill="#f5f5f5" text-anchor="middle" font-size="16">25+ Years</text>
-          </svg>
+        <div class="col-lg-6 fade-in">
+          <div class="service-card">
+            <h3 style="color: var(--accent-gold); margin-bottom: 1.5rem;">25+ Years of Legal Excellence</h3>
+            <p class="mb-4">
+              Founded on principles of integrity, expertise, and unwavering client commitment, Smith & Partners has evolved into one of the region's most trusted legal practices. Our multi-disciplinary approach ensures comprehensive solutions for complex legal challenges.
+            </p>
+            <div class="row g-3">
+              <div class="col-6">
+                <div class="d-flex align-items-center mb-3">
+                  <i class="fas fa-check-circle text-warning me-3"></i>
+                  <span>Multi-jurisdictional licensing</span>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="d-flex align-items-center mb-3">
+                  <i class="fas fa-check-circle text-warning me-3"></i>
+                  <span>24/7 client support</span>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="d-flex align-items-center mb-3">
+                  <i class="fas fa-check-circle text-warning me-3"></i>
+                  <span>Transparent pricing</span>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="d-flex align-items-center mb-3">
+                  <i class="fas fa-check-circle text-warning me-3"></i>
+                  <span>Proven track record</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-md-6">
-          <p>Smith &amp; Partners brings over a quarter-century of experience across major legal domains. Our dedication to excellence and client-first approach has earned us a reputation for reliability and results.</p>
-          <ul>
-            <li>Multi-jurisdictional licensing</li>
-            <li>1,200+ cases resolved</li>
-            <li>Clear, transparent communication</li>
+        <div class="col-lg-6 fade-in" style="animation-delay: 0.2s;">
+          <div class="text-center">
+            <svg width="100%" height="300" viewBox="0 0 400 300">
+              <defs>
+                <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#c9a96e;stop-opacity:0.8" />
+                  <stop offset="100%" style="stop-color:#b8965a;stop-opacity:0.4" />
+                </linearGradient>
+              </defs>
+              <rect width="400" height="300" fill="var(--bg-card)" rx="16"/>
+              <circle cx="150" cy="150" r="60" fill="url(#goldGradient)" opacity="0.6"/>
+              <circle cx="250" cy="150" r="60" fill="url(#goldGradient)" opacity="0.4"/>
+              <rect x="120" y="220" width="160" height="40" fill="url(#goldGradient)" rx="20"/>
+              <text x="200" y="170" fill="var(--text-primary)" text-anchor="middle" font-size="24" font-weight="bold">EXCELLENCE</text>
+              <text x="200" y="245" fill="var(--bg-primary)" text-anchor="middle" font-size="16" font-weight="600">SINCE 1999</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team" style="background: var(--bg-secondary);">
+    <div class="container">
+      <h2 class="section-title fade-in">Our Legal Team</h2>
+      <div class="row g-4">
+        <div class="col-lg-4 fade-in" style="animation-delay: 0.1s;">
+          <div class="team-card">
+            <div class="team-avatar">AR</div>
+            <h4 class="team-name">Alexandra Reed</h4>
+            <div class="team-role">Senior Partner</div>
+            <p class="team-description">
+              Leading our corporate practice with over 20 years of experience in mergers & acquisitions, securities law, and corporate governance. Alexandra has guided Fortune 500 companies through complex transactions worth over $2 billion.
+            </p>
+            <a href="#" class="btn btn-primary-gold btn-sm">View Profile</a>
+          </div>
+        </div>
+        <div class="col-lg-4 fade-in" style="animation-delay: 0.2s;">
+          <div class="team-card">
+            <div class="team-avatar">MT</div>
+            <h4 class="team-name">Marcus Tan</h4>
+            <div class="team-role">Litigation Director</div>
+            <p class="team-description">
+              A formidable advocate in commercial litigation with an exceptional 94% success rate. Marcus specializes in high-stakes business disputes, intellectual property litigation, and class action defense.
+            </p>
+            <a href="#" class="btn btn-primary-gold btn-sm">View Profile</a>
+          </div>
+        </div>
+        <div class="col-lg-4 fade-in" style="animation-delay: 0.3s;">
+          <div class="team-card">
+            <div class="team-avatar">RK</div>
+            <h4 class="team-name">Rina S. Kapoor</h4>
+            <div class="team-role">Family Law Specialist</div>
+            <p class="team-description">
+              Compassionate yet strategic representation in family law matters. Rina's expertise in complex custody cases, high-net-worth divorces, and estate planning has earned her recognition as a leading family law attorney.
+            </p>
+            <a href="#" class="btn btn-primary-gold btn-sm">View Profile</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title fade-in">Get in Touch</h2>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="contact-form fade-in">
+            <div class="row">
+              <div class="col-lg-8">
+                <form id="contactForm">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
+                        <label for="firstName">First Name *</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
+                        <label for="lastName">Last Name *</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                        <input type="email" class="form-control" id="email" placeholder="Email" required>
+                        <label for="email">Email Address *</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-floating">
+                        <input type="tel" class="form-control" id="phone" placeholder="Phone">
+                        <label for="phone">Phone Number</label>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-floating">
+                        <select class="form-control" id="service">
+                          <option value="">Select Service</option>
+                          <option value="corporate">Corporate Law</option>
+                          <option value="litigation">Commercial Litigation</option>
+                          <option value="family">Family Law</option>
+                          <option value="consultation">General Consultation</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-floating">
+                        <textarea class="form-control" id="message" style="height: 120px" placeholder="Message" required></textarea>
+                        <label for="message">How can we help you? *</label>
+                      </div>
+                    </div>
+                    <div class="col-12 text-center">
+                      <button type="submit" class="btn btn-primary-gold px-5">
+                        <i class="fas fa-paper-plane me-2"></i>
+                        Send Message
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="col-lg-4">
+                <div class="ps-lg-4">
+                  <h5 class="mb-4">Contact Information</h5>
+                  
+                  <div class="contact-info mb-4">
+                    <div class="d-flex align-items-start mb-3">
+                      <i class="fas fa-map-marker-alt text-warning me-3 mt-1"></i>
+                      <div>
+                        <strong>Address</strong><br>
+                        <span class="text-muted">123 Legal Avenue<br>Cityville, State 12345</span>
+                      </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-start mb-3">
+                      <i class="fas fa-phone text-warning me-3 mt-1"></i>
+                      <div>
+                        <strong>Phone</strong><br>
+                        <span class="text-muted">(123) 456-7890</span>
+                      </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-start mb-3">
+                      <i class="fas fa-envelope text-warning me-3 mt-1"></i>
+                      <div>
+                        <strong>Email</strong><br>
+                        <span class="text-muted">info@smithpartners.com</span>
+                      </div>
+                    </div>
+                    
+                    <div class="d-flex align-items-start mb-3">
+                      <i class="fas fa-clock text-warning me-3 mt-1"></i>
+                      <div>
+                        <strong>Hours</strong><br>
+                        <span class="text-muted">Mon-Fri: 8:00 AM - 6:00 PM<br>Sat: 9:00 AM - 2:00 PM</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="social-links">
+                    <h6>Follow Us</h6>
+                    <div class="d-flex gap-3">
+                      <a href="#" class="fs-5"><i class="fab fa-linkedin"></i></a>
+                      <a href="#" class="fs-5"><i class="fab fa-twitter"></i></a>
+                      <a href="#" class="fs-5"><i class="fab fa-facebook"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 mb-4">
+          <h5 class="mb-3">Smith & Partners</h5>
+          <p>
+            Delivering exceptional legal services with integrity, expertise, and unwavering commitment to our clients' success.
+          </p>
+          <div class="d-flex gap-3 social-links">
+            <a href="#" class="fs-5"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="fs-5"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="fs-5"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="fs-5"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6 mb-4">
+          <h6 class="mb-3">Services</h6>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-muted text-decoration-none">Corporate Law</a></li>
+            <li><a href="#" class="text-muted text-decoration-none">Litigation</a></li>
+            <li><a href="#" class="text-muted text-decoration-none">Family Law</a></li>
+            <li><a href="#" class="text-muted text-decoration-none">Estate Planning</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6 mb-4">
+          <h6 class="mb-3">Company</h6>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-muted text-decoration-none">About Us</a></li>
+            <li><a href="#" class="text-muted text-decoration-none">Our Team</a></li>
+            <li><a href="#" class="text-muted text-decoration-none">Careers</a></li>
+            <li><a href="#" class="text-muted text-decoration-none">News</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6 mb-4">
+          <h6 class="mb-3">Resources</h6>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-muted text-decoration-none">Legal Blog</a></li>
+            <li><a href="#" class="text-muted text-decoration-none">Case Studies</a></li>
+            <li><a href="#" class="text-muted text-decoration-none">Legal Forms</a></li>
+            <li><a href="#" class="text-muted text-decoration-none">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6 mb-4">
+          <h6 class="mb-3">Legal</h6>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-muted text-decoration-none">Privacy Policy</a></li>
+            <li><a href="#" class="text-muted text-decoration-none">Terms of Service</a></li>
+            <li><a href="#" class="text-muted text-decoration-none">Disclaimer</a></li>
+            <li><a href="#" class="text-muted text-decoration-none">Accessibility</a></li>
           </ul>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- OUR LAWYERS -->
-  <section id="team" class="py-5">
-    <div class="container">
-      <h2 class="text-center mb-4" style="color: var(--accent-gold);">Our Lawyers</h2>
-      <div class="row g-4 justify-content-center">
-        <!-- Profile 1 -->
-        <div class="col-md-4">
-          <div class="card text-center h-100 shadow-sm">
-            <div class="card-body d-flex flex-column">
-              <svg width="80" height="80" class="mx-auto mb-3" viewBox="0 0 100 100">
-                <circle cx="50" cy="35" r="25" fill="#555"/>
-                <rect x="25" y="60" width="50" height="30" fill="#555"/>
-              </svg>
-              <h5 class="card-title text-accent">Alexandra Reed</h5>
-              <p class="card-subtitle mb-2">Senior Partner</p>
-              <p class="flex-grow-1">
-                20 years’ experience in corporate mergers & acquisitions, guiding clients through complex deals.
-              </p>
-              <a href="#" class="btn btn-accent btn-sm mt-auto">View Profile</a>
-            </div>
-          </div>
+      <hr style="border-color: var(--border-color); margin: 2rem 0 1rem;">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <p class="mb-0">&copy; <span id="year"></span> Smith & Partners Law Firm. All rights reserved.</p>
         </div>
-        <!-- Profile 2 -->
-        <div class="col-md-4">
-          <div class="card text-center h-100 shadow-sm">
-            <div class="card-body d-flex flex-column">
-              <svg width="80" height="80" class="mx-auto mb-3" viewBox="0 0 100 100">
-                <circle cx="50" cy="35" r="25" fill="#555"/>
-                <rect x="25" y="60" width="50" height="30" fill="#555"/>
-              </svg>
-              <h5 class="card-title text-accent">Marcus Tan</h5>
-              <p class="card-subtitle mb-2">Litigation Lead</p>
-              <p class="flex-grow-1">
-                Specializes in high-stakes litigation, boasting a 90% success rate in commercial dispute cases.
-              </p>
-              <a href="#" class="btn btn-accent btn-sm mt-auto">View Profile</a>
-            </div>
-          </div>
-        </div>
-        <!-- Profile 3 -->
-        <div class="col-md-4">
-          <div class="card text-center h-100 shadow-sm">
-            <div class="card-body d-flex flex-column">
-              <svg width="80" height="80" class="mx-auto mb-3" viewBox="0 0 100 100">
-                <circle cx="50" cy="35" r="25" fill="#555"/>
-                <rect x="25" y="60" width="50" height="30" fill="#555"/>
-              </svg>
-              <h5 class="card-title text-accent">Rina S. Kapoor</h5>
-              <p class="card-subtitle mb-2">Family Law Expert</p>
-              <p class="flex-grow-1">
-                Trusted advisor in family law, handling custody and estate matters with compassion and precision.
-              </p>
-              <a href="#" class="btn btn-accent btn-sm mt-auto">View Profile</a>
-            </div>
-          </div>
+        <div class="col-md-6 text-md-end">
+          <p class="mb-0">Attorney Advertising | Prior results do not guarantee future outcomes</p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="py-5 bg-black">
-    <div class="container">
-      <h2 class="text-center mb-4" style="color: var(--accent-gold);">Get in Touch</h2>
-      <div class="row justify-content-center">
-        <div class="col-lg-6">
-          <form>
-            <div class="mb-3">
-              <input type="text" class="form-control form-control-dark" placeholder="Your Name *" required />
-            </div>
-            <div class="mb-3">
-              <input type="email" class="form-control form-control-dark" placeholder="Your Email *" required />
-            </div>
-            <div class="mb-3">
-              <input type="tel" class="form-control form-control-dark" placeholder="Phone Number *" />
-            </div>
-            <div class="mb-3">
-              <textarea class="form-control form-control-dark" rows="4" placeholder="How can we help you? *" required></textarea>
-            </div>
-            <div class="text-center">
-              <button class="btn btn-accent px-4" type="submit">Send Message</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="text-center py-4">
-    <div class="container">
-      <p class="mb-1">&copy; <span id="year"></span> Smith &amp; Partners Law Firm</p>
-      <small>123 Legal Avenue, Cityville • (123) 456-7890</small>
     </div>
   </footer>
 
-  <!-- Bootstrap JS & Year Script -->
+  <!-- Back to Top Button -->
+  <button id="backToTop" class="btn btn-primary-gold position-fixed bottom-0 end-0 m-4 rounded-circle" style="width: 50px; height: 50px; display: none; z-index: 1000;">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+    // Set current year
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 100) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all fade-in elements
+    document.querySelectorAll('.fade-in').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Back to top button
+    const backToTopBtn = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 300) {
+        backToTopBtn.style.display = 'block';
+      } else {
+        backToTopBtn.style.display = 'none';
+      }
+    });
+
+    backToTopBtn.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Form submission handling
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Simple form validation and submission feedback
+      const submitBtn = this.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+      submitBtn.disabled = true;
+      
+      // Simulate form submission
+      setTimeout(function() {
+        submitBtn.innerHTML = '<i class="fas fa-check me-2"></i>Message Sent!';
+        submitBtn.classList.add('btn-success');
+        
+        setTimeout(function() {
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('btn-success');
+          document.getElementById('contactForm').reset();
+        }, 2000);
+      }, 1500);
+    });
+
+    // Enhanced hover effects for service cards
+    document.querySelectorAll('.service-card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-8px) scale(1.02)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) scale(1)';
+      });
+    });
+
+    // Parallax effect for hero section
+    window.addEventListener('scroll', function() {
+      const scrolled = window.pageYOffset;
+      const hero = document.getElementById('hero');
+      const rate = scrolled * -0.5;
+      
+      if (hero) {
+        hero.style.transform = `translateY(${rate}px)`;
+      }
+    });
+
+    // Dynamic statistics counter animation
+    function animateNumbers() {
+      const counters = document.querySelectorAll('.stat-number');
+      
+      counters.forEach(counter => {
+        const target = parseInt(counter.textContent.replace(/[^\d]/g, ''));
+        const increment = target / 100;
+        let current = 0;
+        
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            counter.textContent = counter.textContent;
+            clearInterval(timer);
+          } else {
+            const suffix = counter.textContent.includes('%') ? '%' : '+';
+            counter.textContent = Math.floor(current) + suffix;
+          }
+        }, 20);
+      });
+    }
+
+    // Trigger counter animation when stats section is visible
+    const statsObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateNumbers();
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    const statsSection = document.querySelector('.stats-grid');
+    if (statsSection) {
+      statsObserver.observe(statsSection);
+    }
+
+    // Add loading animation delay to elements
+    document.querySelectorAll('.loading').forEach((el, index) => {
+      el.style.animationDelay = `${index * 0.2}s`;
+    });
+
+    // Enhanced mobile menu
+    const navbarToggler = document.querySelector('.navbar-toggler');
+    const navbarCollapse = document.querySelector('.navbar-collapse');
+    
+    navbarToggler.addEventListener('click', function() {
+      this.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+      link.addEventListener('click', function() {
+        navbarCollapse.classList.remove('show');
+        navbarToggler.classList.remove('active');
+      });
+    });
   </script>
 </body>
 </html>
