@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saravana Pillay Jeganathan - CEO & Founder | Keboon Technology Solution</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #2D8A54 0%, #52AE77 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        
+        .profile-section {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .profile-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .title {
+            font-size: 18px;
+            color: #2D8A54;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .company {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .company-logo {
+            max-width: 200px;
+            height: auto;
+            margin: 0 auto 20px;
+            display: block;
+            filter: opacity(0.9);
+            transition: all 0.3s ease;
+        }
+        
+        .company-logo:hover {
+            filter: opacity(1);
+            transform: scale(1.05);
+        }
+        
+        .intro {
+            font-size: 16px;
+            color: #555;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .app-showcase {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 2px solid #f0f0f0;
+            background: linear-gradient(135deg, #f8fffe 0%, #f0f9f4 100%);
+            margin: 0 -20px;
+            border-radius: 12px;
+        }
+        
+        .app-showcase h2 {
+            font-size: 22px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .app-image {
+            max-width: 280px;
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(45, 138, 84, 0.2);
+            margin: 20px auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .app-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .app-description {
+            max-width: 400px;
+            margin: 0 auto 20px;
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .contact-section {
+            padding: 30px 0;
+            text-align: center;
+            border-bottom: 2px solid #f0f0f0;
+            background: #fafafa;
+            margin: 0 -20px;
+            border-radius: 12px;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .contact-card {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-color: #2D8A54;
+        }
+        
+        .contact-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card:hover .contact-icon {
+            transform: scale(1.1);
+        }
+        
+        .email-icon {
+            background: linear-gradient(45deg, #2D8A54, #52AE77);
+        }
+        
+        .whatsapp-icon {
+            background: linear-gradient(45deg, #25d366, #128c7e);
+        }
+        
+        .linkedin-icon {
+            background: linear-gradient(45deg, #0077b5, #005885);
+        }
+        
+        .contact-label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .contact-info {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .contact-link {
+            display: inline-block;
+            color: #2D8A54;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-link:hover {
+            color: #1a5c3a;
+            text-decoration: none;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .vision-section {
+            padding: 30px 0;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .vision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .vision-item {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .vision-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .vision-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #2D8A54, #52AE77);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            margin: 0 auto 12px;
+        }
+        
+        .business-section {
+            padding: 30px 0;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .business-card {
+            background: #f8fffe;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid #2D8A54;
+            transition: all 0.3s ease;
+        }
+        
+        .business-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .business-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(45deg, #2D8A54, #52AE77);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(45deg, #2D8A54, #52AE77);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(45, 138, 84, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(45, 138, 84, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+
+        .whatsapp-button {
+            background: linear-gradient(45deg, #25d366, #128c7e);
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+
+        .whatsapp-button:hover {
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+        }
+
+        .linkedin-button {
+            background: linear-gradient(45deg, #0077b5, #005885);
+            box-shadow: 0 4px 12px rgba(0, 119, 181, 0.3);
+        }
+
+        .linkedin-button:hover {
+            box-shadow: 0 8px 25px rgba(0, 119, 181, 0.4);
+        }
+        
+        .contact-info {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            background: white;
+            color: #2D8A54;
+            padding: 12px 24px;
+            border: 2px solid #2D8A54;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(45, 138, 84, 0.1);
+            margin: 5px;
+        }
+        
+        .btn-secondary:hover {
+            background: #2D8A54;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(45, 138, 84, 0.3);
+            text-decoration: none;
+        }
+
+        .sdg-section {
+            padding: 30px 0;
+        }
+
+        .sdg-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .sdg-card {
+            background: #f0f9f4;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border-left: 4px solid #2D8A54;
+        }
+
+        .sdg-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .sdg-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(45deg, #2D8A54, #52AE77);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            margin: 0 auto 12px;
+        }
+
+                @media (max-width: 768px) {
+            .vision-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .sdg-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .vision-item {
+                padding: 15px;
+            }
+            
+            .business-card {
+                padding: 15px;
+                margin-bottom: 10px;
+            }
+            
+            .contact-card {
+                padding: 15px;
+            }
+            
+            .cta-button {
+                padding: 12px 20px;
+                font-size: 14px;
+                margin: 5px;
+            }
+            
+            .btn-secondary {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+            
+            .app-image {
+                max-width: 240px;
+            }
+            
+            .app-showcase {
+                padding: 20px 0;
+                margin: 0 -20px;
+            }
+            
+            .company-logo {
+                max-width: 160px;
+            }
+            
+            .contact-section {
+                margin: 0 -20px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Profile Section -->
+        <div class="profile-section">
+            <div class="profile-photo">
+                <img src="img/saravana-pillay.jpeg" alt="Profile Photo">
+            </div>
+            <h1 class="name">Saravana Pillay Jeganathan</h1>
+            <div class="title">CEO & Co-Founder</div>
+            <img src="/keboon-website/assets/img/keboon-writing.png" alt="Keboon Technology Solution" class="company-logo">
+            <p class="intro">Leading the transformation of local food systems through innovative technology and sustainable community connections.</p>
+        </div>
+        
+        <!-- App Showcase Section -->
+        <div class="app-showcase">
+            <h2>Introducing the Keboon App</h2>
+            <img src="/keboon-website/assets/img/keboon-concept.png" alt="Keboon App Concept - Hand holding phone displaying the Keboon app" class="app-image">
+            <p class="app-description">Experience the future of local food systems with our innovative mobile platform that connects communities, reduces waste, and promotes sustainable agriculture through cutting-edge AI technology.</p>
+            <a href="https://keboon.net" target="_blank" class="btn-secondary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px;">
+                    <path d="M18 13V19C18 19.5523 17.5523 20 17 20H5C4.44772 20 4 19.5523 4 19V7C4 6.44772 4.44772 6 5 6H11M15 3H21V9M10 14L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Try the App
+            </a>
+        </div>
+        
+        <!-- Contact Section -->
+        <div class="contact-section">
+            <h2 class="section-title">Let's Connect</h2>
+            <p style="margin-bottom: 20px; color: #666; font-size: 16px;">Ready to discuss Keboon's vision and opportunities? Reach out through your preferred channel.</p>
+            
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon email-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3 8L10.89 13.26C11.2187 13.4793 11.6049 13.5963 12 13.5963C12.3951 13.5963 12.7813 13.4793 13.11 13.26L21 8M5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="contact-label">Email</div>
+                    <div class="contact-info">Professional inquiries</div>
+                    <a href="mailto:saravana.p@keboon.net" class="contact-link">saravana.p@keboon.net</a>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon whatsapp-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.905 3.488" fill="white"/>
+                        </svg>
+                    </div>
+                    <div class="contact-label">WhatsApp</div>
+                    <div class="contact-info">Quick conversations</div>
+                    <a href="https://wa.me/60102204004?text=Hi%20Saravana%2C%20I%27m%20interested%20to%20know%20more%20about%20the%20Keboon%20app%20and%20your%20vision%20for%20transforming%20local%20food%20systems." target="_blank" class="contact-link">+60 10-220 4004</a>
+                </div>
+                
+                <div class="contact-card">
+                    <div class="contact-icon linkedin-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16 8C17.5913 8 19.1174 8.63214 20.2426 9.75736C21.3679 10.8826 22 12.4087 22 14V21H18V14C18 13.4696 17.7893 12.9609 17.4142 12.5858C17.0391 12.2107 16.5304 12 16 12C15.4696 12 14.9609 12.2107 14.5858 12.5858C14.2107 12.9609 14 13.4696 14 14V21H10V14C10 12.4087 10.6321 10.8826 11.7574 9.75736C12.8826 8.63214 14.4087 8 16 8V8Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <rect x="2" y="9" width="4" height="12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="4" cy="4" r="2" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="contact-label">LinkedIn</div>
+                    <div class="contact-info">Professional network</div>
+                    <a href="https://my.linkedin.com/in/saravanapillay-jeganathan" target="_blank" class="contact-link">Connect with me</a>
+                </div>
+            </div>
+        </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="https://keboon.net" target="_blank" class="btn-secondary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 8px;">
+                        <path d="M18 13V19C18 19.5523 17.5523 20 17 20H5C4.44772 20 4 19.5523 4 19V7C4 6.44772 4.44772 6 5 6H11M15 3H21V9M10 14L21 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Learn More About Keboon
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
