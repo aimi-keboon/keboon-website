@@ -37,19 +37,22 @@
         }
         
         .profile-photo {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background: linear-gradient(45deg, #4f46e5, #6366f1);
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 48px;
-            font-weight: bold;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Reset the image styling to fill the circle */
+.profile-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
         
         .name {
             font-size: 28px;
@@ -363,7 +366,11 @@
     <div class="container">
         <!-- Profile Section -->
         <div class="profile-section">
-            <div class="profile-photo">AM</div>
+            <div class="profile-photo">
+                <img src="img/aadit-mehendiratta.jpeg" alt="Profile Photo">
+              </div>
+              
+              
             <h1 class="name">Aadit Mehendiratta</h1>
             <div class="title">Digital Marketing & Sales</div>
             <div class="company">Keboon Technology Solution</div>
