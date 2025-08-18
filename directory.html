@@ -313,9 +313,14 @@
             box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
         }
         
-        .submit-btn:hover {
+        .submit-btn:hover:not(:disabled) {
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
         
         .map-loading {
@@ -401,6 +406,26 @@
             border-color: rgba(255, 255, 255, 0.5);
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border: 1px solid #f5c6cb;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border: 1px solid #c3e6cb;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
         }
         
         @media (max-width: 768px) {
@@ -577,6 +602,9 @@
         <div class="main-content">
             <!-- Form Section -->
             <div class="form-section">
+                <div class="error-message" id="errorMessage"></div>
+                <div class="success-message" id="successMessage"></div>
+                
                 <form id="farmerForm">
                     <div class="form-group">
                         <label for="farmName" class="required">Farm/Business Name</label>
@@ -678,7 +706,7 @@
                                             <option value="bag">per bag</option>
                                             <option value="tray">per tray</option>
                                             <option value="pack">per pack</option>
-                                            <option value="bunch">per bunch</option>
+                                            <option value="bundle">per bunch</option>
                                         </select>
                                     </td>
                                     <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeProductRow(this)" disabled>Remove</button></td>
@@ -768,8 +796,32 @@
         let userMarker = null;
         let locationMarker = null;
         
-        // Google Apps Script configuration
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyXZ5dGJXXXQi99VbaPp_tehaed24-IqKEuucotNBkPo6ny1eBRm_-Znsb6XwMXj0RP/exec'; // You'll need to replace this
+        // Google Apps Script configuration - UPDATE THIS WITH YOUR ACTUAL URL
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzQBAsvog2xyf25uuOByKGAb6s1eX5D3mSSNkVB_XzofnzyliYMHJrnFjinRmt8OgAa/exec';
+        
+        // Helper functions for error handling
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 10000);
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            setTimeout(() => {
+                successDiv.style.display = 'none';
+            }, 8000);
+        }
+
+        function hideMessages() {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
         
         // Initialize maps
         function initMap() {
@@ -863,6 +915,11 @@
             
             try {
                 const response = await fetch(`${APPS_SCRIPT_URL}?action=getFarmers`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
                 const data = await response.json();
                 
                 if (data.success) {
@@ -925,7 +982,7 @@
                 
                 farmersData = sampleData;
                 displayFarmersOnMap();
-                console.log('Using sample data - please set up Google Apps Script for live data');
+                showError('Using sample data - please check your Google Apps Script URL');
             } finally {
                 document.getElementById('mapLoading').style.display = 'none';
             }
@@ -1061,14 +1118,14 @@
                         locationMap.setView([lat, lng], 16);
                         setFarmLocation(lat, lng);
                         
-                        alert('📍 Current location set! You can drag the pin to adjust if needed.');
+                        showSuccess('📍 Current location set! You can drag the pin to adjust if needed.');
                     },
                     function(error) {
-                        alert('Unable to get your location. Please click on the map to set your farm location manually.');
+                        showError('Unable to get your location. Please click on the map to set your farm location manually.');
                     }
                 );
             } else {
-                alert('Geolocation is not supported by this browser. Please click on the map to set your location.');
+                showError('Geolocation is not supported by this browser. Please click on the map to set your location.');
             }
         }
         
@@ -1078,7 +1135,7 @@
             const rowCount = tbody.rows.length;
             
             if (rowCount >= 10) {
-                alert('Maximum 10 products allowed.');
+                showError('Maximum 10 products allowed.');
                 return;
             }
             
@@ -1133,7 +1190,7 @@
             const rowCount = tbody.rows.length;
             
             if (rowCount >= 10) {
-                alert('Maximum 10 links allowed.');
+                showError('Maximum 10 links allowed.');
                 return;
             }
             
@@ -1206,9 +1263,62 @@
             return JSON.stringify(websites);
         }
         
+        // Form validation
+        function validateForm() {
+            hideMessages();
+            
+            // Check if location is set
+            const lat = document.getElementById('latitude').value;
+            const lng = document.getElementById('longitude').value;
+            
+            if (!lat || !lng) {
+                showError('Please set your farm location by clicking on the map or using the "Use My Current Location" button.');
+                return false;
+            }
+            
+            // Check if at least one product is filled
+            const nameInputs = document.querySelectorAll('input[name="productName[]"]');
+            let hasProduct = false;
+            
+            for (let input of nameInputs) {
+                if (input.value.trim()) {
+                    hasProduct = true;
+                    break;
+                }
+            }
+            
+            if (!hasProduct) {
+                showError('Please add at least one product/crop.');
+                return false;
+            }
+            
+            // Check if at least one website is filled
+            const urlInputs = document.querySelectorAll('input[name="websiteUrl[]"]');
+            let hasWebsite = false;
+            
+            for (let input of urlInputs) {
+                if (input.value.trim()) {
+                    hasWebsite = true;
+                    break;
+                }
+            }
+            
+            if (!hasWebsite) {
+                showError('Please add at least one website or social media link.');
+                return false;
+            }
+            
+            return true;
+        }
+        
         // Form submission
         document.getElementById('farmerForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            
+            // Validate form first
+            if (!validateForm()) {
+                return;
+            }
             
             // Disable submit button to prevent double submission
             const submitBtn = this.querySelector('.submit-btn');
@@ -1241,22 +1351,29 @@
                     timestamp: new Date().toISOString()
                 };
                 
-                // Submit to Google Apps Script
-                const response = await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action: 'addFarmer',
-                        data: submission
-                    })
+                console.log('Submitting data:', submission);
+                
+                // Check if Apps Script URL is configured
+                if (APPS_SCRIPT_URL.includes('YOUR_SCRIPT_ID_HERE')) {
+                    throw new Error('Google Apps Script URL not configured. Please update APPS_SCRIPT_URL with your actual script URL.');
+                }
+                
+                // Alternative: Use GET request with URL parameters to avoid CORS completely
+                const params = new URLSearchParams({
+                    action: 'addFarmer',
+                    data: JSON.stringify(submission)
                 });
+                
+                const response = await fetch(`${APPS_SCRIPT_URL}?${params.toString()}`);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
                 
                 const result = await response.json();
                 
                 if (result.success) {
-                    alert('🎉 Farm added successfully to Keboon Directory!');
+                    showSuccess('🎉 Farm added successfully to Keboon Directory!');
                     this.reset();
                     updateRemoveButtons(); // Reset products table
                     updateWebsiteRemoveButtons(); // Reset websites table
@@ -1265,6 +1382,8 @@
                         locationMap.removeLayer(locationMarker);
                         locationMarker = null;
                     }
+                    // Scroll to top to see success message
+                    document.querySelector('.form-section').scrollTop = 0;
                     loadFarmersData(); // Refresh the map
                 } else {
                     throw new Error(result.error || 'Failed to submit form');
@@ -1272,7 +1391,14 @@
                 
             } catch (error) {
                 console.error('Error submitting form:', error);
-                alert('❌ Error submitting form. Please try again or check your internet connection.');
+                
+                if (error.message.includes('YOUR_SCRIPT_ID_HERE')) {
+                    showError('Configuration Error: Google Apps Script URL needs to be set up. Please check the setup instructions.');
+                } else if (error.message.includes('CORS') || error.message.includes('Network')) {
+                    showError('Network Error: Unable to connect to the server. Please check your internet connection and try again.');
+                } else {
+                    showError(`Error: ${error.message}`);
+                }
             } finally {
                 // Re-enable submit button
                 submitBtn.disabled = false;
