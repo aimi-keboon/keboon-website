@@ -1262,7 +1262,7 @@
                     step="any"
                     required
                     placeholder="Latitude (e.g., 3.139)"
-                    onchange="updateMapFromCoordinates('add')"
+                    oninput="autoUpdateMapFromCoordinates('add')"
                   />
                   <input
                     type="number"
@@ -1271,7 +1271,7 @@
                     step="any"
                     required
                     placeholder="Longitude (e.g., 101.6869)"
-                    onchange="updateMapFromCoordinates('add')"
+                    oninput="autoUpdateMapFromCoordinates('add')"
                   />
                   <button
                     type="button"
@@ -1727,7 +1727,7 @@
                       step="any"
                       required
                       placeholder="Latitude (e.g., 3.139)"
-                      onchange="updateMapFromCoordinates('update')"
+                      oninput="autoUpdateMapFromCoordinates('update')"
                     />
                     <input
                       type="number"
@@ -1736,7 +1736,7 @@
                       step="any"
                       required
                       placeholder="Longitude (e.g., 101.6869)"
-                      onchange="updateMapFromCoordinates('update')"
+                      oninput="autoUpdateMapFromCoordinates('update')"
                     />
                     <button
                       type="button"
@@ -2078,6 +2078,48 @@
           // Scroll to form
           form.scrollIntoView({ behavior: "smooth", block: "start" });
         }
+      }
+
+      // Auto-update map when coordinates are entered (with debouncing)
+      let coordinateUpdateTimeout = {};
+
+      function autoUpdateMapFromCoordinates(formType) {
+        // Clear existing timeout for this form
+        if (coordinateUpdateTimeout[formType]) {
+          clearTimeout(coordinateUpdateTimeout[formType]);
+        }
+
+        // Set new timeout to avoid too many updates while typing
+        coordinateUpdateTimeout[formType] = setTimeout(() => {
+          const latInput = document.getElementById(`${formType}Latitude`);
+          const lngInput = document.getElementById(`${formType}Longitude`);
+
+          const lat = parseFloat(latInput.value);
+          const lng = parseFloat(lngInput.value);
+
+          // Only update if both values are valid numbers and within range
+          if (
+            !isNaN(lat) &&
+            !isNaN(lng) &&
+            lat >= -90 &&
+            lat <= 90 &&
+            lng >= -180 &&
+            lng <= 180 &&
+            latInput.value &&
+            lngInput.value
+          ) {
+            const locationMap =
+              formType === "add" ? addLocationMap : updateLocationMap;
+
+            if (locationMap) {
+              // Update map view
+              locationMap.setView([lat, lng], 16);
+
+              // Update marker
+              setFarmLocation(lat, lng, formType);
+            }
+          }
+        }, 500); // Wait 500ms after user stops typing
       }
 
       // Helper functions for error handling
