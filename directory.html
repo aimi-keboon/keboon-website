@@ -674,6 +674,103 @@
         font-weight: 600;
       }
 
+      /* Phone Input Styles */
+      .phone-input-container {
+        display: flex;
+        gap: 0;
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        background: white;
+      }
+
+      .phone-input-container:focus-within {
+        border-color: #3f6b20;
+        box-shadow: 0 0 0 3px rgba(63, 107, 32, 0.1);
+      }
+
+      .country-code-select {
+        border: none;
+        background: #f8f9fa;
+        padding: 14px 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #2d5016;
+        width: 85px;
+        flex-shrink: 0;
+        border-right: 2px solid #e9ecef;
+        outline: none;
+        cursor: pointer;
+      }
+
+      .country-code-select:focus {
+        background: #e9ecef;
+      }
+
+      .phone-input-container input[type="tel"] {
+        border: none;
+        padding: 14px 18px;
+        font-size: 1rem;
+        flex: 1;
+        outline: none;
+        background: white;
+      }
+
+      .phone-input-container input[type="tel"]:focus {
+        border: none;
+        box-shadow: none;
+      }
+
+      .phone-help-text {
+        font-size: 0.85rem;
+        color: #6c757d;
+        margin-top: 5px;
+        font-style: italic;
+      }
+
+      .edit-phone-container {
+        display: flex;
+        gap: 0;
+        background: rgba(255, 255, 255, 0.95);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .edit-country-select {
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        padding: 12px 6px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #2d5016;
+        width: 75px;
+        flex-shrink: 0;
+        border-right: 1px solid rgba(255, 255, 255, 0.5);
+      }
+
+      .edit-phone-container input {
+        border: none !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        padding: 12px 16px !important;
+        font-size: 1rem !important;
+        flex: 1;
+      }
+
+      /* Responsive phone input */
+      @media (max-width: 768px) {
+        .phone-input-container {
+          flex-direction: column;
+        }
+
+        .country-code-select {
+          border-right: none;
+          border-bottom: 2px solid #e9ecef;
+          width: 100%;
+        }
+      }
+
       /* Footer */
       .footer {
         background: linear-gradient(135deg, #2d5016 0%, #3f6b20 100%);
@@ -1029,7 +1126,6 @@
                 </div>
                 <div class="location-map-container">
                   <div id="addLocationMap"></div>
-                  
                 </div>
               </div>
             </div>
@@ -1037,7 +1133,45 @@
             <div class="form-row">
               <div class="form-group">
                 <label for="addPhone" class="required">Phone Number</label>
-                <input type="tel" id="addPhone" name="phone" required />
+                <div class="phone-input-container">
+                  <select
+                    id="addCountryCode"
+                    name="countryCode"
+                    class="country-code-select"
+                    required
+                  >
+                    <option value="+60">🇲🇾 +60 (Malaysia)</option>
+                    <option value="+65">🇸🇬 +65 (Singapore)</option>
+                    <option value="+62">🇮🇩 +62 (Indonesia)</option>
+                    <option value="+66">🇹🇭 +66 (Thailand)</option>
+                    <option value="+84">🇻🇳 +84 (Vietnam)</option>
+                    <option value="+63">🇵🇭 +63 (Philippines)</option>
+                    <option value="+673">🇧🇳 +673 (Brunei)</option>
+                    <option value="+856">🇱🇦 +856 (Laos)</option>
+                    <option value="+855">🇰🇭 +855 (Cambodia)</option>
+                    <option value="+95">🇲🇲 +95 (Myanmar)</option>
+                    <option value="+1">🇺🇸 +1 (USA/Canada)</option>
+                    <option value="+44">🇬🇧 +44 (UK)</option>
+                    <option value="+61">🇦🇺 +61 (Australia)</option>
+                    <option value="+86">🇨🇳 +86 (China)</option>
+                    <option value="+81">🇯🇵 +81 (Japan)</option>
+                    <option value="+82">🇰🇷 +82 (South Korea)</option>
+                    <option value="+91">🇮🇳 +91 (India)</option>
+                  </select>
+                  <input
+                    type="tel"
+                    id="addPhone"
+                    name="phone"
+                    placeholder="123456789"
+                    pattern="[0-9]+"
+                    title="Please enter numbers only (without country code or + sign)"
+                    required
+                  />
+                </div>
+                <div class="phone-help-text">
+                  Enter your phone number without the country code (numbers
+                  only)
+                </div>
               </div>
 
               <div class="form-group">
@@ -1059,14 +1193,12 @@
             </div>
 
             <div class="form-group">
-              <label for="addProducts" class="required"
-                >Primary Products/Crops</label
-              >
+              <label for="addProducts" class="required">Product List</label>
               <table class="products-table" id="addProductsTable">
                 <thead>
                   <tr>
-                    <th>Product/Crop Name</th>
-                    <th>Season/Availability</th>
+                    <th>Name</th>
+                    <th>Availability</th>
                     <th>Price (RM)</th>
                     <th>Unit</th>
                     <th>Action</th>
@@ -1074,7 +1206,7 @@
                 </thead>
                 <tbody id="addProductsTableBody">
                   <tr>
-                    <td data-label="Product Name">
+                    <td data-label="Name">
                       <input
                         type="text"
                         name="productName[]"
@@ -1082,7 +1214,7 @@
                         required
                       />
                     </td>
-                    <td data-label="Season">
+                    <td data-label="Availability">
                       <input
                         type="text"
                         name="productSeason[]"
@@ -1163,7 +1295,7 @@
                 </thead>
                 <tbody id="addWebsitesTableBody">
                   <tr>
-                    <td data-label="Website URL">
+                    <td data-label="URL">
                       <input
                         type="url"
                         name="websiteUrl[]"
@@ -1260,11 +1392,33 @@
                 id="editKeboonId"
                 placeholder="Enter Keboon ID (e.g., KB...)"
               />
-              <input
-                type="tel"
-                id="editPhone"
-                placeholder="Enter registered phone number"
-              />
+              <div class="edit-phone-container">
+                <select id="editCountryCode" class="edit-country-select">
+                  <option value="+60">🇲🇾 +60</option>
+                  <option value="+65">🇸🇬 +65</option>
+                  <option value="+62">🇮🇩 +62</option>
+                  <option value="+66">🇹🇭 +66</option>
+                  <option value="+84">🇻🇳 +84</option>
+                  <option value="+63">🇵🇭 +63</option>
+                  <option value="+673">🇧🇳 +673</option>
+                  <option value="+856">🇱🇦 +856</option>
+                  <option value="+855">🇰🇭 +855</option>
+                  <option value="+95">🇲🇲 +95</option>
+                  <option value="+1">🇺🇸 +1</option>
+                  <option value="+44">🇬🇧 +44</option>
+                  <option value="+61">🇦🇺 +61</option>
+                  <option value="+86">🇨🇳 +86</option>
+                  <option value="+81">🇯🇵 +81</option>
+                  <option value="+82">🇰🇷 +82</option>
+                  <option value="+91">🇮🇳 +91</option>
+                </select>
+                <input
+                  type="tel"
+                  id="editPhone"
+                  placeholder="123456789"
+                  pattern="[0-9]+"
+                />
+              </div>
               <button type="button" class="btn-load" onclick="loadFarmerData()">
                 Load My Data
               </button>
@@ -1441,7 +1595,6 @@
                   </div>
                   <div class="location-map-container">
                     <div id="updateLocationMap"></div>
-                    
                   </div>
                 </div>
               </div>
@@ -1449,7 +1602,45 @@
               <div class="form-row">
                 <div class="form-group">
                   <label for="updatePhone" class="required">Phone Number</label>
-                  <input type="tel" id="updatePhone" name="phone" required />
+                  <div class="phone-input-container">
+                    <select
+                      id="updateCountryCode"
+                      name="countryCode"
+                      class="country-code-select"
+                      required
+                    >
+                      <option value="+60">🇲🇾 +60 (Malaysia)</option>
+                      <option value="+65">🇸🇬 +65 (Singapore)</option>
+                      <option value="+62">🇮🇩 +62 (Indonesia)</option>
+                      <option value="+66">🇹🇭 +66 (Thailand)</option>
+                      <option value="+84">🇻🇳 +84 (Vietnam)</option>
+                      <option value="+63">🇵🇭 +63 (Philippines)</option>
+                      <option value="+673">🇧🇳 +673 (Brunei)</option>
+                      <option value="+856">🇱🇦 +856 (Laos)</option>
+                      <option value="+855">🇰🇭 +855 (Cambodia)</option>
+                      <option value="+95">🇲🇲 +95 (Myanmar)</option>
+                      <option value="+1">🇺🇸 +1 (USA/Canada)</option>
+                      <option value="+44">🇬🇧 +44 (UK)</option>
+                      <option value="+61">🇦🇺 +61 (Australia)</option>
+                      <option value="+86">🇨🇳 +86 (China)</option>
+                      <option value="+81">🇯🇵 +81 (Japan)</option>
+                      <option value="+82">🇰🇷 +82 (South Korea)</option>
+                      <option value="+91">🇮🇳 +91 (India)</option>
+                    </select>
+                    <input
+                      type="tel"
+                      id="updatePhone"
+                      name="phone"
+                      placeholder="123456789"
+                      pattern="[0-9]+"
+                      title="Please enter numbers only (without country code or + sign)"
+                      required
+                    />
+                  </div>
+                  <div class="phone-help-text">
+                    Enter your phone number without the country code (numbers
+                    only)
+                  </div>
                 </div>
 
                 <div class="form-group">
@@ -1474,13 +1665,13 @@
 
               <div class="form-group">
                 <label for="updateProducts" class="required"
-                  >Primary Products/Crops</label
+                  >Product List</label
                 >
                 <table class="products-table" id="updateProductsTable">
                   <thead>
                     <tr>
-                      <th>Product/Crop Name</th>
-                      <th>Season/Availability</th>
+                      <th>Name</th>
+                      <th>Availability</th>
                       <th>Price (RM)</th>
                       <th>Unit</th>
                       <th>Action</th>
@@ -1488,7 +1679,7 @@
                   </thead>
                   <tbody id="updateProductsTableBody">
                     <tr>
-                      <td data-label="Product Name">
+                      <td data-label="Name">
                         <input
                           type="text"
                           name="productName[]"
@@ -1496,7 +1687,7 @@
                           required
                         />
                       </td>
-                      <td data-label="Season">
+                      <td data-label="Availability">
                         <input
                           type="text"
                           name="productSeason[]"
@@ -1577,7 +1768,7 @@
                   </thead>
                   <tbody id="updateWebsitesTableBody">
                     <tr>
-                      <td data-label="Website URL">
+                      <td data-label="URL">
                         <input
                           type="url"
                           name="websiteUrl[]"
@@ -1748,7 +1939,7 @@
       // Load farmer data for editing
       async function loadFarmerData() {
         const keboonId = document.getElementById("editKeboonId").value.trim();
-        const phone = document.getElementById("editPhone").value.trim();
+        const phone = getEditPhoneNumber();
 
         if (!keboonId || !phone) {
           showError("Please enter both Keboon ID and phone number", "update");
@@ -1842,7 +2033,28 @@
         document.getElementById("updateCategory").value = data.category || "";
         document.getElementById("updateCommercial").value =
           data.commercial || "";
-        document.getElementById("updatePhone").value = data.phone || "";
+        // Parse the stored phone number to separate country code and number
+        const fullPhone = data.phone || "";
+        if (fullPhone) {
+          // Try to match common country codes
+          const countryCodeMatch = fullPhone.match(
+            /^(60|65|62|66|84|63|673|856|855|95|1|44|61|86|81|82|91)/
+          );
+          if (countryCodeMatch) {
+            const countryCode = "+" + countryCodeMatch[1];
+            const phoneNumber = fullPhone.substring(countryCodeMatch[1].length);
+
+            document.getElementById("updateCountryCode").value = countryCode;
+            document.getElementById("updatePhone").value = phoneNumber;
+          } else {
+            // Default to Malaysia if no match
+            document.getElementById("updateCountryCode").value = "+60";
+            document.getElementById("updatePhone").value = fullPhone;
+          }
+        } else {
+          document.getElementById("updateCountryCode").value = "+60";
+          document.getElementById("updatePhone").value = "";
+        }
         document.getElementById("updateEmail").value = data.email || "";
         document.getElementById("updateAddress").value = data.address || "";
         document.getElementById("updateFarmSize").value = data.farmSize || "";
@@ -1894,10 +2106,10 @@
           products.forEach((product, index) => {
             const newRow = tbody.insertRow();
             newRow.innerHTML = `
-              <td data-label="Product Name"><input type="text" name="productName[]" value="${
+              <td data-label="Name"><input type="text" name="productName[]" value="${
                 product.name || ""
               }" placeholder="e.g., Tomatoes, Rice, Chickens" required></td>
-              <td data-label="Season"><input type="text" name="productSeason[]" value="${
+              <td data-label="Availability"><input type="text" name="productSeason[]" value="${
                 product.season || ""
               }" placeholder="e.g., Year-round, March-Oct" required></td>
               <td data-label="Price (RM)"><input type="number" name="productPrice[]" value="${
@@ -1975,7 +2187,7 @@
           websites.forEach((url, index) => {
             const newRow = tbody.insertRow();
             newRow.innerHTML = `
-              <td data-label="Website URL"><input type="url" name="websiteUrl[]" value="${
+              <td data-label="URL"><input type="url" name="websiteUrl[]" value="${
                 url || ""
               }" placeholder="https://..." required></td>
               <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeWebsiteRow(this, 'update')" ${
@@ -2032,8 +2244,8 @@
         if (isProducts) {
           tbody.innerHTML = `
             <tr>
-              <td data-label="Product Name"><input type="text" name="productName[]" placeholder="e.g., Tomatoes, Rice, Chickens" required></td>
-              <td data-label="Season"><input type="text" name="productSeason[]" placeholder="e.g., Year-round, March-Oct" required></td>
+              <td data-label="Name"><input type="text" name="productName[]" placeholder="e.g., Tomatoes, Rice, Chickens" required></td>
+              <td data-label="Availability"><input type="text" name="productSeason[]" placeholder="e.g., Year-round, March-Oct" required></td>
               <td data-label="Price (RM)"><input type="number" name="productPrice[]" step="0.01" min="0" placeholder="0.00" required></td>
               <td data-label="Unit">
                 <select name="productUnit[]" required>
@@ -2058,7 +2270,7 @@
         } else {
           tbody.innerHTML = `
             <tr>
-              <td data-label="Website URL"><input type="url" name="websiteUrl[]" placeholder="https://..." required></td>
+              <td data-label="URL"><input type="url" name="websiteUrl[]" placeholder="https://..." required></td>
               <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeWebsiteRow(this, '${formType}')" disabled>Remove</button></td>
             </tr>
           `;
@@ -2467,8 +2679,8 @@
 
         const newRow = tbody.insertRow();
         newRow.innerHTML = `
-          <td data-label="Product Name"><input type="text" name="productName[]" placeholder="e.g., Tomatoes, Rice, Chickens" required></td>
-          <td data-label="Season"><input type="text" name="productSeason[]" placeholder="e.g., Year-round, March-Oct" required></td>
+          <td data-label="Name"><input type="text" name="productName[]" placeholder="e.g., Tomatoes, Rice, Chickens" required></td>
+          <td data-label="Availability"><input type="text" name="productSeason[]" placeholder="e.g., Year-round, March-Oct" required></td>
           <td data-label="Price (RM)"><input type="number" name="productPrice[]" step="0.01" min="0" placeholder="0.00" required></td>
           <td data-label="Unit">
               <select name="productUnit[]" required>
@@ -2522,7 +2734,7 @@
 
         const newRow = tbody.insertRow();
         newRow.innerHTML = `
-          <td data-label="Website URL"><input type="url" name="websiteUrl[]" placeholder="https://..." required></td>
+          <td data-label="URL"><input type="url" name="websiteUrl[]" placeholder="https://..." required></td>
           <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeWebsiteRow(this, '${formType}')">Remove</button></td>
         `;
 
@@ -2657,6 +2869,36 @@
         return true;
       }
 
+      // Combine country code with phone number
+      function getFullPhoneNumber(formType) {
+        const countryCode = document.getElementById(
+          `${formType}CountryCode`
+        ).value;
+        const phoneNumber = document.getElementById(`${formType}Phone`).value;
+
+        // Remove any non-digit characters from phone number
+        const cleanNumber = phoneNumber.replace(/\D/g, "");
+
+        // Remove the + from country code and combine
+        const cleanCountryCode = countryCode.replace("+", "");
+
+        return cleanCountryCode + cleanNumber;
+      }
+
+      // Get full phone number for edit mode
+      function getEditPhoneNumber() {
+        const countryCode = document.getElementById("editCountryCode").value;
+        const phoneNumber = document.getElementById("editPhone").value;
+
+        // Remove any non-digit characters from phone number
+        const cleanNumber = phoneNumber.replace(/\D/g, "");
+
+        // Remove the + from country code and combine
+        const cleanCountryCode = countryCode.replace("+", "");
+
+        return cleanCountryCode + cleanNumber;
+      }
+
       // Form submission handler
       async function handleFormSubmission(formId, formType) {
         const form = document.getElementById(formId);
@@ -2693,7 +2935,7 @@
             commercial: formData.get("commercial"),
             latitude: parseFloat(formData.get("latitude")),
             longitude: parseFloat(formData.get("longitude")),
-            phone: formData.get("phone"),
+            phone: getFullPhoneNumber(formType),
             email: formData.get("email"),
             address: formData.get("address"),
             products: productsJson,
