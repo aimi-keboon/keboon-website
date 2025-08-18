@@ -67,89 +67,246 @@
         line-height: 1.4;
       }
 
-      .main-content {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0;
-        min-height: 80vh;
-      }
-
-      .form-section {
+      /* Map Section - Now at the top */
+      .map-section {
         padding: 30px;
         background: #f8f9fa;
-        border-right: 1px solid #e9ecef;
-        overflow-y: auto;
-        max-height: 85vh;
+        border-bottom: 2px solid #e9ecef;
       }
 
-      .map-section {
-        position: relative;
+      .map-title {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #2d5016;
+      }
+
+      .map-title h2 {
+        font-size: 1.8rem;
+        margin-bottom: 8px;
+      }
+
+      .map-title p {
+        color: #6c757d;
+        font-size: 1rem;
       }
 
       #map {
-        height: 85vh;
+        height: 70vh;
         width: 100%;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        border: 3px solid #3f6b20;
       }
 
-      /* Edit Mode Section */
+      .map-loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 15px;
+        display: none;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        text-align: center;
+      }
+
+      /* Action Buttons Section */
+      .action-buttons {
+        padding: 40px 30px;
+        text-align: center;
+        background: white;
+        border-bottom: 2px solid #e9ecef;
+      }
+
+      .action-buttons h3 {
+        color: #2d5016;
+        font-size: 1.6rem;
+        margin-bottom: 15px;
+      }
+
+      .action-buttons p {
+        color: #6c757d;
+        margin-bottom: 30px;
+        font-size: 1.1rem;
+      }
+
+      .button-group {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .action-btn {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        padding: 18px 40px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+        min-width: 250px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .action-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 35px rgba(40, 167, 69, 0.5);
+      }
+
+      .action-btn.update-btn {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        box-shadow: 0 8px 25px rgba(23, 162, 184, 0.3);
+      }
+
+      .action-btn.update-btn:hover {
+        box-shadow: 0 12px 35px rgba(23, 162, 184, 0.5);
+      }
+
+      .action-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* Form Sections - Hidden by default */
+      .form-section {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+        background: #f8f9fa;
+        border-bottom: 2px solid #e9ecef;
+      }
+
+      .form-section.active {
+        max-height: 2000px;
+        padding: 40px 30px;
+        overflow-y: auto;
+      }
+
+      .form-section h3 {
+        color: #2d5016;
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .form-section .subtitle {
+        color: #6c757d;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 1.1rem;
+      }
+
+      .close-form-btn {
+        background: #6c757d;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        float: right;
+        margin-bottom: 20px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .close-form-btn:hover {
+        background: #5a6268;
+        transform: translateY(-2px);
+      }
+
+      /* Edit Mode Section for Update Form */
       .edit-mode-section {
         background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
         color: white;
-        padding: 20px;
-        border-radius: 12px;
-        margin-bottom: 25px;
+        padding: 25px;
+        border-radius: 15px;
+        margin-bottom: 30px;
       }
 
-      .edit-mode-section h3 {
+      .edit-mode-section h4 {
         margin-bottom: 15px;
-        font-size: 1.2rem;
+        font-size: 1.3rem;
       }
 
       .edit-mode-section p {
-        margin-bottom: 15px;
+        margin-bottom: 20px;
         opacity: 0.95;
-        font-size: 0.95rem;
+        font-size: 1rem;
       }
 
       .edit-mode-inputs {
         display: grid;
         grid-template-columns: 1fr 1fr auto;
-        gap: 10px;
+        gap: 15px;
         align-items: end;
       }
 
       .edit-mode-inputs input {
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.95);
         border: 2px solid rgba(255, 255, 255, 0.3);
+        padding: 12px 16px;
+        border-radius: 10px;
+        font-size: 1rem;
       }
 
       .btn-load {
         background: #ffc107;
         color: #212529;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        white-space: nowrap;
       }
 
       .btn-load:hover {
         background: #e0a800;
+        transform: translateY(-2px);
+      }
+
+      .edit-indicator {
+        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+        color: #212529;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        display: none;
+        font-weight: 600;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
       }
 
       .btn-clear {
         background: #6c757d;
         color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 8px;
+        margin-left: 15px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
       }
 
       .btn-clear:hover {
         background: #5a6268;
       }
 
-      .edit-indicator {
-        background: #ffc107;
-        color: #212529;
-        padding: 10px 15px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        display: none;
-        font-weight: 600;
-        text-align: center;
+      /* Form Styles */
+      .form-content {
+        max-width: 900px;
+        margin: 0 auto;
       }
 
       .form-group {
@@ -159,7 +316,7 @@
       .form-row {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 15px;
+        gap: 20px;
       }
 
       label {
@@ -167,7 +324,7 @@
         font-weight: 600;
         color: #2d5016;
         margin-bottom: 8px;
-        font-size: 0.95rem;
+        font-size: 1rem;
       }
 
       .required::after {
@@ -183,7 +340,7 @@
       select,
       textarea {
         width: 100%;
-        padding: 12px 16px;
+        padding: 14px 18px;
         border: 2px solid #e9ecef;
         border-radius: 12px;
         font-size: 1rem;
@@ -201,56 +358,66 @@
 
       textarea {
         resize: vertical;
-        min-height: 80px;
-      }
-
-      .location-section {
-        border: 2px solid #e9ecef;
-        border-radius: 12px;
-        padding: 20px;
-        background: #f8f9fa;
-      }
-
-      .location-input-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr auto;
-        gap: 10px;
-        margin-bottom: 15px;
-        align-items: end;
+        min-height: 100px;
       }
 
       .location-map-container {
         position: relative;
       }
 
-      #locationMap {
-        height: 300px;
+      #addLocationMap,
+      #updateLocationMap {
+        height: 350px;
         width: 100%;
-        border-radius: 8px;
-        border: 1px solid #ced4da;
+        border-radius: 12px;
+        border: 2px solid #ced4da;
+      }
+
+      .location-section {
+        border: 2px solid #e9ecef;
+        border-radius: 15px;
+        padding: 25px;
+        background: white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      }
+
+      .location-input-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        gap: 15px;
+        margin-bottom: 20px;
+        align-items: end;
+      }
+
+      #locationMap {
+        height: 350px;
+        width: 100%;
+        border-radius: 12px;
+        border: 2px solid #ced4da;
       }
 
       .map-instructions {
-        background: #e3f2fd;
-        border: 1px solid #2196f3;
-        border-radius: 8px;
-        padding: 12px;
-        margin-top: 10px;
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        border: 2px solid #2196f3;
+        border-radius: 12px;
+        padding: 15px;
+        margin-top: 15px;
         text-align: center;
       }
 
       .map-instructions p {
         margin: 0;
         color: #1976d2;
-        font-size: 0.9rem;
-        font-weight: 500;
+        font-size: 1rem;
+        font-weight: 600;
       }
 
+      /* Button Styles */
       .btn {
-        padding: 10px 20px;
+        padding: 12px 24px;
         border: none;
-        border-radius: 8px;
-        font-size: 0.9rem;
+        border-radius: 10px;
+        font-size: 1rem;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease;
@@ -273,49 +440,44 @@
 
       .btn-secondary:hover {
         background: #5a6268;
+        transform: translateY(-2px);
+      }
+
+      .btn-success {
+        background: #28a745;
+        color: white;
+      }
+
+      .btn-success:hover {
+        background: #218838;
+        transform: translateY(-2px);
       }
 
       .btn-danger {
         background: #dc3545;
         color: white;
-        padding: 5px 10px;
-        font-size: 0.8rem;
+        padding: 8px 16px;
+        font-size: 0.9rem;
       }
 
       .btn-danger:hover {
         background: #c82333;
       }
 
-      .btn-success {
-        background: #28a745;
-        color: white;
-        padding: 8px 16px;
-        font-size: 0.9rem;
-      }
-
-      .btn-success:hover {
-        background: #218838;
-      }
-
-      .btn-update {
-        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
-        color: #212529;
-      }
-
-      .btn-update:hover:not(:disabled) {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 20px rgba(255, 193, 7, 0.6);
-      }
-
+      /* Tables */
       .products-table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 10px;
+        margin-top: 15px;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
       }
 
       .products-table th,
       .products-table td {
-        padding: 8px;
+        padding: 15px;
         text-align: left;
         border-bottom: 1px solid #dee2e6;
         vertical-align: middle;
@@ -325,71 +487,75 @@
         background: #f8f9fa;
         font-weight: 600;
         color: #2d5016;
-        font-size: 0.9rem;
+        font-size: 1rem;
       }
 
       .products-table input,
       .products-table select {
         margin: 0;
         border: 1px solid #ced4da;
-        padding: 6px 10px;
-        font-size: 0.9rem;
+        padding: 10px 14px;
+        font-size: 1rem;
+        border-radius: 8px;
       }
 
       .products-table input[type="number"] {
-        width: 80px;
+        width: 100px;
       }
 
       .products-table select {
         width: 100%;
-        min-width: 90px;
+        min-width: 120px;
       }
 
       .add-product-btn {
-        margin-top: 15px;
+        margin-top: 20px;
       }
 
       .radio-group {
         display: flex;
-        gap: 20px;
-        margin-top: 8px;
+        gap: 25px;
+        margin-top: 10px;
       }
 
       .radio-label {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
         font-weight: normal;
         cursor: pointer;
+        font-size: 1rem;
       }
 
       .radio-label input[type="radio"] {
         width: auto;
         margin: 0;
+        transform: scale(1.2);
       }
 
       .submit-section {
         text-align: center;
-        padding-top: 30px;
+        padding-top: 40px;
         border-top: 2px solid #e9ecef;
+        margin-top: 30px;
       }
 
       .submit-btn {
         background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
         color: white;
-        padding: 15px 40px;
-        font-size: 1.1rem;
+        padding: 18px 50px;
+        font-size: 1.2rem;
         font-weight: 600;
         border: none;
         border-radius: 50px;
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+        box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
       }
 
       .submit-btn:hover:not(:disabled) {
         transform: translateY(-3px);
-        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
+        box-shadow: 0 12px 35px rgba(40, 167, 69, 0.6);
       }
 
       .submit-btn:disabled {
@@ -397,65 +563,91 @@
         cursor: not-allowed;
       }
 
-      .map-loading {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(255, 255, 255, 0.9);
-        padding: 20px;
-        border-radius: 10px;
-        display: none;
+      .btn-update {
+        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+        color: #212529;
       }
 
+      .btn-update:hover:not(:disabled) {
+        box-shadow: 0 12px 35px rgba(255, 193, 7, 0.6);
+      }
+
+      /* Messages */
+      .error-message {
+        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        color: #721c24;
+        padding: 15px 20px;
+        border: 2px solid #f5c6cb;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        display: none;
+        font-weight: 600;
+      }
+
+      .success-message {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        color: #155724;
+        padding: 15px 20px;
+        border: 2px solid #c3e6cb;
+        border-radius: 12px;
+        margin-bottom: 25px;
+        display: none;
+        font-weight: 600;
+      }
+
+      /* Popup Styles */
       .leaflet-popup-content {
         font-family: inherit;
-        line-height: 1.4;
+        line-height: 1.5;
       }
 
       .popup-farm-name {
-        font-weight: 600;
+        font-weight: 700;
         color: #2d5016;
-        font-size: 1.1rem;
-        margin-bottom: 8px;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
       }
 
       .popup-category {
         background: #3f6b20;
         color: white;
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-size: 0.8rem;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.85rem;
         display: inline-block;
-        margin-bottom: 5px;
+        margin-bottom: 8px;
+        font-weight: 600;
       }
 
       .popup-commercial {
         background: #17a2b8;
         color: white;
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-size: 0.8rem;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.85rem;
         display: inline-block;
-        margin-bottom: 8px;
-        margin-left: 5px;
+        margin-bottom: 10px;
+        margin-left: 8px;
+        font-weight: 600;
       }
 
       .popup-keboon-id {
         background: #6c757d;
         color: white;
-        padding: 2px 8px;
+        padding: 3px 8px;
         border-radius: 4px;
-        font-size: 0.7rem;
+        font-size: 0.75rem;
         display: inline-block;
-        margin-bottom: 8px;
-        margin-left: 5px;
+        margin-bottom: 10px;
+        margin-left: 8px;
+        font-weight: 600;
       }
 
+      /* Footer */
       .footer {
         background: linear-gradient(135deg, #2d5016 0%, #3f6b20 100%);
         color: white;
-        padding: 30px;
+        padding: 40px 30px;
         text-align: center;
       }
 
@@ -465,17 +657,17 @@
       }
 
       .footer p {
-        margin-bottom: 20px;
-        font-size: 1rem;
-        opacity: 0.9;
-        line-height: 1.4;
+        margin-bottom: 25px;
+        font-size: 1.1rem;
+        opacity: 0.95;
+        line-height: 1.5;
       }
 
       .website-btn {
         background: rgba(255, 255, 255, 0.2);
         color: white;
-        padding: 12px 30px;
-        font-size: 1rem;
+        padding: 15px 35px;
+        font-size: 1.1rem;
         font-weight: 600;
         border: 2px solid rgba(255, 255, 255, 0.3);
         border-radius: 50px;
@@ -489,37 +681,18 @@
       .website-btn:hover {
         background: rgba(255, 255, 255, 0.3);
         border-color: rgba(255, 255, 255, 0.5);
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
       }
 
-      .error-message {
-        background: #f8d7da;
-        color: #721c24;
-        padding: 12px;
-        border: 1px solid #f5c6cb;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        display: none;
-      }
-
-      .success-message {
-        background: #d4edda;
-        color: #155724;
-        padding: 12px;
-        border: 1px solid #c3e6cb;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        display: none;
-      }
-
+      /* Responsive Design */
       @media (max-width: 768px) {
         body {
           padding: 10px;
         }
 
         .header {
-          padding: 20px 15px;
+          padding: 25px 20px;
         }
 
         .logo {
@@ -527,24 +700,40 @@
         }
 
         .header h1 {
-          font-size: 2rem;
-          margin-bottom: 8px;
+          font-size: 2.2rem;
         }
 
         .header p {
           font-size: 1rem;
         }
 
-        .main-content {
-          grid-template-columns: 1fr;
-          min-height: auto;
+        .map-section {
+          padding: 20px;
         }
 
-        .form-section {
-          border-right: none;
-          border-bottom: 1px solid #e9ecef;
-          max-height: none;
-          padding: 20px 15px;
+        #map {
+          height: 60vh;
+          min-height: 400px;
+        }
+
+        .action-buttons {
+          padding: 30px 20px;
+        }
+
+        .button-group {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .action-btn {
+          min-width: 100%;
+          max-width: 350px;
+          padding: 15px 30px;
+          font-size: 1.1rem;
+        }
+
+        .form-section.active {
+          padding: 30px 20px;
         }
 
         .form-row {
@@ -558,26 +747,26 @@
 
         .edit-mode-inputs {
           grid-template-columns: 1fr;
-          gap: 10px;
-        }
-
-        #map {
-          height: 60vh;
-          min-height: 400px;
-        }
-
-        #locationMap {
-          height: 250px;
+          gap: 15px;
         }
 
         .location-input-row {
           grid-template-columns: 1fr;
-          gap: 10px;
+          gap: 15px;
         }
 
-        .location-input-row input,
-        .location-input-row button {
-          margin-bottom: 10px;
+        #locationMap {
+          height: 280px;
+        }
+
+        .radio-group {
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .submit-btn {
+          padding: 15px 30px;
+          font-size: 1.1rem;
         }
 
         .products-table,
@@ -596,17 +785,17 @@
         }
 
         .products-table tr {
-          border: 1px solid #ccc;
-          margin-bottom: 10px;
-          padding: 10px;
-          border-radius: 8px;
+          border: 2px solid #ddd;
+          margin-bottom: 15px;
+          padding: 15px;
+          border-radius: 12px;
           background: white;
         }
 
         .products-table td {
           border: none;
           position: relative;
-          padding: 8px 0 8px 30%;
+          padding: 10px 0 10px 35%;
           border-bottom: 1px solid #eee;
         }
 
@@ -614,42 +803,32 @@
           content: attr(data-label);
           position: absolute;
           left: 6px;
-          width: 25%;
+          width: 30%;
           padding-right: 10px;
           white-space: nowrap;
           font-weight: 600;
           color: #2d5016;
-          font-size: 0.8rem;
+          font-size: 0.9rem;
         }
 
         .products-table input,
         .products-table select {
           width: 100%;
-          font-size: 0.9rem;
-        }
-
-        .radio-group {
-          flex-direction: column;
-          gap: 10px;
-        }
-
-        .submit-btn {
-          padding: 12px 25px;
           font-size: 1rem;
         }
 
         .footer {
-          padding: 20px 15px;
+          padding: 30px 20px;
         }
 
         .footer p {
-          font-size: 0.9rem;
-          margin-bottom: 15px;
+          font-size: 1rem;
+          margin-bottom: 20px;
         }
 
         .website-btn {
-          padding: 10px 25px;
-          font-size: 0.9rem;
+          padding: 12px 25px;
+          font-size: 1rem;
         }
       }
 
@@ -658,28 +837,25 @@
           font-size: 1.8rem;
         }
 
-        .location-section {
-          padding: 15px;
-        }
-
-        #locationMap {
-          height: 200px;
-        }
-
-        .btn {
-          padding: 8px 15px;
-          font-size: 0.8rem;
+        .action-btn {
+          padding: 12px 25px;
+          font-size: 1rem;
         }
 
         .submit-btn {
-          padding: 10px 20px;
-          font-size: 0.9rem;
+          padding: 12px 25px;
+          font-size: 1rem;
+        }
+
+        #locationMap {
+          height: 250px;
         }
       }
     </style>
   </head>
   <body>
     <div class="container">
+      <!-- Header -->
       <div class="header">
         <div class="logo-container">
           <img
@@ -696,85 +872,78 @@
         </p>
       </div>
 
-      <div class="main-content">
-        <!-- Form Section -->
-        <div class="form-section">
-          <div class="error-message" id="errorMessage"></div>
-          <div class="success-message" id="successMessage"></div>
+      <!-- Map Section - Now at the top -->
+      <div class="map-section">
+        <div class="map-title">
+          <h2>Discover Local Farmers</h2>
+          <p>Explore farms and homesteads in your area</p>
+        </div>
+        <div style="position: relative">
+          <div id="map"></div>
+          <div class="map-loading" id="mapLoading">
+            <p>Loading farmers data...</p>
+          </div>
+        </div>
+      </div>
 
-          <!-- Edit Mode Section -->
-          <div class="edit-mode-section">
-            <h3>📝 Edit Existing Farm</h3>
-            <p>
-              Already registered? Enter your Keboon ID and phone number to
-              update your information.
-            </p>
-            <div class="edit-mode-inputs">
-              <input
-                type="text"
-                id="editKeboonId"
-                placeholder="Enter Keboon ID (e.g., KB...)"
-              />
-              <input
-                type="tel"
-                id="editPhone"
-                placeholder="Enter registered phone number"
-              />
-              <button
-                type="button"
-                class="btn btn-load"
-                onclick="loadFarmerData()"
+      <!-- Action Buttons Section -->
+      <div class="action-buttons">
+        <h3>Join the Keboon Community</h3>
+        <p>
+          Add your farm to connect with local customers or update your existing
+          listing
+        </p>
+        <div class="button-group">
+          <button class="action-btn" onclick="toggleForm('addForm')">
+            Add My Farm to Directory
+          </button>
+          <button
+            class="action-btn update-btn"
+            onclick="toggleForm('updateForm')"
+          >
+            Update My Farm Info
+          </button>
+        </div>
+      </div>
+
+      <!-- Add Farm Form Section -->
+      <div class="form-section" id="addForm">
+        <button class="close-form-btn" onclick="toggleForm('addForm')">
+          ✕ Close
+        </button>
+        <div class="form-content">
+          <h3>Add New Farm</h3>
+          <p class="subtitle">
+            Join the Keboon Directory and connect with your local community
+          </p>
+
+          <div class="error-message" id="addErrorMessage"></div>
+          <div class="success-message" id="addSuccessMessage"></div>
+
+          <form id="addFarmerForm">
+            <div class="form-group">
+              <label for="addFarmName" class="required"
+                >Farm/Business Name</label
               >
-                🔍 Load My Data
-              </button>
-            </div>
-          </div>
-
-          <!-- Edit Indicator -->
-          <div class="edit-indicator" id="editIndicator">
-            📝 EDIT MODE - Updating farm: <span id="editFarmName"></span> (ID:
-            <span id="editKeboonIdDisplay"></span>)
-            <button
-              type="button"
-              class="btn btn-clear"
-              onclick="clearEditMode()"
-              style="margin-left: 10px"
-            >
-              Clear
-            </button>
-          </div>
-
-          <form id="farmerForm">
-            <!-- Hidden fields for edit mode -->
-            <input
-              type="hidden"
-              id="isEditMode"
-              name="isEditMode"
-              value="false"
-            />
-            <input
-              type="hidden"
-              id="currentKeboonId"
-              name="currentKeboonId"
-              value=""
-            />
-
-            <div class="form-group">
-              <label for="farmName" class="required">Farm/Business Name</label>
-              <input type="text" id="farmName" name="farmName" required />
+              <input type="text" id="addFarmName" name="farmName" required />
             </div>
 
             <div class="form-group">
-              <label for="contactName" class="required"
+              <label for="addContactName" class="required"
                 >Contact Person Name</label
               >
-              <input type="text" id="contactName" name="contactName" required />
+              <input
+                type="text"
+                id="addContactName"
+                name="contactName"
+                required
+              />
             </div>
 
             <div class="form-row">
               <div class="form-group">
-                <label for="category" class="required">Farm Category</label>
-                <select id="category" name="category" required>
+                <label for="addCategory" class="required">Farm Category</label>
+                <select id="addCategory" name="category" required>
                   <option value="">Select Category</option>
                   <option value="Home Grower">
                     Home Grower (micro/backyard)
@@ -789,10 +958,10 @@
               </div>
 
               <div class="form-group">
-                <label for="commercial" class="required"
+                <label for="addCommercial" class="required"
                   >Commercial Status</label
                 >
-                <select id="commercial" name="commercial" required>
+                <select id="addCommercial" name="commercial" required>
                   <option value="">Select Status</option>
                   <option value="Commercial">Commercial</option>
                   <option value="Non-commercial">Non-commercial</option>
@@ -801,12 +970,12 @@
             </div>
 
             <div class="form-group">
-              <label for="location" class="required">Farm Location</label>
+              <label for="addLocation" class="required">Farm Location</label>
               <div class="location-section">
                 <div class="location-input-row">
                   <input
                     type="number"
-                    id="latitude"
+                    id="addLatitude"
                     name="latitude"
                     step="any"
                     required
@@ -815,7 +984,7 @@
                   />
                   <input
                     type="number"
-                    id="longitude"
+                    id="addLongitude"
                     name="longitude"
                     step="any"
                     required
@@ -825,13 +994,13 @@
                   <button
                     type="button"
                     class="btn btn-secondary"
-                    onclick="getCurrentLocation()"
+                    onclick="getCurrentLocation('add')"
                   >
                     📍 Use My Current Location
                   </button>
                 </div>
                 <div class="location-map-container">
-                  <div id="locationMap"></div>
+                  <div id="addLocationMap"></div>
                   <div class="map-instructions">
                     <p>
                       📍 Click on the map to pin your farm location, or use the
@@ -844,22 +1013,22 @@
 
             <div class="form-row">
               <div class="form-group">
-                <label for="phone" class="required">Phone Number</label>
-                <input type="tel" id="phone" name="phone" required />
+                <label for="addPhone" class="required">Phone Number</label>
+                <input type="tel" id="addPhone" name="phone" required />
               </div>
 
               <div class="form-group">
-                <label for="email" class="required">Email Address</label>
-                <input type="email" id="email" name="email" required />
+                <label for="addEmail" class="required">Email Address</label>
+                <input type="email" id="addEmail" name="email" required />
               </div>
             </div>
 
             <div class="form-group">
-              <label for="address" class="required"
+              <label for="addAddress" class="required"
                 >Address/Location Description</label
               >
               <textarea
-                id="address"
+                id="addAddress"
                 name="address"
                 placeholder="e.g., 123 Farm Road, Village Name, District"
                 required
@@ -867,10 +1036,10 @@
             </div>
 
             <div class="form-group">
-              <label for="products" class="required"
+              <label for="addProducts" class="required"
                 >Primary Products/Crops</label
               >
-              <table class="products-table" id="productsTable">
+              <table class="products-table" id="addProductsTable">
                 <thead>
                   <tr>
                     <th>Product/Crop Name</th>
@@ -880,7 +1049,7 @@
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody id="productsTableBody">
+                <tbody id="addProductsTableBody">
                   <tr>
                     <td data-label="Product Name">
                       <input
@@ -922,14 +1091,14 @@
                         <option value="bag">per bag</option>
                         <option value="tray">per tray</option>
                         <option value="pack">per pack</option>
-                        <option value="bundle">per bunch</option>
+                        <option value="bunch">per bunch</option>
                       </select>
                     </td>
                     <td data-label="Action">
                       <button
                         type="button"
                         class="btn btn-danger"
-                        onclick="removeProductRow(this)"
+                        onclick="removeProductRow(this, 'add')"
                         disabled
                       >
                         Remove
@@ -941,17 +1110,17 @@
               <button
                 type="button"
                 class="btn btn-success add-product-btn"
-                onclick="addProductRow()"
+                onclick="addProductRow('add')"
               >
                 + Add Another Product
               </button>
             </div>
 
             <div class="form-group">
-              <label for="farmSize" class="required">Farm Size</label>
+              <label for="addFarmSize" class="required">Farm Size</label>
               <input
                 type="text"
-                id="farmSize"
+                id="addFarmSize"
                 name="farmSize"
                 placeholder="e.g., 0.5 hectares, 2 acres"
                 required
@@ -959,17 +1128,17 @@
             </div>
 
             <div class="form-group">
-              <label for="websites" class="required"
+              <label for="addWebsites" class="required"
                 >Website/Social Media Links</label
               >
-              <table class="products-table" id="websitesTable">
+              <table class="products-table" id="addWebsitesTable">
                 <thead>
                   <tr>
                     <th>URL/Link</th>
                     <th>Action</th>
                   </tr>
                 </thead>
-                <tbody id="websitesTableBody">
+                <tbody id="addWebsitesTableBody">
                   <tr>
                     <td data-label="Website URL">
                       <input
@@ -983,7 +1152,7 @@
                       <button
                         type="button"
                         class="btn btn-danger"
-                        onclick="removeWebsiteRow(this)"
+                        onclick="removeWebsiteRow(this, 'add')"
                         disabled
                       >
                         Remove
@@ -995,18 +1164,18 @@
               <button
                 type="button"
                 class="btn btn-success add-product-btn"
-                onclick="addWebsiteRow()"
+                onclick="addWebsiteRow('add')"
               >
                 + Add Another Link
               </button>
             </div>
 
             <div class="form-group">
-              <label for="description" class="required"
+              <label for="addDescription" class="required"
                 >Brief Description</label
               >
               <textarea
-                id="description"
+                id="addDescription"
                 name="description"
                 placeholder="Tell us about your farm, farming methods, what makes you unique..."
                 required
@@ -1038,18 +1207,386 @@
             </div>
 
             <div class="submit-section">
-              <button type="submit" class="submit-btn" id="submitBtn">
-                🚀 Add My Farm to Keboon Directory
+              <button type="submit" class="submit-btn" id="addSubmitBtn">
+                Add My Farm to Keboon Directory
               </button>
             </div>
           </form>
         </div>
+      </div>
 
-        <!-- Map Section -->
-        <div class="map-section">
-          <div id="map"></div>
-          <div class="map-loading" id="mapLoading">
-            <p>Loading farmers data...</p>
+      <!-- Update Farm Form Section -->
+      <div class="form-section" id="updateForm">
+        <button class="close-form-btn" onclick="toggleForm('updateForm')">
+          ✕ Close
+        </button>
+        <div class="form-content">
+          <h3>Update Farm Information</h3>
+          <p class="subtitle">
+            Update your existing farm listing in the Keboon Directory
+          </p>
+
+          <!-- Verification Section - Always visible when form is open -->
+          <div class="edit-mode-section" id="verificationSection">
+            <h4>Find Your Farm</h4>
+            <p>
+              Enter your Keboon ID and phone number to load your current
+              information for editing.
+            </p>
+            <div class="edit-mode-inputs">
+              <input
+                type="text"
+                id="editKeboonId"
+                placeholder="Enter Keboon ID (e.g., KB...)"
+              />
+              <input
+                type="tel"
+                id="editPhone"
+                placeholder="Enter registered phone number"
+              />
+              <button type="button" class="btn-load" onclick="loadFarmerData()">
+                Load My Data
+              </button>
+            </div>
+          </div>
+
+          <!-- Update Form Container - Hidden until data is loaded -->
+          <div id="updateFormContainer" style="display: none">
+            <!-- Edit Indicator -->
+            <div class="edit-indicator" id="editIndicator">
+              EDITING FARM: <span id="editFarmName"></span> (ID:
+              <span id="editKeboonIdDisplay"></span>)
+              <button type="button" class="btn-clear" onclick="clearEditMode()">
+                Clear
+              </button>
+            </div>
+
+            <div class="error-message" id="updateErrorMessage"></div>
+            <div class="success-message" id="updateSuccessMessage"></div>
+
+            <form id="updateFarmerForm">
+              <!-- Hidden fields for edit mode -->
+              <input
+                type="hidden"
+                id="isEditMode"
+                name="isEditMode"
+                value="false"
+              />
+              <input
+                type="hidden"
+                id="currentKeboonId"
+                name="currentKeboonId"
+                value=""
+              />
+
+              <div class="form-group">
+                <label for="updateFarmName" class="required"
+                  >Farm/Business Name</label
+                >
+                <input
+                  type="text"
+                  id="updateFarmName"
+                  name="farmName"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="updateContactName" class="required"
+                  >Contact Person Name</label
+                >
+                <input
+                  type="text"
+                  id="updateContactName"
+                  name="contactName"
+                  required
+                />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="updateCategory" class="required"
+                    >Farm Category</label
+                  >
+                  <select id="updateCategory" name="category" required>
+                    <option value="">Select Category</option>
+                    <option value="Home Grower">
+                      Home Grower (micro/backyard)
+                    </option>
+                    <option value="Homesteading">
+                      Homesteading (medium-small)
+                    </option>
+                    <option value="Small Scale">
+                      Small Scale (&lt;1.5 ha)
+                    </option>
+                    <option value="Medium Scale">Medium Scale</option>
+                    <option value="Large Scale">Large Scale</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="updateCommercial" class="required"
+                    >Commercial Status</label
+                  >
+                  <select id="updateCommercial" name="commercial" required>
+                    <option value="">Select Status</option>
+                    <option value="Commercial">Commercial</option>
+                    <option value="Non-commercial">Non-commercial</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="updateLocation" class="required"
+                  >Farm Location</label
+                >
+                <div class="location-section">
+                  <div class="location-input-row">
+                    <input
+                      type="number"
+                      id="updateLatitude"
+                      name="latitude"
+                      step="any"
+                      required
+                      readonly
+                      placeholder="Latitude will be set when you pin location"
+                    />
+                    <input
+                      type="number"
+                      id="updateLongitude"
+                      name="longitude"
+                      step="any"
+                      required
+                      readonly
+                      placeholder="Longitude will be set when you pin location"
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      onclick="getCurrentLocation('update')"
+                    >
+                      📍 Use My Current Location
+                    </button>
+                  </div>
+                  <div class="location-map-container">
+                    <div id="updateLocationMap"></div>
+                    <div class="map-instructions">
+                      <p>
+                        📍 Click on the map to pin your farm location, or use
+                        the "Use My Current Location" button above
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="updatePhone" class="required">Phone Number</label>
+                  <input type="tel" id="updatePhone" name="phone" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="updateEmail" class="required"
+                    >Email Address</label
+                  >
+                  <input type="email" id="updateEmail" name="email" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="updateAddress" class="required"
+                  >Address/Location Description</label
+                >
+                <textarea
+                  id="updateAddress"
+                  name="address"
+                  placeholder="e.g., 123 Farm Road, Village Name, District"
+                  required
+                ></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="updateProducts" class="required"
+                  >Primary Products/Crops</label
+                >
+                <table class="products-table" id="updateProductsTable">
+                  <thead>
+                    <tr>
+                      <th>Product/Crop Name</th>
+                      <th>Season/Availability</th>
+                      <th>Price (RM)</th>
+                      <th>Unit</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="updateProductsTableBody">
+                    <tr>
+                      <td data-label="Product Name">
+                        <input
+                          type="text"
+                          name="productName[]"
+                          placeholder="e.g., Tomatoes, Rice, Chickens"
+                          required
+                        />
+                      </td>
+                      <td data-label="Season">
+                        <input
+                          type="text"
+                          name="productSeason[]"
+                          placeholder="e.g., Year-round, March-Oct"
+                          required
+                        />
+                      </td>
+                      <td data-label="Price (RM)">
+                        <input
+                          type="number"
+                          name="productPrice[]"
+                          step="0.01"
+                          min="0"
+                          placeholder="0.00"
+                          required
+                        />
+                      </td>
+                      <td data-label="Unit">
+                        <select name="productUnit[]" required>
+                          <option value="">Select Unit</option>
+                          <option value="kg">per kg</option>
+                          <option value="g">per g</option>
+                          <option value="l">per liter</option>
+                          <option value="ml">per ml</option>
+                          <option value="piece">per piece</option>
+                          <option value="dozen">per dozen</option>
+                          <option value="bundle">per bundle</option>
+                          <option value="box">per box</option>
+                          <option value="bag">per bag</option>
+                          <option value="tray">per tray</option>
+                          <option value="pack">per pack</option>
+                          <option value="bunch">per bunch</option>
+                        </select>
+                      </td>
+                      <td data-label="Action">
+                        <button
+                          type="button"
+                          class="btn btn-danger"
+                          onclick="removeProductRow(this, 'update')"
+                          disabled
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <button
+                  type="button"
+                  class="btn btn-success add-product-btn"
+                  onclick="addProductRow('update')"
+                >
+                  + Add Another Product
+                </button>
+              </div>
+
+              <div class="form-group">
+                <label for="updateFarmSize" class="required">Farm Size</label>
+                <input
+                  type="text"
+                  id="updateFarmSize"
+                  name="farmSize"
+                  placeholder="e.g., 0.5 hectares, 2 acres"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="updateWebsites" class="required"
+                  >Website/Social Media Links</label
+                >
+                <table class="products-table" id="updateWebsitesTable">
+                  <thead>
+                    <tr>
+                      <th>URL/Link</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="updateWebsitesTableBody">
+                    <tr>
+                      <td data-label="Website URL">
+                        <input
+                          type="url"
+                          name="websiteUrl[]"
+                          placeholder="https://..."
+                          required
+                        />
+                      </td>
+                      <td data-label="Action">
+                        <button
+                          type="button"
+                          class="btn btn-danger"
+                          onclick="removeWebsiteRow(this, 'update')"
+                          disabled
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <button
+                  type="button"
+                  class="btn btn-success add-product-btn"
+                  onclick="addWebsiteRow('update')"
+                >
+                  + Add Another Link
+                </button>
+              </div>
+
+              <div class="form-group">
+                <label for="updateDescription" class="required"
+                  >Brief Description</label
+                >
+                <textarea
+                  id="updateDescription"
+                  name="description"
+                  placeholder="Tell us about your farm, farming methods, what makes you unique..."
+                  required
+                ></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="required">Available for visits/tours?</label>
+                <div class="radio-group">
+                  <label class="radio-label">
+                    <input
+                      type="radio"
+                      name="visitsAllowed"
+                      value="Yes"
+                      required
+                    />
+                    Yes, visitors welcome
+                  </label>
+                  <label class="radio-label">
+                    <input
+                      type="radio"
+                      name="visitsAllowed"
+                      value="No"
+                      required
+                    />
+                    No, not open for visits
+                  </label>
+                </div>
+              </div>
+
+              <div class="submit-section">
+                <button
+                  type="submit"
+                  class="submit-btn btn-update"
+                  id="updateSubmitBtn"
+                >
+                  Update My Farm Information
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -1075,10 +1612,12 @@
     <script>
       // Global variables
       let map;
-      let locationMap;
+      let addLocationMap;
+      let updateLocationMap;
       let farmersData = [];
       let userMarker = null;
-      let locationMarker = null;
+      let addLocationMarker = null;
+      let updateLocationMarker = null;
       let isEditMode = false;
       let currentEditData = null;
 
@@ -1086,9 +1625,37 @@
       const APPS_SCRIPT_URL =
         "https://script.google.com/macros/s/AKfycbzkUBAgOU7cerDTPkqpvuMbD4CjpHqsIGy8JjubOwZkhQEKgVUmEiR7iT5AQFszkoId/exec";
 
+      // Toggle form visibility
+      function toggleForm(formId) {
+        const form = document.getElementById(formId);
+        const isActive = form.classList.contains("active");
+
+        // Close all forms
+        document.querySelectorAll(".form-section").forEach((section) => {
+          section.classList.remove("active");
+        });
+
+        // Open the requested form if it wasn't already active
+        if (!isActive) {
+          form.classList.add("active");
+
+          // Initialize the appropriate location map
+          setTimeout(() => {
+            if (formId === "addForm" && addLocationMap) {
+              addLocationMap.invalidateSize();
+            } else if (formId === "updateForm" && updateLocationMap) {
+              updateLocationMap.invalidateSize();
+            }
+          }, 300);
+
+          // Scroll to form
+          form.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+
       // Helper functions for error handling
-      function showError(message) {
-        const errorDiv = document.getElementById("errorMessage");
+      function showError(message, formType = "add") {
+        const errorDiv = document.getElementById(`${formType}ErrorMessage`);
         errorDiv.textContent = message;
         errorDiv.style.display = "block";
         setTimeout(() => {
@@ -1096,8 +1663,8 @@
         }, 10000);
       }
 
-      function showSuccess(message) {
-        const successDiv = document.getElementById("successMessage");
+      function showSuccess(message, formType = "add") {
+        const successDiv = document.getElementById(`${formType}SuccessMessage`);
         successDiv.textContent = message;
         successDiv.style.display = "block";
         setTimeout(() => {
@@ -1105,9 +1672,11 @@
         }, 8000);
       }
 
-      function hideMessages() {
-        document.getElementById("errorMessage").style.display = "none";
-        document.getElementById("successMessage").style.display = "none";
+      function hideMessages(formType = "add") {
+        document.getElementById(`${formType}ErrorMessage`).style.display =
+          "none";
+        document.getElementById(`${formType}SuccessMessage`).style.display =
+          "none";
       }
 
       // Load farmer data for editing
@@ -1116,11 +1685,11 @@
         const phone = document.getElementById("editPhone").value.trim();
 
         if (!keboonId || !phone) {
-          showError("Please enter both Keboon ID and phone number");
+          showError("Please enter both Keboon ID and phone number", "update");
           return;
         }
 
-        hideMessages();
+        hideMessages("update");
 
         try {
           // Show loading state
@@ -1160,18 +1729,18 @@
             // Populate form fields
             populateFormWithData(result.farmer);
 
-            // Update submit button
-            const submitBtn = document.getElementById("submitBtn");
-            submitBtn.textContent = "🔄 Update My Farm Information";
-            submitBtn.classList.remove("submit-btn");
-            submitBtn.classList.add("submit-btn", "btn-update");
-
             showSuccess(
-              "✅ Data loaded successfully! You can now update your information."
+              "Data loaded successfully! You can now update your information.",
+              "update"
             );
 
-            // Scroll to form
-            document.querySelector(".form-section").scrollTop = 200;
+            // Scroll to form content
+            setTimeout(() => {
+              document.getElementById("updateFarmerForm").scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }, 500);
           } else {
             throw new Error(
               result.error ||
@@ -1180,43 +1749,57 @@
           }
         } catch (error) {
           console.error("Error loading farmer data:", error);
-          showError(`Error: ${error.message}`);
+          showError(`Error: ${error.message}`, "update");
         } finally {
           // Reset button
           const loadBtn = document.querySelector(".btn-load");
           loadBtn.disabled = false;
-          loadBtn.textContent = "🔍 Load My Data";
+          loadBtn.textContent = "Load My Data";
         }
       }
 
       // Populate form with farmer data
+      // Populate form with farmer data
       function populateFormWithData(data) {
+        // Show the form container
+        document.getElementById("updateFormContainer").style.display = "block";
+        // Fix map sizing after showing the container
+        setTimeout(() => {
+          if (updateLocationMap) {
+            updateLocationMap.invalidateSize();
+          }
+        }, 100);
         // Basic fields
-        document.getElementById("farmName").value = data.farmName || "";
-        document.getElementById("contactName").value = data.contactName || "";
-        document.getElementById("category").value = data.category || "";
-        document.getElementById("commercial").value = data.commercial || "";
-        document.getElementById("phone").value = data.phone || "";
-        document.getElementById("email").value = data.email || "";
-        document.getElementById("address").value = data.address || "";
-        document.getElementById("farmSize").value = data.farmSize || "";
-        document.getElementById("description").value = data.description || "";
+        document.getElementById("updateFarmName").value = data.farmName || "";
+        document.getElementById("updateContactName").value =
+          data.contactName || "";
+        document.getElementById("updateCategory").value = data.category || "";
+        document.getElementById("updateCommercial").value =
+          data.commercial || "";
+        document.getElementById("updatePhone").value = data.phone || "";
+        document.getElementById("updateEmail").value = data.email || "";
+        document.getElementById("updateAddress").value = data.address || "";
+        document.getElementById("updateFarmSize").value = data.farmSize || "";
+        document.getElementById("updateDescription").value =
+          data.description || "";
 
         // Set location
         if (data.latitude && data.longitude) {
           const lat = parseFloat(data.latitude);
           const lng = parseFloat(data.longitude);
-          document.getElementById("latitude").value = lat;
-          document.getElementById("longitude").value = lng;
+          document.getElementById("updateLatitude").value = lat;
+          document.getElementById("updateLongitude").value = lng;
 
           // Update location map
-          locationMap.setView([lat, lng], 16);
-          setFarmLocation(lat, lng);
+          if (updateLocationMap) {
+            updateLocationMap.setView([lat, lng], 16);
+            setFarmLocation(lat, lng, "update");
+          }
         }
 
         // Set visits allowed
         const visitsRadio = document.querySelector(
-          `input[name="visitsAllowed"][value="${data.visitsAllowed}"]`
+          `#updateForm input[name="visitsAllowed"][value="${data.visitsAllowed}"]`
         );
         if (visitsRadio) {
           visitsRadio.checked = true;
@@ -1238,69 +1821,69 @@
 
         if (products && products.length > 0) {
           // Clear existing product rows
-          const tbody = document.getElementById("productsTableBody");
+          const tbody = document.getElementById("updateProductsTableBody");
           tbody.innerHTML = "";
 
           // Add product rows
           products.forEach((product, index) => {
             const newRow = tbody.insertRow();
             newRow.innerHTML = `
-                    <td data-label="Product Name"><input type="text" name="productName[]" value="${
-                      product.name || ""
-                    }" placeholder="e.g., Tomatoes, Rice, Chickens" required></td>
-                    <td data-label="Season"><input type="text" name="productSeason[]" value="${
-                      product.season || ""
-                    }" placeholder="e.g., Year-round, March-Oct" required></td>
-                    <td data-label="Price (RM)"><input type="number" name="productPrice[]" value="${
-                      product.price || ""
-                    }" step="0.01" min="0" placeholder="0.00" required></td>
-                    <td data-label="Unit">
-                        <select name="productUnit[]" required>
-                            <option value="">Select Unit</option>
-                            <option value="kg" ${
-                              product.unit === "kg" ? "selected" : ""
-                            }>per kg</option>
-                            <option value="g" ${
-                              product.unit === "g" ? "selected" : ""
-                            }>per g</option>
-                            <option value="l" ${
-                              product.unit === "l" ? "selected" : ""
-                            }>per liter</option>
-                            <option value="ml" ${
-                              product.unit === "ml" ? "selected" : ""
-                            }>per ml</option>
-                            <option value="piece" ${
-                              product.unit === "piece" ? "selected" : ""
-                            }>per piece</option>
-                            <option value="dozen" ${
-                              product.unit === "dozen" ? "selected" : ""
-                            }>per dozen</option>
-                            <option value="bundle" ${
-                              product.unit === "bundle" ? "selected" : ""
-                            }>per bundle</option>
-                            <option value="box" ${
-                              product.unit === "box" ? "selected" : ""
-                            }>per box</option>
-                            <option value="bag" ${
-                              product.unit === "bag" ? "selected" : ""
-                            }>per bag</option>
-                            <option value="tray" ${
-                              product.unit === "tray" ? "selected" : ""
-                            }>per tray</option>
-                            <option value="pack" ${
-                              product.unit === "pack" ? "selected" : ""
-                            }>per pack</option>
-                            <option value="bunch" ${
-                              product.unit === "bunch" ? "selected" : ""
-                            }>per bunch</option>
-                        </select>
-                    </td>
-                    <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeProductRow(this)" ${
-                      index === 0 ? "disabled" : ""
-                    }>Remove</button></td>
-                `;
+              <td data-label="Product Name"><input type="text" name="productName[]" value="${
+                product.name || ""
+              }" placeholder="e.g., Tomatoes, Rice, Chickens" required></td>
+              <td data-label="Season"><input type="text" name="productSeason[]" value="${
+                product.season || ""
+              }" placeholder="e.g., Year-round, March-Oct" required></td>
+              <td data-label="Price (RM)"><input type="number" name="productPrice[]" value="${
+                product.price || ""
+              }" step="0.01" min="0" placeholder="0.00" required></td>
+              <td data-label="Unit">
+                <select name="productUnit[]" required>
+                  <option value="">Select Unit</option>
+                  <option value="kg" ${
+                    product.unit === "kg" ? "selected" : ""
+                  }>per kg</option>
+                  <option value="g" ${
+                    product.unit === "g" ? "selected" : ""
+                  }>per g</option>
+                  <option value="l" ${
+                    product.unit === "l" ? "selected" : ""
+                  }>per liter</option>
+                  <option value="ml" ${
+                    product.unit === "ml" ? "selected" : ""
+                  }>per ml</option>
+                  <option value="piece" ${
+                    product.unit === "piece" ? "selected" : ""
+                  }>per piece</option>
+                  <option value="dozen" ${
+                    product.unit === "dozen" ? "selected" : ""
+                  }>per dozen</option>
+                  <option value="bundle" ${
+                    product.unit === "bundle" ? "selected" : ""
+                  }>per bundle</option>
+                  <option value="box" ${
+                    product.unit === "box" ? "selected" : ""
+                  }>per box</option>
+                  <option value="bag" ${
+                    product.unit === "bag" ? "selected" : ""
+                  }>per bag</option>
+                  <option value="tray" ${
+                    product.unit === "tray" ? "selected" : ""
+                  }>per tray</option>
+                  <option value="pack" ${
+                    product.unit === "pack" ? "selected" : ""
+                  }>per pack</option>
+                  <option value="bunch" ${
+                    product.unit === "bunch" ? "selected" : ""
+                  }>per bunch</option>
+                </select>
+              </td>
+              <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeProductRow(this, 'update')" ${
+                index === 0 ? "disabled" : ""
+              }>Remove</button></td>
+            `;
           });
-          updateRemoveButtons();
+          updateRemoveButtons("update");
         }
 
         // Populate websites
@@ -1319,27 +1902,30 @@
 
         if (websites && websites.length > 0) {
           // Clear existing website rows
-          const tbody = document.getElementById("websitesTableBody");
+          const tbody = document.getElementById("updateWebsitesTableBody");
           tbody.innerHTML = "";
 
           // Add website rows
           websites.forEach((url, index) => {
             const newRow = tbody.insertRow();
             newRow.innerHTML = `
-                    <td data-label="Website URL"><input type="url" name="websiteUrl[]" value="${
-                      url || ""
-                    }" placeholder="https://..." required></td>
-                    <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeWebsiteRow(this)" ${
-                      index === 0 ? "disabled" : ""
-                    }>Remove</button></td>
-                `;
+              <td data-label="Website URL"><input type="url" name="websiteUrl[]" value="${
+                url || ""
+              }" placeholder="https://..." required></td>
+              <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeWebsiteRow(this, 'update')" ${
+                index === 0 ? "disabled" : ""
+              }>Remove</button></td>
+            `;
           });
-          updateWebsiteRemoveButtons();
+          updateWebsiteRemoveButtons("update");
         }
       }
 
       // Clear edit mode
+      // Clear edit mode
       function clearEditMode() {
+        // Hide the form container
+        document.getElementById("updateFormContainer").style.display = "none";
         isEditMode = false;
         currentEditData = null;
 
@@ -1355,64 +1941,70 @@
         document.getElementById("editPhone").value = "";
 
         // Reset form
-        document.getElementById("farmerForm").reset();
+        document.getElementById("updateFarmerForm").reset();
 
         // Reset products and websites tables
-        const productsBody = document.getElementById("productsTableBody");
-        productsBody.innerHTML = `
-            <tr>
-                <td data-label="Product Name"><input type="text" name="productName[]" placeholder="e.g., Tomatoes, Rice, Chickens" required></td>
-                <td data-label="Season"><input type="text" name="productSeason[]" placeholder="e.g., Year-round, March-Oct" required></td>
-                <td data-label="Price (RM)"><input type="number" name="productPrice[]" step="0.01" min="0" placeholder="0.00" required></td>
-                <td data-label="Unit">
-                    <select name="productUnit[]" required>
-                        <option value="">Select Unit</option>
-                        <option value="kg">per kg</option>
-                        <option value="g">per g</option>
-                        <option value="l">per liter</option>
-                        <option value="ml">per ml</option>
-                        <option value="piece">per piece</option>
-                        <option value="dozen">per dozen</option>
-                        <option value="bundle">per bundle</option>
-                        <option value="box">per box</option>
-                        <option value="bag">per bag</option>
-                        <option value="tray">per tray</option>
-                        <option value="pack">per pack</option>
-                        <option value="bunch">per bunch</option>
-                    </select>
-                </td>
-                <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeProductRow(this)" disabled>Remove</button></td>
-            </tr>
-        `;
-
-        const websitesBody = document.getElementById("websitesTableBody");
-        websitesBody.innerHTML = `
-            <tr>
-                <td data-label="Website URL"><input type="url" name="websiteUrl[]" placeholder="https://..." required></td>
-                <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeWebsiteRow(this)" disabled>Remove</button></td>
-            </tr>
-        `;
+        resetTable("update", "Products");
+        resetTable("update", "Websites");
 
         // Clear location marker
-        if (locationMarker) {
-          locationMap.removeLayer(locationMarker);
-          locationMarker = null;
+        if (updateLocationMarker) {
+          updateLocationMap.removeLayer(updateLocationMarker);
+          updateLocationMarker = null;
         }
 
-        // Reset submit button
-        const submitBtn = document.getElementById("submitBtn");
-        submitBtn.textContent = "🚀 Add My Farm to Keboon Directory";
-        submitBtn.classList.remove("btn-update");
+        showSuccess("Edit mode cleared. Form reset.", "update");
+      }
 
-        showSuccess("Edit mode cleared. Form reset to add new farm.");
+      // Reset table to default state
+      function resetTable(formType, tableType) {
+        const isProducts = tableType === "Products";
+        const tbody = document.getElementById(
+          `${formType}${tableType}TableBody`
+        );
+
+        if (isProducts) {
+          tbody.innerHTML = `
+            <tr>
+              <td data-label="Product Name"><input type="text" name="productName[]" placeholder="e.g., Tomatoes, Rice, Chickens" required></td>
+              <td data-label="Season"><input type="text" name="productSeason[]" placeholder="e.g., Year-round, March-Oct" required></td>
+              <td data-label="Price (RM)"><input type="number" name="productPrice[]" step="0.01" min="0" placeholder="0.00" required></td>
+              <td data-label="Unit">
+                <select name="productUnit[]" required>
+                  <option value="">Select Unit</option>
+                  <option value="kg">per kg</option>
+                  <option value="g">per g</option>
+                  <option value="l">per liter</option>
+                  <option value="ml">per ml</option>
+                  <option value="piece">per piece</option>
+                  <option value="dozen">per dozen</option>
+                  <option value="bundle">per bundle</option>
+                  <option value="box">per box</option>
+                  <option value="bag">per bag</option>
+                  <option value="tray">per tray</option>
+                  <option value="pack">per pack</option>
+                  <option value="bunch">per bunch</option>
+                </select>
+              </td>
+              <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeProductRow(this, '${formType}')" disabled>Remove</button></td>
+            </tr>
+          `;
+        } else {
+          tbody.innerHTML = `
+            <tr>
+              <td data-label="Website URL"><input type="url" name="websiteUrl[]" placeholder="https://..." required></td>
+              <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeWebsiteRow(this, '${formType}')" disabled>Remove</button></td>
+            </tr>
+          `;
+        }
       }
 
       // Initialize maps
       function initMap() {
         // Initialize main map
         initMainMap();
-        // Initialize location picker map
-        initLocationMap();
+        // Initialize location picker maps
+        initLocationMaps();
       }
 
       // Initialize main display map
@@ -1444,11 +2036,11 @@
                   iconUrl:
                     "data:image/svg+xml;charset=UTF-8," +
                     encodeURIComponent(`
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff4444" width="24" height="24">
-                                    <circle cx="12" cy="12" r="10" stroke="#fff" stroke-width="2"/>
-                                    <circle cx="12" cy="12" r="3" fill="#fff"/>
-                                </svg>
-                            `),
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff4444" width="24" height="24">
+                          <circle cx="12" cy="12" r="10" stroke="#fff" stroke-width="2"/>
+                          <circle cx="12" cy="12" r="3" fill="#fff"/>
+                      </svg>
+                    `),
                   iconSize: [24, 24],
                   iconAnchor: [12, 12],
                 }),
@@ -1467,17 +2059,26 @@
         loadFarmersData();
       }
 
-      // Initialize location picker map
-      function initLocationMap() {
+      // Initialize location picker maps
+      function initLocationMaps() {
         const defaultCenter = [3.139, 101.6869];
 
-        locationMap = L.map("locationMap").setView(defaultCenter, 12);
-
-        // Add OpenStreetMap tiles
+        // Initialize add form location map
+        addLocationMap = L.map("addLocationMap").setView(defaultCenter, 12);
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
           attribution: "© OpenStreetMap contributors",
           maxZoom: 18,
-        }).addTo(locationMap);
+        }).addTo(addLocationMap);
+
+        // Initialize update form location map
+        updateLocationMap = L.map("updateLocationMap").setView(
+          defaultCenter,
+          12
+        );
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: "© OpenStreetMap contributors",
+          maxZoom: 18,
+        }).addTo(updateLocationMap);
 
         // Try to center on user's location
         if (navigator.geolocation) {
@@ -1487,17 +2088,22 @@
                 position.coords.latitude,
                 position.coords.longitude,
               ];
-              locationMap.setView(userLocation, 15);
+              addLocationMap.setView(userLocation, 15);
+              updateLocationMap.setView(userLocation, 15);
             },
             function (error) {
-              console.log("Geolocation error for location map:", error);
+              console.log("Geolocation error for location maps:", error);
             }
           );
         }
 
-        // Add click event to set farm location
-        locationMap.on("click", function (e) {
-          setFarmLocation(e.latlng.lat, e.latlng.lng);
+        // Add click events to set farm location
+        addLocationMap.on("click", function (e) {
+          setFarmLocation(e.latlng.lat, e.latlng.lng, "add");
+        });
+
+        updateLocationMap.on("click", function (e) {
+          setFarmLocation(e.latlng.lat, e.latlng.lng, "update");
         });
       }
 
@@ -1595,9 +2201,6 @@
 
           farmersData = sampleData;
           displayFarmersOnMap();
-          showError(
-            "Using sample data - please check your Google Apps Script URL"
-          );
         } finally {
           document.getElementById("mapLoading").style.display = "none";
         }
@@ -1612,10 +2215,10 @@
                 iconUrl:
                   "data:image/svg+xml;charset=UTF-8," +
                   encodeURIComponent(`
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3f6b20" width="30" height="30">
-                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                            </svg>
-                        `),
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3f6b20" width="30" height="30">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                  `),
                 iconSize: [30, 30],
                 iconAnchor: [15, 30],
                 popupAnchor: [0, -30],
@@ -1672,27 +2275,25 @@
             }
 
             const popupContent = `
-                    <div class="popup-farm-name">${farmer.farmName}</div>
-                    <div>
-                        <span class="popup-category">${farmer.category}</span>
-                        <span class="popup-commercial">${
-                          farmer.commercial
-                        }</span>
-                    </div>
-                    <br>
-                    <strong>Contact:</strong> ${farmer.contactName}<br>
-                    📞 ${farmer.phone}<br>
-                    ✉️ ${farmer.email}<br>
-                    📍 ${farmer.address}
-                    ${productsHtml}
-                    ${websitesHtml}
-                    <br><strong>Farm Size:</strong> ${farmer.farmSize}<br>
-                    <strong>Visits:</strong> ${
-                      farmer.visitsAllowed === "Yes"
-                        ? "✅ Visitors welcome"
-                        : "❌ Not open for visits"
-                    }
-                `;
+              <div class="popup-farm-name">${farmer.farmName}</div>
+              <div>
+                  <span class="popup-category">${farmer.category}</span>
+                  <span class="popup-commercial">${farmer.commercial}</span>
+              </div>
+              <br>
+              <strong>Contact:</strong> ${farmer.contactName}<br>
+              📞 ${farmer.phone}<br>
+              ✉️ ${farmer.email}<br>
+              📍 ${farmer.address}
+              ${productsHtml}
+              ${websitesHtml}
+              <br><strong>Farm Size:</strong> ${farmer.farmSize}<br>
+              <strong>Visits:</strong> ${
+                farmer.visitsAllowed === "Yes"
+                  ? "✅ Visitors welcome"
+                  : "❌ Not open for visits"
+              }
+            `;
 
             marker.bindPopup(popupContent);
           }
@@ -1700,10 +2301,16 @@
       }
 
       // Set farm location on map and update form
-      function setFarmLocation(lat, lng) {
+      function setFarmLocation(lat, lng, formType) {
         // Update form fields
-        document.getElementById("latitude").value = lat.toFixed(6);
-        document.getElementById("longitude").value = lng.toFixed(6);
+        document.getElementById(`${formType}Latitude`).value = lat.toFixed(6);
+        document.getElementById(`${formType}Longitude`).value = lng.toFixed(6);
+
+        // Select the appropriate map and marker
+        const locationMap =
+          formType === "add" ? addLocationMap : updateLocationMap;
+        let locationMarker =
+          formType === "add" ? addLocationMarker : updateLocationMarker;
 
         // Remove existing marker if any
         if (locationMarker) {
@@ -1716,10 +2323,10 @@
             iconUrl:
               "data:image/svg+xml;charset=UTF-8," +
               encodeURIComponent(`
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3f6b20" width="30" height="30">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                    </svg>
-                `),
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3f6b20" width="30" height="30">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+              `),
             iconSize: [30, 30],
             iconAnchor: [15, 30],
           }),
@@ -1735,87 +2342,101 @@
         // Make marker draggable
         locationMarker.on("dragend", function (e) {
           const newPos = e.target.getLatLng();
-          setFarmLocation(newPos.lat, newPos.lng);
+          setFarmLocation(newPos.lat, newPos.lng, formType);
         });
+
+        // Update the global marker variable
+        if (formType === "add") {
+          addLocationMarker = locationMarker;
+        } else {
+          updateLocationMarker = locationMarker;
+        }
       }
 
       // Get current location for both form and map
-      function getCurrentLocation() {
+      function getCurrentLocation(formType) {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(
             function (position) {
               const lat = position.coords.latitude;
               const lng = position.coords.longitude;
 
+              // Select the appropriate map
+              const locationMap =
+                formType === "add" ? addLocationMap : updateLocationMap;
+
               // Set location on form map
               locationMap.setView([lat, lng], 16);
-              setFarmLocation(lat, lng);
+              setFarmLocation(lat, lng, formType);
 
               showSuccess(
-                "📍 Current location set! You can drag the pin to adjust if needed."
+                "📍 Current location set! You can drag the pin to adjust if needed.",
+                formType
               );
             },
             function (error) {
               showError(
-                "Unable to get your location. Please click on the map to set your farm location manually."
+                "Unable to get your location. Please click on the map to set your farm location manually.",
+                formType
               );
             }
           );
         } else {
           showError(
-            "Geolocation is not supported by this browser. Please click on the map to set your location."
+            "Geolocation is not supported by this browser. Please click on the map to set your location.",
+            formType
           );
         }
       }
 
       // Products table management
-      function addProductRow() {
-        const tbody = document.getElementById("productsTableBody");
+      function addProductRow(formType) {
+        const tbody = document.getElementById(`${formType}ProductsTableBody`);
         const rowCount = tbody.rows.length;
 
         if (rowCount >= 10) {
-          showError("Maximum 10 products allowed.");
+          showError("Maximum 10 products allowed.", formType);
           return;
         }
 
         const newRow = tbody.insertRow();
         newRow.innerHTML = `
-            <td data-label="Product Name"><input type="text" name="productName[]" placeholder="e.g., Tomatoes, Rice, Chickens" required></td>
-            <td data-label="Season"><input type="text" name="productSeason[]" placeholder="e.g., Year-round, March-Oct" required></td>
-            <td data-label="Price (RM)"><input type="number" name="productPrice[]" step="0.01" min="0" placeholder="0.00" required></td>
-            <td data-label="Unit">
-                <select name="productUnit[]" required>
-                    <option value="">Select Unit</option>
-                    <option value="kg">per kg</option>
-                    <option value="g">per g</option>
-                    <option value="l">per liter</option>
-                    <option value="ml">per ml</option>
-                    <option value="piece">per piece</option>
-                    <option value="dozen">per dozen</option>
-                    <option value="bundle">per bundle</option>
-                    <option value="box">per box</option>
-                    <option value="bag">per bag</option>
-                    <option value="tray">per tray</option>
-                    <option value="pack">per pack</option>
-                    <option value="bunch">per bunch</option>
-                </select>
-            </td>
-            <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeProductRow(this)">Remove</button></td>
+          <td data-label="Product Name"><input type="text" name="productName[]" placeholder="e.g., Tomatoes, Rice, Chickens" required></td>
+          <td data-label="Season"><input type="text" name="productSeason[]" placeholder="e.g., Year-round, March-Oct" required></td>
+          <td data-label="Price (RM)"><input type="number" name="productPrice[]" step="0.01" min="0" placeholder="0.00" required></td>
+          <td data-label="Unit">
+              <select name="productUnit[]" required>
+                  <option value="">Select Unit</option>
+                  <option value="kg">per kg</option>
+                  <option value="g">per g</option>
+                  <option value="l">per liter</option>
+                  <option value="ml">per ml</option>
+                  <option value="piece">per piece</option>
+                  <option value="dozen">per dozen</option>
+                  <option value="bundle">per bundle</option>
+                  <option value="box">per box</option>
+                  <option value="bag">per bag</option>
+                  <option value="tray">per tray</option>
+                  <option value="pack">per pack</option>
+                  <option value="bunch">per bunch</option>
+              </select>
+          </td>
+          <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeProductRow(this, '${formType}')">Remove</button></td>
         `;
 
-        updateRemoveButtons();
+        updateRemoveButtons(formType);
       }
 
-      function removeProductRow(button) {
-        const tbody = document.getElementById("productsTableBody");
+      function removeProductRow(button, formType) {
+        const tbody = document.getElementById(`${formType}ProductsTableBody`);
         if (tbody.rows.length > 1) {
           button.closest("tr").remove();
-          updateRemoveButtons();
+          updateRemoveButtons(formType);
         }
       }
 
-      function updateRemoveButtons() {
-        const tbody = document.getElementById("productsTableBody");
+      function updateRemoveButtons(formType) {
+        const tbody = document.getElementById(`${formType}ProductsTableBody`);
         const removeButtons = tbody.querySelectorAll(".btn-danger");
 
         removeButtons.forEach((button, index) => {
@@ -1824,34 +2445,34 @@
       }
 
       // Website/Social Media table management
-      function addWebsiteRow() {
-        const tbody = document.getElementById("websitesTableBody");
+      function addWebsiteRow(formType) {
+        const tbody = document.getElementById(`${formType}WebsitesTableBody`);
         const rowCount = tbody.rows.length;
 
         if (rowCount >= 10) {
-          showError("Maximum 10 links allowed.");
+          showError("Maximum 10 links allowed.", formType);
           return;
         }
 
         const newRow = tbody.insertRow();
         newRow.innerHTML = `
-            <td data-label="Website URL"><input type="url" name="websiteUrl[]" placeholder="https://..." required></td>
-            <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeWebsiteRow(this)">Remove</button></td>
+          <td data-label="Website URL"><input type="url" name="websiteUrl[]" placeholder="https://..." required></td>
+          <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeWebsiteRow(this, '${formType}')">Remove</button></td>
         `;
 
-        updateWebsiteRemoveButtons();
+        updateWebsiteRemoveButtons(formType);
       }
 
-      function removeWebsiteRow(button) {
-        const tbody = document.getElementById("websitesTableBody");
+      function removeWebsiteRow(button, formType) {
+        const tbody = document.getElementById(`${formType}WebsitesTableBody`);
         if (tbody.rows.length > 1) {
           button.closest("tr").remove();
-          updateWebsiteRemoveButtons();
+          updateWebsiteRemoveButtons(formType);
         }
       }
 
-      function updateWebsiteRemoveButtons() {
-        const tbody = document.getElementById("websitesTableBody");
+      function updateWebsiteRemoveButtons(formType) {
+        const tbody = document.getElementById(`${formType}WebsitesTableBody`);
         const removeButtons = tbody.querySelectorAll(".btn-danger");
 
         removeButtons.forEach((button, index) => {
@@ -1860,19 +2481,19 @@
       }
 
       // Collect products data as JSON
-      function collectProductsData() {
+      function collectProductsData(formType) {
         const products = [];
         const nameInputs = document.querySelectorAll(
-          'input[name="productName[]"]'
+          `#${formType}Form input[name="productName[]"]`
         );
         const seasonInputs = document.querySelectorAll(
-          'input[name="productSeason[]"]'
+          `#${formType}Form input[name="productSeason[]"]`
         );
         const priceInputs = document.querySelectorAll(
-          'input[name="productPrice[]"]'
+          `#${formType}Form input[name="productPrice[]"]`
         );
         const unitSelects = document.querySelectorAll(
-          'select[name="productUnit[]"]'
+          `#${formType}Form select[name="productUnit[]"]`
         );
 
         for (let i = 0; i < nameInputs.length; i++) {
@@ -1895,10 +2516,10 @@
       }
 
       // Collect websites data as JSON
-      function collectWebsitesData() {
+      function collectWebsitesData(formType) {
         const websites = [];
         const urlInputs = document.querySelectorAll(
-          'input[name="websiteUrl[]"]'
+          `#${formType}Form input[name="websiteUrl[]"]`
         );
 
         for (let i = 0; i < urlInputs.length; i++) {
@@ -1913,23 +2534,24 @@
       }
 
       // Form validation
-      function validateForm() {
-        hideMessages();
+      function validateForm(formType) {
+        hideMessages(formType);
 
         // Check if location is set
-        const lat = document.getElementById("latitude").value;
-        const lng = document.getElementById("longitude").value;
+        const lat = document.getElementById(`${formType}Latitude`).value;
+        const lng = document.getElementById(`${formType}Longitude`).value;
 
         if (!lat || !lng) {
           showError(
-            'Please set your farm location by clicking on the map or using the "Use My Current Location" button.'
+            'Please set your farm location by clicking on the map or using the "Use My Current Location" button.',
+            formType
           );
           return false;
         }
 
         // Check if at least one product is filled
         const nameInputs = document.querySelectorAll(
-          'input[name="productName[]"]'
+          `#${formType}Form input[name="productName[]"]`
         );
         let hasProduct = false;
 
@@ -1941,13 +2563,13 @@
         }
 
         if (!hasProduct) {
-          showError("Please add at least one product/crop.");
+          showError("Please add at least one product/crop.", formType);
           return false;
         }
 
         // Check if at least one website is filled
         const urlInputs = document.querySelectorAll(
-          'input[name="websiteUrl[]"]'
+          `#${formType}Form input[name="websiteUrl[]"]`
         );
         let hasWebsite = false;
 
@@ -1959,166 +2581,183 @@
         }
 
         if (!hasWebsite) {
-          showError("Please add at least one website or social media link.");
+          showError(
+            "Please add at least one website or social media link.",
+            formType
+          );
           return false;
         }
 
         return true;
       }
 
-      // Form submission
-      document
-        .getElementById("farmerForm")
-        .addEventListener("submit", async function (e) {
-          e.preventDefault();
+      // Form submission handler
+      async function handleFormSubmission(formId, formType) {
+        const form = document.getElementById(formId);
 
-          // Validate form first
-          if (!validateForm()) {
-            return;
+        // Validate form first
+        if (!validateForm(formType)) {
+          return;
+        }
+
+        // Disable submit button to prevent double submission
+        const submitBtn = document.getElementById(`${formType}SubmitBtn`);
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = "🔄 Submitting...";
+
+        try {
+          // Collect form data
+          const formData = new FormData(form);
+          const productsJson = collectProductsData(formType);
+          const websitesJson = collectWebsitesData(formType);
+
+          // Check if we're in edit mode (only for update form)
+          const isEditMode =
+            formType === "update" &&
+            document.getElementById("isEditMode").value === "true";
+          const currentKeboonId =
+            document.getElementById("currentKeboonId").value;
+
+          // Create submission object
+          const submission = {
+            farmName: formData.get("farmName"),
+            contactName: formData.get("contactName"),
+            category: formData.get("category"),
+            commercial: formData.get("commercial"),
+            latitude: parseFloat(formData.get("latitude")),
+            longitude: parseFloat(formData.get("longitude")),
+            phone: formData.get("phone"),
+            email: formData.get("email"),
+            address: formData.get("address"),
+            products: productsJson,
+            farmSize: formData.get("farmSize"),
+            websites: websitesJson,
+            description: formData.get("description"),
+            visitsAllowed: formData.get("visitsAllowed"),
+            timestamp: new Date().toISOString(),
+          };
+
+          // Add keboonId if updating
+          if (isEditMode && currentKeboonId) {
+            submission.keboonId = currentKeboonId;
           }
 
-          // Disable submit button to prevent double submission
-          const submitBtn = document.getElementById("submitBtn");
-          const originalText = submitBtn.textContent;
-          submitBtn.disabled = true;
-          submitBtn.textContent = "🔄 Submitting...";
+          console.log("Submitting data:", submission);
 
-          try {
-            // Collect form data
-            const formData = new FormData(this);
-            const productsJson = collectProductsData();
-            const websitesJson = collectWebsitesData();
+          // Check if Apps Script URL is configured
+          if (APPS_SCRIPT_URL.includes("YOUR_SCRIPT_ID_HERE")) {
+            throw new Error(
+              "Google Apps Script URL not configured. Please update APPS_SCRIPT_URL with your actual script URL."
+            );
+          }
 
-            // Check if we're in edit mode
-            const isEditMode =
-              document.getElementById("isEditMode").value === "true";
-            const currentKeboonId =
-              document.getElementById("currentKeboonId").value;
+          let response;
 
-            // Create submission object
-            const submission = {
-              farmName: formData.get("farmName"),
-              contactName: formData.get("contactName"),
-              category: formData.get("category"),
-              commercial: formData.get("commercial"),
-              latitude: parseFloat(formData.get("latitude")),
-              longitude: parseFloat(formData.get("longitude")),
-              phone: formData.get("phone"),
-              email: formData.get("email"),
-              address: formData.get("address"),
-              products: productsJson,
-              farmSize: formData.get("farmSize"),
-              websites: websitesJson,
-              description: formData.get("description"),
-              visitsAllowed: formData.get("visitsAllowed"),
-              timestamp: new Date().toISOString(),
-            };
+          if (isEditMode) {
+            // Update existing farmer
+            const params = new URLSearchParams({
+              action: "updateFarmer",
+              data: JSON.stringify(submission),
+            });
+            response = await fetch(`${APPS_SCRIPT_URL}?${params.toString()}`);
+          } else {
+            // Add new farmer
+            const params = new URLSearchParams({
+              action: "addFarmer",
+              data: JSON.stringify(submission),
+            });
+            response = await fetch(`${APPS_SCRIPT_URL}?${params.toString()}`);
+          }
 
-            // Add keboonId if updating
-            if (isEditMode && currentKeboonId) {
-              submission.keboonId = currentKeboonId;
-            }
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
 
-            console.log("Submitting data:", submission);
+          const result = await response.json();
 
-            // Check if Apps Script URL is configured
-            if (APPS_SCRIPT_URL.includes("YOUR_SCRIPT_ID_HERE")) {
-              throw new Error(
-                "Google Apps Script URL not configured. Please update APPS_SCRIPT_URL with your actual script URL."
-              );
-            }
-
-            let response;
-
+          if (result.success) {
             if (isEditMode) {
-              // Update existing farmer
-              const params = new URLSearchParams({
-                action: "updateFarmer",
-                data: JSON.stringify(submission),
-              });
-
-              response = await fetch(`${APPS_SCRIPT_URL}?${params.toString()}`);
-            } else {
-              // Add new farmer
-              const params = new URLSearchParams({
-                action: "addFarmer",
-                data: JSON.stringify(submission),
-              });
-
-              response = await fetch(`${APPS_SCRIPT_URL}?${params.toString()}`);
-            }
-
-            if (!response.ok) {
-              throw new Error(
-                `HTTP ${response.status}: ${response.statusText}`
+              showSuccess(
+                "🎉 Farm information updated successfully!",
+                formType
               );
-            }
-
-            const result = await response.json();
-
-            if (result.success) {
-              if (isEditMode) {
-                showSuccess("🎉 Farm information updated successfully!");
-                // Stay in edit mode after successful update
-                // Reload the updated data
-                setTimeout(() => {
-                  loadFarmerData();
-                }, 1500);
-              } else {
-                showSuccess("🎉 Farm added successfully to Keboon Directory!");
-                // Generate and show the Keboon ID
-                if (result.keboonId) {
-                  showSuccess(
-                    `🎉 Farm added successfully! Your Keboon ID is: ${result.keboonId}. Please save this ID along with your phone number to edit your listing later.`
-                  );
-                }
-                // Reset form for new entry
-                this.reset();
-                updateRemoveButtons();
-                updateWebsiteRemoveButtons();
-                // Clear location marker
-                if (locationMarker) {
-                  locationMap.removeLayer(locationMarker);
-                  locationMarker = null;
+              // Reload the updated data
+              setTimeout(() => {
+                loadFarmerData();
+              }, 1500);
+            } else {
+              showSuccess(
+                "🎉 Farm added successfully to Keboon Directory!",
+                formType
+              );
+              if (result.keboonId) {
+                showSuccess(
+                  `🎉 Farm added successfully! Your Keboon ID is: ${result.keboonId}. Please save this ID along with your phone number to edit your listing later.`,
+                  formType
+                );
+              }
+              // Reset form for new entry
+              form.reset();
+              updateRemoveButtons(formType);
+              updateWebsiteRemoveButtons(formType);
+              // Clear location marker
+              const locationMarker =
+                formType === "add" ? addLocationMarker : updateLocationMarker;
+              const locationMap =
+                formType === "add" ? addLocationMap : updateLocationMap;
+              if (locationMarker) {
+                locationMap.removeLayer(locationMarker);
+                if (formType === "add") {
+                  addLocationMarker = null;
+                } else {
+                  updateLocationMarker = null;
                 }
               }
-
-              // Scroll to top to see success message
-              document.querySelector(".form-section").scrollTop = 0;
-              // Refresh the map
-              loadFarmersData();
-            } else {
-              throw new Error(result.error || "Failed to submit form");
             }
-          } catch (error) {
-            console.error("Error submitting form:", error);
 
-            if (error.message.includes("YOUR_SCRIPT_ID_HERE")) {
-              showError(
-                "Configuration Error: Google Apps Script URL needs to be set up. Please check the setup instructions."
-              );
-            } else if (
-              error.message.includes("CORS") ||
-              error.message.includes("Network")
-            ) {
-              showError(
-                "Network Error: Unable to connect to the server. Please check your internet connection and try again."
-              );
-            } else {
-              showError(`Error: ${error.message}`);
-            }
-          } finally {
-            // Re-enable submit button
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalText;
+            // Scroll to top to see success message
+            document
+              .getElementById(`${formType}Form`)
+              .scrollIntoView({ behavior: "smooth", block: "start" });
+            // Refresh the map
+            loadFarmersData();
+          } else {
+            throw new Error(result.error || "Failed to submit form");
           }
-        });
+        } catch (error) {
+          console.error("Error submitting form:", error);
+
+          if (error.message.includes("YOUR_SCRIPT_ID_HERE")) {
+            showError(
+              "Configuration Error: Google Apps Script URL needs to be set up. Please check the setup instructions.",
+              formType
+            );
+          } else if (
+            error.message.includes("CORS") ||
+            error.message.includes("Network")
+          ) {
+            showError(
+              "Network Error: Unable to connect to the server. Please check your internet connection and try again.",
+              formType
+            );
+          } else {
+            showError(`Error: ${error.message}`, formType);
+          }
+        } finally {
+          // Re-enable submit button
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        }
+      }
 
       // Initialize everything when page loads
       document.addEventListener("DOMContentLoaded", function () {
         initMap();
-        updateRemoveButtons();
-        updateWebsiteRemoveButtons();
+        updateRemoveButtons("add");
+        updateWebsiteRemoveButtons("add");
+        updateRemoveButtons("update");
+        updateWebsiteRemoveButtons("update");
 
         // Handle logo error (if logo file doesn't exist)
         const logo = document.getElementById("keboonLogo");
@@ -2127,10 +2766,28 @@
           document.querySelector(".logo-container").style.display = "none";
         });
 
+        // Add form submission handlers
+        document
+          .getElementById("addFarmerForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            handleFormSubmission("addFarmerForm", "add");
+          });
+
+        document
+          .getElementById("updateFarmerForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            handleFormSubmission("updateFarmerForm", "update");
+          });
+
         // Fix map sizing issues
         setTimeout(function () {
-          if (locationMap) {
-            locationMap.invalidateSize();
+          if (addLocationMap) {
+            addLocationMap.invalidateSize();
+          }
+          if (updateLocationMap) {
+            updateLocationMap.invalidateSize();
           }
         }, 100);
       });
