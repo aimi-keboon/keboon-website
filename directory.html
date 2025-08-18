@@ -2050,7 +2050,7 @@
 
       // Google Apps Script configuration - UPDATE THIS WITH YOUR ACTUAL URL
       const APPS_SCRIPT_URL =
-        "https://script.google.com/macros/s/AKfycby1yreSu1WvHixUpq2MYBDwxmentF1kKAspzOtRfdORmIYji5rlU1GgFQ7_aZE8OnbA/exec";
+        "https://script.google.com/macros/s/AKfycbzJSL3MjjlaEV6B9UGx0iRYPOsRFjPp3yCUn4g6pi4-IPSwr-9k_iGzGtAjsv82vr6t/exec";
 
       // Toggle form visibility
       function toggleForm(formId) {
@@ -2158,7 +2158,7 @@
     <br><br>
     Your Keboon ID is:
     <div class="keboon-id-highlight">${keboonId}</div>
-    <strong>Please save this ID along with your phone number to edit your listing later.</strong>
+    <strong>Please save this ID to edit your listing later.</strong>
   `;
           } else {
             messageDiv.innerHTML = message;
@@ -2302,7 +2302,7 @@
         document.getElementById("updateCommercial").value =
           data.commercial || "";
         // Parse the stored phone number to separate country code and number
-        const fullPhone = data.phone || "";
+        const fullPhone = String(data.phone || ""); // Convert to string to ensure .match() works
         if (fullPhone) {
           // Try to match common country codes
           const countryCodeMatch = fullPhone.match(
@@ -3251,13 +3251,13 @@
             let successMessage = "";
 
             if (isEditMode) {
-              successMessage = "🎉 Farm information updated successfully!";
+              successMessage = "Farm information updated successfully!";
               if (result.emailSent) {
                 successMessage +=
-                  "<br><br>📧 A confirmation email has been sent to your registered email address.";
+                  "<br><br>A confirmation email has been sent to your registered email address.";
               } else if (result.emailError) {
                 successMessage +=
-                  "<br><br>⚠️ Note: Confirmation email could not be sent.";
+                  "<br><br>Note: Confirmation email could not be sent.";
               }
 
               showMessagePopup(successMessage, "success");
@@ -3273,16 +3273,16 @@
                   "Farm added successfully to Keboon Directory!";
                 if (result.emailSent) {
                   farmMessage +=
-                    "<br><br>📧 A detailed confirmation email with all your farm information has been sent to your email address.";
+                    "<br><br>A detailed confirmation email with all your farm information has been sent to your email address.";
                 } else if (result.emailError) {
                   farmMessage +=
-                    "<br><br>⚠️ Note: Confirmation email could not be sent, but your farm has been added successfully.";
+                    "<br><br>Note: Confirmation email could not be sent, but your farm has been added successfully.";
                 }
 
                 showMessagePopup(farmMessage, "success", result.keboonId);
               } else {
                 showSuccess(
-                  "🎉 Farm added successfully to Keboon Directory!",
+                  "Farm added successfully to Keboon Directory!",
                   formType
                 );
               }
