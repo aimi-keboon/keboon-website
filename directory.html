@@ -1261,8 +1261,8 @@
                     name="latitude"
                     step="any"
                     required
-                    readonly
-                    placeholder="Latitude"
+                    placeholder="Latitude (e.g., 3.139)"
+                    onchange="updateMapFromCoordinates('add')"
                   />
                   <input
                     type="number"
@@ -1270,8 +1270,8 @@
                     name="longitude"
                     step="any"
                     required
-                    readonly
-                    placeholder="Longitude"
+                    placeholder="Longitude (e.g., 101.6869)"
+                    onchange="updateMapFromCoordinates('add')"
                   />
                   <button
                     type="button"
@@ -1726,8 +1726,8 @@
                       name="latitude"
                       step="any"
                       required
-                      readonly
-                      placeholder="Latitude"
+                      placeholder="Latitude (e.g., 3.139)"
+                      onchange="updateMapFromCoordinates('update')"
                     />
                     <input
                       type="number"
@@ -1735,8 +1735,8 @@
                       name="longitude"
                       step="any"
                       required
-                      readonly
-                      placeholder="Longitude"
+                      placeholder="Longitude (e.g., 101.6869)"
+                      onchange="updateMapFromCoordinates('update')"
                     />
                     <button
                       type="button"
