@@ -1,1146 +1,1366 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Keboon Directory</title>
-    
+
     <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
-    
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"
+    />
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #1b5e3f 0%, #52ae77 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #2d5016 0%, #3f6b20 100%);
+        color: white;
+        padding: 40px 40px 30px 40px;
+        text-align: center;
+        position: relative;
+      }
+
+      .logo-container {
+        margin-bottom: 20px;
+      }
+
+      .logo {
+        max-height: 80px;
+        width: auto;
+        filter: brightness(0) invert(1);
+      }
+
+      .header h1 {
+        font-size: 2.8rem;
+        margin-bottom: 10px;
+        font-weight: 300;
+        letter-spacing: 1px;
+      }
+
+      .header p {
+        font-size: 1.2rem;
+        opacity: 0.95;
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.4;
+      }
+
+      .main-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        min-height: 80vh;
+      }
+
+      .form-section {
+        padding: 30px;
+        background: #f8f9fa;
+        border-right: 1px solid #e9ecef;
+        overflow-y: auto;
+        max-height: 85vh;
+      }
+
+      .map-section {
+        position: relative;
+      }
+
+      #map {
+        height: 85vh;
+        width: 100%;
+      }
+
+      /* Edit Mode Section */
+      .edit-mode-section {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+      }
+
+      .edit-mode-section h3 {
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+      }
+
+      .edit-mode-section p {
+        margin-bottom: 15px;
+        opacity: 0.95;
+        font-size: 0.95rem;
+      }
+
+      .edit-mode-inputs {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        gap: 10px;
+        align-items: end;
+      }
+
+      .edit-mode-inputs input {
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .btn-load {
+        background: #ffc107;
+        color: #212529;
+      }
+
+      .btn-load:hover {
+        background: #e0a800;
+      }
+
+      .btn-clear {
+        background: #6c757d;
+        color: white;
+      }
+
+      .btn-clear:hover {
+        background: #5a6268;
+      }
+
+      .edit-indicator {
+        background: #ffc107;
+        color: #212529;
+        padding: 10px 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: none;
+        font-weight: 600;
+        text-align: center;
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+      }
+
+      label {
+        display: block;
+        font-weight: 600;
+        color: #2d5016;
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+      }
+
+      .required::after {
+        content: " *";
+        color: #dc3545;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      input[type="number"],
+      input[type="url"],
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: white;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #3f6b20;
+        box-shadow: 0 0 0 3px rgba(63, 107, 32, 0.1);
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+
+      .location-section {
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 20px;
+        background: #f8f9fa;
+      }
+
+      .location-input-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+        gap: 10px;
+        margin-bottom: 15px;
+        align-items: end;
+      }
+
+      .location-map-container {
+        position: relative;
+      }
+
+      #locationMap {
+        height: 300px;
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+      }
+
+      .map-instructions {
+        background: #e3f2fd;
+        border: 1px solid #2196f3;
+        border-radius: 8px;
+        padding: 12px;
+        margin-top: 10px;
+        text-align: center;
+      }
+
+      .map-instructions p {
+        margin: 0;
+        color: #1976d2;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background: #3f6b20;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: #2d5016;
+        transform: translateY(-2px);
+      }
+
+      .btn-secondary {
+        background: #6c757d;
+        color: white;
+      }
+
+      .btn-secondary:hover {
+        background: #5a6268;
+      }
+
+      .btn-danger {
+        background: #dc3545;
+        color: white;
+        padding: 5px 10px;
+        font-size: 0.8rem;
+      }
+
+      .btn-danger:hover {
+        background: #c82333;
+      }
+
+      .btn-success {
+        background: #28a745;
+        color: white;
+        padding: 8px 16px;
+        font-size: 0.9rem;
+      }
+
+      .btn-success:hover {
+        background: #218838;
+      }
+
+      .btn-update {
+        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+        color: #212529;
+      }
+
+      .btn-update:hover:not(:disabled) {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(255, 193, 7, 0.6);
+      }
+
+      .products-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+
+      .products-table th,
+      .products-table td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+        vertical-align: middle;
+      }
+
+      .products-table th {
+        background: #f8f9fa;
+        font-weight: 600;
+        color: #2d5016;
+        font-size: 0.9rem;
+      }
+
+      .products-table input,
+      .products-table select {
+        margin: 0;
+        border: 1px solid #ced4da;
+        padding: 6px 10px;
+        font-size: 0.9rem;
+      }
+
+      .products-table input[type="number"] {
+        width: 80px;
+      }
+
+      .products-table select {
+        width: 100%;
+        min-width: 90px;
+      }
+
+      .add-product-btn {
+        margin-top: 15px;
+      }
+
+      .radio-group {
+        display: flex;
+        gap: 20px;
+        margin-top: 8px;
+      }
+
+      .radio-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: normal;
+        cursor: pointer;
+      }
+
+      .radio-label input[type="radio"] {
+        width: auto;
+        margin: 0;
+      }
+
+      .submit-section {
+        text-align: center;
+        padding-top: 30px;
+        border-top: 2px solid #e9ecef;
+      }
+
+      .submit-btn {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        padding: 15px 40px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+      }
+
+      .submit-btn:hover:not(:disabled) {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
+      }
+
+      .submit-btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+
+      .map-loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        display: none;
+      }
+
+      .leaflet-popup-content {
+        font-family: inherit;
+        line-height: 1.4;
+      }
+
+      .popup-farm-name {
+        font-weight: 600;
+        color: #2d5016;
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+      }
+
+      .popup-category {
+        background: #3f6b20;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        display: inline-block;
+        margin-bottom: 5px;
+      }
+
+      .popup-commercial {
+        background: #17a2b8;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        display: inline-block;
+        margin-bottom: 8px;
+        margin-left: 5px;
+      }
+
+      .popup-keboon-id {
+        background: #6c757d;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        display: inline-block;
+        margin-bottom: 8px;
+        margin-left: 5px;
+      }
+
+      .footer {
+        background: linear-gradient(135deg, #2d5016 0%, #3f6b20 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+      }
+
+      .footer-content {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .footer p {
+        margin-bottom: 20px;
+        font-size: 1rem;
+        opacity: 0.9;
+        line-height: 1.4;
+      }
+
+      .website-btn {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 12px 30px;
+        font-size: 1rem;
+        font-weight: 600;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+      }
+
+      .website-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.5);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .error-message {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 12px;
+        border: 1px solid #f5c6cb;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: none;
+      }
+
+      .success-message {
+        background: #d4edda;
+        color: #155724;
+        padding: 12px;
+        border: 1px solid #c3e6cb;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: none;
+      }
+
+      @media (max-width: 768px) {
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1B5E3F 0%, #52AE77 100%);
-            min-height: 100vh;
-            padding: 20px;
+          padding: 10px;
         }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        
+
         .header {
-            background: linear-gradient(135deg, #2d5016 0%, #3f6b20 100%);
-            color: white;
-            padding: 40px 40px 30px 40px;
-            text-align: center;
-            position: relative;
+          padding: 20px 15px;
         }
-        
-        .logo-container {
-            margin-bottom: 20px;
-        }
-        
+
         .logo {
-            max-height: 80px;
-            width: auto;
-            filter: brightness(0) invert(1); /* Makes logo white if it's dark */
+          max-height: 60px;
         }
-        
+
         .header h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            font-weight: 300;
-            letter-spacing: 1px;
+          font-size: 2rem;
+          margin-bottom: 8px;
         }
-        
+
         .header p {
-            font-size: 1.2rem;
-            opacity: 0.95;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.4;
+          font-size: 1rem;
         }
-        
+
         .main-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
-            min-height: 80vh;
+          grid-template-columns: 1fr;
+          min-height: auto;
         }
-        
+
         .form-section {
-            padding: 30px;
-            background: #f8f9fa;
-            border-right: 1px solid #e9ecef;
-            overflow-y: auto;
-            max-height: 85vh;
+          border-right: none;
+          border-bottom: 1px solid #e9ecef;
+          max-height: none;
+          padding: 20px 15px;
         }
-        
-        .map-section {
-            position: relative;
-        }
-        
-        #map {
-            height: 85vh;
-            width: 100%;
-        }
-        
-        .form-group {
-            margin-bottom: 25px;
-        }
-        
+
         .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+          grid-template-columns: 1fr;
+          gap: 0;
         }
-        
-        label {
-            display: block;
-            font-weight: 600;
-            color: #2d5016;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
+
+        .form-group {
+          margin-bottom: 20px;
         }
-        
-        .required::after {
-            content: " *";
-            color: #dc3545;
+
+        .edit-mode-inputs {
+          grid-template-columns: 1fr;
+          gap: 10px;
         }
-        
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="number"],
-        input[type="url"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e9ecef;
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: white;
+
+        #map {
+          height: 60vh;
+          min-height: 400px;
         }
-        
-        input:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #3f6b20;
-            box-shadow: 0 0 0 3px rgba(63, 107, 32, 0.1);
-        }
-        
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-        
-        .location-section {
-            border: 2px solid #e9ecef;
-            border-radius: 12px;
-            padding: 20px;
-            background: #f8f9fa;
-        }
-        
-        .location-input-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr auto;
-            gap: 10px;
-            margin-bottom: 15px;
-            align-items: end;
-        }
-        
-        .location-map-container {
-            position: relative;
-        }
-        
+
         #locationMap {
-            height: 300px;
-            width: 100%;
-            border-radius: 8px;
-            border: 1px solid #ced4da;
+          height: 250px;
         }
-        
-        .map-instructions {
-            background: #e3f2fd;
-            border: 1px solid #2196f3;
-            border-radius: 8px;
-            padding: 12px;
-            margin-top: 10px;
-            text-align: center;
+
+        .location-input-row {
+          grid-template-columns: 1fr;
+          gap: 10px;
         }
-        
-        .map-instructions p {
-            margin: 0;
-            color: #1976d2;
-            font-size: 0.9rem;
-            font-weight: 500;
+
+        .location-input-row input,
+        .location-input-row button {
+          margin-bottom: 10px;
         }
-        
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary {
-            background: #3f6b20;
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: #2d5016;
-            transform: translateY(-2px);
-        }
-        
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-        
-        .btn-secondary:hover {
-            background: #5a6268;
-        }
-        
-        .btn-danger {
-            background: #dc3545;
-            color: white;
-            padding: 5px 10px;
-            font-size: 0.8rem;
-        }
-        
-        .btn-danger:hover {
-            background: #c82333;
-        }
-        
-        .btn-success {
-            background: #28a745;
-            color: white;
-            padding: 8px 16px;
-            font-size: 0.9rem;
-        }
-        
-        .btn-success:hover {
-            background: #218838;
-        }
-        
-        .products-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        
+
+        .products-table,
+        .products-table thead,
+        .products-table tbody,
         .products-table th,
+        .products-table td,
+        .products-table tr {
+          display: block;
+        }
+
+        .products-table thead tr {
+          position: absolute;
+          top: -9999px;
+          left: -9999px;
+        }
+
+        .products-table tr {
+          border: 1px solid #ccc;
+          margin-bottom: 10px;
+          padding: 10px;
+          border-radius: 8px;
+          background: white;
+        }
+
         .products-table td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #dee2e6;
-            vertical-align: middle;
+          border: none;
+          position: relative;
+          padding: 8px 0 8px 30%;
+          border-bottom: 1px solid #eee;
         }
-        
-        .products-table th {
-            background: #f8f9fa;
-            font-weight: 600;
-            color: #2d5016;
-            font-size: 0.9rem;
+
+        .products-table td:before {
+          content: attr(data-label);
+          position: absolute;
+          left: 6px;
+          width: 25%;
+          padding-right: 10px;
+          white-space: nowrap;
+          font-weight: 600;
+          color: #2d5016;
+          font-size: 0.8rem;
         }
-        
+
         .products-table input,
         .products-table select {
-            margin: 0;
-            border: 1px solid #ced4da;
-            padding: 6px 10px;
-            font-size: 0.9rem;
+          width: 100%;
+          font-size: 0.9rem;
         }
-        
-        .products-table input[type="number"] {
-            width: 80px;
-        }
-        
-        .products-table select {
-            width: 100%;
-            min-width: 90px;
-        }
-        
-        .add-product-btn {
-            margin-top: 15px;
-        }
-        
+
         .radio-group {
-            display: flex;
-            gap: 20px;
-            margin-top: 8px;
+          flex-direction: column;
+          gap: 10px;
         }
-        
-        .radio-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: normal;
-            cursor: pointer;
-        }
-        
-        .radio-label input[type="radio"] {
-            width: auto;
-            margin: 0;
-        }
-        
-        .submit-section {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 2px solid #e9ecef;
-        }
-        
+
         .submit-btn {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-            color: white;
-            padding: 15px 40px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+          padding: 12px 25px;
+          font-size: 1rem;
         }
-        
-        .submit-btn:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.6);
-        }
-        
-        .submit-btn:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-        
-        .map-loading {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 10px;
-            display: none;
-        }
-        
-        .leaflet-popup-content {
-            font-family: inherit;
-            line-height: 1.4;
-        }
-        
-        .popup-farm-name {
-            font-weight: 600;
-            color: #2d5016;
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-        }
-        
-        .popup-category {
-            background: #3f6b20;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            display: inline-block;
-            margin-bottom: 5px;
-        }
-        
-        .popup-commercial {
-            background: #17a2b8;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            display: inline-block;
-            margin-bottom: 8px;
-            margin-left: 5px;
-        }
-        
+
         .footer {
-            background: linear-gradient(135deg, #2d5016 0%, #3f6b20 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
+          padding: 20px 15px;
         }
-        
-        .footer-content {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
+
         .footer p {
-            margin-bottom: 20px;
-            font-size: 1rem;
-            opacity: 0.9;
-            line-height: 1.4;
+          font-size: 0.9rem;
+          margin-bottom: 15px;
         }
-        
+
         .website-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 12px 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
+          padding: 10px 25px;
+          font-size: 0.9rem;
         }
-        
-        .website-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.5);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      @media (max-width: 480px) {
+        .header h1 {
+          font-size: 1.8rem;
         }
 
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 12px;
-            border: 1px solid #f5c6cb;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: none;
+        .location-section {
+          padding: 15px;
         }
 
-        .success-message {
-            background: #d4edda;
-            color: #155724;
-            padding: 12px;
-            border: 1px solid #c3e6cb;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: none;
+        #locationMap {
+          height: 200px;
         }
-        
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            
-            .header {
-                padding: 20px 15px;
-            }
-            
-            .logo {
-                max-height: 60px;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-                margin-bottom: 8px;
-            }
-            
-            .header p {
-                font-size: 1rem;
-            }
-            
-            .main-content {
-                grid-template-columns: 1fr;
-                min-height: auto;
-            }
-            
-            .form-section {
-                border-right: none;
-                border-bottom: 1px solid #e9ecef;
-                max-height: none;
-                padding: 20px 15px;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-                gap: 0;
-            }
-            
-            .form-group {
-                margin-bottom: 20px;
-            }
-            
-            #map {
-                height: 60vh;
-                min-height: 400px;
-            }
-            
-            #locationMap {
-                height: 250px;
-            }
-            
-            .location-input-row {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-            
-            .location-input-row input,
-            .location-input-row button {
-                margin-bottom: 10px;
-            }
-            
-            .products-table,
-            .products-table thead,
-            .products-table tbody,
-            .products-table th,
-            .products-table td,
-            .products-table tr {
-                display: block;
-            }
-            
-            .products-table thead tr {
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
-            
-            .products-table tr {
-                border: 1px solid #ccc;
-                margin-bottom: 10px;
-                padding: 10px;
-                border-radius: 8px;
-                background: white;
-            }
-            
-            .products-table td {
-                border: none;
-                position: relative;
-                padding: 8px 0 8px 30%;
-                border-bottom: 1px solid #eee;
-            }
-            
-            .products-table td:before {
-                content: attr(data-label);
-                position: absolute;
-                left: 6px;
-                width: 25%;
-                padding-right: 10px;
-                white-space: nowrap;
-                font-weight: 600;
-                color: #2d5016;
-                font-size: 0.8rem;
-            }
-            
-            .products-table input,
-            .products-table select {
-                width: 100%;
-                font-size: 0.9rem;
-            }
-            
-            .radio-group {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .submit-btn {
-                padding: 12px 25px;
-                font-size: 1rem;
-            }
-            
-            .footer {
-                padding: 20px 15px;
-            }
-            
-            .footer p {
-                font-size: 0.9rem;
-                margin-bottom: 15px;
-            }
-            
-            .website-btn {
-                padding: 10px 25px;
-                font-size: 0.9rem;
-            }
+
+        .btn {
+          padding: 8px 15px;
+          font-size: 0.8rem;
         }
-        
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .location-section {
-                padding: 15px;
-            }
-            
-            #locationMap {
-                height: 200px;
-            }
-            
-            .btn {
-                padding: 8px 15px;
-                font-size: 0.8rem;
-            }
-            
-            .submit-btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
+
+        .submit-btn {
+          padding: 10px 20px;
+          font-size: 0.9rem;
         }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="header">
-            <div class="logo-container">
-                <!-- Replace the src with your Keboon logo PNG -->
-                <img src="assets/img/keboon-logo-white.png" alt="Keboon Logo" class="logo" id="keboonLogo">
-            </div>
-            <h1>Directory</h1>
-            <p>Connect with local farmers in your area - Add your farm or discover fresh produce nearby</p>
+      <div class="header">
+        <div class="logo-container">
+          <img
+            src="assets/img/keboon-logo-white.png"
+            alt="Keboon Logo"
+            class="logo"
+            id="keboonLogo"
+          />
         </div>
-        
-        <div class="main-content">
-            <!-- Form Section -->
-            <div class="form-section">
-                <div class="error-message" id="errorMessage"></div>
-                <div class="success-message" id="successMessage"></div>
-                
-                <form id="farmerForm">
-                    <div class="form-group">
-                        <label for="farmName" class="required">Farm/Business Name</label>
-                        <input type="text" id="farmName" name="farmName" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="contactName" class="required">Contact Person Name</label>
-                        <input type="text" id="contactName" name="contactName" required>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="category" class="required">Farm Category</label>
-                            <select id="category" name="category" required>
-                                <option value="">Select Category</option>
-                                <option value="Home Grower">Home Grower (micro/backyard)</option>
-                                <option value="Homesteading">Homesteading (medium-small)</option>
-                                <option value="Small Scale">Small Scale (&lt;1.5 ha)</option>
-                                <option value="Medium Scale">Medium Scale</option>
-                                <option value="Large Scale">Large Scale</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="commercial" class="required">Commercial Status</label>
-                            <select id="commercial" name="commercial" required>
-                                <option value="">Select Status</option>
-                                <option value="Commercial">Commercial</option>
-                                <option value="Non-commercial">Non-commercial</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="location" class="required">Farm Location</label>
-                        <div class="location-section">
-                            <div class="location-input-row">
-                                <input type="number" id="latitude" name="latitude" step="any" required readonly placeholder="Latitude will be set when you pin location">
-                                <input type="number" id="longitude" name="longitude" step="any" required readonly placeholder="Longitude will be set when you pin location">
-                                <button type="button" class="btn btn-secondary" onclick="getCurrentLocation()">
-                                    📍 Use My Current Location
-                                </button>
-                            </div>
-                            <div class="location-map-container">
-                                <div id="locationMap"></div>
-                                <div class="map-instructions">
-                                    <p>📍 Click on the map to pin your farm location, or use the "Use My Current Location" button above</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="phone" class="required">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email" class="required">Email Address</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="address" class="required">Address/Location Description</label>
-                        <textarea id="address" name="address" placeholder="e.g., 123 Farm Road, Village Name, District" required></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="products" class="required">Primary Products/Crops</label>
-                        <table class="products-table" id="productsTable">
-                            <thead>
-                                <tr>
-                                    <th>Product/Crop Name</th>
-                                    <th>Season/Availability</th>
-                                    <th>Price (RM)</th>
-                                    <th>Unit</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="productsTableBody">
-                                <tr>
-                                    <td data-label="Product Name"><input type="text" name="productName[]" placeholder="e.g., Tomatoes, Rice, Chickens" required></td>
-                                    <td data-label="Season"><input type="text" name="productSeason[]" placeholder="e.g., Year-round, March-Oct" required></td>
-                                    <td data-label="Price (RM)"><input type="number" name="productPrice[]" step="0.01" min="0" placeholder="0.00" required></td>
-                                    <td data-label="Unit">
-                                        <select name="productUnit[]" required>
-                                            <option value="">Select Unit</option>
-                                            <option value="kg">per kg</option>
-                                            <option value="g">per g</option>
-                                            <option value="l">per liter</option>
-                                            <option value="ml">per ml</option>
-                                            <option value="piece">per piece</option>
-                                            <option value="dozen">per dozen</option>
-                                            <option value="bundle">per bundle</option>
-                                            <option value="box">per box</option>
-                                            <option value="bag">per bag</option>
-                                            <option value="tray">per tray</option>
-                                            <option value="pack">per pack</option>
-                                            <option value="bundle">per bunch</option>
-                                        </select>
-                                    </td>
-                                    <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeProductRow(this)" disabled>Remove</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <button type="button" class="btn btn-success add-product-btn" onclick="addProductRow()">+ Add Another Product</button>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="farmSize" class="required">Farm Size</label>
-                        <input type="text" id="farmSize" name="farmSize" placeholder="e.g., 0.5 hectares, 2 acres" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="websites" class="required">Website/Social Media Links</label>
-                        <table class="products-table" id="websitesTable">
-                            <thead>
-                                <tr>
-                                    <th>URL/Link</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="websitesTableBody">
-                                <tr>
-                                    <td data-label="Website URL"><input type="url" name="websiteUrl[]" placeholder="https://..." required></td>
-                                    <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeWebsiteRow(this)" disabled>Remove</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <button type="button" class="btn btn-success add-product-btn" onclick="addWebsiteRow()">+ Add Another Link</button>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="description" class="required">Brief Description</label>
-                        <textarea id="description" name="description" placeholder="Tell us about your farm, farming methods, what makes you unique..." required></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="required">Available for visits/tours?</label>
-                        <div class="radio-group">
-                            <label class="radio-label">
-                                <input type="radio" name="visitsAllowed" value="Yes" required> 
-                                Yes, visitors welcome
-                            </label>
-                            <label class="radio-label">
-                                <input type="radio" name="visitsAllowed" value="No" required> 
-                                No, not open for visits
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="submit-section">
-                        <button type="submit" class="submit-btn">🚀 Add My Farm to Keboon Directory</button>
-                    </div>
-                </form>
+        <h1>Directory</h1>
+        <p>
+          Connect with local farmers in your area - Add your farm or discover
+          fresh produce nearby
+        </p>
+      </div>
+
+      <div class="main-content">
+        <!-- Form Section -->
+        <div class="form-section">
+          <div class="error-message" id="errorMessage"></div>
+          <div class="success-message" id="successMessage"></div>
+
+          <!-- Edit Mode Section -->
+          <div class="edit-mode-section">
+            <h3>📝 Edit Existing Farm</h3>
+            <p>
+              Already registered? Enter your Keboon ID and phone number to
+              update your information.
+            </p>
+            <div class="edit-mode-inputs">
+              <input
+                type="text"
+                id="editKeboonId"
+                placeholder="Enter Keboon ID (e.g., KB...)"
+              />
+              <input
+                type="tel"
+                id="editPhone"
+                placeholder="Enter registered phone number"
+              />
+              <button
+                type="button"
+                class="btn btn-load"
+                onclick="loadFarmerData()"
+              >
+                🔍 Load My Data
+              </button>
             </div>
-            
-            <!-- Map Section -->
-            <div class="map-section">
-                <div id="map"></div>
-                <div class="map-loading" id="mapLoading">
-                    <p>Loading farmers data...</p>
+          </div>
+
+          <!-- Edit Indicator -->
+          <div class="edit-indicator" id="editIndicator">
+            📝 EDIT MODE - Updating farm: <span id="editFarmName"></span> (ID:
+            <span id="editKeboonIdDisplay"></span>)
+            <button
+              type="button"
+              class="btn btn-clear"
+              onclick="clearEditMode()"
+              style="margin-left: 10px"
+            >
+              Clear
+            </button>
+          </div>
+
+          <form id="farmerForm">
+            <!-- Hidden fields for edit mode -->
+            <input
+              type="hidden"
+              id="isEditMode"
+              name="isEditMode"
+              value="false"
+            />
+            <input
+              type="hidden"
+              id="currentKeboonId"
+              name="currentKeboonId"
+              value=""
+            />
+
+            <div class="form-group">
+              <label for="farmName" class="required">Farm/Business Name</label>
+              <input type="text" id="farmName" name="farmName" required />
+            </div>
+
+            <div class="form-group">
+              <label for="contactName" class="required"
+                >Contact Person Name</label
+              >
+              <input type="text" id="contactName" name="contactName" required />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="category" class="required">Farm Category</label>
+                <select id="category" name="category" required>
+                  <option value="">Select Category</option>
+                  <option value="Home Grower">
+                    Home Grower (micro/backyard)
+                  </option>
+                  <option value="Homesteading">
+                    Homesteading (medium-small)
+                  </option>
+                  <option value="Small Scale">Small Scale (&lt;1.5 ha)</option>
+                  <option value="Medium Scale">Medium Scale</option>
+                  <option value="Large Scale">Large Scale</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="commercial" class="required"
+                  >Commercial Status</label
+                >
+                <select id="commercial" name="commercial" required>
+                  <option value="">Select Status</option>
+                  <option value="Commercial">Commercial</option>
+                  <option value="Non-commercial">Non-commercial</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="location" class="required">Farm Location</label>
+              <div class="location-section">
+                <div class="location-input-row">
+                  <input
+                    type="number"
+                    id="latitude"
+                    name="latitude"
+                    step="any"
+                    required
+                    readonly
+                    placeholder="Latitude will be set when you pin location"
+                  />
+                  <input
+                    type="number"
+                    id="longitude"
+                    name="longitude"
+                    step="any"
+                    required
+                    readonly
+                    placeholder="Longitude will be set when you pin location"
+                  />
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    onclick="getCurrentLocation()"
+                  >
+                    📍 Use My Current Location
+                  </button>
                 </div>
+                <div class="location-map-container">
+                  <div id="locationMap"></div>
+                  <div class="map-instructions">
+                    <p>
+                      📍 Click on the map to pin your farm location, or use the
+                      "Use My Current Location" button above
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
-        </div>
-        
-        <!-- Footer Section -->
-        <div class="footer">
-            <div class="footer-content">
-                <p>Keboon Directory is part of the Keboon ecosystem - empowering sustainable agriculture and connecting communities with local farmers.</p>
-                <a href="https://keboon.net" target="_blank" class="website-btn">
-                    🌐 Visit Keboon.net for More Info
-                </a>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="phone" class="required">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required />
+              </div>
+
+              <div class="form-group">
+                <label for="email" class="required">Email Address</label>
+                <input type="email" id="email" name="email" required />
+              </div>
             </div>
+
+            <div class="form-group">
+              <label for="address" class="required"
+                >Address/Location Description</label
+              >
+              <textarea
+                id="address"
+                name="address"
+                placeholder="e.g., 123 Farm Road, Village Name, District"
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="products" class="required"
+                >Primary Products/Crops</label
+              >
+              <table class="products-table" id="productsTable">
+                <thead>
+                  <tr>
+                    <th>Product/Crop Name</th>
+                    <th>Season/Availability</th>
+                    <th>Price (RM)</th>
+                    <th>Unit</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="productsTableBody">
+                  <tr>
+                    <td data-label="Product Name">
+                      <input
+                        type="text"
+                        name="productName[]"
+                        placeholder="e.g., Tomatoes, Rice, Chickens"
+                        required
+                      />
+                    </td>
+                    <td data-label="Season">
+                      <input
+                        type="text"
+                        name="productSeason[]"
+                        placeholder="e.g., Year-round, March-Oct"
+                        required
+                      />
+                    </td>
+                    <td data-label="Price (RM)">
+                      <input
+                        type="number"
+                        name="productPrice[]"
+                        step="0.01"
+                        min="0"
+                        placeholder="0.00"
+                        required
+                      />
+                    </td>
+                    <td data-label="Unit">
+                      <select name="productUnit[]" required>
+                        <option value="">Select Unit</option>
+                        <option value="kg">per kg</option>
+                        <option value="g">per g</option>
+                        <option value="l">per liter</option>
+                        <option value="ml">per ml</option>
+                        <option value="piece">per piece</option>
+                        <option value="dozen">per dozen</option>
+                        <option value="bundle">per bundle</option>
+                        <option value="box">per box</option>
+                        <option value="bag">per bag</option>
+                        <option value="tray">per tray</option>
+                        <option value="pack">per pack</option>
+                        <option value="bundle">per bunch</option>
+                      </select>
+                    </td>
+                    <td data-label="Action">
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        onclick="removeProductRow(this)"
+                        disabled
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <button
+                type="button"
+                class="btn btn-success add-product-btn"
+                onclick="addProductRow()"
+              >
+                + Add Another Product
+              </button>
+            </div>
+
+            <div class="form-group">
+              <label for="farmSize" class="required">Farm Size</label>
+              <input
+                type="text"
+                id="farmSize"
+                name="farmSize"
+                placeholder="e.g., 0.5 hectares, 2 acres"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="websites" class="required"
+                >Website/Social Media Links</label
+              >
+              <table class="products-table" id="websitesTable">
+                <thead>
+                  <tr>
+                    <th>URL/Link</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="websitesTableBody">
+                  <tr>
+                    <td data-label="Website URL">
+                      <input
+                        type="url"
+                        name="websiteUrl[]"
+                        placeholder="https://..."
+                        required
+                      />
+                    </td>
+                    <td data-label="Action">
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        onclick="removeWebsiteRow(this)"
+                        disabled
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <button
+                type="button"
+                class="btn btn-success add-product-btn"
+                onclick="addWebsiteRow()"
+              >
+                + Add Another Link
+              </button>
+            </div>
+
+            <div class="form-group">
+              <label for="description" class="required"
+                >Brief Description</label
+              >
+              <textarea
+                id="description"
+                name="description"
+                placeholder="Tell us about your farm, farming methods, what makes you unique..."
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="required">Available for visits/tours?</label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input
+                    type="radio"
+                    name="visitsAllowed"
+                    value="Yes"
+                    required
+                  />
+                  Yes, visitors welcome
+                </label>
+                <label class="radio-label">
+                  <input
+                    type="radio"
+                    name="visitsAllowed"
+                    value="No"
+                    required
+                  />
+                  No, not open for visits
+                </label>
+              </div>
+            </div>
+
+            <div class="submit-section">
+              <button type="submit" class="submit-btn" id="submitBtn">
+                🚀 Add My Farm to Keboon Directory
+              </button>
+            </div>
+          </form>
         </div>
+
+        <!-- Map Section -->
+        <div class="map-section">
+          <div id="map"></div>
+          <div class="map-loading" id="mapLoading">
+            <p>Loading farmers data...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Section -->
+      <div class="footer">
+        <div class="footer-content">
+          <p>
+            Keboon Directory is part of the Keboon ecosystem - empowering
+            sustainable agriculture and connecting communities with local
+            farmers.
+          </p>
+          <a href="https://keboon.net" target="_blank" class="website-btn">
+            🌐 Visit Keboon.net for More Info
+          </a>
+        </div>
+      </div>
     </div>
-    
+
     <!-- Leaflet JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
-    
+
     <script>
-        // Global variables
-        let map;
-        let locationMap;
-        let farmersData = [];
-        let userMarker = null;
-        let locationMarker = null;
-        
-        // Google Apps Script configuration - UPDATE THIS WITH YOUR ACTUAL URL
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzQBAsvog2xyf25uuOByKGAb6s1eX5D3mSSNkVB_XzofnzyliYMHJrnFjinRmt8OgAa/exec';
-        
-        // Helper functions for error handling
-        function showError(message) {
-            const errorDiv = document.getElementById('errorMessage');
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
-            setTimeout(() => {
-                errorDiv.style.display = 'none';
-            }, 10000);
+      // Global variables
+      let map;
+      let locationMap;
+      let farmersData = [];
+      let userMarker = null;
+      let locationMarker = null;
+      let isEditMode = false;
+      let currentEditData = null;
+
+      // Google Apps Script configuration - UPDATE THIS WITH YOUR ACTUAL URL
+      const APPS_SCRIPT_URL =
+        "https://script.google.com/macros/s/AKfycbzkUBAgOU7cerDTPkqpvuMbD4CjpHqsIGy8JjubOwZkhQEKgVUmEiR7iT5AQFszkoId/exec";
+
+      // Helper functions for error handling
+      function showError(message) {
+        const errorDiv = document.getElementById("errorMessage");
+        errorDiv.textContent = message;
+        errorDiv.style.display = "block";
+        setTimeout(() => {
+          errorDiv.style.display = "none";
+        }, 10000);
+      }
+
+      function showSuccess(message) {
+        const successDiv = document.getElementById("successMessage");
+        successDiv.textContent = message;
+        successDiv.style.display = "block";
+        setTimeout(() => {
+          successDiv.style.display = "none";
+        }, 8000);
+      }
+
+      function hideMessages() {
+        document.getElementById("errorMessage").style.display = "none";
+        document.getElementById("successMessage").style.display = "none";
+      }
+
+      // Load farmer data for editing
+      async function loadFarmerData() {
+        const keboonId = document.getElementById("editKeboonId").value.trim();
+        const phone = document.getElementById("editPhone").value.trim();
+
+        if (!keboonId || !phone) {
+          showError("Please enter both Keboon ID and phone number");
+          return;
         }
 
-        function showSuccess(message) {
-            const successDiv = document.getElementById('successMessage');
-            successDiv.textContent = message;
-            successDiv.style.display = 'block';
-            setTimeout(() => {
-                successDiv.style.display = 'none';
-            }, 8000);
+        hideMessages();
+
+        try {
+          // Show loading state
+          const loadBtn = document.querySelector(".btn-load");
+          const originalText = loadBtn.textContent;
+          loadBtn.disabled = true;
+          loadBtn.textContent = "⏳ Loading...";
+
+          const response = await fetch(
+            `${APPS_SCRIPT_URL}?action=getFarmerById&keboonId=${encodeURIComponent(
+              keboonId
+            )}&phone=${encodeURIComponent(phone)}`
+          );
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+
+          const result = await response.json();
+
+          if (result.success && result.farmer) {
+            // Set edit mode
+            isEditMode = true;
+            currentEditData = result.farmer;
+
+            // Update hidden fields
+            document.getElementById("isEditMode").value = "true";
+            document.getElementById("currentKeboonId").value = keboonId;
+
+            // Show edit indicator
+            document.getElementById("editIndicator").style.display = "block";
+            document.getElementById("editFarmName").textContent =
+              result.farmer.farmName;
+            document.getElementById("editKeboonIdDisplay").textContent =
+              keboonId;
+
+            // Populate form fields
+            populateFormWithData(result.farmer);
+
+            // Update submit button
+            const submitBtn = document.getElementById("submitBtn");
+            submitBtn.textContent = "🔄 Update My Farm Information";
+            submitBtn.classList.remove("submit-btn");
+            submitBtn.classList.add("submit-btn", "btn-update");
+
+            showSuccess(
+              "✅ Data loaded successfully! You can now update your information."
+            );
+
+            // Scroll to form
+            document.querySelector(".form-section").scrollTop = 200;
+          } else {
+            throw new Error(
+              result.error ||
+                "Farm not found. Please check your Keboon ID and phone number."
+            );
+          }
+        } catch (error) {
+          console.error("Error loading farmer data:", error);
+          showError(`Error: ${error.message}`);
+        } finally {
+          // Reset button
+          const loadBtn = document.querySelector(".btn-load");
+          loadBtn.disabled = false;
+          loadBtn.textContent = "🔍 Load My Data";
+        }
+      }
+
+      // Populate form with farmer data
+      function populateFormWithData(data) {
+        // Basic fields
+        document.getElementById("farmName").value = data.farmName || "";
+        document.getElementById("contactName").value = data.contactName || "";
+        document.getElementById("category").value = data.category || "";
+        document.getElementById("commercial").value = data.commercial || "";
+        document.getElementById("phone").value = data.phone || "";
+        document.getElementById("email").value = data.email || "";
+        document.getElementById("address").value = data.address || "";
+        document.getElementById("farmSize").value = data.farmSize || "";
+        document.getElementById("description").value = data.description || "";
+
+        // Set location
+        if (data.latitude && data.longitude) {
+          const lat = parseFloat(data.latitude);
+          const lng = parseFloat(data.longitude);
+          document.getElementById("latitude").value = lat;
+          document.getElementById("longitude").value = lng;
+
+          // Update location map
+          locationMap.setView([lat, lng], 16);
+          setFarmLocation(lat, lng);
         }
 
-        function hideMessages() {
-            document.getElementById('errorMessage').style.display = 'none';
-            document.getElementById('successMessage').style.display = 'none';
+        // Set visits allowed
+        const visitsRadio = document.querySelector(
+          `input[name="visitsAllowed"][value="${data.visitsAllowed}"]`
+        );
+        if (visitsRadio) {
+          visitsRadio.checked = true;
         }
-        
-        // Initialize maps
-        function initMap() {
-            // Initialize main map
-            initMainMap();
-            // Initialize location picker map
-            initLocationMap();
-        }
-        
-        // Initialize main display map
-        function initMainMap() {
-            // Default center (Kuala Lumpur)
-            const defaultCenter = [3.1390, 101.6869];
-            
-            map = L.map('map').setView(defaultCenter, 10);
-            
-            // Add OpenStreetMap tiles
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors',
-                maxZoom: 18,
-            }).addTo(map);
-            
-            // Try to get user's location
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        const userLocation = [position.coords.latitude, position.coords.longitude];
-                        map.setView(userLocation, 12);
-                        
-                        // Add user location marker
-                        userMarker = L.marker(userLocation, {
-                            icon: L.icon({
-                                iconUrl: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff4444" width="24" height="24">
-                                        <circle cx="12" cy="12" r="10" stroke="#fff" stroke-width="2"/>
-                                        <circle cx="12" cy="12" r="3" fill="#fff"/>
-                                    </svg>
-                                `),
-                                iconSize: [24, 24],
-                                iconAnchor: [12, 12]
-                            })
-                        }).addTo(map);
-                        
-                        userMarker.bindPopup('<b>Your Location</b>').openPopup();
-                    },
-                    function(error) {
-                        console.log('Geolocation error:', error);
-                        // Stay with default location
-                    }
-                );
-            }
-            
-            // Load farmers data
-            loadFarmersData();
-        }
-        
-        // Initialize location picker map
-        function initLocationMap() {
-            const defaultCenter = [3.1390, 101.6869];
-            
-            locationMap = L.map('locationMap').setView(defaultCenter, 12);
-            
-            // Add OpenStreetMap tiles
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors',
-                maxZoom: 18,
-            }).addTo(locationMap);
-            
-            // Try to center on user's location
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        const userLocation = [position.coords.latitude, position.coords.longitude];
-                        locationMap.setView(userLocation, 15);
-                    },
-                    function(error) {
-                        console.log('Geolocation error for location map:', error);
-                    }
-                );
-            }
-            
-            // Add click event to set farm location
-            locationMap.on('click', function(e) {
-                setFarmLocation(e.latlng.lat, e.latlng.lng);
-            });
-        }
-        
-        // Load farmers data from Google Apps Script
-        async function loadFarmersData() {
-            document.getElementById('mapLoading').style.display = 'block';
-            
+
+        // Populate products
+        let products = [];
+        if (data.products) {
+          if (typeof data.products === "string") {
             try {
-                const response = await fetch(`${APPS_SCRIPT_URL}?action=getFarmers`);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                const data = await response.json();
-                
-                if (data.success) {
-                    farmersData = data.farmers;
-                    displayFarmersOnMap();
-                } else {
-                    throw new Error(data.error || 'Failed to load farmers data');
-                }
-                
-            } catch (error) {
-                console.error('Error loading farmers data:', error);
-                
-                // Use sample data as fallback
-                const sampleData = [
-                    {
-                        farmName: "Green Valley Farm",
-                        contactName: "Ahmad Rahman",
-                        category: "Small Scale",
-                        commercial: "Commercial",
-                        latitude: 3.1500,
-                        longitude: 101.7000,
-                        phone: "+60123456789",
-                        email: "ahmad@greenvalley.com",
-                        address: "Lot 123, Kampung Baru, Selangor",
-                        farmSize: "2 hectares",
-                        description: "Organic farming with sustainable practices",
-                        visitsAllowed: "Yes",
-                        products: [
-                            {name: "Organic Vegetables", season: "Year-round", price: 8.50, unit: "kg"},
-                            {name: "Herbs", season: "Year-round", price: 12.00, unit: "bundle"}
-                        ],
-                        websites: [
-                            "https://facebook.com/greenvalley",
-                            "https://wa.me/60123456789"
-                        ]
-                    },
-                    {
-                        farmName: "Sunrise Homestead",
-                        contactName: "Sarah Lee",
-                        category: "Homesteading",
-                        commercial: "Non-commercial",
-                        latitude: 3.1200,
-                        longitude: 101.6500,
-                        phone: "+60198765432",
-                        email: "sarah@sunrise.com",
-                        address: "Jalan Kebun, Petaling Jaya",
-                        farmSize: "0.5 hectares",
-                        description: "Family homestead focusing on free-range poultry",
-                        visitsAllowed: "No",
-                        products: [
-                            {name: "Free-range Chickens", season: "Year-round", price: 25.00, unit: "kg"},
-                            {name: "Eggs", season: "Year-round", price: 8.00, unit: "dozen"}
-                        ],
-                        websites: [
-                            "https://instagram.com/sunrisehomestead",
-                            "https://sunrise.com"
-                        ]
-                    }
-                ];
-                
-                farmersData = sampleData;
-                displayFarmersOnMap();
-                showError('Using sample data - please check your Google Apps Script URL');
-            } finally {
-                document.getElementById('mapLoading').style.display = 'none';
+              products = JSON.parse(data.products);
+            } catch (e) {
+              console.error("Error parsing products:", e);
             }
+          } else {
+            products = data.products;
+          }
         }
-        
-        // Display farmers on map
-        function displayFarmersOnMap() {
-            farmersData.forEach(farmer => {
-                if (farmer.latitude && farmer.longitude) {
-                    const marker = L.marker([farmer.latitude, farmer.longitude], {
-                        icon: L.icon({
-                            iconUrl: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3f6b20" width="30" height="30">
-                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                                </svg>
-                            `),
-                            iconSize: [30, 30],
-                            iconAnchor: [15, 30],
-                            popupAnchor: [0, -30]
-                        })
-                    }).addTo(map);
-                    
-                    // Create popup content
-                    let productsHtml = '';
-                    if (farmer.products) {
-                        // Handle both JSON string and array formats
-                        let products = farmer.products;
-                        if (typeof products === 'string') {
-                            try {
-                                products = JSON.parse(products);
-                            } catch (e) {
-                                products = [];
-                            }
-                        }
-                        
-                        if (products && products.length > 0) {
-                            productsHtml = '<br><strong>Products & Prices:</strong><br>';
-                            products.forEach(product => {
-                                const priceDisplay = product.price && product.price > 0 
-                                    ? ` - RM${product.price.toFixed(2)} ${product.unit || 'each'}`
-                                    : '';
-                                productsHtml += `• ${product.name} (${product.season})${priceDisplay}<br>`;
-                            });
-                        }
-                    }
-                    
-                    // Create websites content
-                    let websitesHtml = '';
-                    if (farmer.websites) {
-                        let websites = farmer.websites;
-                        if (typeof websites === 'string') {
-                            try {
-                                websites = JSON.parse(websites);
-                            } catch (e) {
-                                websites = [];
-                            }
-                        }
-                        
-                        if (websites && websites.length > 0) {
-                            websitesHtml = '<br><strong>Find us online:</strong><br>';
-                            websites.forEach(url => {
-                                const displayUrl = url.length > 30 ? url.substring(0, 30) + '...' : url;
-                                websitesHtml += `🔗 <a href="${url}" target="_blank">${displayUrl}</a><br>`;
-                            });
-                        }
-                    }
-                    
-                    const popupContent = `
-                        <div class="popup-farm-name">${farmer.farmName}</div>
-                        <div>
-                            <span class="popup-category">${farmer.category}</span>
-                            <span class="popup-commercial">${farmer.commercial}</span>
-                        </div>
-                        <br>
-                        <strong>Contact:</strong> ${farmer.contactName}<br>
-                        📞 ${farmer.phone}<br>
-                        ✉️ ${farmer.email}<br>
-                        📍 ${farmer.address}
-                        ${productsHtml}
-                        ${websitesHtml}
-                        <br><strong>Farm Size:</strong> ${farmer.farmSize}<br>
-                        <strong>Visits:</strong> ${farmer.visitsAllowed === 'Yes' ? '✅ Visitors welcome' : '❌ Not open for visits'}
-                    `;
-                    
-                    marker.bindPopup(popupContent);
-                }
-            });
-        }
-        
-        // Set farm location on map and update form
-        function setFarmLocation(lat, lng) {
-            // Update form fields
-            document.getElementById('latitude').value = lat.toFixed(6);
-            document.getElementById('longitude').value = lng.toFixed(6);
-            
-            // Remove existing marker if any
-            if (locationMarker) {
-                locationMap.removeLayer(locationMarker);
-            }
-            
-            // Add new marker
-            locationMarker = L.marker([lat, lng], {
-                icon: L.icon({
-                    iconUrl: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(`
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3f6b20" width="30" height="30">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
-                    `),
-                    iconSize: [30, 30],
-                    iconAnchor: [15, 30]
-                }),
-                draggable: true
-            }).addTo(locationMap);
-            
-            locationMarker.bindPopup(`<b>📍 Your Farm Location</b><br>Lat: ${lat.toFixed(6)}<br>Lng: ${lng.toFixed(6)}`);
-            
-            // Make marker draggable
-            locationMarker.on('dragend', function(e) {
-                const newPos = e.target.getLatLng();
-                setFarmLocation(newPos.lat, newPos.lng);
-            });
-        }
-        
-        // Get current location for both form and map
-        function getCurrentLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        const lat = position.coords.latitude;
-                        const lng = position.coords.longitude;
-                        
-                        // Set location on form map
-                        locationMap.setView([lat, lng], 16);
-                        setFarmLocation(lat, lng);
-                        
-                        showSuccess('📍 Current location set! You can drag the pin to adjust if needed.');
-                    },
-                    function(error) {
-                        showError('Unable to get your location. Please click on the map to set your farm location manually.');
-                    }
-                );
-            } else {
-                showError('Geolocation is not supported by this browser. Please click on the map to set your location.');
-            }
-        }
-        
-        // Products table management
-        function addProductRow() {
-            const tbody = document.getElementById('productsTableBody');
-            const rowCount = tbody.rows.length;
-            
-            if (rowCount >= 10) {
-                showError('Maximum 10 products allowed.');
-                return;
-            }
-            
+
+        if (products && products.length > 0) {
+          // Clear existing product rows
+          const tbody = document.getElementById("productsTableBody");
+          tbody.innerHTML = "";
+
+          // Add product rows
+          products.forEach((product, index) => {
             const newRow = tbody.insertRow();
             newRow.innerHTML = `
+                    <td data-label="Product Name"><input type="text" name="productName[]" value="${
+                      product.name || ""
+                    }" placeholder="e.g., Tomatoes, Rice, Chickens" required></td>
+                    <td data-label="Season"><input type="text" name="productSeason[]" value="${
+                      product.season || ""
+                    }" placeholder="e.g., Year-round, March-Oct" required></td>
+                    <td data-label="Price (RM)"><input type="number" name="productPrice[]" value="${
+                      product.price || ""
+                    }" step="0.01" min="0" placeholder="0.00" required></td>
+                    <td data-label="Unit">
+                        <select name="productUnit[]" required>
+                            <option value="">Select Unit</option>
+                            <option value="kg" ${
+                              product.unit === "kg" ? "selected" : ""
+                            }>per kg</option>
+                            <option value="g" ${
+                              product.unit === "g" ? "selected" : ""
+                            }>per g</option>
+                            <option value="l" ${
+                              product.unit === "l" ? "selected" : ""
+                            }>per liter</option>
+                            <option value="ml" ${
+                              product.unit === "ml" ? "selected" : ""
+                            }>per ml</option>
+                            <option value="piece" ${
+                              product.unit === "piece" ? "selected" : ""
+                            }>per piece</option>
+                            <option value="dozen" ${
+                              product.unit === "dozen" ? "selected" : ""
+                            }>per dozen</option>
+                            <option value="bundle" ${
+                              product.unit === "bundle" ? "selected" : ""
+                            }>per bundle</option>
+                            <option value="box" ${
+                              product.unit === "box" ? "selected" : ""
+                            }>per box</option>
+                            <option value="bag" ${
+                              product.unit === "bag" ? "selected" : ""
+                            }>per bag</option>
+                            <option value="tray" ${
+                              product.unit === "tray" ? "selected" : ""
+                            }>per tray</option>
+                            <option value="pack" ${
+                              product.unit === "pack" ? "selected" : ""
+                            }>per pack</option>
+                            <option value="bunch" ${
+                              product.unit === "bunch" ? "selected" : ""
+                            }>per bunch</option>
+                        </select>
+                    </td>
+                    <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeProductRow(this)" ${
+                      index === 0 ? "disabled" : ""
+                    }>Remove</button></td>
+                `;
+          });
+          updateRemoveButtons();
+        }
+
+        // Populate websites
+        let websites = [];
+        if (data.websites) {
+          if (typeof data.websites === "string") {
+            try {
+              websites = JSON.parse(data.websites);
+            } catch (e) {
+              console.error("Error parsing websites:", e);
+            }
+          } else {
+            websites = data.websites;
+          }
+        }
+
+        if (websites && websites.length > 0) {
+          // Clear existing website rows
+          const tbody = document.getElementById("websitesTableBody");
+          tbody.innerHTML = "";
+
+          // Add website rows
+          websites.forEach((url, index) => {
+            const newRow = tbody.insertRow();
+            newRow.innerHTML = `
+                    <td data-label="Website URL"><input type="url" name="websiteUrl[]" value="${
+                      url || ""
+                    }" placeholder="https://..." required></td>
+                    <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeWebsiteRow(this)" ${
+                      index === 0 ? "disabled" : ""
+                    }>Remove</button></td>
+                `;
+          });
+          updateWebsiteRemoveButtons();
+        }
+      }
+
+      // Clear edit mode
+      function clearEditMode() {
+        isEditMode = false;
+        currentEditData = null;
+
+        // Reset hidden fields
+        document.getElementById("isEditMode").value = "false";
+        document.getElementById("currentKeboonId").value = "";
+
+        // Hide edit indicator
+        document.getElementById("editIndicator").style.display = "none";
+
+        // Clear edit inputs
+        document.getElementById("editKeboonId").value = "";
+        document.getElementById("editPhone").value = "";
+
+        // Reset form
+        document.getElementById("farmerForm").reset();
+
+        // Reset products and websites tables
+        const productsBody = document.getElementById("productsTableBody");
+        productsBody.innerHTML = `
+            <tr>
                 <td data-label="Product Name"><input type="text" name="productName[]" placeholder="e.g., Tomatoes, Rice, Chickens" required></td>
                 <td data-label="Season"><input type="text" name="productSeason[]" placeholder="e.g., Year-round, March-Oct" required></td>
                 <td data-label="Price (RM)"><input type="number" name="productPrice[]" step="0.01" min="0" placeholder="0.00" required></td>
@@ -1161,271 +1381,759 @@
                         <option value="bunch">per bunch</option>
                     </select>
                 </td>
-                <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeProductRow(this)">Remove</button></td>
-            `;
-            
-            updateRemoveButtons();
-        }
-        
-        function removeProductRow(button) {
-            const tbody = document.getElementById('productsTableBody');
-            if (tbody.rows.length > 1) {
-                button.closest('tr').remove();
-                updateRemoveButtons();
-            }
-        }
-        
-        function updateRemoveButtons() {
-            const tbody = document.getElementById('productsTableBody');
-            const removeButtons = tbody.querySelectorAll('.btn-danger');
-            
-            removeButtons.forEach((button, index) => {
-                button.disabled = tbody.rows.length === 1;
-            });
-        }
-        
-        // Website/Social Media table management
-        function addWebsiteRow() {
-            const tbody = document.getElementById('websitesTableBody');
-            const rowCount = tbody.rows.length;
-            
-            if (rowCount >= 10) {
-                showError('Maximum 10 links allowed.');
-                return;
-            }
-            
-            const newRow = tbody.insertRow();
-            newRow.innerHTML = `
+                <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeProductRow(this)" disabled>Remove</button></td>
+            </tr>
+        `;
+
+        const websitesBody = document.getElementById("websitesTableBody");
+        websitesBody.innerHTML = `
+            <tr>
                 <td data-label="Website URL"><input type="url" name="websiteUrl[]" placeholder="https://..." required></td>
-                <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeWebsiteRow(this)">Remove</button></td>
-            `;
-            
-            updateWebsiteRemoveButtons();
+                <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeWebsiteRow(this)" disabled>Remove</button></td>
+            </tr>
+        `;
+
+        // Clear location marker
+        if (locationMarker) {
+          locationMap.removeLayer(locationMarker);
+          locationMarker = null;
         }
-        
-        function removeWebsiteRow(button) {
-            const tbody = document.getElementById('websitesTableBody');
-            if (tbody.rows.length > 1) {
-                button.closest('tr').remove();
-                updateWebsiteRemoveButtons();
+
+        // Reset submit button
+        const submitBtn = document.getElementById("submitBtn");
+        submitBtn.textContent = "🚀 Add My Farm to Keboon Directory";
+        submitBtn.classList.remove("btn-update");
+
+        showSuccess("Edit mode cleared. Form reset to add new farm.");
+      }
+
+      // Initialize maps
+      function initMap() {
+        // Initialize main map
+        initMainMap();
+        // Initialize location picker map
+        initLocationMap();
+      }
+
+      // Initialize main display map
+      function initMainMap() {
+        // Default center (Kuala Lumpur)
+        const defaultCenter = [3.139, 101.6869];
+
+        map = L.map("map").setView(defaultCenter, 10);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: "© OpenStreetMap contributors",
+          maxZoom: 18,
+        }).addTo(map);
+
+        // Try to get user's location
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              const userLocation = [
+                position.coords.latitude,
+                position.coords.longitude,
+              ];
+              map.setView(userLocation, 12);
+
+              // Add user location marker
+              userMarker = L.marker(userLocation, {
+                icon: L.icon({
+                  iconUrl:
+                    "data:image/svg+xml;charset=UTF-8," +
+                    encodeURIComponent(`
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff4444" width="24" height="24">
+                                    <circle cx="12" cy="12" r="10" stroke="#fff" stroke-width="2"/>
+                                    <circle cx="12" cy="12" r="3" fill="#fff"/>
+                                </svg>
+                            `),
+                  iconSize: [24, 24],
+                  iconAnchor: [12, 12],
+                }),
+              }).addTo(map);
+
+              userMarker.bindPopup("<b>Your Location</b>").openPopup();
+            },
+            function (error) {
+              console.log("Geolocation error:", error);
+              // Stay with default location
             }
+          );
         }
-        
-        function updateWebsiteRemoveButtons() {
-            const tbody = document.getElementById('websitesTableBody');
-            const removeButtons = tbody.querySelectorAll('.btn-danger');
-            
-            removeButtons.forEach((button, index) => {
-                button.disabled = tbody.rows.length === 1;
-            });
+
+        // Load farmers data
+        loadFarmersData();
+      }
+
+      // Initialize location picker map
+      function initLocationMap() {
+        const defaultCenter = [3.139, 101.6869];
+
+        locationMap = L.map("locationMap").setView(defaultCenter, 12);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: "© OpenStreetMap contributors",
+          maxZoom: 18,
+        }).addTo(locationMap);
+
+        // Try to center on user's location
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              const userLocation = [
+                position.coords.latitude,
+                position.coords.longitude,
+              ];
+              locationMap.setView(userLocation, 15);
+            },
+            function (error) {
+              console.log("Geolocation error for location map:", error);
+            }
+          );
         }
-        
-        // Collect products data as JSON
-        function collectProductsData() {
-            const products = [];
-            const nameInputs = document.querySelectorAll('input[name="productName[]"]');
-            const seasonInputs = document.querySelectorAll('input[name="productSeason[]"]');
-            const priceInputs = document.querySelectorAll('input[name="productPrice[]"]');
-            const unitSelects = document.querySelectorAll('select[name="productUnit[]"]');
-            
-            for (let i = 0; i < nameInputs.length; i++) {
-                const name = nameInputs[i].value.trim();
-                const season = seasonInputs[i].value.trim();
-                const price = parseFloat(priceInputs[i].value) || 0;
-                const unit = unitSelects[i].value;
-                
-                if (name) {
-                    products.push({
-                        name: name,
-                        season: season || 'Not specified',
-                        price: price,
-                        unit: unit || 'piece'
-                    });
+
+        // Add click event to set farm location
+        locationMap.on("click", function (e) {
+          setFarmLocation(e.latlng.lat, e.latlng.lng);
+        });
+      }
+
+      // Load farmers data from Google Apps Script
+      async function loadFarmersData() {
+        document.getElementById("mapLoading").style.display = "block";
+
+        try {
+          const response = await fetch(`${APPS_SCRIPT_URL}?action=getFarmers`);
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+
+          const data = await response.json();
+
+          if (data.success) {
+            farmersData = data.farmers;
+            displayFarmersOnMap();
+          } else {
+            throw new Error(data.error || "Failed to load farmers data");
+          }
+        } catch (error) {
+          console.error("Error loading farmers data:", error);
+
+          // Use sample data as fallback
+          const sampleData = [
+            {
+              keboonId: "KB001",
+              farmName: "Green Valley Farm",
+              contactName: "Ahmad Rahman",
+              category: "Small Scale",
+              commercial: "Commercial",
+              latitude: 3.15,
+              longitude: 101.7,
+              phone: "+60123456789",
+              email: "ahmad@greenvalley.com",
+              address: "Lot 123, Kampung Baru, Selangor",
+              farmSize: "2 hectares",
+              description: "Organic farming with sustainable practices",
+              visitsAllowed: "Yes",
+              products: [
+                {
+                  name: "Organic Vegetables",
+                  season: "Year-round",
+                  price: 8.5,
+                  unit: "kg",
+                },
+                {
+                  name: "Herbs",
+                  season: "Year-round",
+                  price: 12.0,
+                  unit: "bundle",
+                },
+              ],
+              websites: [
+                "https://facebook.com/greenvalley",
+                "https://wa.me/60123456789",
+              ],
+            },
+            {
+              keboonId: "KB002",
+              farmName: "Sunrise Homestead",
+              contactName: "Sarah Lee",
+              category: "Homesteading",
+              commercial: "Non-commercial",
+              latitude: 3.12,
+              longitude: 101.65,
+              phone: "+60198765432",
+              email: "sarah@sunrise.com",
+              address: "Jalan Kebun, Petaling Jaya",
+              farmSize: "0.5 hectares",
+              description: "Family homestead focusing on free-range poultry",
+              visitsAllowed: "No",
+              products: [
+                {
+                  name: "Free-range Chickens",
+                  season: "Year-round",
+                  price: 25.0,
+                  unit: "kg",
+                },
+                {
+                  name: "Eggs",
+                  season: "Year-round",
+                  price: 8.0,
+                  unit: "dozen",
+                },
+              ],
+              websites: [
+                "https://instagram.com/sunrisehomestead",
+                "https://sunrise.com",
+              ],
+            },
+          ];
+
+          farmersData = sampleData;
+          displayFarmersOnMap();
+          showError(
+            "Using sample data - please check your Google Apps Script URL"
+          );
+        } finally {
+          document.getElementById("mapLoading").style.display = "none";
+        }
+      }
+
+      // Display farmers on map
+      function displayFarmersOnMap() {
+        farmersData.forEach((farmer) => {
+          if (farmer.latitude && farmer.longitude) {
+            const marker = L.marker([farmer.latitude, farmer.longitude], {
+              icon: L.icon({
+                iconUrl:
+                  "data:image/svg+xml;charset=UTF-8," +
+                  encodeURIComponent(`
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3f6b20" width="30" height="30">
+                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                            </svg>
+                        `),
+                iconSize: [30, 30],
+                iconAnchor: [15, 30],
+                popupAnchor: [0, -30],
+              }),
+            }).addTo(map);
+
+            // Create popup content
+            let productsHtml = "";
+            if (farmer.products) {
+              // Handle both JSON string and array formats
+              let products = farmer.products;
+              if (typeof products === "string") {
+                try {
+                  products = JSON.parse(products);
+                } catch (e) {
+                  products = [];
                 }
-            }
-            
-            return JSON.stringify(products);
-        }
-        
-        // Collect websites data as JSON
-        function collectWebsitesData() {
-            const websites = [];
-            const urlInputs = document.querySelectorAll('input[name="websiteUrl[]"]');
-            
-            for (let i = 0; i < urlInputs.length; i++) {
-                const url = urlInputs[i].value.trim();
-                
-                if (url) {
-                    websites.push(url);
-                }
-            }
-            
-            return JSON.stringify(websites);
-        }
-        
-        // Form validation
-        function validateForm() {
-            hideMessages();
-            
-            // Check if location is set
-            const lat = document.getElementById('latitude').value;
-            const lng = document.getElementById('longitude').value;
-            
-            if (!lat || !lng) {
-                showError('Please set your farm location by clicking on the map or using the "Use My Current Location" button.');
-                return false;
-            }
-            
-            // Check if at least one product is filled
-            const nameInputs = document.querySelectorAll('input[name="productName[]"]');
-            let hasProduct = false;
-            
-            for (let input of nameInputs) {
-                if (input.value.trim()) {
-                    hasProduct = true;
-                    break;
-                }
-            }
-            
-            if (!hasProduct) {
-                showError('Please add at least one product/crop.');
-                return false;
-            }
-            
-            // Check if at least one website is filled
-            const urlInputs = document.querySelectorAll('input[name="websiteUrl[]"]');
-            let hasWebsite = false;
-            
-            for (let input of urlInputs) {
-                if (input.value.trim()) {
-                    hasWebsite = true;
-                    break;
-                }
-            }
-            
-            if (!hasWebsite) {
-                showError('Please add at least one website or social media link.');
-                return false;
-            }
-            
-            return true;
-        }
-        
-        // Form submission
-        document.getElementById('farmerForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            // Validate form first
-            if (!validateForm()) {
-                return;
-            }
-            
-            // Disable submit button to prevent double submission
-            const submitBtn = this.querySelector('.submit-btn');
-            const originalText = submitBtn.textContent;
-            submitBtn.disabled = true;
-            submitBtn.textContent = '🔄 Submitting...';
-            
-            try {
-                // Collect form data
-                const formData = new FormData(this);
-                const productsJson = collectProductsData();
-                const websitesJson = collectWebsitesData();
-                
-                // Create submission object
-                const submission = {
-                    farmName: formData.get('farmName'),
-                    contactName: formData.get('contactName'),
-                    category: formData.get('category'),
-                    commercial: formData.get('commercial'),
-                    latitude: parseFloat(formData.get('latitude')),
-                    longitude: parseFloat(formData.get('longitude')),
-                    phone: formData.get('phone'),
-                    email: formData.get('email'),
-                    address: formData.get('address'),
-                    products: productsJson,
-                    farmSize: formData.get('farmSize'),
-                    websites: websitesJson,
-                    description: formData.get('description'),
-                    visitsAllowed: formData.get('visitsAllowed'),
-                    timestamp: new Date().toISOString()
-                };
-                
-                console.log('Submitting data:', submission);
-                
-                // Check if Apps Script URL is configured
-                if (APPS_SCRIPT_URL.includes('YOUR_SCRIPT_ID_HERE')) {
-                    throw new Error('Google Apps Script URL not configured. Please update APPS_SCRIPT_URL with your actual script URL.');
-                }
-                
-                // Alternative: Use GET request with URL parameters to avoid CORS completely
-                const params = new URLSearchParams({
-                    action: 'addFarmer',
-                    data: JSON.stringify(submission)
+              }
+
+              if (products && products.length > 0) {
+                productsHtml = "<br><strong>Products & Prices:</strong><br>";
+                products.forEach((product) => {
+                  const priceDisplay =
+                    product.price && product.price > 0
+                      ? ` - RM${product.price.toFixed(2)} ${
+                          product.unit || "each"
+                        }`
+                      : "";
+                  productsHtml += `• ${product.name} (${product.season})${priceDisplay}<br>`;
                 });
-                
-                const response = await fetch(`${APPS_SCRIPT_URL}?${params.toString()}`);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    showSuccess('🎉 Farm added successfully to Keboon Directory!');
-                    this.reset();
-                    updateRemoveButtons(); // Reset products table
-                    updateWebsiteRemoveButtons(); // Reset websites table
-                    // Clear location marker
-                    if (locationMarker) {
-                        locationMap.removeLayer(locationMarker);
-                        locationMarker = null;
-                    }
-                    // Scroll to top to see success message
-                    document.querySelector('.form-section').scrollTop = 0;
-                    loadFarmersData(); // Refresh the map
-                } else {
-                    throw new Error(result.error || 'Failed to submit form');
-                }
-                
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                
-                if (error.message.includes('YOUR_SCRIPT_ID_HERE')) {
-                    showError('Configuration Error: Google Apps Script URL needs to be set up. Please check the setup instructions.');
-                } else if (error.message.includes('CORS') || error.message.includes('Network')) {
-                    showError('Network Error: Unable to connect to the server. Please check your internet connection and try again.');
-                } else {
-                    showError(`Error: ${error.message}`);
-                }
-            } finally {
-                // Re-enable submit button
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
+              }
             }
-        });
-        
-        // Initialize everything when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            initMap();
-            updateRemoveButtons();
-            updateWebsiteRemoveButtons();
-            
-            // Handle logo error (if logo file doesn't exist)
-            const logo = document.getElementById('keboonLogo');
-            logo.addEventListener('error', function() {
-                // Hide logo container if image fails to load
-                document.querySelector('.logo-container').style.display = 'none';
-            });
-            
-            // Fix map sizing issues
-            setTimeout(function() {
-                if (locationMap) {
-                    locationMap.invalidateSize();
+
+            // Create websites content
+            let websitesHtml = "";
+            if (farmer.websites) {
+              let websites = farmer.websites;
+              if (typeof websites === "string") {
+                try {
+                  websites = JSON.parse(websites);
+                } catch (e) {
+                  websites = [];
                 }
-            }, 100);
+              }
+
+              if (websites && websites.length > 0) {
+                websitesHtml = "<br><strong>Find us online:</strong><br>";
+                websites.forEach((url) => {
+                  const displayUrl =
+                    url.length > 30 ? url.substring(0, 30) + "..." : url;
+                  websitesHtml += `🔗 <a href="${url}" target="_blank">${displayUrl}</a><br>`;
+                });
+              }
+            }
+
+            const popupContent = `
+                    <div class="popup-farm-name">${farmer.farmName}</div>
+                    <div>
+                        <span class="popup-category">${farmer.category}</span>
+                        <span class="popup-commercial">${
+                          farmer.commercial
+                        }</span>
+                    </div>
+                    <br>
+                    <strong>Contact:</strong> ${farmer.contactName}<br>
+                    📞 ${farmer.phone}<br>
+                    ✉️ ${farmer.email}<br>
+                    📍 ${farmer.address}
+                    ${productsHtml}
+                    ${websitesHtml}
+                    <br><strong>Farm Size:</strong> ${farmer.farmSize}<br>
+                    <strong>Visits:</strong> ${
+                      farmer.visitsAllowed === "Yes"
+                        ? "✅ Visitors welcome"
+                        : "❌ Not open for visits"
+                    }
+                `;
+
+            marker.bindPopup(popupContent);
+          }
         });
+      }
+
+      // Set farm location on map and update form
+      function setFarmLocation(lat, lng) {
+        // Update form fields
+        document.getElementById("latitude").value = lat.toFixed(6);
+        document.getElementById("longitude").value = lng.toFixed(6);
+
+        // Remove existing marker if any
+        if (locationMarker) {
+          locationMap.removeLayer(locationMarker);
+        }
+
+        // Add new marker
+        locationMarker = L.marker([lat, lng], {
+          icon: L.icon({
+            iconUrl:
+              "data:image/svg+xml;charset=UTF-8," +
+              encodeURIComponent(`
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3f6b20" width="30" height="30">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                `),
+            iconSize: [30, 30],
+            iconAnchor: [15, 30],
+          }),
+          draggable: true,
+        }).addTo(locationMap);
+
+        locationMarker.bindPopup(
+          `<b>📍 Your Farm Location</b><br>Lat: ${lat.toFixed(
+            6
+          )}<br>Lng: ${lng.toFixed(6)}`
+        );
+
+        // Make marker draggable
+        locationMarker.on("dragend", function (e) {
+          const newPos = e.target.getLatLng();
+          setFarmLocation(newPos.lat, newPos.lng);
+        });
+      }
+
+      // Get current location for both form and map
+      function getCurrentLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              const lat = position.coords.latitude;
+              const lng = position.coords.longitude;
+
+              // Set location on form map
+              locationMap.setView([lat, lng], 16);
+              setFarmLocation(lat, lng);
+
+              showSuccess(
+                "📍 Current location set! You can drag the pin to adjust if needed."
+              );
+            },
+            function (error) {
+              showError(
+                "Unable to get your location. Please click on the map to set your farm location manually."
+              );
+            }
+          );
+        } else {
+          showError(
+            "Geolocation is not supported by this browser. Please click on the map to set your location."
+          );
+        }
+      }
+
+      // Products table management
+      function addProductRow() {
+        const tbody = document.getElementById("productsTableBody");
+        const rowCount = tbody.rows.length;
+
+        if (rowCount >= 10) {
+          showError("Maximum 10 products allowed.");
+          return;
+        }
+
+        const newRow = tbody.insertRow();
+        newRow.innerHTML = `
+            <td data-label="Product Name"><input type="text" name="productName[]" placeholder="e.g., Tomatoes, Rice, Chickens" required></td>
+            <td data-label="Season"><input type="text" name="productSeason[]" placeholder="e.g., Year-round, March-Oct" required></td>
+            <td data-label="Price (RM)"><input type="number" name="productPrice[]" step="0.01" min="0" placeholder="0.00" required></td>
+            <td data-label="Unit">
+                <select name="productUnit[]" required>
+                    <option value="">Select Unit</option>
+                    <option value="kg">per kg</option>
+                    <option value="g">per g</option>
+                    <option value="l">per liter</option>
+                    <option value="ml">per ml</option>
+                    <option value="piece">per piece</option>
+                    <option value="dozen">per dozen</option>
+                    <option value="bundle">per bundle</option>
+                    <option value="box">per box</option>
+                    <option value="bag">per bag</option>
+                    <option value="tray">per tray</option>
+                    <option value="pack">per pack</option>
+                    <option value="bunch">per bunch</option>
+                </select>
+            </td>
+            <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeProductRow(this)">Remove</button></td>
+        `;
+
+        updateRemoveButtons();
+      }
+
+      function removeProductRow(button) {
+        const tbody = document.getElementById("productsTableBody");
+        if (tbody.rows.length > 1) {
+          button.closest("tr").remove();
+          updateRemoveButtons();
+        }
+      }
+
+      function updateRemoveButtons() {
+        const tbody = document.getElementById("productsTableBody");
+        const removeButtons = tbody.querySelectorAll(".btn-danger");
+
+        removeButtons.forEach((button, index) => {
+          button.disabled = tbody.rows.length === 1;
+        });
+      }
+
+      // Website/Social Media table management
+      function addWebsiteRow() {
+        const tbody = document.getElementById("websitesTableBody");
+        const rowCount = tbody.rows.length;
+
+        if (rowCount >= 10) {
+          showError("Maximum 10 links allowed.");
+          return;
+        }
+
+        const newRow = tbody.insertRow();
+        newRow.innerHTML = `
+            <td data-label="Website URL"><input type="url" name="websiteUrl[]" placeholder="https://..." required></td>
+            <td data-label="Action"><button type="button" class="btn btn-danger" onclick="removeWebsiteRow(this)">Remove</button></td>
+        `;
+
+        updateWebsiteRemoveButtons();
+      }
+
+      function removeWebsiteRow(button) {
+        const tbody = document.getElementById("websitesTableBody");
+        if (tbody.rows.length > 1) {
+          button.closest("tr").remove();
+          updateWebsiteRemoveButtons();
+        }
+      }
+
+      function updateWebsiteRemoveButtons() {
+        const tbody = document.getElementById("websitesTableBody");
+        const removeButtons = tbody.querySelectorAll(".btn-danger");
+
+        removeButtons.forEach((button, index) => {
+          button.disabled = tbody.rows.length === 1;
+        });
+      }
+
+      // Collect products data as JSON
+      function collectProductsData() {
+        const products = [];
+        const nameInputs = document.querySelectorAll(
+          'input[name="productName[]"]'
+        );
+        const seasonInputs = document.querySelectorAll(
+          'input[name="productSeason[]"]'
+        );
+        const priceInputs = document.querySelectorAll(
+          'input[name="productPrice[]"]'
+        );
+        const unitSelects = document.querySelectorAll(
+          'select[name="productUnit[]"]'
+        );
+
+        for (let i = 0; i < nameInputs.length; i++) {
+          const name = nameInputs[i].value.trim();
+          const season = seasonInputs[i].value.trim();
+          const price = parseFloat(priceInputs[i].value) || 0;
+          const unit = unitSelects[i].value;
+
+          if (name) {
+            products.push({
+              name: name,
+              season: season || "Not specified",
+              price: price,
+              unit: unit || "piece",
+            });
+          }
+        }
+
+        return JSON.stringify(products);
+      }
+
+      // Collect websites data as JSON
+      function collectWebsitesData() {
+        const websites = [];
+        const urlInputs = document.querySelectorAll(
+          'input[name="websiteUrl[]"]'
+        );
+
+        for (let i = 0; i < urlInputs.length; i++) {
+          const url = urlInputs[i].value.trim();
+
+          if (url) {
+            websites.push(url);
+          }
+        }
+
+        return JSON.stringify(websites);
+      }
+
+      // Form validation
+      function validateForm() {
+        hideMessages();
+
+        // Check if location is set
+        const lat = document.getElementById("latitude").value;
+        const lng = document.getElementById("longitude").value;
+
+        if (!lat || !lng) {
+          showError(
+            'Please set your farm location by clicking on the map or using the "Use My Current Location" button.'
+          );
+          return false;
+        }
+
+        // Check if at least one product is filled
+        const nameInputs = document.querySelectorAll(
+          'input[name="productName[]"]'
+        );
+        let hasProduct = false;
+
+        for (let input of nameInputs) {
+          if (input.value.trim()) {
+            hasProduct = true;
+            break;
+          }
+        }
+
+        if (!hasProduct) {
+          showError("Please add at least one product/crop.");
+          return false;
+        }
+
+        // Check if at least one website is filled
+        const urlInputs = document.querySelectorAll(
+          'input[name="websiteUrl[]"]'
+        );
+        let hasWebsite = false;
+
+        for (let input of urlInputs) {
+          if (input.value.trim()) {
+            hasWebsite = true;
+            break;
+          }
+        }
+
+        if (!hasWebsite) {
+          showError("Please add at least one website or social media link.");
+          return false;
+        }
+
+        return true;
+      }
+
+      // Form submission
+      document
+        .getElementById("farmerForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          // Validate form first
+          if (!validateForm()) {
+            return;
+          }
+
+          // Disable submit button to prevent double submission
+          const submitBtn = document.getElementById("submitBtn");
+          const originalText = submitBtn.textContent;
+          submitBtn.disabled = true;
+          submitBtn.textContent = "🔄 Submitting...";
+
+          try {
+            // Collect form data
+            const formData = new FormData(this);
+            const productsJson = collectProductsData();
+            const websitesJson = collectWebsitesData();
+
+            // Check if we're in edit mode
+            const isEditMode =
+              document.getElementById("isEditMode").value === "true";
+            const currentKeboonId =
+              document.getElementById("currentKeboonId").value;
+
+            // Create submission object
+            const submission = {
+              farmName: formData.get("farmName"),
+              contactName: formData.get("contactName"),
+              category: formData.get("category"),
+              commercial: formData.get("commercial"),
+              latitude: parseFloat(formData.get("latitude")),
+              longitude: parseFloat(formData.get("longitude")),
+              phone: formData.get("phone"),
+              email: formData.get("email"),
+              address: formData.get("address"),
+              products: productsJson,
+              farmSize: formData.get("farmSize"),
+              websites: websitesJson,
+              description: formData.get("description"),
+              visitsAllowed: formData.get("visitsAllowed"),
+              timestamp: new Date().toISOString(),
+            };
+
+            // Add keboonId if updating
+            if (isEditMode && currentKeboonId) {
+              submission.keboonId = currentKeboonId;
+            }
+
+            console.log("Submitting data:", submission);
+
+            // Check if Apps Script URL is configured
+            if (APPS_SCRIPT_URL.includes("YOUR_SCRIPT_ID_HERE")) {
+              throw new Error(
+                "Google Apps Script URL not configured. Please update APPS_SCRIPT_URL with your actual script URL."
+              );
+            }
+
+            let response;
+
+            if (isEditMode) {
+              // Update existing farmer
+              const params = new URLSearchParams({
+                action: "updateFarmer",
+                data: JSON.stringify(submission),
+              });
+
+              response = await fetch(`${APPS_SCRIPT_URL}?${params.toString()}`);
+            } else {
+              // Add new farmer
+              const params = new URLSearchParams({
+                action: "addFarmer",
+                data: JSON.stringify(submission),
+              });
+
+              response = await fetch(`${APPS_SCRIPT_URL}?${params.toString()}`);
+            }
+
+            if (!response.ok) {
+              throw new Error(
+                `HTTP ${response.status}: ${response.statusText}`
+              );
+            }
+
+            const result = await response.json();
+
+            if (result.success) {
+              if (isEditMode) {
+                showSuccess("🎉 Farm information updated successfully!");
+                // Stay in edit mode after successful update
+                // Reload the updated data
+                setTimeout(() => {
+                  loadFarmerData();
+                }, 1500);
+              } else {
+                showSuccess("🎉 Farm added successfully to Keboon Directory!");
+                // Generate and show the Keboon ID
+                if (result.keboonId) {
+                  showSuccess(
+                    `🎉 Farm added successfully! Your Keboon ID is: ${result.keboonId}. Please save this ID along with your phone number to edit your listing later.`
+                  );
+                }
+                // Reset form for new entry
+                this.reset();
+                updateRemoveButtons();
+                updateWebsiteRemoveButtons();
+                // Clear location marker
+                if (locationMarker) {
+                  locationMap.removeLayer(locationMarker);
+                  locationMarker = null;
+                }
+              }
+
+              // Scroll to top to see success message
+              document.querySelector(".form-section").scrollTop = 0;
+              // Refresh the map
+              loadFarmersData();
+            } else {
+              throw new Error(result.error || "Failed to submit form");
+            }
+          } catch (error) {
+            console.error("Error submitting form:", error);
+
+            if (error.message.includes("YOUR_SCRIPT_ID_HERE")) {
+              showError(
+                "Configuration Error: Google Apps Script URL needs to be set up. Please check the setup instructions."
+              );
+            } else if (
+              error.message.includes("CORS") ||
+              error.message.includes("Network")
+            ) {
+              showError(
+                "Network Error: Unable to connect to the server. Please check your internet connection and try again."
+              );
+            } else {
+              showError(`Error: ${error.message}`);
+            }
+          } finally {
+            // Re-enable submit button
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+          }
+        });
+
+      // Initialize everything when page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        initMap();
+        updateRemoveButtons();
+        updateWebsiteRemoveButtons();
+
+        // Handle logo error (if logo file doesn't exist)
+        const logo = document.getElementById("keboonLogo");
+        logo.addEventListener("error", function () {
+          // Hide logo container if image fails to load
+          document.querySelector(".logo-container").style.display = "none";
+        });
+
+        // Fix map sizing issues
+        setTimeout(function () {
+          if (locationMap) {
+            locationMap.invalidateSize();
+          }
+        }, 100);
+      });
     </script>
-</body>
+  </body>
 </html>
