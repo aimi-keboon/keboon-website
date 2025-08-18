@@ -791,6 +791,163 @@
         line-height: 1.5;
       }
 
+      /* Message Popup Styles */
+      .message-popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+        backdrop-filter: blur(5px);
+      }
+
+      .message-popup-content {
+        border-radius: 20px;
+        padding: 30px;
+        max-width: 500px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        position: relative;
+        animation: popupSlideIn 0.3s ease-out;
+      }
+
+      @keyframes popupSlideIn {
+        from {
+          transform: scale(0.7) translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1) translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .message-popup-content.success {
+        background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        border: 3px solid #28a745;
+      }
+
+      .message-popup-content.error {
+        background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+        border: 3px solid #dc3545;
+      }
+
+      .message-popup-header {
+        font-size: 2rem;
+        margin-bottom: 20px;
+      }
+
+      .message-popup-header.success {
+        color: #155724;
+      }
+
+      .message-popup-header.error {
+        color: #721c24;
+      }
+
+      .message-popup-message {
+        font-size: 1.1rem;
+        margin-bottom: 25px;
+        line-height: 1.5;
+        font-weight: 600;
+      }
+
+      .message-popup-message.success {
+        color: #155724;
+      }
+
+      .message-popup-message.error {
+        color: #721c24;
+      }
+
+      .keboon-id-highlight {
+        background: #28a745;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 25px;
+        font-weight: 700;
+        font-size: 1.2rem;
+        display: inline-block;
+        margin: 10px 0;
+        letter-spacing: 1px;
+      }
+
+      .message-popup-close {
+        border: none;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .message-popup-close.success {
+        background: #28a745;
+        color: white;
+      }
+
+      .message-popup-close.success:hover {
+        background: #218838;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(40, 167, 69, 0.4);
+      }
+
+      .message-popup-close.error {
+        background: #dc3545;
+        color: white;
+      }
+
+      .message-popup-close.error:hover {
+        background: #c82333;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(220, 53, 69, 0.4);
+      }
+
+      .message-popup-close-x {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+      }
+
+      .message-popup-close-x.success {
+        color: #155724;
+      }
+
+      .message-popup-close-x.success:hover {
+        background: rgba(21, 87, 36, 0.1);
+      }
+
+      .message-popup-close-x.error {
+        color: #721c24;
+      }
+
+      .message-popup-close-x.error:hover {
+        background: rgba(114, 28, 36, 0.1);
+      }
+
+      .message-popup-close-x:hover {
+        transform: rotate(90deg);
+      }
+
       .website-btn {
         background: rgba(255, 255, 255, 0.2);
         color: white;
@@ -1105,7 +1262,7 @@
                     step="any"
                     required
                     readonly
-                    placeholder="Latitude will be set when you pin location"
+                    placeholder="Latitude"
                   />
                   <input
                     type="number"
@@ -1114,7 +1271,7 @@
                     step="any"
                     required
                     readonly
-                    placeholder="Longitude will be set when you pin location"
+                    placeholder="Longitude"
                   />
                   <button
                     type="button"
@@ -1168,10 +1325,6 @@
                     required
                   />
                 </div>
-                <div class="phone-help-text">
-                  Enter your phone number without the country code (numbers
-                  only)
-                </div>
               </div>
 
               <div class="form-group">
@@ -1210,7 +1363,7 @@
                       <input
                         type="text"
                         name="productName[]"
-                        placeholder="e.g., Tomatoes, Rice, Chickens"
+                        placeholder="e.g., Tomatoes"
                         required
                       />
                     </td>
@@ -1218,7 +1371,7 @@
                       <input
                         type="text"
                         name="productSeason[]"
-                        placeholder="e.g., Year-round, March-Oct"
+                        placeholder="e.g., March-Oct"
                         required
                       />
                     </td>
@@ -1277,7 +1430,7 @@
                 type="text"
                 id="addFarmSize"
                 name="farmSize"
-                placeholder="e.g., 0.5 hectares, 2 acres"
+                placeholder="e.g., 0.5 hectares"
                 required
               />
             </div>
@@ -1390,7 +1543,7 @@
               <input
                 type="text"
                 id="editKeboonId"
-                placeholder="Enter Keboon ID (e.g., KB...)"
+                placeholder="Enter Keboon ID"
               />
               <div class="edit-phone-container">
                 <select id="editCountryCode" class="edit-country-select">
@@ -1454,7 +1607,7 @@
                 <input
                   type="email"
                   id="forgotEmail"
-                  placeholder="Enter your registered email address"
+                  placeholder="Email Address"
                   style="
                     background: rgba(255, 255, 255, 0.95);
                     border: 2px solid rgba(255, 255, 255, 0.3);
@@ -1469,7 +1622,7 @@
                   onclick="sendKeboonId()"
                   style="background: #28a745"
                 >
-                  Send Keboon ID
+                  Send
                 </button>
               </div>
             </div>
@@ -1574,7 +1727,7 @@
                       step="any"
                       required
                       readonly
-                      placeholder="Latitude will be set when you pin location"
+                      placeholder="Latitude"
                     />
                     <input
                       type="number"
@@ -1583,7 +1736,7 @@
                       step="any"
                       required
                       readonly
-                      placeholder="Longitude will be set when you pin location"
+                      placeholder="Longitude"
                     />
                     <button
                       type="button"
@@ -1637,10 +1790,6 @@
                       required
                     />
                   </div>
-                  <div class="phone-help-text">
-                    Enter your phone number without the country code (numbers
-                    only)
-                  </div>
                 </div>
 
                 <div class="form-group">
@@ -1683,7 +1832,7 @@
                         <input
                           type="text"
                           name="productName[]"
-                          placeholder="e.g., Tomatoes, Rice, Chickens"
+                          placeholder="e.g., Tomatoes"
                           required
                         />
                       </td>
@@ -1691,7 +1840,7 @@
                         <input
                           type="text"
                           name="productSeason[]"
-                          placeholder="e.g., Year-round, March-Oct"
+                          placeholder="e.g., March-Oct"
                           required
                         />
                       </td>
@@ -1750,7 +1899,7 @@
                   type="text"
                   id="updateFarmSize"
                   name="farmSize"
-                  placeholder="e.g., 0.5 hectares, 2 acres"
+                  placeholder="e.g., 0.5 hectares"
                   required
                 />
               </div>
@@ -1846,6 +1995,27 @@
             </form>
           </div>
         </div>
+        <!-- Message Popup -->
+        <div class="message-popup" id="messagePopup">
+          <div class="message-popup-content" id="messagePopupContent">
+            <button
+              class="message-popup-close-x"
+              id="messagePopupCloseX"
+              onclick="closeMessagePopup()"
+            >
+              ×
+            </button>
+            <div class="message-popup-header" id="messagePopupHeader"></div>
+            <div class="message-popup-message" id="messagePopupMessage"></div>
+            <button
+              class="message-popup-close"
+              id="messagePopupClose"
+              onclick="closeMessagePopup()"
+            >
+              Close
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- Footer Section -->
@@ -1911,23 +2081,81 @@
       }
 
       // Helper functions for error handling
-      function showError(message, formType = "add") {
-        const errorDiv = document.getElementById(`${formType}ErrorMessage`);
-        errorDiv.textContent = message;
-        errorDiv.style.display = "block";
-        setTimeout(() => {
-          errorDiv.style.display = "none";
-        }, 10000);
+      // Show message popup (replaces showError and showSuccess)
+      function showMessagePopup(message, type = "success", keboonId = null) {
+        const popup = document.getElementById("messagePopup");
+        const content = document.getElementById("messagePopupContent");
+        const header = document.getElementById("messagePopupHeader");
+        const messageDiv = document.getElementById("messagePopupMessage");
+        const closeBtn = document.getElementById("messagePopupClose");
+        const closeX = document.getElementById("messagePopupCloseX");
+
+        // Reset classes
+        content.className = "message-popup-content";
+        header.className = "message-popup-header";
+        messageDiv.className = "message-popup-message";
+        closeBtn.className = "message-popup-close";
+        closeX.className = "message-popup-close-x";
+
+        // Add type-specific classes
+        content.classList.add(type);
+        header.classList.add(type);
+        messageDiv.classList.add(type);
+        closeBtn.classList.add(type);
+        closeX.classList.add(type);
+
+        // Set content
+        if (type === "success") {
+          header.textContent = "Success!";
+          if (keboonId) {
+            messageDiv.innerHTML = `
+        Farm added successfully to Keboon Directory!
+        <br><br>
+        Your Keboon ID is:
+        <div class="keboon-id-highlight">${keboonId}</div>
+        <strong>Please save this ID to edit your listing.</strong>
+      `;
+          } else {
+            messageDiv.innerHTML = message;
+          }
+          closeBtn.textContent = "Got it!";
+        } else {
+          header.textContent = "Error";
+          messageDiv.innerHTML = message;
+          closeBtn.textContent = "Try Again";
+        }
+
+        popup.style.display = "flex";
+        document.body.style.overflow = "hidden"; // Prevent background scrolling
       }
 
-      function showSuccess(message, formType = "add") {
-        const successDiv = document.getElementById(`${formType}SuccessMessage`);
-        successDiv.textContent = message;
-        successDiv.style.display = "block";
-        setTimeout(() => {
-          successDiv.style.display = "none";
-        }, 8000);
+      // Legacy functions for compatibility
+      function showError(message, formType = "add") {
+        showMessagePopup(message, "error");
       }
+
+      function showSuccess(message, formType = "add", keboonId = null) {
+        showMessagePopup(message, "success", keboonId);
+      }
+
+      // Close message popup
+      function closeMessagePopup() {
+        const popup = document.getElementById("messagePopup");
+        popup.style.display = "none";
+        document.body.style.overflow = "auto"; // Restore scrolling
+      }
+
+      // Close popup when clicking outside
+      document.addEventListener("DOMContentLoaded", function () {
+        const popup = document.getElementById("messagePopup");
+        if (popup) {
+          popup.addEventListener("click", function (e) {
+            if (e.target === popup) {
+              closeMessagePopup();
+            }
+          });
+        }
+      });
 
       function hideMessages(formType = "add") {
         document.getElementById(`${formType}ErrorMessage`).style.display =
@@ -1953,7 +2181,7 @@
           const loadBtn = document.querySelector(".btn-load");
           const originalText = loadBtn.textContent;
           loadBtn.disabled = true;
-          loadBtn.textContent = "⏳ Loading...";
+          loadBtn.textContent = "Loading...";
 
           const response = await fetch(
             `${APPS_SCRIPT_URL}?action=getFarmerById&keboonId=${encodeURIComponent(
@@ -1985,11 +2213,6 @@
 
             // Populate form fields
             populateFormWithData(result.farmer);
-
-            showSuccess(
-              "Data loaded successfully! You can now update your information.",
-              "update"
-            );
 
             // Scroll to form content
             setTimeout(() => {
@@ -2108,10 +2331,10 @@
             newRow.innerHTML = `
               <td data-label="Name"><input type="text" name="productName[]" value="${
                 product.name || ""
-              }" placeholder="e.g., Tomatoes, Rice, Chickens" required></td>
+              }" placeholder="e.g., Tomatoes" required></td>
               <td data-label="Availability"><input type="text" name="productSeason[]" value="${
                 product.season || ""
-              }" placeholder="e.g., Year-round, March-Oct" required></td>
+              }" placeholder="e.g., March-Oct" required></td>
               <td data-label="Price (RM)"><input type="number" name="productPrice[]" value="${
                 product.price || ""
               }" step="0.01" min="0" placeholder="0.00" required></td>
@@ -2244,8 +2467,8 @@
         if (isProducts) {
           tbody.innerHTML = `
             <tr>
-              <td data-label="Name"><input type="text" name="productName[]" placeholder="e.g., Tomatoes, Rice, Chickens" required></td>
-              <td data-label="Availability"><input type="text" name="productSeason[]" placeholder="e.g., Year-round, March-Oct" required></td>
+              <td data-label="Name"><input type="text" name="productName[]" placeholder="e.g., Tomatoes" required></td>
+              <td data-label="Availability"><input type="text" name="productSeason[]" placeholder="e.g., March-Oct" required></td>
               <td data-label="Price (RM)"><input type="number" name="productPrice[]" step="0.01" min="0" placeholder="0.00" required></td>
               <td data-label="Unit">
                 <select name="productUnit[]" required>
@@ -2646,11 +2869,6 @@
               // Set location on form map
               locationMap.setView([lat, lng], 16);
               setFarmLocation(lat, lng, formType);
-
-              showSuccess(
-                "📍 Current location set! You can drag the pin to adjust if needed.",
-                formType
-              );
             },
             function (error) {
               showError(
@@ -2679,8 +2897,8 @@
 
         const newRow = tbody.insertRow();
         newRow.innerHTML = `
-          <td data-label="Name"><input type="text" name="productName[]" placeholder="e.g., Tomatoes, Rice, Chickens" required></td>
-          <td data-label="Availability"><input type="text" name="productSeason[]" placeholder="e.g., Year-round, March-Oct" required></td>
+          <td data-label="Name"><input type="text" name="productName[]" placeholder="e.g., Tomatoes" required></td>
+          <td data-label="Availability"><input type="text" name="productSeason[]" placeholder="e.g., March-Oct" required></td>
           <td data-label="Price (RM)"><input type="number" name="productPrice[]" step="0.01" min="0" placeholder="0.00" required></td>
           <td data-label="Unit">
               <select name="productUnit[]" required>
@@ -3000,8 +3218,14 @@
                 formType
               );
               if (result.keboonId) {
+                showMessagePopup(
+                  "Farm added successfully!",
+                  "success",
+                  result.keboonId
+                );
+              } else {
                 showSuccess(
-                  `🎉 Farm added successfully! Your Keboon ID is: ${result.keboonId}. Please save this ID along with your phone number to edit your listing later.`,
+                  "🎉 Farm added successfully to Keboon Directory!",
                   formType
                 );
               }
@@ -3076,7 +3300,7 @@
           const sendBtn = document.querySelector('[onclick="sendKeboonId()"]');
           const originalText = sendBtn.textContent;
           sendBtn.disabled = true;
-          sendBtn.textContent = "📧 Sending...";
+          sendBtn.textContent = "Sending...";
 
           const response = await fetch(
             `${APPS_SCRIPT_URL}?action=sendKeboonId&email=${encodeURIComponent(
@@ -3092,7 +3316,7 @@
 
           if (result.success) {
             showSuccess(
-              `📧 Keboon ID sent to ${email}! Please check your email (including spam folder).`,
+              `Keboon ID sent to ${email}! Please check your email (including spam folder).`,
               "update"
             );
             // Clear the email field
@@ -3107,7 +3331,7 @@
           // Reset button
           const sendBtn = document.querySelector('[onclick="sendKeboonId()"]');
           sendBtn.disabled = false;
-          sendBtn.textContent = "Send Keboon ID";
+          sendBtn.textContent = "Send";
         }
       }
 
