@@ -176,6 +176,37 @@
         transform: none;
       }
 
+      .btn-forgot {
+        background: #28a745;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+      }
+
+      .btn-forgot:hover {
+        background: #218838;
+        transform: translateY(-2px);
+      }
+
+      .btn-forgot:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .forgot-id-section {
+        margin-top: 20px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
       /* Form Sections - Hidden by default */
       .form-section {
         max-height: 0;
@@ -908,9 +939,6 @@
 
       <!-- Add Farm Form Section -->
       <div class="form-section" id="addForm">
-        <button class="close-form-btn" onclick="toggleForm('addForm')">
-          ✕ Close
-        </button>
         <div class="form-content">
           <h3>Add New Farm</h3>
           <p class="subtitle">
@@ -993,20 +1021,15 @@
                   />
                   <button
                     type="button"
-                    class="btn btn-secondary"
+                    class="btn btn-primary"
                     onclick="getCurrentLocation('add')"
                   >
-                    📍 Use My Current Location
+                    Use My Current Location
                   </button>
                 </div>
                 <div class="location-map-container">
                   <div id="addLocationMap"></div>
-                  <div class="map-instructions">
-                    <p>
-                      📍 Click on the map to pin your farm location, or use the
-                      "Use My Current Location" button above
-                    </p>
-                  </div>
+                  
                 </div>
               </div>
             </div>
@@ -1217,9 +1240,6 @@
 
       <!-- Update Farm Form Section -->
       <div class="form-section" id="updateForm">
-        <button class="close-form-btn" onclick="toggleForm('updateForm')">
-          ✕ Close
-        </button>
         <div class="form-content">
           <h3>Update Farm Information</h3>
           <p class="subtitle">
@@ -1233,6 +1253,7 @@
               Enter your Keboon ID and phone number to load your current
               information for editing.
             </p>
+
             <div class="edit-mode-inputs">
               <input
                 type="text"
@@ -1247,6 +1268,56 @@
               <button type="button" class="btn-load" onclick="loadFarmerData()">
                 Load My Data
               </button>
+            </div>
+
+            <div
+              style="
+                text-align: center;
+                margin: 20px 0;
+                color: rgba(255, 255, 255, 0.8);
+                font-weight: 600;
+              "
+            >
+              OR
+            </div>
+
+            <div style="margin-top: 20px">
+              <h4 style="margin-bottom: 10px; font-size: 1.1rem">
+                Forgot Your Keboon ID?
+              </h4>
+              <p style="margin-bottom: 15px; opacity: 0.9; font-size: 0.95rem">
+                Enter your registered email address and we'll send your Keboon
+                ID to you.
+              </p>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr auto;
+                  gap: 15px;
+                  align-items: end;
+                "
+              >
+                <input
+                  type="email"
+                  id="forgotEmail"
+                  placeholder="Enter your registered email address"
+                  style="
+                    background: rgba(255, 255, 255, 0.95);
+                    border: 2px solid rgba(255, 255, 255, 0.3);
+                    padding: 12px 16px;
+                    border-radius: 10px;
+                    font-size: 1rem;
+                  "
+                />
+                <button
+                  type="button"
+                  class="btn-load"
+                  onclick="sendKeboonId()"
+                  style="background: #28a745"
+                >
+                  Send Keboon ID
+                </button>
+              </div>
             </div>
           </div>
 
@@ -1362,20 +1433,15 @@
                     />
                     <button
                       type="button"
-                      class="btn btn-secondary"
+                      class="btn btn-primary"
                       onclick="getCurrentLocation('update')"
                     >
-                      📍 Use My Current Location
+                      Use My Current Location
                     </button>
                   </div>
                   <div class="location-map-container">
                     <div id="updateLocationMap"></div>
-                    <div class="map-instructions">
-                      <p>
-                        📍 Click on the map to pin your farm location, or use
-                        the "Use My Current Location" button above
-                      </p>
-                    </div>
+                    
                   </div>
                 </div>
               </div>
@@ -1600,7 +1666,7 @@
             farmers.
           </p>
           <a href="https://keboon.net" target="_blank" class="website-btn">
-            🌐 Visit Keboon.net for More Info
+            Visit Keboon.net for More Info
           </a>
         </div>
       </div>
@@ -1623,7 +1689,7 @@
 
       // Google Apps Script configuration - UPDATE THIS WITH YOUR ACTUAL URL
       const APPS_SCRIPT_URL =
-        "https://script.google.com/macros/s/AKfycbzkUBAgOU7cerDTPkqpvuMbD4CjpHqsIGy8JjubOwZkhQEKgVUmEiR7iT5AQFszkoId/exec";
+        "https://script.google.com/macros/s/AKfycbxd1QVulqQLufxt3Z2Zmvn9pbj6rigkkDk3x_u_g3LEfsUDxUiGlB2UYG9Q_kKT7aQL/exec";
 
       // Toggle form visibility
       function toggleForm(formId) {
@@ -2748,6 +2814,58 @@
           // Re-enable submit button
           submitBtn.disabled = false;
           submitBtn.textContent = originalText;
+        }
+      }
+      // Replace the existing sendKeboonId function in your HTML file with this corrected version:
+
+      // Send Keboon ID to user's email
+      async function sendKeboonId() {
+        const email = document.getElementById("forgotEmail").value.trim();
+
+        if (!email) {
+          showError("Please enter your email address", "update");
+          return;
+        }
+
+        hideMessages("update");
+
+        try {
+          // Show loading state
+          const sendBtn = document.querySelector('[onclick="sendKeboonId()"]');
+          const originalText = sendBtn.textContent;
+          sendBtn.disabled = true;
+          sendBtn.textContent = "📧 Sending...";
+
+          const response = await fetch(
+            `${APPS_SCRIPT_URL}?action=sendKeboonId&email=${encodeURIComponent(
+              email
+            )}`
+          );
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+
+          const result = await response.json();
+
+          if (result.success) {
+            showSuccess(
+              `📧 Keboon ID sent to ${email}! Please check your email (including spam folder).`,
+              "update"
+            );
+            // Clear the email field
+            document.getElementById("forgotEmail").value = "";
+          } else {
+            throw new Error(result.error || "Failed to send Keboon ID");
+          }
+        } catch (error) {
+          console.error("Error sending Keboon ID:", error);
+          showError(`Error: ${error.message}`, "update");
+        } finally {
+          // Reset button
+          const sendBtn = document.querySelector('[onclick="sendKeboonId()"]');
+          sendBtn.disabled = false;
+          sendBtn.textContent = "Send Keboon ID";
         }
       }
 
