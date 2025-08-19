@@ -12,6 +12,382 @@
     />
 
     <style>
+      .modal-phone-input-container {
+        display: flex;
+        gap: 0;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        background: white;
+      }
+
+      .modal-phone-input-container:focus-within {
+        border-color: #3f6b20;
+        box-shadow: 0 0 0 3px rgba(63, 107, 32, 0.1);
+      }
+
+      .modal-country-code-select {
+        border: none;
+        background: #f8f9fa;
+        padding: 10px 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #2d5016;
+        width: 85px;
+        flex-shrink: 0;
+        border-right: 2px solid #e9ecef;
+        outline: none;
+        cursor: pointer;
+      }
+
+      .modal-country-code-select:focus {
+        background: #e9ecef;
+      }
+
+      .modal-phone-input-container input[type="tel"] {
+        border: none;
+        padding: 10px 14px;
+        font-size: 14px;
+        flex: 1;
+        outline: none;
+        background: white;
+      }
+
+      .modal-phone-input-container input[type="tel"]:focus {
+        border: none;
+        box-shadow: none;
+      }
+
+      .phone-help-text {
+        font-size: 0.8rem;
+        color: #6c757d;
+        margin-top: 5px;
+        font-style: italic;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .modal-phone-input-container {
+          flex-direction: column;
+        }
+
+        .modal-country-code-select {
+          border-right: none;
+          border-bottom: 2px solid #e9ecef;
+          width: 100%;
+        }
+      }
+      /* Message Button Styles - Add to your existing CSS */
+      .message-btn {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        padding: 12px 24px;
+        font-size: 14px;
+        font-weight: 600;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+      }
+
+      .message-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        text-decoration: none;
+        color: white;
+      }
+
+      /* Modal Styles - Add to your existing CSS */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+      }
+
+      .modal-content {
+        background-color: white;
+        margin: 5% auto;
+        padding: 0;
+        border-radius: 15px;
+        width: 90%;
+        max-width: 450px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        animation: modalSlideIn 0.3s ease-out;
+      }
+
+      @keyframes modalSlideIn {
+        from {
+          transform: scale(0.7) translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1) translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .modal-header {
+        background: linear-gradient(135deg, #2d5016 0%, #3f6b20 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 15px 15px 0 0;
+        text-align: center;
+      }
+
+      .modal-header h2 {
+        margin-bottom: 8px;
+        font-size: 1.3rem;
+      }
+
+      .modal-body {
+        padding: 25px;
+      }
+
+      .form-group {
+        margin-bottom: 18px;
+      }
+
+      .form-group label {
+        display: block;
+        font-weight: 600;
+        color: #2d5016;
+        margin-bottom: 6px;
+        font-size: 14px;
+      }
+
+      .required::after {
+        content: " *";
+        color: #dc3545;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 10px 14px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus {
+        outline: none;
+        border-color: #3f6b20;
+        box-shadow: 0 0 0 3px rgba(63, 107, 32, 0.1);
+      }
+
+      .form-group textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+
+      .modal-footer {
+        padding: 15px 25px;
+        text-align: center;
+        border-top: 1px solid #e9ecef;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 0 8px;
+      }
+
+      .btn-primary {
+        background: #3f6b20;
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: #2d5016;
+        transform: translateY(-1px);
+      }
+
+      .btn-secondary {
+        background: #6c757d;
+        color: white;
+      }
+
+      .btn-secondary:hover {
+        background: #5a6268;
+      }
+
+      /* Chat Interface Styles - Add to your existing CSS */
+      .chat-container {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 380px;
+        height: 480px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        z-index: 1001;
+        overflow: hidden;
+      }
+
+      .chat-header {
+        background: linear-gradient(135deg, #2d5016 0%, #3f6b20 100%);
+        color: white;
+        padding: 12px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .chat-title {
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .chat-close {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+      }
+
+      .chat-close:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .chat-messages {
+        height: 340px;
+        overflow-y: auto;
+        padding: 12px;
+        background: #f8f9fa;
+      }
+
+      .message {
+        margin-bottom: 12px;
+        padding: 8px 12px;
+        border-radius: 12px;
+        max-width: 80%;
+        word-wrap: break-word;
+        font-size: 14px;
+      }
+
+      .message.buyer {
+        background: #3f6b20;
+        color: white;
+        margin-left: auto;
+        border-bottom-right-radius: 4px;
+      }
+
+      .message.grower {
+        background: white;
+        color: #333;
+        border: 1px solid #e9ecef;
+        border-bottom-left-radius: 4px;
+      }
+
+      .message-time {
+        font-size: 11px;
+        opacity: 0.7;
+        margin-top: 4px;
+      }
+
+      .chat-input {
+        padding: 12px;
+        border-top: 1px solid #e9ecef;
+        display: flex;
+        gap: 8px;
+      }
+
+      .chat-input input {
+        flex: 1;
+        padding: 8px 12px;
+        border: 2px solid #e9ecef;
+        border-radius: 20px;
+        outline: none;
+        font-size: 14px;
+      }
+
+      .chat-input input:focus {
+        border-color: #3f6b20;
+      }
+
+      .send-btn {
+        background: #3f6b20;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        font-size: 14px;
+      }
+
+      .send-btn:hover {
+        background: #2d5016;
+        transform: scale(1.05);
+      }
+
+      .loading,
+      .error-message,
+      .success-message {
+        text-align: center;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        font-size: 14px;
+      }
+
+      .error-message {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+
+      .success-message {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+
+      .loading {
+        color: #6c757d;
+      }
+
+      /* Mobile adjustments for chat */
+      @media (max-width: 768px) {
+        .chat-container {
+          width: calc(100% - 20px);
+          height: 400px;
+          bottom: 10px;
+          right: 10px;
+          left: 10px;
+        }
+      }
+
       * {
         margin: 0;
         padding: 0;
@@ -803,10 +1179,348 @@
     <script>
       // Google Apps Script configuration - UPDATE THIS WITH YOUR ACTUAL URL
       const APPS_SCRIPT_URL =
-        "https://script.google.com/macros/s/AKfycbyGYH3VVm0l3HglytNHawKYX-yEWU6Nsr1FfkbLHcQUnhsQswA0btgNWm2aWesGDCMw/exec";
+        "https://script.google.com/macros/s/AKfycbxXSsGq5vCpJttfjbkC8rg6j4pYDO4Zbylx4jsByb9QYwH0gMdo5miFahxZWStM20P6/exec";
 
       let farmMap;
       let farmerData = null;
+      let currentGrowerData = null;
+      let currentBuyerData = null;
+      let conversationId = null;
+      let farmerDataCache = new Map();
+      let cacheTimestamp = null;
+      const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+      // Open contact modal
+      function openContactModal() {
+        document.getElementById("contactModal").style.display = "block";
+        document.body.style.overflow = "hidden";
+      }
+
+      // Close contact modal
+      function closeContactModal() {
+        document.getElementById("contactModal").style.display = "none";
+        document.body.style.overflow = "auto";
+        clearContactForm();
+      }
+
+      // Clear contact form
+      function clearContactForm() {
+        document.getElementById("buyerName").value = "";
+        document.getElementById("buyerEmail").value = "";
+        document.getElementById("buyerCountryCode").value = "+60"; // Reset to default
+        document.getElementById("buyerPhone").value = "";
+        document.getElementById("initialMessage").value = "";
+        hideContactMessages();
+      }
+
+      // Show/hide contact form messages
+      function showContactError(message) {
+        const errorDiv = document.getElementById("contactError");
+        errorDiv.textContent = message;
+        errorDiv.style.display = "block";
+        document.getElementById("contactSuccess").style.display = "none";
+      }
+
+      function showContactSuccess(message) {
+        const successDiv = document.getElementById("contactSuccess");
+        successDiv.textContent = message;
+        successDiv.style.display = "block";
+        document.getElementById("contactError").style.display = "none";
+      }
+
+      function hideContactMessages() {
+        document.getElementById("contactError").style.display = "none";
+        document.getElementById("contactSuccess").style.display = "none";
+      }
+
+      // Validate contact form
+      function validateContactForm() {
+        const name = document.getElementById("buyerName").value.trim();
+        const email = document.getElementById("buyerEmail").value.trim();
+        const countryCode = document.getElementById("buyerCountryCode").value;
+        const phone = document.getElementById("buyerPhone").value.trim();
+
+        if (!name) {
+          showContactError("Please enter your name");
+          return false;
+        }
+
+        if (!email || !email.includes("@")) {
+          showContactError("Please enter a valid email address");
+          return false;
+        }
+
+        if (!countryCode) {
+          showContactError("Please select a country code");
+          return false;
+        }
+
+        if (!phone) {
+          showContactError("Please enter your phone number");
+          return false;
+        }
+
+        // Validate phone number contains only digits
+        if (!/^\d+$/.test(phone)) {
+          showContactError("Phone number should contain only digits");
+          return false;
+        }
+
+        return true;
+      }
+
+      // Add this new helper function to combine country code with phone number
+      function getFullPhoneNumber() {
+        const countryCode = document.getElementById("buyerCountryCode").value;
+        const phoneNumber = document.getElementById("buyerPhone").value.trim();
+
+        // Remove any non-digit characters from phone number
+        const cleanNumber = phoneNumber.replace(/\D/g, "");
+
+        // Remove the + from country code and combine
+        const cleanCountryCode = countryCode.replace("+", "");
+
+        return cleanCountryCode + cleanNumber;
+      }
+
+      // Start conversation
+      async function startConversation() {
+        if (!validateContactForm()) return;
+
+        const startBtn = document.getElementById("startChatBtn");
+        const originalText = startBtn.textContent;
+        startBtn.disabled = true;
+        startBtn.textContent = "Starting...";
+
+        try {
+          // Collect buyer data with combined phone number
+          currentBuyerData = {
+            name: document.getElementById("buyerName").value.trim(),
+            email: document.getElementById("buyerEmail").value.trim(),
+            phone: getFullPhoneNumber(), // Use the combined phone number
+          };
+
+          const initialMessage = document
+            .getElementById("initialMessage")
+            .value.trim();
+
+          // Create or get conversation
+          const conversationData = await createOrGetConversation(
+            currentBuyerData,
+            currentGrowerData
+          );
+
+          if (!conversationData.success) {
+            throw new Error(
+              conversationData.error || "Failed to start conversation"
+            );
+          }
+
+          conversationId = conversationData.conversationId;
+
+          // Send initial message if provided
+          if (initialMessage) {
+            await sendMessageToConversation(initialMessage);
+          }
+
+          // Close modal and open chat
+          closeContactModal();
+          openChatInterface();
+        } catch (error) {
+          console.error("Error starting conversation:", error);
+          showContactError(`Error: ${error.message}`);
+        } finally {
+          startBtn.disabled = false;
+          startBtn.textContent = originalText;
+        }
+      }
+
+      // Replace your existing createOrGetConversation function with this:
+      async function createOrGetConversation(buyerData, growerData) {
+        try {
+          // Use GET method with data as URL parameter to avoid CORS preflight
+          const data = {
+            buyerEmail: buyerData.email,
+            buyerPhone: buyerData.phone,
+            buyerName: buyerData.name,
+            growerKeboonId: growerData.keboonId,
+            growerName: growerData.contactName,
+            farmName: growerData.farmName,
+          };
+
+          const params = new URLSearchParams({
+            action: "createConversation",
+            data: JSON.stringify(data),
+          });
+
+          const response = await fetch(
+            `${APPS_SCRIPT_URL}?${params.toString()}`
+          );
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+
+          return await response.json();
+        } catch (error) {
+          console.error("Error creating conversation:", error);
+          return { success: false, error: error.message };
+        }
+      }
+
+      // Open chat interface
+      function openChatInterface() {
+        document.getElementById("chatContainer").style.display = "block";
+        document.getElementById(
+          "chatTitle"
+        ).textContent = `Chat with ${currentGrowerData.farmName}`;
+        loadChatHistory();
+      }
+
+      // Close chat interface
+      function closeChatInterface() {
+        document.getElementById("chatContainer").style.display = "none";
+      }
+
+      // Load chat history
+      async function loadChatHistory() {
+        const messagesDiv = document.getElementById("chatMessages");
+        messagesDiv.innerHTML =
+          '<div class="loading">Loading conversation...</div>';
+
+        try {
+          const response = await fetch(
+            `${APPS_SCRIPT_URL}?action=getChatHistory&conversationId=${conversationId}`
+          );
+          const result = await response.json();
+
+          if (result.success) {
+            displayMessages(result.messages || []);
+          } else {
+            throw new Error(result.error || "Failed to load chat history");
+          }
+        } catch (error) {
+          console.error("Error loading chat history:", error);
+          messagesDiv.innerHTML =
+            '<div class="error-message">Failed to load chat history</div>';
+        }
+      }
+
+      // Display messages in chat
+      function displayMessages(messages) {
+        const messagesDiv = document.getElementById("chatMessages");
+        messagesDiv.innerHTML = "";
+
+        if (messages.length === 0) {
+          messagesDiv.innerHTML =
+            '<div class="loading">Start your conversation by sending a message!</div>';
+          return;
+        }
+
+        messages.forEach((message) => {
+          const messageDiv = document.createElement("div");
+          messageDiv.className = `message ${message.senderType}`;
+
+          const time = new Date(message.timestamp).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+
+          messageDiv.innerHTML = `
+      <div>${message.content}</div>
+      <div class="message-time">${time}</div>
+    `;
+          messagesDiv.appendChild(messageDiv);
+        });
+
+        // Scroll to bottom
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      }
+
+      // Send message
+      async function sendMessage() {
+        const messageInput = document.getElementById("messageInput");
+        const messageText = messageInput.value.trim();
+
+        if (!messageText) return;
+
+        // Clear input immediately
+        messageInput.value = "";
+
+        // Add message to UI immediately
+        addMessageToUI(messageText, "buyer");
+
+        try {
+          await sendMessageToConversation(messageText);
+        } catch (error) {
+          console.error("Error sending message:", error);
+          // Could add error handling here
+        }
+      }
+
+      // Handle Enter key in message input
+      function handleEnterKey(event) {
+        if (event.key === "Enter") {
+          sendMessage();
+        }
+      }
+
+      // Add message to UI
+      function addMessageToUI(messageText, senderType) {
+        const messagesDiv = document.getElementById("chatMessages");
+
+        const messageDiv = document.createElement("div");
+        messageDiv.className = `message ${senderType}`;
+
+        const time = new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        messageDiv.innerHTML = `
+    <div>${messageText}</div>
+    <div class="message-time">${time}</div>
+  `;
+
+        messagesDiv.appendChild(messageDiv);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      }
+
+      // Replace your existing sendMessageToConversation function with this:
+      async function sendMessageToConversation(messageText) {
+        try {
+          const data = {
+            conversationId: conversationId,
+            senderType: "buyer",
+            senderEmail: currentBuyerData.email,
+            senderName: currentBuyerData.name,
+            content: messageText,
+          };
+
+          const params = new URLSearchParams({
+            action: "sendMessage",
+            data: JSON.stringify(data),
+          });
+
+          const response = await fetch(
+            `${APPS_SCRIPT_URL}?${params.toString()}`
+          );
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+
+          const result = await response.json();
+          if (!result.success) {
+            throw new Error(result.error || "Failed to send message");
+          }
+
+          return result;
+        } catch (error) {
+          console.error("Error sending message to server:", error);
+          throw error;
+        }
+      }
 
       // Get farm URL parameter
       function getFarmUrlParam() {
@@ -815,48 +1529,105 @@
       }
 
       // Load farm data from Google Apps Script
+      // Replace your existing loadFarmData function with this
+      // FIXED loadFarmData function with better error handling
       async function loadFarmData() {
         const farmUrl = getFarmUrlParam();
 
         if (!farmUrl) {
-          showError("No farm specified in URL");
+          console.error("No farm URL parameter found");
+          showError("No farm specified in URL. Please check the link.");
           return;
         }
 
+        console.log("Loading farm data for:", farmUrl);
+        console.log("Apps Script URL:", APPS_SCRIPT_URL);
+
         try {
-          const response = await fetch(
-            `${APPS_SCRIPT_URL}?action=getFarmerByUrl&farmUrl=${encodeURIComponent(
-              farmUrl
-            )}`
+          // Create the request URL
+          const requestUrl = `${APPS_SCRIPT_URL}?action=getFarmerByUrl&farmUrl=${encodeURIComponent(
+            farmUrl
+          )}`;
+          console.log("Request URL:", requestUrl);
+
+          // Add timeout and better error handling
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => {
+            console.error("Request timed out");
+            controller.abort();
+          }, 10000); // 10 second timeout
+
+          console.log("Sending request...");
+          const response = await fetch(requestUrl, {
+            signal: controller.signal,
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+            },
+          });
+
+          clearTimeout(timeoutId);
+
+          console.log("Response status:", response.status);
+          console.log(
+            "Response headers:",
+            Object.fromEntries(response.headers.entries())
           );
 
           if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            throw new Error(
+              `HTTP Error ${response.status}: ${response.statusText}`
+            );
+          }
+
+          // Check if response is actually JSON
+          const contentType = response.headers.get("content-type");
+          if (!contentType || !contentType.includes("application/json")) {
+            const textResponse = await response.text();
+            console.error("Non-JSON response received:", textResponse);
+            throw new Error(
+              "Server returned non-JSON response. Check Apps Script deployment."
+            );
           }
 
           const result = await response.json();
+          console.log("Response data:", result);
 
           if (result.success && result.farmer) {
+            console.log("✅ Farmer data loaded successfully");
             farmerData = result.farmer;
             populateFarmProfile(result.farmer);
             hideLoading();
             showMainContent();
 
-            // Initialize map after content is fully shown
+            // Initialize map after a short delay
             setTimeout(() => {
-              initializeMap(result.farmer);
+              if (result.farmer.latitude && result.farmer.longitude) {
+                initializeMap(result.farmer);
+              }
             }, 100);
           } else {
-            throw new Error(result.error || "Farm not found");
+            console.error("Farm not found:", result.error);
+            throw new Error(result.error || "Farm not found in database");
           }
         } catch (error) {
           console.error("Error loading farm data:", error);
-          showError(`Error loading farm profile: ${error.message}`);
+
+          if (error.name === "AbortError") {
+            showError(
+              "Request timed out. Please check your internet connection and try again."
+            );
+          } else if (error.message.includes("non-JSON")) {
+            showError("Server configuration error. Please contact support.");
+          } else {
+            showError(`Unable to load farm profile: ${error.message}`);
+          }
         }
       }
 
       // Populate farm profile with data
       function populateFarmProfile(farmer) {
+        currentGrowerData = farmer;
         // Update page title
         document.title = `${farmer.farmName} - Keboon Directory`;
 
@@ -892,38 +1663,36 @@
       function populateContactInfo(farmer) {
         const contactContainer = document.getElementById("contactInfo");
 
+        document.getElementById("modalGrowerName").textContent =
+          farmer.farmName;
+
         const contactItems = [
           {
             icon: `<svg viewBox="0 0 24 24" fill="currentColor">
-               <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-             </svg>`,
+         <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+       </svg>`,
             label: "Contact",
             value: farmer.contactName,
             href: null,
           },
+
+          // REMOVED: Phone and Email items for privacy
           {
             icon: `<svg viewBox="0 0 24 24" fill="currentColor">
-               <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-             </svg>`,
-            label: "Phone",
-            value: farmer.phone,
-            href: `tel:${farmer.phone}`,
-          },
-          {
-            icon: `<svg viewBox="0 0 24 24" fill="currentColor">
-               <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-             </svg>`,
-            label: "Email",
-            value: farmer.email,
-            href: `mailto:${farmer.email}`,
-          },
-          {
-            icon: `<svg viewBox="0 0 24 24" fill="currentColor">
-               <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-             </svg>`,
+         <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+       </svg>`,
             label: "Address",
             value: farmer.address,
             href: null,
+          },
+          // ADD: Message button as contact item
+          {
+            icon: `<svg viewBox="0 0 24 24" fill="currentColor">
+   <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+ </svg>`,
+            label: "Message",
+            value: `Message ${farmer.contactName}`,
+            href: "javascript:openContactModal()",
           },
         ];
 
@@ -931,20 +1700,16 @@
           .filter((item) => item.value)
           .map(
             (item) => `
-        <div class="contact-item">
-          <div class="contact-header">
-            <div class="contact-icon">${item.icon}</div>
-            <div class="contact-label">${item.label}</div>
-          </div>
-          <div class="contact-value">
-            ${
-              item.href
-                ? `<a href="${item.href}">${item.value}</a>`
-                : item.value
-            }
-          </div>
-        </div>
-      `
+    <div class="contact-item">
+      <div class="contact-header">
+        <div class="contact-icon">${item.icon}</div>
+        <div class="contact-label">${item.label}</div>
+      </div>
+      <div class="contact-value">
+        ${item.href ? `<a href="${item.href}">${item.value}</a>` : item.value}
+      </div>
+    </div>
+  `
           )
           .join("");
       }
@@ -1179,8 +1944,156 @@
 
       // Initialize page
       document.addEventListener("DOMContentLoaded", function () {
+        console.log("Page loaded, starting farm data load...");
+
+        // Set default country code based on user location (Malaysia)
+        const countryCodeSelect = document.getElementById("buyerCountryCode");
+        if (countryCodeSelect) {
+          countryCodeSelect.value = "+60"; // Default to Malaysia
+        }
+
+        // Add input validation for phone number
+        const phoneInput = document.getElementById("buyerPhone");
+        if (phoneInput) {
+          phoneInput.addEventListener("input", function (e) {
+            // Remove any non-digit characters as user types
+            this.value = this.value.replace(/\D/g, "");
+          });
+        }
+
+        // Close modal when clicking outside
+        const modal = document.getElementById("contactModal");
+        if (modal) {
+          modal.addEventListener("click", function (e) {
+            if (e.target === modal) {
+              closeContactModal();
+            }
+          });
+        }
+
+        // THIS IS THE MISSING LINE - LOAD THE FARM DATA!
         loadFarmData();
       });
     </script>
+    <div id="contactModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Contact <span id="modalGrowerName">Farm</span></h2>
+        </div>
+        <div class="modal-body">
+          <div id="contactForm">
+            <div
+              class="error-message"
+              id="contactError"
+              style="display: none"
+            ></div>
+            <div
+              class="success-message"
+              id="contactSuccess"
+              style="display: none"
+            ></div>
+
+            <div class="form-group">
+              <label for="buyerName" class="required">Your Name</label>
+              <input
+                type="text"
+                id="buyerName"
+                placeholder="Enter your full name"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="buyerEmail" class="required">Email Address</label>
+              <input
+                type="email"
+                id="buyerEmail"
+                placeholder="your.email@example.com"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="buyerPhone" class="required">Phone Number</label>
+              <div class="modal-phone-input-container">
+                <select
+                  id="buyerCountryCode"
+                  name="countryCode"
+                  class="modal-country-code-select"
+                  required
+                >
+                  <option value="+60">🇲🇾 +60</option>
+                  <option value="+65">🇸🇬 +65</option>
+                  <option value="+62">🇮🇩 +62</option>
+                  <option value="+66">🇹🇭 +66</option>
+                  <option value="+84">🇻🇳 +84</option>
+                  <option value="+63">🇵🇭 +63</option>
+                  <option value="+673">🇧🇳 +673</option>
+                  <option value="+856">🇱🇦 +856</option>
+                  <option value="+855">🇰🇭 +855</option>
+                  <option value="+95">🇲🇲 +95</option>
+                  <option value="+1">🇺🇸 +1</option>
+                  <option value="+44">🇬🇧 +44</option>
+                  <option value="+61">🇦🇺 +61</option>
+                  <option value="+86">🇨🇳 +86</option>
+                  <option value="+81">🇯🇵 +81</option>
+                  <option value="+82">🇰🇷 +82</option>
+                  <option value="+91">🇮🇳 +91</option>
+                </select>
+                <input
+                  type="tel"
+                  id="buyerPhone"
+                  placeholder="123456789"
+                  pattern="[0-9]+"
+                  title="Please enter numbers only (without country code or + sign)"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="initialMessage">Your Message</label>
+              <textarea
+                id="initialMessage"
+                placeholder="Hi! I'm interested in your products..."
+                rows="3"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" onclick="closeContactModal()">
+            Cancel
+          </button>
+          <button
+            class="btn btn-primary"
+            onclick="startConversation()"
+            id="startChatBtn"
+          >
+            Send Message
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Interface -->
+    <div id="chatContainer" class="chat-container">
+      <div class="chat-header">
+        <div class="chat-title" id="chatTitle">Chat with Farm</div>
+        <button class="chat-close" onclick="closeChatInterface()">×</button>
+      </div>
+      <div class="chat-messages" id="chatMessages">
+        <div class="loading" id="chatLoading">Loading conversation...</div>
+      </div>
+      <div class="chat-input">
+        <input
+          type="text"
+          id="messageInput"
+          placeholder="Type your message..."
+          onkeypress="handleEnterKey(event)"
+        />
+        <button class="send-btn" onclick="sendMessage()">📤</button>
+      </div>
+    </div>
   </body>
 </html>
