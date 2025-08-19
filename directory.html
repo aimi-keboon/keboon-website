@@ -217,9 +217,10 @@
       }
 
       .form-section.active {
-        max-height: 2000px;
+        max-height: 300vh; /* 300% of viewport height - should cover any form size */
         padding: 40px 30px;
         overflow-y: auto;
+        margin-top: 100px;
       }
 
       .form-section h3 {
@@ -1038,7 +1039,9 @@
         }
 
         .form-section.active {
+          max-height: max-content;
           padding: 30px 20px;
+          margin-top: 80px !important; /* ADD THIS LINE */
         }
 
         .form-row {
