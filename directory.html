@@ -674,6 +674,26 @@
         font-weight: 600;
       }
 
+      .popup-profile-btn {
+        background: linear-gradient(135deg, #3f6b20 0%, #2d5016 100%);
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 8px;
+        width: 100%;
+      }
+
+      .popup-profile-btn:hover {
+        background: linear-gradient(135deg, #2d5016 0%, #1a3009 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(63, 107, 32, 0.4);
+      }
+
       /* Phone Input Styles */
       .phone-input-container {
         display: flex;
@@ -2048,9 +2068,22 @@
       let isEditMode = false;
       let currentEditData = null;
 
+      // Generate profile URL from farm name
+      function generateProfileUrl(farmName) {
+        // Convert farm name to URL-friendly format
+        const baseUrl = farmName
+          .toLowerCase()
+          .replace(/[^a-z0-9\s]/g, "") // Remove special characters
+          .replace(/\s+/g, "-") // Replace spaces with hyphens
+          .replace(/-+/g, "-") // Replace multiple hyphens with single
+          .replace(/^-|-$/g, ""); // Remove leading/trailing hyphens
+
+        return `profile.html?farm=${encodeURIComponent(baseUrl)}`;
+      }
+
       // Google Apps Script configuration - UPDATE THIS WITH YOUR ACTUAL URL
       const APPS_SCRIPT_URL =
-        "https://script.google.com/macros/s/AKfycbzJSL3MjjlaEV6B9UGx0iRYPOsRFjPp3yCUn4g6pi4-IPSwr-9k_iGzGtAjsv82vr6t/exec";
+        "https://script.google.com/macros/s/AKfycbyGYH3VVm0l3HglytNHawKYX-yEWU6Nsr1FfkbLHcQUnhsQswA0btgNWm2aWesGDCMw/exec";
 
       // Toggle form visibility
       function toggleForm(formId) {
@@ -2820,26 +2853,17 @@
               }
             }
 
+            // Generate profile URL from farm name
+            const profileUrl = generateProfileUrl(farmer.farmName);
+
             const popupContent = `
-              <div class="popup-farm-name">${farmer.farmName}</div>
-              <div>
-                  <span class="popup-category">${farmer.category}</span>
-                  <span class="popup-commercial">${farmer.commercial}</span>
-              </div>
-              <br>
-              <strong>Contact:</strong> ${farmer.contactName}<br>
-              📞 ${farmer.phone}<br>
-              ✉️ ${farmer.email}<br>
-              📍 ${farmer.address}
-              ${productsHtml}
-              ${websitesHtml}
-              <br><strong>Farm Size:</strong> ${farmer.farmSize}<br>
-              <strong>Visits:</strong> ${
-                farmer.visitsAllowed === "Yes"
-                  ? "✅ Visitors welcome"
-                  : "❌ Not open for visits"
-              }
-            `;
+            <div class="popup-farm-name">${farmer.farmName}</div>
+            ${productsHtml}
+            <br>
+            <button onclick="window.open('${profileUrl}', '_blank')" class="popup-profile-btn">
+              View Full Profile
+            </button>
+          `;
 
             marker.bindPopup(popupContent);
           }
