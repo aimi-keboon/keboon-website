@@ -865,8 +865,8 @@
         "https://script.google.com/macros/s/AKfycbxXSsGq5vCpJttfjbkC8rg6j4pYDO4Zbylx4jsByb9QYwH0gMdo5miFahxZWStM20P6/exec";
 
       function getFarmerFullPhoneNumber() {
-        const countryCode = document.getElementById("farmerCountryCode").value;
-        const phoneNumber = document.getElementById("farmerPhone").value.trim();
+        const countryCode = document.getElementById("buyerCountryCode").value; // ✅ Correct ID
+        const phoneNumber = document.getElementById("buyerPhone").value.trim(); // ✅ Correct ID
 
         // Remove any non-digit characters from phone number
         const cleanNumber = phoneNumber.replace(/\D/g, "");
@@ -1332,12 +1332,12 @@
               const countryCode = "+" + countryCodeMatch[1];
               const phoneNumber = phone.substring(countryCodeMatch[1].length);
 
-              document.getElementById("farmerCountryCode").value = countryCode;
-              document.getElementById("farmerPhone").value = phoneNumber;
+              document.getElementById("buyerCountryCode").value = countryCode; // ✅ Correct ID
+              document.getElementById("buyerPhone").value = phoneNumber; // ✅ Correct ID
             } else {
               // Default to Malaysia if no match
-              document.getElementById("farmerCountryCode").value = "+60";
-              document.getElementById("farmerPhone").value = phone;
+              document.getElementById("buyerCountryCode").value = "+60"; // ✅ Correct ID
+              document.getElementById("buyerPhone").value = phone; // ✅ Correct ID
             }
           }
 
@@ -1345,14 +1345,14 @@
           authenticateFarmer();
         } else {
           // Set default country code
-          document.getElementById("farmerCountryCode").value = "+60";
+          document.getElementById("buyerCountryCode").value = "+60"; // ✅ Correct ID
         }
 
         // Start conversation refresh
         startConversationRefresh();
 
         // Add input validation for phone number
-        const phoneInput = document.getElementById("farmerPhone");
+        const phoneInput = document.getElementById("buyerPhone"); // ✅ Correct ID
         if (phoneInput) {
           phoneInput.addEventListener("input", function (e) {
             // Remove any non-digit characters as user types
@@ -1365,12 +1365,12 @@
           .getElementById("farmerKeboonId")
           .addEventListener("keypress", function (e) {
             if (e.key === "Enter") {
-              document.getElementById("farmerPhone").focus();
+              document.getElementById("buyerPhone").focus(); // ✅ Correct ID
             }
           });
 
         document
-          .getElementById("farmerPhone")
+          .getElementById("buyerPhone") // ✅ Correct ID
           .addEventListener("keypress", function (e) {
             if (e.key === "Enter") {
               authenticateFarmer();
