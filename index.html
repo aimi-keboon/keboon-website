@@ -168,12 +168,24 @@
             display: inline-block;
             transition: all 0.3s ease;
             box-shadow: 0 10px 30px rgba(255, 224, 102, 0.3);
+            margin: 0.5rem;
         }
 
         .cta-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 40px rgba(255, 224, 102, 0.4);
             color: var(--text-dark);
+        }
+
+        .cta-button.secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cta-button.secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
         }
 
         /* Sections */
@@ -249,6 +261,62 @@
 
         .modern-card:hover .card-icon {
             transform: scale(1.1) rotate(10deg);
+        }
+
+        /* MVP Progress */
+        .mvp-progress {
+            background: var(--light-green);
+        }
+
+        .roadmap-item {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary-green);
+            position: relative;
+        }
+
+        .roadmap-item.current {
+            border-left-color: var(--accent-orange);
+            background: linear-gradient(135deg, #fff7e6 0%, #ffffff 100%);
+        }
+
+        .roadmap-item.future {
+            border-left-color: var(--text-light);
+            opacity: 0.7;
+        }
+
+        .roadmap-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-badge.live {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.current {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-badge.planned {
+            background: #e2e3e5;
+            color: #495057;
         }
 
         /* Problem/Solution alternating layout */
@@ -576,6 +644,9 @@
             .cta-button {
                 padding: 0.8rem 2rem;
                 font-size: 1rem;
+                margin: 0.25rem;
+                display: block;
+                text-align: center;
             }
             
             .hero {
@@ -585,6 +656,11 @@
             .navbar-nav .nav-link {
                 padding: 0.5rem 0;
                 margin: 0.2rem 0;
+            }
+
+            .roadmap-item {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
             }
         }
 
@@ -653,9 +729,9 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#mvp">Our Journey</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="https://keboon.net/directory">Keboon Directory</a></li>
-                    
                 </ul>
             </div>
         </div>
@@ -670,9 +746,20 @@
                     <div class="hero-text">
                         Connecting Neighbours, Sharing Freshness
                     </div>
-                    <a href="https://app.keboon.net/" target="_blank" class="cta-button">
-                        <i class="fas fa-rocket me-2"></i>Start Growing Together
-                    </a>
+                    <div class="mt-4">
+                        <a href="https://keboon.net/directory" target="_blank" class="cta-button">
+                            <i class="fas fa-map-marker-alt me-2"></i>Explore Directory
+                        </a>
+                        <a href="#mvp" class="cta-button secondary">
+                            <i class="fas fa-route me-2"></i>Our Journey
+                        </a>
+                    </div>
+                    <div class="mt-4">
+                        <small class="text-white-50">
+                            <i class="fas fa-seedling me-2"></i>
+                            Currently building our community through the Keboon Directory
+                        </small>
+                    </div>
                 </div>
             </div>
         </div>
@@ -683,8 +770,8 @@
         <div class="container">
             <div class="row justify-content-center text-center mb-5">
                 <div class="col-lg-8">
-                    <h2 class="section-title fade-in">Revolutionizing Local Food Systems</h2>
-                    <p class="section-subtitle fade-in">Through innovative technology and community connections</p>
+                    <h2 class="section-title fade-in">Building the Future of Local Food</h2>
+                    <p class="section-subtitle fade-in">Starting with community, scaling to revolution</p>
                 </div>
             </div>
             <div class="row align-items-center mb-5">
@@ -693,13 +780,20 @@
                         <div class="card-icon">
                             <i class="fas fa-seedling"></i>
                         </div>
-                        <h4 class="mb-3">What is Keboon?</h4>
-                        <p class="mb-3">Keboon is an innovative platform designed to transform local communities' interaction with their food systems. We connect home gardeners, urban farmers, and eco-conscious consumers in a vibrant marketplace.</p>
-                        <p>Our mission goes beyond just creating an app – we're cultivating a movement towards sustainable, community-centered food practices that reduce waste and strengthen neighborhood bonds.</p>
+                        <h4 class="mb-3">Our Vision: The Full Keboon Platform</h4>
+                        <p class="mb-3">Keboon will be a comprehensive marketplace connecting home gardeners, urban farmers, and eco-conscious consumers. Imagine a platform where your neighbor's surplus tomatoes are just a tap away, complete with AI-powered growing tips and community rewards.</p>
+                        <p><strong>But we're taking a strategic approach.</strong> Before building the full app, we're validating our market and building community trust through simpler, proven solutions.</p>
                     </div>
                 </div>
                 <div class="col-lg-6 fade-in-right">
-                    <img src="assets/img/keboon-concept.png" alt="Keboon Concept" class="img-fluid rounded-4 shadow-lg">
+                    <div class="modern-card">
+                        <div class="card-icon">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <h4 class="mb-3">Starting Here: Keboon Directory</h4>
+                        <p class="mb-3">Our current MVP is the <strong>Keboon Directory</strong> - a comprehensive database of local farms and producers. Think of it as the foundation of our ecosystem, helping consumers discover fresh, local produce sources.</p>
+                        <p>This directory validates our core hypothesis: people want to connect with local food sources. Every farmer we onboard and every consumer we connect teaches us valuable lessons for the full platform.</p>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -718,7 +812,110 @@
                             <i class="fas fa-bullseye"></i>
                         </div>
                         <h4>Our Mission</h4>
-                        <p>Creating an innovative platform that seamlessly connects local producers with consumers, promoting sustainable living and strengthening community bonds.</p>
+                        <p>Building step-by-step from community directory to full marketplace, validating each piece before creating the complete local food ecosystem.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MVP Journey Section -->
+    <section id="mvp" class="section mvp-progress">
+        <div class="container">
+            <div class="row justify-content-center text-center mb-5">
+                <div class="col-lg-8">
+                    <h2 class="section-title fade-in">Our Strategic Journey</h2>
+                    <p class="section-subtitle fade-in">Building trust and community before scaling to the full vision</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 mx-auto fade-in">
+                    <div class="roadmap-item">
+                        <span class="status-badge live">✓ LIVE</span>
+                        <h4><i class="fas fa-map-marker-alt text-success me-2"></i>Phase 1: Keboon Directory</h4>
+                        <p class="mb-3"><strong>What we're doing now:</strong> A comprehensive directory of local farms and producers with GPS mapping, contact details, product listings, and direct farmer profiles.</p>
+                        <ul class="mb-3">
+                            <li>Farm registration and management system</li>
+                            <li>Interactive map of local producers</li>
+                            <li>Product catalogs with pricing</li>
+                            <li>Direct contact facilitation</li>
+                            <li>Email notifications and updates</li>
+                        </ul>
+                        <p><strong>Why this first:</strong> Validates market demand, builds farmer network, establishes trust, and creates our foundational database.</p>
+                    </div>
+
+                    <div class="roadmap-item current">
+                        <span class="status-badge current">⚡ NEXT</span>
+                        <h4><i class="fas fa-shopping-cart text-warning me-2"></i>Phase 2: Basic Marketplace</h4>
+                        <p class="mb-3"><strong>Building on directory success:</strong> Add simple ordering and payment features to existing directory, enabling direct transactions.</p>
+                        <ul class="mb-3">
+                            <li>Online ordering system integration</li>
+                            <li>Basic payment processing</li>
+                            <li>Order management for farmers</li>
+                            <li>Customer review system</li>
+                            <li>Delivery coordination tools</li>
+                        </ul>
+                        <p><strong>Why this next:</strong> Proven farmer base + validated consumer demand = ready for transaction layer.</p>
+                    </div>
+
+                    <div class="roadmap-item future">
+                        <span class="status-badge planned">📋 PLANNED</span>
+                        <h4><i class="fas fa-users text-muted me-2"></i>Phase 3: Community Features</h4>
+                        <p class="mb-3"><strong>Expanding community:</strong> Add neighbor-to-neighbor sharing, community gardens, and local food groups.</p>
+                        <ul class="mb-3">
+                            <li>Home gardener profiles and surplus sharing</li>
+                            <li>Community garden coordination</li>
+                            <li>Local food group formation</li>
+                            <li>Bulk buying coordination</li>
+                            <li>Seasonal planning tools</li>
+                        </ul>
+                        <p><strong>Timeline:</strong> After marketplace stabilizes with commercial farmers.</p>
+                    </div>
+
+                    <div class="roadmap-item future">
+                        <span class="status-badge planned">🚀 FUTURE</span>
+                        <h4><i class="fas fa-brain text-muted me-2"></i>Phase 4: Full Platform Vision</h4>
+                        <p class="mb-3"><strong>The complete ecosystem:</strong> AI-powered features, advanced community tools, and comprehensive sustainability tracking.</p>
+                        <ul class="mb-3">
+                            <li>AI planting scheduler and grow recommendations</li>
+                            <li>Gamified rewards system</li>
+                            <li>Compost exchange marketplace</li>
+                            <li>Carbon footprint tracking</li>
+                            <li>Advanced community networking</li>
+                            <li>Mobile app with offline features</li>
+                        </ul>
+                        <p><strong>Timeline:</strong> After community adoption and proven economics.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-5">
+                <div class="col-lg-10 mx-auto text-center fade-in">
+                    <div class="modern-card">
+                        <h4 class="text-gradient mb-3">Why This Approach Works</h4>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="card-icon mx-auto">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <h5>Community First</h5>
+                                <p>Build trust and relationships before asking for transactions</p>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card-icon mx-auto">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h5>Validate & Learn</h5>
+                                <p>Each phase teaches us what users actually want</p>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card-icon mx-auto">
+                                    <i class="fas fa-puzzle-piece"></i>
+                                </div>
+                                <h5>Sustainable Growth</h5>
+                                <p>Build solid foundations before adding complexity</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -731,84 +928,107 @@
             <div class="row justify-content-center text-center mb-5">
                 <div class="col-lg-8">
                     <h2 class="section-title fade-in">The Challenge We're Solving</h2>
-                    <p class="section-subtitle fade-in">Addressing critical issues in our food systems</p>
+                    <p class="section-subtitle fade-in">Starting with discovery, scaling to full ecosystem</p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-6 fade-in-left">
-                    <h3 class="text-gradient mb-4">The Problems</h3>
+                    <h3 class="text-gradient mb-4">Current Problems</h3>
                     <div class="solution-card">
-                        <h5><i class="fas fa-trash-alt text-danger me-2"></i>Food Waste Crisis</h5>
-                        <p>Excess home-grown produce often goes to waste due to lack of efficient distribution channels.</p>
+                        <h5><i class="fas fa-search text-danger me-2"></i>Discovery Challenge</h5>
+                        <p>Consumers struggle to find local farms and fresh produce sources in their area.</p>
+                        <small class="text-success"><strong>✓ Solved by Keboon Directory</strong></small>
                     </div>
                     <div class="solution-card">
-                        <h5><i class="fas fa-share-alt text-warning me-2"></i>Inefficient Distribution</h5>
-                        <p>Limited networks and time constraints prevent effective surplus produce sharing.</p>
+                        <h5><i class="fas fa-phone text-warning me-2"></i>Connection Barriers</h5>
+                        <p>Farmers lack efficient ways to reach local customers and showcase their products.</p>
+                        <small class="text-success"><strong>✓ Solved by Keboon Directory</strong></small>
                     </div>
                     <div class="solution-card">
-                        <h5><i class="fas fa-users text-info me-2"></i>Disconnected Communities</h5>
-                        <p>Growing disconnect between local food producers and consumers.</p>
+                        <h5><i class="fas fa-trash-alt text-info me-2"></i>Future: Food Waste</h5>
+                        <p>Excess home-grown produce goes to waste due to lack of sharing networks.</p>
+                        <small class="text-muted"><strong>→ Phase 3: Community Features</strong></small>
                     </div>
                 </div>
                 <div class="col-lg-6 fade-in-right">
                     <h3 class="text-gradient mb-4">Our Solutions</h3>
                     <div class="solution-card">
-                        <h5><i class="fas fa-carrot text-success me-2"></i>For Consumers</h5>
-                        <p>Access to fresh, organic, nearby produce with complete transparency about food sources.</p>
+                        <h5><i class="fas fa-map-marked-alt text-success me-2"></i>Local Farm Discovery</h5>
+                        <p>Interactive map showing all local farms, their products, prices, and contact information.</p>
+                        <small class="text-success"><strong>✓ Live Now</strong></small>
                     </div>
                     <div class="solution-card">
-                        <h5><i class="fas fa-hand-holding-usd text-success me-2"></i>For Producers</h5>
-                        <p>Monetize surplus produce, reduce waste, and connect with local community.</p>
+                        <h5><i class="fas fa-store text-success me-2"></i>Farmer Showcase Platform</h5>
+                        <p>Professional profiles for farmers to display products, tell their story, and connect with customers.</p>
+                        <small class="text-success"><strong>✓ Live Now</strong></small>
                     </div>
                     <div class="solution-card">
-                        <h5><i class="fas fa-heart text-success me-2"></i>For Communities</h5>
-                        <p>Strengthen local economy and promote sustainable food networks.</p>
+                        <h5><i class="fas fa-shopping-cart text-warning me-2"></i>Coming: Direct Marketplace</h5>
+                        <p>Seamless ordering and payment system built on top of our proven directory.</p>
+                        <small class="text-warning"><strong>→ Phase 2: Basic Marketplace</strong></small>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
+    <!-- Current Features Section -->
     <section id="features" class="section features">
         <div class="container">
             <div class="row justify-content-center text-center mb-5">
                 <div class="col-lg-8">
-                    <h2 class="section-title text-white fade-in">Powerful Features</h2>
-                    <p class="section-subtitle text-white-50 fade-in">Empowering the local food ecosystem</p>
+                    <h2 class="section-title text-white fade-in">Keboon Directory Features</h2>
+                    <p class="section-subtitle text-white-50 fade-in">What's available right now</p>
                 </div>
             </div>
             <div class="feature-grid fade-in">
                 <div class="feature-card">
                     <div class="card-icon bg-glass">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h4>Interactive Farm Map</h4>
+                    <p>GPS-powered map showing all registered farms with filtering by location, products, and farm type.</p>
+                    <span class="badge bg-success mt-2">Live Now</span>
+                </div>
+                <div class="feature-card">
+                    <div class="card-icon bg-glass">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h4>Farmer Profiles</h4>
+                    <p>Detailed farm information including contact details, product listings with prices, and farm descriptions.</p>
+                    <span class="badge bg-success mt-2">Live Now</span>
+                </div>
+                <div class="feature-card">
+                    <div class="card-icon bg-glass">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h4>Product Catalogs</h4>
+                    <p>Seasonal availability, pricing information, and product descriptions for easy discovery.</p>
+                    <span class="badge bg-success mt-2">Live Now</span>
+                </div>
+                <div class="feature-card">
+                    <div class="card-icon bg-glass">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4>Mobile Responsive</h4>
+                    <p>Works perfectly on all devices - phone, tablet, or desktop for easy access anywhere.</p>
+                    <span class="badge bg-success mt-2">Live Now</span>
+                </div>
+                <div class="feature-card">
+                    <div class="card-icon bg-glass">
                         <i class="fas fa-shopping-cart"></i>
                     </div>
-                    <h4>Product Marketplace</h4>
-                    <p>Platform to sell surplus produce and buy fresh, locally-sourced products with geolocation-based connections.</p>
+                    <h4>Marketplace Integration</h4>
+                    <p>Simple ordering system and payment processing for direct farm-to-consumer sales.</p>
+                    <span class="badge bg-warning text-dark mt-2">Phase 2</span>
                 </div>
                 <div class="feature-card">
                     <div class="card-icon bg-glass">
                         <i class="fas fa-seedling"></i>
                     </div>
-                    <h4>AI Planting Scheduler</h4>
-                    <p>Monitor plant growth with ML & AI, receive intelligent reminders and tips for optimal farming practices.</p>
-                    <span class="badge bg-warning text-dark mt-2">Coming Soon</span>
-                </div>
-                <div class="feature-card">
-                    <div class="card-icon bg-glass">
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <h4>Rewards System</h4>
-                    <p>Earn points for transactions and community engagement, redeem for gardening supplies and tools.</p>
-                    <span class="badge bg-warning text-dark mt-2">Coming Soon</span>
-                </div>
-                <div class="feature-card">
-                    <div class="card-icon bg-glass">
-                        <i class="fas fa-recycle"></i>
-                    </div>
-                    <h4>Compost Exchange</h4>
-                    <p>Find and share compost materials, exchange garden waste, and trade composting supplies.</p>
-                    <span class="badge bg-warning text-dark mt-2">Coming Soon</span>
+                    <h4>AI Growing Assistant</h4>
+                    <p>Smart planting recommendations and growth monitoring with ML-powered insights.</p>
+                    <span class="badge bg-info mt-2">Phase 4</span>
                 </div>
             </div>
         </div>
@@ -820,7 +1040,7 @@
             <div class="row justify-content-center text-center mb-5">
                 <div class="col-lg-8">
                     <h2 class="section-title fade-in">Market Opportunity</h2>
-                    <p class="section-subtitle fade-in">Understanding our market segments</p>
+                    <p class="section-subtitle fade-in">Building from directory users to marketplace participants</p>
                 </div>
             </div>
             <div class="row align-items-center">
@@ -834,20 +1054,22 @@
                 <div class="col-lg-6 fade-in-right">
                     <div class="modern-card">
                         <h4><i class="fas fa-globe text-success me-2"></i>TAM - Total Available Market</h4>
-                        <p class="mb-4">Eco-conscious consumers, home gardeners, and urban farmers across Southeast Asia. <strong>RM 15 billion</strong> annual revenue potential.</p>
+                        <p class="mb-4">Eco-conscious consumers, farmers, and home gardeners across Southeast Asia. <strong>RM 15 billion</strong> annual revenue potential.</p>
                         
                         <h4><i class="fas fa-map-marker-alt text-success me-2"></i>SAM - Serviceable Available Market</h4>
-                        <p class="mb-4">Malaysian eco-conscious consumers and urban farmers. <strong>RM 500 million</strong> estimated annual revenue potential.</p>
+                        <p class="mb-4">Malaysian consumers seeking local produce and farmers needing better market access. <strong>RM 500 million</strong> estimated potential.</p>
                         
-                        <h4><i class="fas fa-bullseye text-success me-2"></i>SOM - Serviceable Obtainable Market</h4>
-                        <p>Initial target of <strong>1 million Malaysian consumers</strong> within first few years, aiming for <strong>RM 120 million</strong> annual revenue potential.</p>
+                        <h4><i class="fas fa-bullseye text-success me-2"></i>SOM - Current Focus</h4>
+                        <p class="mb-3">Starting with <strong>Selangor and KL farmers</strong> in our directory, then expanding marketplace features to proven user base.</p>
+                        <p><strong>Directory Goal:</strong> 1,000 farms by end of 2025<br>
+                        <strong>Marketplace Goal:</strong> RM 1 million GMV in first year</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SDGs Section -->
+    <!-- Impact Section -->
     <section class="section problem-solution">
         <div class="container">
             <div class="row justify-content-center text-center mb-5">
@@ -859,23 +1081,23 @@
             <div class="sdg-grid fade-in">
                 <div class="sdg-card">
                     <h5><i class="fas fa-utensils text-success me-2"></i>Zero Hunger</h5>
-                    <p>Promoting local food production, reducing waste, and improving access to fresh produce.</p>
+                    <p>Directory helps consumers find local food sources, while future features will reduce waste.</p>
                 </div>
                 <div class="sdg-card">
                     <h5><i class="fas fa-briefcase text-success me-2"></i>Economic Growth</h5>
-                    <p>Creating income opportunities for local producers from surplus produce.</p>
+                    <p>Giving farmers digital presence now, enabling direct sales and income growth in Phase 2.</p>
                 </div>
                 <div class="sdg-card">
                     <h5><i class="fas fa-city text-success me-2"></i>Sustainable Communities</h5>
-                    <p>Fostering local food networks and promoting sustainable urban farming practices.</p>
+                    <p>Building local food networks that will strengthen community bonds and reduce food miles.</p>
                 </div>
                 <div class="sdg-card">
                     <h5><i class="fas fa-shopping-basket text-success me-2"></i>Responsible Consumption</h5>
-                    <p>Reducing food waste and promoting sustainable consumption patterns.</p>
+                    <p>Promoting local sourcing now, with future features for waste reduction and sharing.</p>
                 </div>
                 <div class="sdg-card">
                     <h5><i class="fas fa-leaf text-success me-2"></i>Climate Action</h5>
-                    <p>Reducing food miles and promoting local, sustainable agriculture practices.</p>
+                    <p>Reducing food transportation through local connections, with carbon tracking in future phases.</p>
                 </div>
             </div>
         </div>
