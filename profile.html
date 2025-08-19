@@ -19,104 +19,109 @@
       }
 
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #1b5e3f 0%, #52ae77 100%);
-        min-height: 100vh;
-        padding: 20px;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        background: #fafafa;
+        color: #333;
+        line-height: 1.6;
       }
 
       .container {
-        max-width: 1200px;
+        max-width: 1100px;
         margin: 0 auto;
         background: white;
-        border-radius: 20px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
+        min-height: 100vh;
       }
 
       /* Header */
       .header {
-        background: linear-gradient(135deg, #2d5016 0%, #3f6b20 100%);
-        color: white;
-        padding: 30px 40px;
-        position: relative;
+        background: white;
+        padding: 24px 32px;
+        border-bottom: 1px solid #e5e5e5;
+      }
+
+      .header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+      }
+
+      .logo {
+        height: 48px;
+        width: auto;
       }
 
       .back-btn {
-        background: rgba(255, 255, 255, 0.2);
-        color: white;
-        padding: 10px 20px;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        border-radius: 25px;
+        color: #666;
         text-decoration: none;
-        font-weight: 600;
-        margin-bottom: 20px;
-        display: inline-block;
-        transition: all 0.3s ease;
+        font-size: 14px;
+        padding: 8px 16px;
+        border: 1px solid #e5e5e5;
+        border-radius: 6px;
+        transition: all 0.2s ease;
       }
 
       .back-btn:hover {
-        background: rgba(255, 255, 255, 0.3);
-        transform: translateY(-2px);
+        background: #f9f9f9;
         text-decoration: none;
-        color: white;
+        color: #333;
+      }
+
+      .farm-info {
+        text-align: left;
       }
 
       .farm-title {
-        font-size: 2.5rem;
-        margin-bottom: 10px;
-        font-weight: 300;
-        letter-spacing: 1px;
+        font-size: 2rem;
+        font-weight: 600;
+        color: #2d5016;
+        margin-bottom: 8px;
+        letter-spacing: -0.02em;
       }
 
       .farm-subtitle {
-        font-size: 1.2rem;
-        opacity: 0.9;
-        margin-bottom: 15px;
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 16px;
       }
 
       .farm-badges {
         display: flex;
-        gap: 15px;
+        gap: 8px;
         flex-wrap: wrap;
       }
 
       .badge {
-        background: rgba(255, 255, 255, 0.2);
-        padding: 8px 16px;
+        background: #f0f7ed;
+        color: #2d5016;
+        padding: 6px 12px;
         border-radius: 20px;
-        font-size: 0.9rem;
-        font-weight: 600;
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        font-size: 12px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
 
-      .badge.commercial {
-        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
-      }
-
-      .badge.visits-yes {
-        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-      }
-
-      .badge.visits-no {
-        background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+      .badge.primary {
+        background: #2d5016;
+        color: white;
       }
 
       /* Loading State */
       .loading-section {
-        padding: 60px 40px;
+        padding: 80px 32px;
         text-align: center;
-        color: #6c757d;
       }
 
       .loading-spinner {
-        width: 50px;
-        height: 50px;
-        border: 4px solid #e9ecef;
-        border-top: 4px solid #3f6b20;
+        width: 32px;
+        height: 32px;
+        border: 2px solid #f0f0f0;
+        border-top: 2px solid #2d5016;
         border-radius: 50%;
         animation: spin 1s linear infinite;
-        margin: 0 auto 20px;
+        margin: 0 auto 16px;
       }
 
       @keyframes spin {
@@ -128,43 +133,46 @@
         }
       }
 
-      /* Error State */
-      .error-section {
-        padding: 60px 40px;
-        text-align: center;
-        color: #dc3545;
+      .loading-text {
+        color: #666;
+        font-size: 14px;
       }
 
-      .error-icon {
-        font-size: 4rem;
-        margin-bottom: 20px;
+      /* Error State */
+      .error-section {
+        padding: 80px 32px;
+        text-align: center;
+        color: #dc3545;
       }
 
       /* Main Content */
       .main-content {
         display: none;
+        padding: 32px;
       }
 
-      .content-grid {
+      .content-wrapper {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0;
+        grid-template-columns: 1fr 400px;
+        gap: 48px;
       }
 
-      .left-column,
-      .right-column {
-        padding: 40px;
+      .main-column {
+        min-width: 0;
       }
 
-      .left-column {
-        background: #f8f9fa;
-        border-right: 2px solid #e9ecef;
+      .sidebar {
+        background: #fafafa;
+        padding: 24px;
+        border-radius: 8px;
+        height: fit-content;
+        position: sticky;
+        top: 24px;
       }
 
+      /* Sections */
       .section {
-        word-wrap: break-word; /* break long words */
-        overflow-wrap: break-word; /* modern syntax */
-        white-space: normal; /* allow multi-line wrapping */
+        margin-bottom: 48px;
       }
 
       .section:last-child {
@@ -172,57 +180,139 @@
       }
 
       .section-title {
-        color: #2d5016;
-        font-size: 1.4rem;
+        font-size: 18px;
         font-weight: 600;
-        margin-bottom: 15px;
+        color: #333;
+        margin-bottom: 16px;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
       }
 
-      .section-icon {
-        font-size: 1.5rem;
+      .section-title svg {
+        width: 20px;
+        height: 20px;
+        fill: #666;
       }
 
-      /* Contact Section */
+      .sidebar .section-title {
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+
+      /* Map */
+      .map-container {
+        height: 300px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #e5e5e5;
+      }
+
+      #farmMap {
+        height: 100%;
+        width: 100%;
+      }
+
+      /* Description */
+      .description-text {
+        font-size: 16px;
+        color: #555;
+        line-height: 1.7;
+      }
+
+      /* Products */
+      .products-grid {
+        display: grid;
+        gap: 12px;
+      }
+
+      .product-card {
+        padding: 16px;
+        border: 1px solid #e5e5e5;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+      }
+
+      .product-card:hover {
+        border-color: #2d5016;
+        transform: translateY(-1px);
+      }
+
+      .product-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 4px;
+      }
+
+      .product-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .product-price {
+        font-size: 14px;
+        font-weight: 600;
+        color: #2d5016;
+        white-space: nowrap;
+      }
+
+      .product-details {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        color: #666;
+      }
+
+      /* Contact */
+      .contact-grid {
+        display: grid;
+        gap: 16px;
+      }
+
       .contact-item {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         gap: 12px;
-        margin-bottom: 12px;
-        padding: 12px;
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        padding: 12px 0;
       }
 
       .contact-icon {
-        width: 40px;
-        height: 40px;
-        background: linear-gradient(135deg, #3f6b20 0%, #2d5016 100%);
-        color: white;
-        border-radius: 50%;
+        width: 20px;
+        height: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.1rem;
+        color: #666;
         flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .contact-icon svg {
+        width: 20px;
+        height: 20px;
+        fill: currentColor;
       }
 
       .contact-info {
         flex: 1;
+        min-width: 0;
       }
 
       .contact-label {
-        font-size: 0.85rem;
-        color: #6c757d;
+        font-size: 12px;
+        color: #666;
         margin-bottom: 2px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
 
       .contact-value {
-        font-weight: 600;
-        color: #2d5016;
+        font-size: 14px;
+        color: #333;
+        word-break: break-word;
       }
 
       .contact-value a {
@@ -234,278 +324,345 @@
         text-decoration: underline;
       }
 
-      /* Products Section */
-      .products-grid {
-        display: grid;
-        gap: 15px;
-      }
-
-      .product-card {
-        background: white;
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        border-left: 4px solid #3f6b20;
-        transition: all 0.3s ease;
-      }
-
-      .product-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-      }
-
-      .product-name {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: #2d5016;
-        margin-bottom: 8px;
-      }
-
-      .product-details {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 8px;
-      }
-
-      .product-price {
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: #28a745;
-      }
-
-      .product-unit {
-        font-size: 0.9rem;
-        color: #6c757d;
-      }
-
-      .product-season {
-        font-size: 0.9rem;
-        color: #6c757d;
-        background: #f8f9fa;
-        padding: 4px 8px;
-        border-radius: 6px;
-      }
-
-      /* Links Section */
-      .links-grid {
-        display: grid;
-        gap: 10px;
-      }
-
-      .link-item {
-        background: white;
-        padding: 15px;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-      }
-
-      .link-item:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-      }
-
-      .link-item a {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        text-decoration: none;
-        color: #2d5016;
-        font-weight: 600;
-      }
-
-      .link-icon {
-        width: 35px;
-        height: 35px;
-        background: linear-gradient(135deg, #3f6b20 0%, #2d5016 100%);
-        color: white;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1rem;
-      }
-
-      .link-text {
-        flex: 1;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      /* Map Section */
-      .map-container {
-        height: 400px;
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        border: 3px solid #3f6b20;
-      }
-
-      #farmMap {
-        height: 100%;
-        width: 100%;
-      }
-
-      /* Description Section */
-      .description-text {
-        background: white;
-        padding: 25px;
-        border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        line-height: 1.6;
-        color: #495057;
-        border-left: 4px solid #3f6b20;
-      }
-
       /* Farm Details */
-      .farm-details {
-        background: white;
-        padding: 25px;
-        border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      .details-grid {
+        display: grid;
+        gap: 12px;
       }
 
-      .detail-item {
+      .detail-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 12px 0;
-        border-bottom: 1px solid #e9ecef;
+        padding: 8px 0;
+        border-bottom: 1px solid #f0f0f0;
       }
 
-      .detail-item:last-child {
+      .detail-row:last-child {
         border-bottom: none;
       }
 
       .detail-label {
-        font-weight: 600;
-        color: #6c757d;
+        font-size: 12px;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
 
       .detail-value {
-        font-weight: 600;
-        color: #2d5016;
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
         text-align: right;
       }
 
-      .keboon-id {
-        background: linear-gradient(135deg, #3f6b20 0%, #2d5016 100%);
+      /* Links */
+      .links-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .link-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        background: #2d5016;
         color: white;
-        padding: 6px 12px;
-        border-radius: 15px;
-        font-size: 0.9rem;
-        letter-spacing: 1px;
+        border: none;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(45, 80, 22, 0.2);
+      }
+
+      .link-item:hover {
+        background: #234012;
+        text-decoration: none;
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(45, 80, 22, 0.3);
+      }
+
+      .link-icon {
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+
+      .link-icon svg {
+        width: 18px;
+        height: 18px;
+        fill: currentColor;
+      }
+
+      .link-text {
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       /* Footer */
       .footer {
-        background: linear-gradient(135deg, #2d5016 0%, #3f6b20 100%);
+        background: #2d5016;
         color: white;
-        padding: 30px 40px;
+        padding: 24px 32px;
         text-align: center;
       }
 
       .footer-content {
-        max-width: 600px;
+        max-width: 500px;
         margin: 0 auto;
       }
 
       .footer p {
-        margin-bottom: 25px;
-        font-size: 1.1rem;
-        opacity: 0.95;
-        line-height: 1.5;
+        margin-bottom: 16px;
+        font-size: 14px;
+        opacity: 0.9;
       }
 
       .footer-btn {
-        background: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.1);
         color: white;
-        padding: 12px 25px;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        border-radius: 25px;
+        padding: 8px 16px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
         text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
+        font-size: 14px;
+        transition: all 0.2s ease;
       }
 
       .footer-btn:hover {
-        background: rgba(255, 255, 255, 0.3);
-        transform: translateY(-2px);
+        background: rgba(255, 255, 255, 0.2);
         text-decoration: none;
         color: white;
       }
 
       /* Responsive Design */
       @media (max-width: 768px) {
-        body {
-          padding: 10px;
+        .header {
+          padding: 16px 20px;
         }
 
-        .header {
-          padding: 20px 25px;
+        .header-top {
+          flex-direction: column;
+          gap: 12px;
+          align-items: flex-start;
+        }
+
+        .logo {
+          height: 36px;
         }
 
         .farm-title {
-          font-size: 2rem;
+          font-size: 1.5rem;
+          line-height: 1.3;
         }
 
-        .content-grid {
+        .farm-subtitle {
+          font-size: 14px;
+          margin-bottom: 12px;
+        }
+
+        .main-content {
+          padding: 16px;
+        }
+
+        .content-wrapper {
           grid-template-columns: 1fr;
+          gap: 20px;
+          display: flex;
+          flex-direction: column;
         }
 
-        .left-column,
-        .right-column {
-          padding: 25px;
+        .main-column {
+          display: flex;
+          flex-direction: column;
         }
 
-        .left-column {
-          border-right: none;
-          border-bottom: 2px solid #e9ecef;
+        .sidebar {
+          position: static;
+          background: white;
+          padding: 0;
+          border-radius: 0;
+          display: flex;
+          flex-direction: column;
         }
 
         .map-container {
-          height: 300px;
+          height: 220px;
         }
 
-        .farm-badges {
-          justify-content: center;
-        }
-
-        .contact-item {
-          padding: 10px;
-        }
-
-        .contact-icon {
-          width: 35px;
-          height: 35px;
-          font-size: 1rem;
+        .section {
+          margin-bottom: 24px;
         }
 
         .section-title {
-          font-size: 1.2rem;
+          font-size: 16px;
+          margin-bottom: 12px;
         }
 
-        .footer {
-          padding: 25px 20px;
+        .sidebar .section-title {
+          font-size: 16px;
+        }
+
+        /* Mobile section reordering */
+        .main-column .section:nth-child(1) {
+          order: 1;
+        } /* Location */
+        .main-column .section:nth-child(2) {
+          order: 2;
+        } /* About */
+        .main-column .section:nth-child(3) {
+          order: 3;
+        } /* Products */
+        .sidebar .section:nth-child(1) {
+          order: 4;
+        } /* Contact */
+        .sidebar .section:nth-child(2) {
+          order: 5;
+        } /* Details */
+        .sidebar .section:nth-child(3) {
+          order: 6;
+        } /* Links */
+
+        /* Mobile centered contact */
+        .contact-grid {
+          gap: 12px;
+          text-align: center;
+        }
+
+        .contact-item {
+          padding: 8px 0;
+          justify-content: center;
+          text-align: center;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .contact-icon {
+          width: 18px;
+          height: 18px;
+          margin-bottom: 4px;
+        }
+
+        .contact-info {
+          text-align: center;
+        }
+
+        /* Compact products */
+        .product-card {
+          padding: 12px;
+        }
+
+        .product-name {
+          font-size: 13px;
+        }
+
+        .product-price {
+          font-size: 13px;
+        }
+
+        /* Better button styling for mobile */
+        .links-list {
+          gap: 10px;
+        }
+
+        .link-item {
+          padding: 14px 16px;
+          font-size: 15px;
+          border-radius: 10px;
+        }
+
+        .link-text {
+          font-weight: 500;
+        }
+
+        /* Compact details */
+        .details-grid {
+          gap: 8px;
+        }
+
+        .detail-row {
+          padding: 6px 0;
+        }
+
+        .detail-label {
+          font-size: 11px;
+        }
+
+        .detail-value {
+          font-size: 13px;
         }
       }
 
       @media (max-width: 480px) {
+        .header {
+          padding: 12px 16px;
+        }
+
+        .main-content {
+          padding: 12px;
+        }
+
         .farm-title {
-          font-size: 1.8rem;
+          font-size: 1.3rem;
+        }
+
+        .farm-subtitle {
+          font-size: 13px;
+        }
+
+        .content-wrapper {
+          gap: 16px;
         }
 
         .section {
-          margin-bottom: 30px;
-          max-width: 70%;
+          margin-bottom: 20px;
         }
 
-        .left-column,
-        .right-column {
-          padding: 20px;
+        .map-container {
+          height: 200px;
         }
+
+        .description-text {
+          font-size: 15px;
+        }
+
+        .badge {
+          padding: 4px 8px;
+          font-size: 11px;
+        }
+
+        .link-item {
+          padding: 12px 14px;
+          font-size: 14px;
+        }
+
+        .contact-value {
+          font-size: 13px;
+        }
+
+        .contact-label {
+          font-size: 11px;
+        }
+      }
+
+      /* Placeholder for missing logo */
+      .logo-placeholder {
+        width: 120px;
+        height: 48px;
+        background: #f0f7ed;
+        border: 2px dashed #2d5016;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        color: #2d5016;
+        text-align: center;
       }
     </style>
   </head>
@@ -513,26 +670,41 @@
     <div class="container">
       <!-- Header -->
       <div class="header">
-        <a href="directory.html" class="back-btn">← Back to Directory</a>
-        <div class="farm-title" id="farmTitle">Loading...</div>
-        <div class="farm-subtitle" id="farmSubtitle">
-          Loading farm information...
+        <div class="header-top">
+          <img
+            src="assets/img/keboon-writing.png"
+            alt="Keboon Directory"
+            class="logo"
+          />
+          <img
+            src="assets/img/keboon-logo-white.png"
+            alt="Keboon Directory"
+            class="logo"
+          />
+
+          <a href="directory.html" class="back-btn">← Back to Directory</a>
         </div>
-        <div class="farm-badges" id="farmBadges">
-          <!-- Badges will be populated by JavaScript -->
+
+        <div class="farm-info">
+          <div class="farm-title" id="farmTitle">Loading...</div>
+          <div class="farm-subtitle" id="farmSubtitle">
+            Loading farm information...
+          </div>
+          <div class="farm-badges" id="farmBadges">
+            <!-- Badges will be populated by JavaScript -->
+          </div>
         </div>
       </div>
 
       <!-- Loading Section -->
       <div class="loading-section" id="loadingSection">
         <div class="loading-spinner"></div>
-        <h3>Loading Farm Profile...</h3>
-        <p>Please wait while we fetch the farm information.</p>
+        <div class="loading-text">Loading Farm Profile...</div>
       </div>
 
       <!-- Error Section -->
       <div class="error-section" id="errorSection" style="display: none">
-        <div class="error-icon">⚠️</div>
+        <div style="font-size: 2rem; margin-bottom: 16px">⚠️</div>
         <h3>Farm Not Found</h3>
         <p id="errorMessage">The requested farm profile could not be found.</p>
         <br />
@@ -541,79 +713,57 @@
 
       <!-- Main Content -->
       <div class="main-content" id="mainContent">
-        <div class="content-grid">
-          <!-- Left Column -->
-          <div class="left-column">
-            <!-- Contact Information -->
-            <div class="section">
-              <div class="section-title">
-                <span class="section-icon">📞</span>
-                Contact Information
-              </div>
-              <div id="contactInfo">
-                <!-- Contact items will be populated by JavaScript -->
-              </div>
-            </div>
-
-            <!-- Products -->
-            <div class="section">
-              <div class="section-title">
-                <span class="section-icon">🌱</span>
-                Products & Pricing
-              </div>
-              <div class="products-grid" id="productsGrid">
-                <!-- Products will be populated by JavaScript -->
-              </div>
-            </div>
-
-            <!-- Online Presence -->
-            <div class="section" id="linksSection">
-              <div class="section-title">
-                <span class="section-icon">🔗</span>
-                Find Us Online
-              </div>
-              <div
-                class="links-grid"
-                id="linksGrid"
-                style="max-height: 150px; overflow-y:hidden"
-              >
-                <!-- Links will be populated by JavaScript -->
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Column -->
-          <div class="right-column">
+        <div class="content-wrapper">
+          <!-- Main Column -->
+          <div class="main-column">
             <!-- Farm Location -->
             <div class="section">
-              <div class="section-title">
-                <span class="section-icon">📍</span>
-                Farm Location
-              </div>
+              <div class="section-title">Location</div>
               <div class="map-container">
                 <div id="farmMap"></div>
               </div>
             </div>
 
+            <!-- Description -->
+            <div class="section">
+              <div class="section-title">About</div>
+              <div class="description-text" id="farmDescription">
+                <!-- Description will be populated by JavaScript -->
+              </div>
+            </div>
+
+            <!-- Products -->
+            <div class="section">
+              <div class="section-title">Products</div>
+              <div class="products-grid" id="productsGrid">
+                <!-- Products will be populated by JavaScript -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <div class="sidebar">
+            <!-- Contact Information -->
+            <div class="section">
+              <div class="section-title">Contact</div>
+              <div class="contact-grid" id="contactInfo">
+                <!-- Contact items will be populated by JavaScript -->
+              </div>
+            </div>
+
             <!-- Farm Details -->
             <div class="section">
-              <div class="section-title">
-                <span class="section-icon">🏡</span>
-                Farm Details
-              </div>
-              <div class="farm-details" id="farmDetails">
+              <div class="section-title">Details</div>
+              <div class="details-grid" id="farmDetails">
                 <!-- Farm details will be populated by JavaScript -->
               </div>
             </div>
 
-            <!-- Description -->
-            <div class="section">
-              <div class="section-title">
-                <span class="section-icon">📝</span>
-                About This Farm
-              </div>
-              <div class="description-text" id="farmDescription">
-                <!-- Description will be populated by JavaScript -->
+            <!-- Online Presence -->
+            <div class="section" id="linksSection">
+              <div class="section-title">Links</div>
+              <div class="links-list" id="linksGrid">
+                <!-- Links will be populated by JavaScript -->
               </div>
             </div>
           </div>
@@ -624,12 +774,11 @@
       <div class="footer">
         <div class="footer-content">
           <p>
-            Keboon Directory is part of the Keboon ecosystem - empowering
-            sustainable agriculture and connecting communities with local
-            farmers.
+            Connecting communities with sustainable local agriculture through
+            the Keboon ecosystem.
           </p>
           <a href="https://keboon.net" target="_blank" class="footer-btn">
-            Visit Keboon.net for More Info
+            Visit Keboon.net
           </a>
         </div>
       </div>
@@ -683,7 +832,7 @@
             // Initialize map after content is fully shown
             setTimeout(() => {
               initializeMap(result.farmer);
-            }, 500);
+            }, 100);
           } else {
             throw new Error(result.error || "Farm not found");
           }
@@ -707,9 +856,9 @@
         // Badges
         const badgesContainer = document.getElementById("farmBadges");
         badgesContainer.innerHTML = `
-                <span class="badge">${farmer.category}</span>
-                <span class="badge commercial">${farmer.commercial}</span>
-            `;
+          <span class="badge primary">${farmer.category}</span>
+          <span class="badge">${farmer.commercial}</span>
+        `;
 
         // Contact Information
         populateContactInfo(farmer);
@@ -734,25 +883,33 @@
 
         const contactItems = [
           {
-            icon: "👤",
-            label: "Contact Person",
+            icon: `<svg viewBox="0 0 24 24" fill="currentColor">
+                     <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                   </svg>`,
+            label: "Contact",
             value: farmer.contactName,
             href: null,
           },
           {
-            icon: "📞",
+            icon: `<svg viewBox="0 0 24 24" fill="currentColor">
+                     <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                   </svg>`,
             label: "Phone",
             value: farmer.phone,
             href: `tel:${farmer.phone}`,
           },
           {
-            icon: "✉️",
+            icon: `<svg viewBox="0 0 24 24" fill="currentColor">
+                     <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                   </svg>`,
             label: "Email",
             value: farmer.email,
             href: `mailto:${farmer.email}`,
           },
           {
-            icon: "📍",
+            icon: `<svg viewBox="0 0 24 24" fill="currentColor">
+                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                   </svg>`,
             label: "Address",
             value: farmer.address,
             href: null,
@@ -760,21 +917,22 @@
         ];
 
         contactContainer.innerHTML = contactItems
+          .filter((item) => item.value)
           .map(
             (item) => `
-                <div class="contact-item">
-                    <div class="contact-icon">${item.icon}</div>
-                    <div class="contact-info">
-                        <div class="contact-label">${item.label}</div>
-                        <div class="contact-value">
-                            ${
-                              item.href
-                                ? `<a href="${item.href}">${item.value}</a>`
-                                : item.value
-                            }
-                        </div>
-                    </div>
+              <div class="contact-item">
+                <div class="contact-icon">${item.icon}</div>
+                <div class="contact-info">
+                  <div class="contact-label">${item.label}</div>
+                  <div class="contact-value">
+                    ${
+                      item.href
+                        ? `<a href="${item.href}">${item.value}</a>`
+                        : item.value
+                    }
+                  </div>
                 </div>
+              </div>
             `
           )
           .join("");
@@ -801,23 +959,23 @@
           productsContainer.innerHTML = products
             .map(
               (product) => `
-                    <div class="product-card">
-                        <div class="product-name">${product.name}</div>
-                        <div class="product-details">
-                            <div class="product-price">RM${parseFloat(
-                              product.price
-                            ).toFixed(2)} <span class="product-unit">per ${
-                product.unit
-              }</span></div>
-                            <div class="product-season">${product.season}</div>
-                        </div>
-                    </div>
-                `
+                <div class="product-card">
+                  <div class="product-header">
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-price">RM${parseFloat(
+                      product.price
+                    ).toFixed(2)}/${product.unit}</div>
+                  </div>
+                  <div class="product-details">
+                    <span>Season: ${product.season}</span>
+                  </div>
+                </div>
+              `
             )
             .join("");
         } else {
           productsContainer.innerHTML =
-            '<p style="text-align: center; color: #6c757d; padding: 20px;">No products listed</p>';
+            '<p style="text-align: center; color: #666; padding: 20px;">No products listed</p>';
         }
       }
 
@@ -842,18 +1000,15 @@
         if (websites && websites.length > 0) {
           linksContainer.innerHTML = websites
             .map((url) => {
-              const displayUrl =
-                url.length > 40 ? url.substring(0, 40) + "..." : url;
+              const displayUrl = getDomainName(url);
               const icon = getUrlIcon(url);
 
               return `
-                        <div class="link-item">
-                            <a href="${url}" target="_blank" rel="noopener noreferrer">
-                                <div class="link-icon">${icon}</div>
-                                <div class="link-text">${displayUrl}</div>
-                            </a>
-                        </div>
-                    `;
+                <a href="${url}" target="_blank" rel="noopener noreferrer" class="link-item">
+                  <div class="link-icon">${icon}</div>
+                  <div class="link-text">${displayUrl}</div>
+                </a>
+              `;
             })
             .join("");
           linksSection.style.display = "block";
@@ -862,19 +1017,66 @@
         }
       }
 
-      // Get appropriate icon for URL
+      // Get domain name from URL
+      function getDomainName(url) {
+        try {
+          const domain = new URL(url).hostname;
+          return domain.replace("www.", "");
+        } catch (e) {
+          return url.length > 25 ? url.substring(0, 25) + "..." : url;
+        }
+      }
+
+      // Get appropriate SVG icon for URL
       function getUrlIcon(url) {
         const lowerUrl = url.toLowerCase();
-        if (lowerUrl.includes("facebook")) return "📘";
-        if (lowerUrl.includes("instagram")) return "📷";
-        if (lowerUrl.includes("twitter") || lowerUrl.includes("x.com"))
-          return "🐦";
-        if (lowerUrl.includes("whatsapp") || lowerUrl.includes("wa.me"))
-          return "💬";
-        if (lowerUrl.includes("telegram")) return "✈️";
-        if (lowerUrl.includes("youtube")) return "📺";
-        if (lowerUrl.includes("tiktok")) return "🎵";
-        return "🔗";
+
+        if (lowerUrl.includes("facebook")) {
+          return `<svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>`;
+        }
+
+        if (lowerUrl.includes("instagram")) {
+          return `<svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>`;
+        }
+
+        if (lowerUrl.includes("twitter") || lowerUrl.includes("x.com")) {
+          return `<svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>`;
+        }
+
+        if (lowerUrl.includes("whatsapp") || lowerUrl.includes("wa.me")) {
+          return `<svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488"/>
+                  </svg>`;
+        }
+
+        if (lowerUrl.includes("telegram")) {
+          return `<svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                  </svg>`;
+        }
+
+        if (lowerUrl.includes("youtube")) {
+          return `<svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>`;
+        }
+
+        if (lowerUrl.includes("tiktok")) {
+          return `<svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                  </svg>`;
+        }
+
+        // Default link icon
+        return `<svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H6.9C4.29 7 2.1 9.29 2.1 12s2.19 5 4.8 5H11v-1.9H6.9c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9.1-6H13v1.9h4.1c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1H13V17h4.1c2.61 0 4.8-2.29 4.8-5s-2.19-5-4.8-5z"/>
+                </svg>`;
       }
 
       // Populate farm details
@@ -882,26 +1084,25 @@
         const detailsContainer = document.getElementById("farmDetails");
 
         detailsContainer.innerHTML = `
-                
-                <div class="detail-item">
-                    <span class="detail-label">Farm Size</span>
-                    <span class="detail-value">${farmer.farmSize}</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Category</span>
-                    <span class="detail-value">${farmer.category}</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Commercial Status</span>
-                    <span class="detail-value">${farmer.commercial}</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Visits Allowed</span>
-                    <span class="detail-value">${
-                      farmer.visitsAllowed === "Yes" ? "✅ Yes" : "❌ No"
-                    }</span>
-                </div>
-            `;
+          <div class="detail-row">
+            <span class="detail-label">Size</span>
+            <span class="detail-value">${farmer.farmSize}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Category</span>
+            <span class="detail-value">${farmer.category}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Commercial</span>
+            <span class="detail-value">${farmer.commercial}</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Visits</span>
+            <span class="detail-value">${
+              farmer.visitsAllowed === "Yes" ? "✅" : "❌"
+            }</span>
+          </div>
+        `;
       }
 
       // Initialize map
@@ -918,30 +1119,30 @@
           maxZoom: 18,
         }).addTo(farmMap);
 
-        // Add farm marker
-        const farmMarker = L.marker(farmLocation, {
+        // Add farm marker with custom green SVG icon
+        const farmMarker = L.marker([farmer.latitude, farmer.longitude], {
           icon: L.icon({
             iconUrl:
               "data:image/svg+xml;charset=UTF-8," +
               encodeURIComponent(`
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3f6b20" width="40" height="40">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
-                    `),
-            iconSize: [40, 40],
-            iconAnchor: [20, 40],
-            popupAnchor: [0, -40],
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#3f6b20" width="30" height="30">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                </svg>
+              `),
+            iconSize: [30, 30],
+            iconAnchor: [15, 30],
+            popupAnchor: [0, -30],
           }),
         }).addTo(farmMap);
 
         farmMarker
           .bindPopup(
             `
-                <div style="text-align: center; min-width: 200px;">
-                    <strong style="font-size: 1.1rem; color: #2d5016;">${farmer.farmName}</strong><br>
-                    <span style="color: #6c757d;">${farmer.address}</span>
-                </div>
-            `
+            <div style="text-align: center; min-width: 150px; font-size: 14px;">
+              <strong style="color: #2d5016;">${farmer.farmName}</strong><br>
+              <span style="color: #666;">${farmer.address}</span>
+            </div>
+          `
           )
           .openPopup();
       }
