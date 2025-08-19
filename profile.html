@@ -162,7 +162,9 @@
       }
 
       .section {
-        margin-bottom: 40px;
+        word-wrap: break-word; /* break long words */
+        overflow-wrap: break-word; /* modern syntax */
+        white-space: normal; /* allow multi-line wrapping */
       }
 
       .section:last-child {
@@ -497,6 +499,7 @@
 
         .section {
           margin-bottom: 30px;
+          max-width: 70%;
         }
 
         .left-column,
@@ -569,7 +572,11 @@
                 <span class="section-icon">🔗</span>
                 Find Us Online
               </div>
-              <div class="links-grid" id="linksGrid">
+              <div
+                class="links-grid"
+                id="linksGrid"
+                style="max-height: 150px; overflow-y:hidden"
+              >
                 <!-- Links will be populated by JavaScript -->
               </div>
             </div>
@@ -702,15 +709,6 @@
         badgesContainer.innerHTML = `
                 <span class="badge">${farmer.category}</span>
                 <span class="badge commercial">${farmer.commercial}</span>
-                <span class="badge ${
-                  farmer.visitsAllowed === "Yes" ? "visits-yes" : "visits-no"
-                }">
-                    ${
-                      farmer.visitsAllowed === "Yes"
-                        ? "✅ Visits Welcome"
-                        : "❌ No Visits"
-                    }
-                </span>
             `;
 
         // Contact Information
@@ -884,12 +882,7 @@
         const detailsContainer = document.getElementById("farmDetails");
 
         detailsContainer.innerHTML = `
-                <div class="detail-item">
-                    <span class="detail-label">Keboon ID</span>
-                    <span class="detail-value"><span class="keboon-id">${
-                      farmer.keboonId
-                    }</span></span>
-                </div>
+                
                 <div class="detail-item">
                     <span class="detail-label">Farm Size</span>
                     <span class="detail-value">${farmer.farmSize}</span>
@@ -907,12 +900,6 @@
                     <span class="detail-value">${
                       farmer.visitsAllowed === "Yes" ? "✅ Yes" : "❌ No"
                     }</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Coordinates</span>
-                    <span class="detail-value">${farmer.latitude.toFixed(
-                      6
-                    )}, ${farmer.longitude.toFixed(6)}</span>
                 </div>
             `;
       }
