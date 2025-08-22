@@ -7,17 +7,19 @@
 
     <style>
       * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
       body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #1b5e3f 0%, #52ae77 100%);
-        min-height: 100vh;
-        padding: 20px;
-      }
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1b5e3f 0%, #52ae77 100%);
+  min-height: 110vh;
+  padding: 20px;
+  margin: 0;
+  box-sizing: border-box;
+}
 
       .container {
         max-width: 1400px;
@@ -51,6 +53,12 @@
         font-size: 1rem;
       }
 
+      .header-actions {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+
       .back-btn {
         background: rgba(255, 255, 255, 0.2);
         color: white;
@@ -60,6 +68,9 @@
         cursor: pointer;
         text-decoration: none;
         transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
 
       .back-btn:hover {
@@ -68,111 +79,81 @@
         color: white;
       }
 
+      .mobile-back-btn {
+        display: none;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .logo {
+  height: 40px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  margin-right: 15px;
+}
+
+.header-info h1 {
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+
+.header-info p {
+  opacity: 0.9;
+  font-size: 1rem;
+}
+
+      /* Loading Section */
+      .loading-section {
+        padding: 80px 40px;
+        text-align: center;
+      }
+
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid #f0f0f0;
+        border-top: 3px solid #3f6b20;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      /* Error Section */
+      .error-section {
+        padding: 80px 40px;
+        text-align: center;
+        color: #dc3545;
+      }
+
       /* Main Content */
       .main-content {
-        flex: 1;
-        display: flex;
-        height: calc(100vh - 160px);
-      }
-
-      /* Login Section */
-      .login-section {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 60px 40px;
-        text-align: center;
-        background: #f8f9fa;
-        flex: 1;
-      }
-
-      .login-form {
-        background: white;
-        padding: 40px;
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        max-width: 400px;
-        width: 100%;
-      }
-
-      .login-form h2 {
-        color: #2d5016;
-        margin-bottom: 20px;
-        font-size: 1.8rem;
-      }
-
-      .login-form p {
-        color: #6c757d;
-        margin-bottom: 30px;
-        line-height: 1.5;
-      }
-
-      .form-group {
-        margin-bottom: 20px;
-        text-align: left;
-      }
-
-      .form-group label {
-        display: block;
-        font-weight: 600;
-        color: #2d5016;
-        margin-bottom: 8px;
-      }
-
-      .form-group input {
-        width: 100%;
-        padding: 12px 16px;
-        border: 2px solid #e9ecef;
-        border-radius: 10px;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-      }
-
-      .form-group input:focus {
-        outline: none;
-        border-color: #3f6b20;
-        box-shadow: 0 0 0 3px rgba(63, 107, 32, 0.1);
-      }
-
-      .login-btn {
-        background: #3f6b20;
-        color: white;
-        padding: 12px 30px;
-        border: none;
-        border-radius: 25px;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        width: 100%;
-      }
-
-      .login-btn:hover {
-        background: #2d5016;
-        transform: translateY(-2px);
-      }
-
-      .login-btn:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-        transform: none;
-      }
-
-      /* Dashboard Content */
-      .dashboard-content {
         display: none;
         flex: 1;
       }
 
       /* Sidebar */
-      .sidebar {
-        width: 350px;
-        background: #f8f9fa;
-        border-right: 2px solid #e9ecef;
-        display: flex;
-        flex-direction: column;
-      }
+     .sidebar {
+  width: 350px;
+  background: #f8f9fa;
+  border-right: 2px solid #e9ecef;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 200px); /* Make it smaller - adjust this value */
+  max-height: calc(100vh - 200px); /* Add max-height constraint */
+  overflow: hidden;
+}
 
       .sidebar-header {
         padding: 20px;
@@ -181,8 +162,8 @@
       }
 
       .farmer-info {
-        text-align: center;
-      }
+  display: none;
+}
 
       .farmer-name {
         font-size: 1.3rem;
@@ -197,10 +178,12 @@
       }
 
       .conversations-list {
-        flex: 1;
-        overflow-y: auto;
-        padding: 10px;
-      }
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  min-height: 0; /* Add this - allows flex item to shrink */
+  max-height: 100%; /* Add this */
+}
 
       .conversation-item {
         background: white;
@@ -262,15 +245,23 @@
         padding: 2px 8px;
         border-radius: 10px;
         margin-left: 10px;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.6; }
+        100% { opacity: 1; }
       }
 
       /* Chat Area */
       .chat-area {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        background: white;
-      }
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  min-height: 0; /* 👈 critical */
+}
 
       .chat-placeholder {
         display: flex;
@@ -294,17 +285,22 @@
         font-size: 1.5rem;
       }
 
-      .chat-content {
-        display: none;
-        flex: 1;
-        flex-direction: column;
-      }
+     .chat-content {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+  height: 100vh; /* Use viewport height instead of percentage */
+  max-height: calc(100vh - 200px); /* Account for header space */
+  overflow: hidden;
+}
 
       .chat-header {
-        padding: 20px;
-        border-bottom: 2px solid #e9ecef;
-        background: #f8f9fa;
-      }
+  padding: 20px;
+  border-bottom: 2px solid #e9ecef;
+  background: #f8f9fa;
+  position: relative;
+  flex-shrink: 0; /* Prevent header from shrinking */
+}
 
       .chat-buyer-info {
         display: flex;
@@ -352,11 +348,13 @@
       }
 
       .chat-messages {
-        flex: 1;
-        overflow-y: auto;
-        padding: 20px;
-        background: #f8f9fa;
-      }
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  background: #f8f9fa;
+  min-height: 0; /* This is the key - allows flex item to shrink below content size */
+  max-height: 100%; /* Ensure it doesn't exceed container */
+}
 
       .message {
         margin-bottom: 15px;
@@ -401,10 +399,11 @@
       }
 
       .chat-input-area {
-        padding: 20px;
-        border-top: 2px solid #e9ecef;
-        background: white;
-      }
+  padding: 20px;
+  border-top: 2px solid #e9ecef;
+  background: white;
+  flex-shrink: 0; /* Prevent input area from shrinking */
+}
 
       .chat-input-container {
         display: flex;
@@ -432,7 +431,7 @@
         background: #3f6b20;
         color: white;
         border: none;
-        border-radius: 50%;
+        border-radius: 10%;
         width: 50px;
         height: 50px;
         cursor: pointer;
@@ -440,7 +439,7 @@
         align-items: center;
         justify-content: center;
         transition: all 0.3s ease;
-        font-size: 1.2rem;
+        font-size: 1rem;
       }
 
       .send-btn:hover {
@@ -452,50 +451,6 @@
         opacity: 0.5;
         cursor: not-allowed;
         transform: none;
-      }
-
-      /* Loading and Error States */
-      .loading {
-        text-align: center;
-        padding: 20px;
-        color: #6c757d;
-      }
-
-      .loading-spinner {
-        width: 24px;
-        height: 24px;
-        border: 2px solid #f0f0f0;
-        border-top: 2px solid #3f6b20;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 10px;
-      }
-
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-
-      .error-message {
-        background: #f8d7da;
-        color: #721c24;
-        padding: 15px;
-        border-radius: 10px;
-        margin: 20px;
-        border: 1px solid #f5c6cb;
-      }
-
-      .success-message {
-        background: #d4edda;
-        color: #155724;
-        padding: 15px;
-        border-radius: 10px;
-        margin: 20px;
-        border: 1px solid #c3e6cb;
       }
 
       .empty-state {
@@ -510,16 +465,29 @@
         opacity: 0.5;
       }
 
-      /* Responsive Design */
+      .error-message {
+        background: #f8d7da;
+        color: #721c24;
+        padding: 15px;
+        border-radius: 10px;
+        margin: 20px;
+        border: 1px solid #f5c6cb;
+      }
+
+      /* Mobile Responsive Design */
       @media (max-width: 768px) {
+        body {
+          padding: 10px;
+        }
+
         .container {
-          margin: 10px;
+          margin: 0;
           border-radius: 15px;
           min-height: calc(100vh - 20px);
         }
 
         .header {
-          padding: 20px;
+          padding: 15px 20px;
           flex-direction: column;
           gap: 15px;
           text-align: center;
@@ -529,34 +497,132 @@
           font-size: 1.5rem;
         }
 
-        .main-content {
-          flex-direction: column;
-          height: auto;
-        }
-
-        .sidebar {
+        .header-actions {
           width: 100%;
-          max-height: 300px;
-          order: 2;
+          justify-content: center;
         }
 
-        .chat-area {
-          order: 1;
-          min-height: 400px;
+        .mobile-back-btn {
+          display: flex;
         }
 
-        .login-form {
-          padding: 30px 25px;
-          margin: 0 20px;
+        .main-content {
+  flex-direction: row;
+  height: calc(100vh - 120px);
+  overflow: hidden; /* Prevent main content from scrolling */
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  margin-right: 15px;
+}
+
+.header-info h1 {
+  font-size: 2rem;
+  margin-bottom: 5px;
+}
+
+.header-info p {
+  opacity: 0.9;
+  font-size: 1rem;
+}
+
+        /* Mobile View States */
+        .mobile-conversations-view .sidebar {
+  width: 100%;
+  display: flex;
+  height: calc(100vh - 120px); /* Constrain height on mobile */
+  overflow: hidden;
+}
+
+        .mobile-conversations-view .chat-area {
+          display: none;
+        }
+
+        .mobile-chat-view .sidebar {
+          display: none;
+        }
+
+       @media (max-width: 768px) {
+  .mobile-chat-view .chat-area {
+    width: 100%;
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+    flex-direction: column; /* Add this */
+  }
+}
+/* ADD THE NEW RULE HERE: */
+  .mobile-chat-view .chat-content {
+    height: calc(100vh - 120px);
+    max-height: calc(100vh - 120px);
+  }
+
+        /* Chat header mobile adjustments */
+        .mobile-chat-view .chat-header {
+          padding: 15px 20px;
+        }
+
+        .mobile-chat-view .chat-header::before {
+          content: "";
+          position: absolute;
+          top: 15px;
+          left: 15px;
+          width: 24px;
+          height: 24px;
+          background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232d5016'%3e%3cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 19l-7-7 7-7'/%3e%3c/svg%3e");
+          cursor: pointer;
+          z-index: 10;
+        }
+
+        .mobile-chat-back-btn {
+          position: absolute;
+          top: 15px;
+          left: 15px;
+          background: none;
+          border: none;
+          color: #2d5016;
+          font-size: 1.5rem;
+          cursor: pointer;
+          padding: 5px;
+          border-radius: 50%;
+          width: 35px;
+          height: 35px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 10;
+        }
+
+        .mobile-chat-back-btn:hover {
+          background: rgba(45, 80, 22, 0.1);
+        }
+
+        .mobile-chat-view .buyer-details {
+          margin-left: 50px;
+        }
+
+        .sidebar-header {
+          padding: 15px;
+        }
+
+        .conversation-item {
+          padding: 12px;
+          margin-bottom: 8px;
+        }
+
+        .chat-messages {
+          padding: 15px;
+        }
+
+        .chat-input-area {
+          padding: 15px;
         }
 
         .message {
           max-width: 85%;
-        }
-
-        .chat-input-container {
-          flex-direction: column;
-          gap: 10px;
         }
 
         .contact-buttons {
@@ -571,108 +637,24 @@
       }
 
       @media (max-width: 480px) {
-        body {
-          padding: 10px;
-        }
-
         .header {
-          padding: 15px;
+          padding: 12px 15px;
         }
 
-        .login-section {
-          padding: 30px 20px;
-        }
-
-        .login-form {
-          padding: 25px 20px;
-          margin: 0 10px;
-        }
-
-        .sidebar-header {
-          padding: 15px;
+        .main-content {
+          height: calc(100vh - 100px);
         }
 
         .conversation-item {
-          padding: 12px;
+          padding: 10px;
         }
 
-        .chat-header {
-          padding: 15px;
-        }
-
-        .chat-messages {
-          padding: 15px;
-        }
-
-        .chat-input-area {
-          padding: 15px;
-        }
-
-        .modal-phone-input-container {
-          display: flex;
-          gap: 0;
-          border: 2px solid #e9ecef;
-          border-radius: 8px;
-          overflow: hidden;
-          transition: all 0.3s ease;
-          background: white;
-        }
-
-        .modal-phone-input-container:focus-within {
-          border-color: #3f6b20;
-          box-shadow: 0 0 0 3px rgba(63, 107, 32, 0.1);
-        }
-
-        .modal-country-code-select {
-          border: none;
-          background: #f8f9fa;
-          padding: 10px 6px;
-          font-size: 0.85rem;
-          font-weight: 600;
-          color: #2d5016;
-          width: 85px;
-          flex-shrink: 0;
-          border-right: 2px solid #e9ecef;
-          outline: none;
-          cursor: pointer;
-        }
-
-        .modal-country-code-select:focus {
-          background: #e9ecef;
-        }
-
-        .modal-phone-input-container input[type="tel"] {
-          border: none;
-          padding: 10px 14px;
-          font-size: 14px;
-          flex: 1;
-          outline: none;
-          background: white;
-        }
-
-        .modal-phone-input-container input[type="tel"]:focus {
-          border: none;
-          box-shadow: none;
-        }
-
-        .phone-help-text {
+        .buyer-contact {
           font-size: 0.8rem;
-          color: #6c757d;
-          margin-top: 5px;
-          font-style: italic;
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-          .modal-phone-input-container {
-            flex-direction: column;
-          }
-
-          .modal-country-code-select {
-            border-right: none;
-            border-bottom: 2px solid #e9ecef;
-            width: 100%;
-          }
+        .last-message {
+          font-size: 0.85rem;
         }
       }
     </style>
@@ -680,92 +662,35 @@
   <body>
     <div class="container">
       <!-- Header -->
-      <div class="header">
-        <div class="header-left">
-          <h1>Farmer Messages</h1>
-          <p>Manage your customer conversations</p>
-        </div>
-        <a href="directory.html" class="back-btn">← Back to Directory</a>
+<div class="header">
+  <div class="header-left">
+    <img src="assets/img/keboon-logo-white.png" alt="Keboon" class="logo" id="headerLogo">
+    <div class="header-info">
+      <h1>Farmer Messages</h1>
+    </div>
+  </div>
+  <div class="header-actions">
+    <a href="#" class="back-btn" id="dashboardBtn" onclick="goToDashboard()">
+      Dashboard
+    </a>
+  </div>
+</div>
+
+      <!-- Loading Section -->
+      <div class="loading-section" id="loadingSection">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading your messages...</div>
       </div>
 
-      <!-- Login Section -->
-      <div class="login-section" id="loginSection">
-        <div class="login-form">
-          <h2>Access Your Messages</h2>
-          <p>
-            Enter your Keboon ID and phone number to view and respond to
-            customer messages.
-          </p>
-
-          <div
-            class="error-message"
-            id="loginError"
-            style="display: none"
-          ></div>
-
-          <div class="form-group">
-            <label for="farmerKeboonId">Keboon ID</label>
-            <input
-              type="text"
-              id="farmerKeboonId"
-              placeholder="KB123ABC..."
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="buyerPhone" class="required">Phone Number</label>
-            <div class="modal-phone-input-container">
-              <select
-                id="buyerCountryCode"
-                name="countryCode"
-                class="modal-country-code-select"
-                required
-              >
-                <option value="+60">🇲🇾 +60</option>
-                <option value="+65">🇸🇬 +65</option>
-                <option value="+62">🇮🇩 +62</option>
-                <option value="+66">🇹🇭 +66</option>
-                <option value="+84">🇻🇳 +84</option>
-                <option value="+63">🇵🇭 +63</option>
-                <option value="+673">🇧🇳 +673</option>
-                <option value="+856">🇱🇦 +856</option>
-                <option value="+855">🇰🇭 +855</option>
-                <option value="+95">🇲🇲 +95</option>
-                <option value="+1">🇺🇸 +1</option>
-                <option value="+44">🇬🇧 +44</option>
-                <option value="+61">🇦🇺 +61</option>
-                <option value="+86">🇨🇳 +86</option>
-                <option value="+81">🇯🇵 +81</option>
-                <option value="+82">🇰🇷 +82</option>
-                <option value="+91">🇮🇳 +91</option>
-              </select>
-              <input
-                type="tel"
-                id="buyerPhone"
-                placeholder="123456789"
-                pattern="[0-9]+"
-                title="Please enter numbers only (without country code or + sign)"
-                required
-              />
-            </div>
-            <div class="phone-help-text">
-              Enter your phone number without the country code
-            </div>
-          </div>
-
-          <button
-            class="login-btn"
-            onclick="authenticateFarmer()"
-            id="loginBtn"
-          >
-            Access Messages
-          </button>
-        </div>
+      <!-- Error Section -->
+      <div class="error-section" id="errorSection" style="display: none">
+        <h3>Unable to Load Messages</h3>
+        <p id="errorMessage">There was an error loading your messages.</p>
+        <a href="#" class="back-btn" onclick="goToDashboard()">Return to Dashboard</a>
       </div>
 
-      <!-- Dashboard Content -->
-      <div class="main-content dashboard-content" id="dashboardContent">
+      <!-- Main Content -->
+      <div class="main-content mobile-conversations-view" id="mainContent">
         <!-- Sidebar - Conversations List -->
         <div class="sidebar">
           <div class="sidebar-header">
@@ -789,15 +714,15 @@
           <div class="chat-placeholder" id="chatPlaceholder">
             <div class="chat-placeholder-icon">💬</div>
             <h3>Select a conversation</h3>
-            <p>
-              Choose a customer conversation from the left to start messaging
-            </p>
+            <p>Choose a customer conversation from the left to start messaging</p>
           </div>
 
           <!-- Chat Content -->
           <div class="chat-content" id="chatContent">
             <!-- Chat Header -->
             <div class="chat-header">
+              <button class="mobile-chat-back-btn" onclick="showConversationsList()" id="mobileBackBtn">
+              </button>
               <div class="chat-buyer-info">
                 <div class="buyer-details">
                   <h3 id="chatBuyerName">Customer Name</h3>
@@ -807,19 +732,11 @@
                   </div>
                 </div>
                 <div class="contact-buttons">
-                  <button
-                    class="contact-btn phone"
-                    onclick="callBuyer()"
-                    id="callBtn"
-                  >
-                    📞 Call
+                  <button class="contact-btn phone" onclick="callBuyer()" id="callBtn">
+                    Call
                   </button>
-                  <button
-                    class="contact-btn email"
-                    onclick="emailBuyer()"
-                    id="emailBtn"
-                  >
-                    ✉️ Email
+                  <button class="contact-btn email" onclick="emailBuyer()" id="emailBtn">
+                    Email
                   </button>
                 </div>
               </div>
@@ -843,7 +760,7 @@
                   onkeypress="handleKeyPress(event)"
                 ></textarea>
                 <button class="send-btn" onclick="sendMessage()" id="sendBtn">
-                  📤
+                  Send
                 </button>
               </div>
             </div>
@@ -860,88 +777,98 @@
       let conversations = [];
       let messageRefreshInterval = null;
 
-      // Apps Script URL - UPDATE THIS WITH YOUR ACTUAL URL
+      // Apps Script URL
       const APPS_SCRIPT_URL =
         "https://script.google.com/macros/s/AKfycbxXSsGq5vCpJttfjbkC8rg6j4pYDO4Zbylx4jsByb9QYwH0gMdo5miFahxZWStM20P6/exec";
 
-      function getFarmerFullPhoneNumber() {
-        const countryCode = document.getElementById("buyerCountryCode").value; // ✅ Correct ID
-        const phoneNumber = document.getElementById("buyerPhone").value.trim(); // ✅ Correct ID
-
-        // Remove any non-digit characters from phone number
-        const cleanNumber = phoneNumber.replace(/\D/g, "");
-
-        // Remove the + from country code and combine
-        const cleanCountryCode = countryCode.replace("+", "");
-
-        return cleanCountryCode + cleanNumber;
+      // Mobile view functions
+      function isMobile() {
+        return window.innerWidth <= 768;
       }
 
-      // Authenticate farmer
-      async function authenticateFarmer() {
-        const keboonId = document.getElementById("farmerKeboonId").value.trim();
-        const phone = getFarmerFullPhoneNumber(); // Use the combined phone number
+      function showConversationsList() {
+        if (isMobile()) {
+          const mainContent = document.getElementById("mainContent");
+          mainContent.className = "main-content mobile-conversations-view";
+          
+          // Stop message refresh when going back to conversations
+          if (messageRefreshInterval) {
+            clearInterval(messageRefreshInterval);
+            messageRefreshInterval = null;
+          }
+        }
+      }
 
-        if (!keboonId || !phone) {
-          showLoginError("Please enter both Keboon ID and phone number");
+      function showChatView() {
+        if (isMobile()) {
+          const mainContent = document.getElementById("mainContent");
+          mainContent.className = "main-content mobile-chat-view";
+        }
+      }
+
+      // Get URL parameters
+      function getUrlParams() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return {
+          keboonId: urlParams.get("keboonId"),
+          phone: urlParams.get("phone"),
+        };
+      }
+
+      // Go to dashboard
+      function goToDashboard() {
+        const params = getUrlParams();
+        if (params.keboonId && params.phone) {
+          window.location.href = `farmer-dashboard.html?keboonId=${encodeURIComponent(
+            params.keboonId
+          )}&phone=${encodeURIComponent(params.phone)}`;
+        } else {
+          window.location.href = 'directory.html';
+        }
+      }
+
+      // Load farmer data and messages
+      async function loadFarmerMessages() {
+        const params = getUrlParams();
+
+        if (!params.keboonId || !params.phone) {
+          showError("Invalid access. Please return to dashboard and try again.");
           return;
         }
 
-        const loginBtn = document.getElementById("loginBtn");
-        const originalText = loginBtn.textContent;
-        loginBtn.disabled = true;
-        loginBtn.textContent = "Authenticating...";
-
         try {
-          const response = await fetch(
+          // Load farmer data
+          const farmerResponse = await fetch(
             `${APPS_SCRIPT_URL}?action=getFarmerById&keboonId=${encodeURIComponent(
-              keboonId
-            )}&phone=${encodeURIComponent(phone)}`
+              params.keboonId
+            )}&phone=${encodeURIComponent(params.phone)}`
           );
-          const result = await response.json();
+          const farmerResult = await farmerResponse.json();
 
-          if (result.success && result.farmer) {
-            currentFarmerData = result.farmer;
-            showDashboard();
-            loadConversations();
-          } else {
-            throw new Error(result.error || "Invalid credentials");
+          if (!farmerResult.success || !farmerResult.farmer) {
+            throw new Error(farmerResult.error || "Farmer not found");
           }
+
+          currentFarmerData = farmerResult.farmer;
+
+          // Update farmer info
+          document.getElementById("farmerName").textContent = currentFarmerData.farmName;
+          document.getElementById("farmerIdDisplay").textContent = `Keboon ID: ${currentFarmerData.keboonId}`;
+
+          // Load conversations
+          await loadConversations();
+
+          // Show main content
+          showMainContent();
+
         } catch (error) {
-          console.error("Authentication error:", error);
-          showLoginError(`Authentication failed: ${error.message}`);
-        } finally {
-          loginBtn.disabled = false;
-          loginBtn.textContent = originalText;
+          console.error("Error loading farmer messages:", error);
+          showError(`Error loading messages: ${error.message}`);
         }
-      }
-
-      // Show login error
-      function showLoginError(message) {
-        const errorDiv = document.getElementById("loginError");
-        errorDiv.textContent = message;
-        errorDiv.style.display = "block";
-      }
-
-      // Show dashboard
-      function showDashboard() {
-        document.getElementById("loginSection").style.display = "none";
-        document.getElementById("dashboardContent").style.display = "flex";
-
-        // Update farmer info
-        document.getElementById("farmerName").textContent =
-          currentFarmerData.farmName;
-        document.getElementById(
-          "farmerIdDisplay"
-        ).textContent = `Keboon ID: ${currentFarmerData.keboonId}`;
       }
 
       // Load conversations
       async function loadConversations() {
-        const conversationsList = document.getElementById("conversationsList");
-        conversationsList.innerHTML =
-          '<div class="loading"><div class="loading-spinner"></div>Loading conversations...</div>';
-
         try {
           const response = await fetch(
             `${APPS_SCRIPT_URL}?action=getConversations&growerKeboonId=${encodeURIComponent(
@@ -958,7 +885,7 @@
           }
         } catch (error) {
           console.error("Error loading conversations:", error);
-          conversationsList.innerHTML =
+          document.getElementById("conversationsList").innerHTML = 
             '<div class="error-message">Failed to load conversations</div>';
         }
       }
@@ -969,45 +896,37 @@
 
         if (conversations.length === 0) {
           conversationsList.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📭</div>
-                        <h3>No Messages Yet</h3>
-                        <p>Customer messages will appear here when someone contacts you through your farm profile.</p>
-                    </div>
-                `;
+            <div class="empty-state">
+              <div class="empty-state-icon">📭</div>
+              <h3>No Messages Yet</h3>
+              <p>Customer messages will appear here when someone contacts you through your farm profile.</p>
+            </div>
+          `;
           return;
         }
 
         conversationsList.innerHTML = conversations
           .map((conv) => {
-            const lastMessageTime = new Date(
-              conv.lastMessageAt
-            ).toLocaleDateString();
+            const lastMessageTime = new Date(conv.lastMessageAt).toLocaleDateString();
             const unreadCount = parseInt(conv.growerUnreadCount) || 0;
 
             return `
-                    <div class="conversation-item" onclick="selectConversation('${
-                      conv.conversationId
-                    }')" id="conv-${conv.conversationId}">
-                        <div class="conversation-header">
-                            <div class="buyer-name">
-                                ${conv.buyerName}
-                                ${
-                                  unreadCount > 0
-                                    ? `<span class="unread-badge">${unreadCount}</span>`
-                                    : ""
-                                }
-                            </div>
-                            <div class="conversation-time">${lastMessageTime}</div>
-                        </div>
-                        <div class="buyer-contact">
-                            📧 ${conv.buyerEmail} • 📞 ${conv.buyerPhone}
-                        </div>
-                        <div class="last-message">
-                            Conversation about ${conv.farmName}
-                        </div>
-                    </div>
-                `;
+              <div class="conversation-item" onclick="selectConversation('${conv.conversationId}')" id="conv-${conv.conversationId}">
+                <div class="conversation-header">
+                  <div class="buyer-name">
+                    ${conv.buyerName}
+                    ${unreadCount > 0 ? `<span class="unread-badge">${unreadCount}</span>` : ""}
+                  </div>
+                  <div class="conversation-time">${lastMessageTime}</div>
+                </div>
+                <div class="buyer-contact">
+                  📧 ${conv.buyerEmail} • 📞 ${conv.buyerPhone}
+                </div>
+                <div class="last-message">
+                  Conversation about ${conv.farmName}
+                </div>
+              </div>
+            `;
           })
           .join("");
       }
@@ -1018,14 +937,10 @@
         document.querySelectorAll(".conversation-item").forEach((item) => {
           item.classList.remove("active");
         });
-        document
-          .getElementById(`conv-${conversationId}`)
-          .classList.add("active");
+        document.getElementById(`conv-${conversationId}`).classList.add("active");
 
         // Find conversation data
-        const conversation = conversations.find(
-          (c) => c.conversationId === conversationId
-        );
+        const conversation = conversations.find(c => c.conversationId === conversationId);
         if (!conversation) return;
 
         currentConversationId = conversationId;
@@ -1036,16 +951,18 @@
         };
 
         // Update chat header
-        document.getElementById("chatBuyerName").textContent =
-          conversation.buyerName;
-        document.getElementById("chatBuyerEmail").textContent =
-          conversation.buyerEmail;
-        document.getElementById("chatBuyerPhone").textContent =
-          conversation.buyerPhone;
+        document.getElementById("chatBuyerName").textContent = conversation.buyerName;
+        document.getElementById("chatBuyerEmail").textContent = conversation.buyerEmail;
+        document.getElementById("chatBuyerPhone").textContent = conversation.buyerPhone;
 
         // Show chat content
         document.getElementById("chatPlaceholder").style.display = "none";
         document.getElementById("chatContent").style.display = "flex";
+
+        // For mobile, switch to chat view
+        if (isMobile()) {
+          showChatView();
+        }
 
         // Load messages
         await loadChatMessages();
@@ -1053,42 +970,95 @@
         // Mark as read
         markConversationAsRead(conversationId);
 
-        // Start auto-refresh for this conversation
+        // Start auto-refresh
         startMessageRefresh();
       }
 
       // Load chat messages
-      async function loadChatMessages() {
-        const messagesContainer = document.getElementById("chatMessages");
-        messagesContainer.innerHTML =
-          '<div class="loading"><div class="loading-spinner"></div>Loading messages...</div>';
+      // Load chat messages
+async function loadChatMessages(isRefresh = false) {
+  const messagesContainer = document.getElementById("chatMessages");
+  
+  if (!isRefresh) {
+    messagesContainer.innerHTML = '<div class="loading"><div class="loading-spinner"></div>Loading messages...</div>';
+  }
 
-        try {
-          const response = await fetch(
-            `${APPS_SCRIPT_URL}?action=getChatHistory&conversationId=${encodeURIComponent(
-              currentConversationId
-            )}`
-          );
-          const result = await response.json();
+  try {
+    const response = await fetch(
+      `${APPS_SCRIPT_URL}?action=getChatHistory&conversationId=${encodeURIComponent(currentConversationId)}`
+    );
+    const result = await response.json();
 
-          if (result.success) {
-            displayMessages(result.messages || []);
-          } else {
-            throw new Error(result.error || "Failed to load messages");
-          }
-        } catch (error) {
-          console.error("Error loading messages:", error);
-          messagesContainer.innerHTML =
-            '<div class="error-message">Failed to load messages</div>';
-        }
+    if (result.success) {
+      if (isRefresh) {
+        updateMessagesSubtly(result.messages || []);
+      } else {
+        displayMessages(result.messages || []);
       }
+    } else {
+      throw new Error(result.error || "Failed to load messages");
+    }
+  } catch (error) {
+    console.error("Error loading messages:", error);
+    if (!isRefresh) {
+      messagesContainer.innerHTML = '<div class="error-message">Failed to load messages</div>';
+    }
+  }
+}
+// Update messages subtly without full reload
+function updateMessagesSubtly(newMessages) {
+  const messagesContainer = document.getElementById("chatMessages");
+  const existingMessages = messagesContainer.querySelectorAll('.message');
+  
+  // If no existing messages, do full display
+  if (existingMessages.length === 0) {
+    displayMessages(newMessages);
+    return;
+  }
+  
+  // Only add new messages that don't exist
+  const existingCount = existingMessages.length;
+  const newCount = newMessages.length;
+  
+  if (newCount > existingCount) {
+    const scrollAtBottom = messagesContainer.scrollTop + messagesContainer.clientHeight >= messagesContainer.scrollHeight - 10;
+    
+    // Add only the new messages
+    for (let i = existingCount; i < newCount; i++) {
+      const message = newMessages[i];
+      const time = new Date(message.timestamp).toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      
+      const senderName = message.senderType === "buyer" ? currentBuyerData.name : currentFarmerData.contactName;
+      
+      const messageDiv = document.createElement("div");
+      messageDiv.className = `message ${message.senderType}`;
+      messageDiv.innerHTML = `
+        <div class="message-header">
+          <div class="message-sender">${senderName}</div>
+          <div class="message-time">${time}</div>
+        </div>
+        <div class="message-content">${message.content}</div>
+      `;
+      
+      messagesContainer.appendChild(messageDiv);
+    }
+    
+    // Only scroll if user was at bottom
+    if (scrollAtBottom) {
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+  }
+}
 
       // Display messages
       function displayMessages(messages) {
         const messagesContainer = document.getElementById("chatMessages");
 
         if (messages.length === 0) {
-          messagesContainer.innerHTML =
+          messagesContainer.innerHTML = 
             '<div class="empty-state"><div class="empty-state-icon">💬</div><h3>No messages yet</h3><p>Start the conversation by sending a message below.</p></div>';
           return;
         }
@@ -1100,20 +1070,17 @@
               minute: "2-digit",
             });
 
-            const senderName =
-              message.senderType === "buyer"
-                ? currentBuyerData.name
-                : currentFarmerData.contactName;
+            const senderName = message.senderType === "buyer" ? currentBuyerData.name : currentFarmerData.contactName;
 
             return `
-                    <div class="message ${message.senderType}">
-                        <div class="message-header">
-                            <div class="message-sender">${senderName}</div>
-                            <div class="message-time">${time}</div>
-                        </div>
-                        <div class="message-content">${message.content}</div>
-                    </div>
-                `;
+              <div class="message ${message.senderType}">
+                <div class="message-header">
+                  <div class="message-sender">${senderName}</div>
+                  <div class="message-time">${time}</div>
+                </div>
+                <div class="message-content">${message.content}</div>
+              </div>
+            `;
           })
           .join("");
 
@@ -1121,7 +1088,7 @@
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
       }
 
-      // Update the sendMessage function in farmer-messages.html:
+      // Send message
       async function sendMessage() {
         const messageInput = document.getElementById("messageInput");
         const messageText = messageInput.value.trim();
@@ -1136,7 +1103,7 @@
           addMessageToUI(messageText, "grower");
           messageInput.value = "";
 
-          // Send to server using GET method
+          // Send to server
           const data = {
             conversationId: currentConversationId,
             senderType: "grower",
@@ -1150,15 +1117,9 @@
             data: JSON.stringify(data),
           });
 
-          const response = await fetch(
-            `${APPS_SCRIPT_URL}?${params.toString()}`
-          );
-
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-          }
-
+          const response = await fetch(`${APPS_SCRIPT_URL}?${params.toString()}`);
           const result = await response.json();
+          
           if (!result.success) {
             throw new Error(result.error || "Failed to send message");
           }
@@ -1167,8 +1128,7 @@
           updateConversationTimestamp();
         } catch (error) {
           console.error("Error sending message:", error);
-          // Remove the message from UI if sending failed
-          loadChatMessages();
+          loadChatMessages(); // Reload to remove failed message
         } finally {
           sendBtn.disabled = false;
         }
@@ -1177,32 +1137,24 @@
       // Add message to UI
       function addMessageToUI(messageText, senderType) {
         const messagesContainer = document.getElementById("chatMessages");
-
-        const time = new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        });
-
-        const senderName =
-          senderType === "buyer"
-            ? currentBuyerData.name
-            : currentFarmerData.contactName;
+        const time = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+        const senderName = senderType === "buyer" ? currentBuyerData.name : currentFarmerData.contactName;
 
         const messageDiv = document.createElement("div");
         messageDiv.className = `message ${senderType}`;
         messageDiv.innerHTML = `
-                <div class="message-header">
-                    <div class="message-sender">${senderName}</div>
-                    <div class="message-time">${time}</div>
-                </div>
-                <div class="message-content">${messageText}</div>
-            `;
+          <div class="message-header">
+            <div class="message-sender">${senderName}</div>
+            <div class="message-time">${time}</div>
+          </div>
+          <div class="message-content">${messageText}</div>
+        `;
 
         messagesContainer.appendChild(messageDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
       }
 
-      // Handle key press in message input
+      // Handle key press
       function handleKeyPress(event) {
         if (event.key === "Enter" && !event.shiftKey) {
           event.preventDefault();
@@ -1213,17 +1165,15 @@
       // Mark conversation as read
       async function markConversationAsRead(conversationId) {
         try {
-          await fetch(
-            `${APPS_SCRIPT_URL}?action=markMessageRead&conversationId=${encodeURIComponent(
-              conversationId
-            )}&userType=grower`
-          );
-
+          await fetch(`${APPS_SCRIPT_URL}?action=markMessageRead&conversationId=${encodeURIComponent(conversationId)}&userType=grower`);
+          
           // Update UI - remove unread badge
           const convElement = document.getElementById(`conv-${conversationId}`);
-          const unreadBadge = convElement.querySelector(".unread-badge");
-          if (unreadBadge) {
-            unreadBadge.remove();
+          if (convElement) {
+            const unreadBadge = convElement.querySelector(".unread-badge");
+            if (unreadBadge) {
+              unreadBadge.remove();
+            }
           }
         } catch (error) {
           console.error("Error marking messages as read:", error);
@@ -1232,45 +1182,29 @@
 
       // Update conversation timestamp
       function updateConversationTimestamp() {
-        const conversation = conversations.find(
-          (c) => c.conversationId === currentConversationId
-        );
+        const conversation = conversations.find(c => c.conversationId === currentConversationId);
         if (conversation) {
           conversation.lastMessageAt = new Date().toISOString();
-          // Re-sort and redisplay conversations
-          conversations.sort(
-            (a, b) => new Date(b.lastMessageAt) - new Date(a.lastMessageAt)
-          );
+          conversations.sort((a, b) => new Date(b.lastMessageAt) - new Date(a.lastMessageAt));
           displayConversations();
-          // Re-select the active conversation
-          document
-            .getElementById(`conv-${currentConversationId}`)
-            .classList.add("active");
+          const activeConv = document.getElementById(`conv-${currentConversationId}`);
+          if (activeConv) {
+            activeConv.classList.add("active");
+          }
         }
       }
 
       // Start auto-refresh for messages
-      function startMessageRefresh() {
-        // Clear existing interval
-        if (messageRefreshInterval) {
-          clearInterval(messageRefreshInterval);
-        }
-
-        // Refresh messages every 10 seconds
-        messageRefreshInterval = setInterval(() => {
-          if (currentConversationId) {
-            loadChatMessages();
-          }
-        }, 10000);
-      }
-
-      // Stop auto-refresh
-      function stopMessageRefresh() {
-        if (messageRefreshInterval) {
-          clearInterval(messageRefreshInterval);
-          messageRefreshInterval = null;
-        }
-      }
+function startMessageRefresh() {
+  if (messageRefreshInterval) {
+    clearInterval(messageRefreshInterval);
+  }
+  messageRefreshInterval = setInterval(() => {
+    if (currentConversationId) {
+      loadChatMessages(true); // Pass true for subtle refresh
+    }
+  }, 10000);
+}
 
       // Contact functions
       function callBuyer() {
@@ -1281,106 +1215,71 @@
 
       function emailBuyer() {
         if (currentBuyerData && currentBuyerData.email) {
-          const subject = encodeURIComponent(
-            `Re: Your inquiry about ${currentFarmerData.farmName}`
-          );
-          const body = encodeURIComponent(
-            `Hello ${currentBuyerData.name},\n\nThank you for your interest in ${currentFarmerData.farmName}.\n\nBest regards,\n${currentFarmerData.contactName}`
-          );
-          window.open(
-            `mailto:${currentBuyerData.email}?subject=${subject}&body=${body}`
-          );
+          const subject = encodeURIComponent(`Re: Your inquiry about ${currentFarmerData.farmName}`);
+          const body = encodeURIComponent(`Hello ${currentBuyerData.name},\n\nThank you for your interest in ${currentFarmerData.farmName}.\n\nBest regards,\n${currentFarmerData.contactName}`);
+          window.open(`mailto:${currentBuyerData.email}?subject=${subject}&body=${body}`);
         }
       }
 
-      // Auto-refresh conversations every 30 seconds
-      function startConversationRefresh() {
+      // Show error
+      function showError(message) {
+        document.getElementById("loadingSection").style.display = "none";
+        document.getElementById("errorMessage").textContent = message;
+        document.getElementById("errorSection").style.display = "block";
+      }
+
+      // Show main content
+      function showMainContent() {
+        document.getElementById("loadingSection").style.display = "none";
+        document.getElementById("mainContent").style.display = "flex";
+      }
+
+      // Handle window resize
+      function handleResize() {
+        if (!isMobile() && currentConversationId) {
+          // Reset to desktop view if screen becomes larger
+          const mainContent = document.getElementById("mainContent");
+          mainContent.className = "main-content";
+          document.getElementById("chatContent").style.display = "flex";
+          document.getElementById("chatPlaceholder").style.display = "none";
+        } else if (isMobile() && !currentConversationId) {
+          // Ensure conversations view on mobile if no conversation selected
+          showConversationsList();
+        }
+      }
+
+      // Initialize page
+      document.addEventListener("DOMContentLoaded", function () {
+        loadFarmerMessages();
+
+        // Auto-refresh conversations every 30 seconds
         setInterval(() => {
           if (currentFarmerData) {
             loadConversations();
           }
         }, 30000);
-      }
 
-      // Handle page visibility change
-      document.addEventListener("visibilitychange", function () {
-        if (document.hidden) {
-          stopMessageRefresh();
-        } else if (currentConversationId) {
-          startMessageRefresh();
-          loadChatMessages(); // Refresh immediately when page becomes visible
-        }
-      });
-
-      // Initialize page
-      document.addEventListener("DOMContentLoaded", function () {
-        // Check if farmer info is passed via URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const keboonId = urlParams.get("keboonId");
-        const phone = urlParams.get("phone");
-
-        if (keboonId && phone) {
-          document.getElementById("farmerKeboonId").value = keboonId;
-
-          // Parse the phone number to separate country code and number
-          if (phone) {
-            // Try to match common country codes
-            const countryCodeMatch = phone.match(
-              /^(60|65|62|66|84|63|673|856|855|95|1|44|61|86|81|82|91)/
-            );
-            if (countryCodeMatch) {
-              const countryCode = "+" + countryCodeMatch[1];
-              const phoneNumber = phone.substring(countryCodeMatch[1].length);
-
-              document.getElementById("buyerCountryCode").value = countryCode; // ✅ Correct ID
-              document.getElementById("buyerPhone").value = phoneNumber; // ✅ Correct ID
-            } else {
-              // Default to Malaysia if no match
-              document.getElementById("buyerCountryCode").value = "+60"; // ✅ Correct ID
-              document.getElementById("buyerPhone").value = phone; // ✅ Correct ID
+        // Handle page visibility change
+        document.addEventListener("visibilitychange", function () {
+          if (document.hidden) {
+            if (messageRefreshInterval) {
+              clearInterval(messageRefreshInterval);
+              messageRefreshInterval = null;
             }
+          } else if (currentConversationId) {
+            startMessageRefresh();
+            loadChatMessages();
           }
+        });
 
-          // Auto-authenticate if both parameters are provided
-          authenticateFarmer();
-        } else {
-          // Set default country code
-          document.getElementById("buyerCountryCode").value = "+60"; // ✅ Correct ID
-        }
+        // Handle window resize
+        window.addEventListener("resize", handleResize);
 
-        // Start conversation refresh
-        startConversationRefresh();
-
-        // Add input validation for phone number
-        const phoneInput = document.getElementById("buyerPhone"); // ✅ Correct ID
-        if (phoneInput) {
-          phoneInput.addEventListener("input", function (e) {
-            // Remove any non-digit characters as user types
-            this.value = this.value.replace(/\D/g, "");
-          });
-        }
-
-        // Handle Enter key in login form
-        document
-          .getElementById("farmerKeboonId")
-          .addEventListener("keypress", function (e) {
-            if (e.key === "Enter") {
-              document.getElementById("buyerPhone").focus(); // ✅ Correct ID
-            }
-          });
-
-        document
-          .getElementById("buyerPhone") // ✅ Correct ID
-          .addEventListener("keypress", function (e) {
-            if (e.key === "Enter") {
-              authenticateFarmer();
-            }
-          });
-      });
-
-      // Cleanup on page unload
-      window.addEventListener("beforeunload", function () {
-        stopMessageRefresh();
+        // Handle mobile back button in chat header
+        document.getElementById("mobileBackBtn").addEventListener("click", function(e) {
+          e.preventDefault();
+          showConversationsList();
+        });
       });
     </script>
   </body>

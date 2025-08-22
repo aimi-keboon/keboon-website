@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Farmer Dashboard - Keboon Directory</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #1b5e3f 0%, #52ae77 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      /* Header */
+      .header {
+        background: linear-gradient(135deg, #2d5016 0%, #3f6b20 100%);
+        color: white;
+        padding: 30px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .logo {
+        height: 40px;
+        width: auto;
+        filter: brightness(0) invert(1);
+      }
+
+      .header-info h1 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+      }
+
+      .header-actions {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .logout-btn {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .logout-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        text-decoration: none;
+        color: white;
+      }
+
+      /* Loading State */
+      .loading-section {
+        padding: 80px 40px;
+        text-align: center;
+      }
+
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid #f0f0f0;
+        border-top: 3px solid #3f6b20;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 20px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Error State */
+      .error-section {
+        padding: 80px 40px;
+        text-align: center;
+        color: #dc3545;
+      }
+
+      /* Main Content */
+      .main-content {
+        display: none;
+        padding: 40px;
+      }
+
+      /* Stats Cards */
+      .stats-section {
+        margin: 0 auto 40px auto;
+        width: 70%;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .stat-card {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 25px;
+        border-radius: 15px;
+        text-align: center;
+        border: 2px solid #e9ecef;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-card.messages-card {
+        background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
+        border-color: #3f6b20;
+      }
+
+      .stat-card.messages-card:hover {
+        background: linear-gradient(135deg, #3f6b20 0%, #2d5016 100%);
+        color: white;
+      }
+
+      .stat-number {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #2d5016;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .stat-label {
+        font-size: 0.95rem;
+        color: #666;
+        font-weight: 500;
+      }
+
+      .stat-card.messages-card:hover .stat-number,
+      .stat-card.messages-card:hover .stat-label {
+        color: white;
+      }
+
+      .unread-indicator {
+        background: #dc3545;
+        color: white;
+        font-size: 0.75rem;
+        padding: 2px 8px;
+        border-radius: 10px;
+        margin-left: 8px;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.6; }
+        100% { opacity: 1; }
+      }
+
+      /* Dashboard Grid */
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 40px;
+      }
+
+      /* Quick Actions */
+      .quick-actions {
+        background: white;
+        border: 2px solid #e9ecef;
+        border-radius: 15px;
+        padding: 25px;
+      }
+
+      .actions-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .action-btn {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        color: #2d5016;
+        padding: 30px 20px;
+        border: 2px solid #e9ecef;
+        border-radius: 15px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        font-weight: 600;
+        text-align: center;
+        min-height: 140px;
+        position: relative;
+      }
+
+      .action-btn:hover {
+        background: linear-gradient(135deg, #3f6b20 0%, #2d5016 100%);
+        color: white;
+        text-decoration: none;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(63, 107, 32, 0.3);
+      }
+
+      .action-btn .action-title {
+        font-size: 1rem;
+        line-height: 1.3;
+      }
+
+      .action-btn .action-info {
+        flex: 1;
+      }
+
+      .action-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #dc3545;
+        color: white;
+        font-size: 0.7rem;
+        padding: 3px 8px;
+        border-radius: 12px;
+        font-weight: 700;
+        min-width: 18px;
+        text-align: center;
+        animation: pulse 2s infinite;
+      }
+
+      /* Farm Profile Preview */
+      .profile-preview {
+        grid-column: 1 / -1;
+        background: white;
+        border: 2px solid #e9ecef;
+        border-radius: 15px;
+        padding: 25px;
+      }
+
+      .profile-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .farm-name {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #2d5016;
+        margin-bottom: 8px;
+      }
+
+      .farm-details {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+
+      .farm-badge {
+        background: #3f6b20;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        body {
+          padding: 10px;
+          padding-bottom: 50px;
+        }
+
+        .header {
+          padding: 20px;
+          flex-direction: column;
+          gap: 15px;
+          text-align: center;
+        }
+
+        .header-left {
+          flex-direction: column;
+          gap: 10px;
+          text-align: center;
+        }
+
+        .main-content {
+          padding: 20px;
+        }
+
+        .dashboard-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+          gap: 15px;
+        }
+        .actions-grid {
+          grid-template-columns: 1fr;
+          gap: 15px;
+          max-width: 100%;
+        }
+
+        .action-btn {
+          min-height: 120px;
+          padding: 25px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <div class="header">
+        <div class="header-left">
+          <img
+            src="assets/img/keboon-logo-white.png"
+            alt="Keboon"
+            class="logo"
+            id="headerLogo"
+          />
+          <div class="header-info">
+            <h1 id="farmerWelcome">Farmer Dashboard</h1>
+          </div>
+        </div>
+        <div class="header-actions">
+          <a href="directory.html" class="logout-btn">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+              <path
+                d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.59L17 17l5-5z"
+              />
+            </svg>
+            Logout
+          </a>
+        </div>
+      </div>
+
+      <!-- Loading Section -->
+      <div class="loading-section" id="loadingSection">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading your dashboard...</div>
+      </div>
+
+      <!-- Error Section -->
+      <div class="error-section" id="errorSection" style="display: none">
+        <h3>Unable to Load Dashboard</h3>
+        <p id="errorMessage">
+          There was an error loading your farmer dashboard.
+        </p>
+        <a href="directory.html" class="logout-btn">Return to Directory</a>
+      </div>
+
+      <!-- Farm Profile Preview -->
+      <div class="profile-preview" hidden>
+        <div class="profile-header">
+          <div class="profile-info">
+            <div class="farm-name" id="farmName" hidden>Loading...</div>
+            <div class="farm-details">
+              <span class="farm-badge" id="farmCategory" hidden>Category</span>
+              <span class="farm-badge" id="farmCommercial" hidden>Status</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content" id="mainContent">
+        <!-- Stats Section -->
+        <div class="stats-section">
+          <div class="stats-grid">
+            <div class="stat-card messages-card" onclick="goToMessages()" title="Click to view messages">
+              <div class="stat-number">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="#3f6b20">
+                  <path
+                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
+                  />
+                </svg>
+                <span id="totalMessages">0</span>
+                <span id="unreadBadge" class="unread-indicator" style="display: none;">0 new</span>
+              </div>
+              <div class="stat-label">Total Messages</div>
+            </div>
+
+            <div class="stat-card" hidden>
+              <div class="stat-number">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="#3f6b20">
+                  <path
+                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                  />
+                </svg>
+                <span id="totalProducts">0</span>
+              </div>
+              <div class="stat-label">Products Listed</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions-grid">
+          <a href="#" class="action-btn" onclick="toggleEditForm()">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+              <path
+                d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+              />
+            </svg>
+            <div class="action-title">Edit Profile</div>
+          </a>
+
+          <a href="#" class="action-btn" id="messagesAction" onclick="goToMessages()">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+              <path
+                d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"
+              />
+            </svg>
+            <div class="action-title">Manage Messages</div>
+            <span id="messagesBadge" class="action-badge" style="display: none;">0</span>
+          </a>
+
+          <button class="action-btn" onclick="viewPublicProfile()">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+              <path
+                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+              />
+            </svg>
+            <div class="action-title">View Profile</div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Global variables
+      let farmerData = null;
+      let messageStatsInterval = null;
+
+      // Google Apps Script URL
+      const APPS_SCRIPT_URL =
+        "https://script.google.com/macros/s/AKfycbxXSsGq5vCpJttfjbkC8rg6j4pYDO4Zbylx4jsByb9QYwH0gMdo5miFahxZWStM20P6/exec";
+
+      // Get URL parameters
+      function getUrlParams() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return {
+          keboonId: urlParams.get("keboonId"),
+          phone: urlParams.get("phone"),
+        };
+      }
+
+      // Generate profile URL from farm name
+      function generateProfileUrl(farmName) {
+        const baseUrl = farmName
+          .toLowerCase()
+          .replace(/[^a-z0-9\s]/g, "")
+          .replace(/\s+/g, "-")
+          .replace(/-+/g, "-")
+          .replace(/^-|-$/g, "");
+        return `profile.html?farm=${encodeURIComponent(baseUrl)}`;
+      }
+
+      // Load farmer data
+      async function loadFarmerData() {
+        const params = getUrlParams();
+
+        if (!params.keboonId || !params.phone) {
+          showError("Invalid access. Please login again.");
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            `${APPS_SCRIPT_URL}?action=getFarmerById&keboonId=${encodeURIComponent(
+              params.keboonId
+            )}&phone=${encodeURIComponent(params.phone)}`
+          );
+          const result = await response.json();
+
+          if (result.success && result.farmer) {
+            farmerData = result.farmer;
+            populateDashboard();
+            loadMessageStats();
+            startMessageStatsRefresh();
+          } else {
+            throw new Error(result.error || "Farmer not found");
+          }
+        } catch (error) {
+          console.error("Error loading farmer data:", error);
+          showError(`Error loading dashboard: ${error.message}`);
+        }
+      }
+
+      // Load message statistics
+      async function loadMessageStats() {
+        if (!farmerData || !farmerData.keboonId) return;
+
+        try {
+          const response = await fetch(
+            `${APPS_SCRIPT_URL}?action=getConversations&growerKeboonId=${encodeURIComponent(
+              farmerData.keboonId
+            )}`
+          );
+          const result = await response.json();
+
+          if (result.success) {
+            const conversations = result.conversations || [];
+            updateMessageStats(conversations);
+          }
+        } catch (error) {
+          console.error("Error loading message stats:", error);
+          // Set default values on error
+          document.getElementById("totalMessages").textContent = "0";
+        }
+      }
+
+      // Update message statistics
+      function updateMessageStats(conversations) {
+        const totalConversations = conversations.length;
+        const totalUnread = conversations.reduce((sum, conv) => {
+          return sum + (parseInt(conv.growerUnreadCount) || 0);
+        }, 0);
+
+        // Update total messages display
+        document.getElementById("totalMessages").textContent = totalConversations;
+
+        // Update unread indicators
+        const unreadBadge = document.getElementById("unreadBadge");
+        const messagesBadge = document.getElementById("messagesBadge");
+
+        if (totalUnread > 0) {
+          unreadBadge.textContent = `${totalUnread} new`;
+          unreadBadge.style.display = "inline";
+          
+          messagesBadge.textContent = totalUnread;
+          messagesBadge.style.display = "inline";
+        } else {
+          unreadBadge.style.display = "none";
+          messagesBadge.style.display = "none";
+        }
+      }
+
+      // Start automatic refresh of message stats
+      function startMessageStatsRefresh() {
+        // Refresh message stats every 30 seconds
+        messageStatsInterval = setInterval(() => {
+          loadMessageStats();
+        }, 30000);
+      }
+
+      // Stop message stats refresh
+      function stopMessageStatsRefresh() {
+        if (messageStatsInterval) {
+          clearInterval(messageStatsInterval);
+          messageStatsInterval = null;
+        }
+      }
+
+      // Go to messages page
+      function goToMessages() {
+        const params = getUrlParams();
+        if (params.keboonId && params.phone) {
+          window.location.href = `farmer-messages.html?keboonId=${encodeURIComponent(
+            params.keboonId
+          )}&phone=${encodeURIComponent(params.phone)}`;
+        }
+      }
+
+      // Populate dashboard with farmer data
+      function populateDashboard() {
+        // Update header
+        document.getElementById(
+          "farmerWelcome"
+        ).textContent = `Welcome, ${farmerData.contactName}`;
+
+        // Update farm info
+        document.getElementById("farmName").textContent = farmerData.farmName;
+        document.getElementById("farmCategory").textContent =
+          farmerData.category;
+        document.getElementById("farmCommercial").textContent =
+          farmerData.commercial;
+
+        // Update products count
+        let productCount = 0;
+        if (farmerData.products) {
+          let products = farmerData.products;
+          if (typeof products === "string") {
+            try {
+              products = JSON.parse(products);
+            } catch (e) {
+              products = [];
+            }
+          }
+          if (products && Array.isArray(products)) {
+            productCount = products.length;
+          }
+        }
+        document.getElementById("totalProducts").textContent = productCount;
+
+        // Show main content
+        hideLoading();
+        showMainContent();
+      }
+
+      // Toggle edit form
+      function toggleEditForm() {
+        const params = getUrlParams();
+        if (params.keboonId && params.phone) {
+          window.location.href = `farmer-edit.html?keboonId=${encodeURIComponent(
+            params.keboonId
+          )}&phone=${encodeURIComponent(params.phone)}`;
+        }
+      }
+
+      // View public profile function
+      function viewPublicProfile() {
+        if (farmerData && farmerData.farmName) {
+          const profileUrl = generateProfileUrl(farmerData.farmName);
+          window.open(profileUrl, "_blank");
+        }
+      }
+
+      // Show error
+      function showError(message) {
+        document.getElementById("loadingSection").style.display = "none";
+        document.getElementById("errorMessage").textContent = message;
+        document.getElementById("errorSection").style.display = "block";
+      }
+
+      function hideLoading() {
+        document.getElementById("loadingSection").style.display = "none";
+      }
+
+      function showMainContent() {
+        document.getElementById("mainContent").style.display = "block";
+      }
+
+      // Handle page visibility change
+      document.addEventListener("visibilitychange", function () {
+        if (!document.hidden && farmerData) {
+          // Refresh message stats when page becomes visible
+          loadMessageStats();
+        }
+      });
+
+      // Initialize dashboard
+      document.addEventListener("DOMContentLoaded", function () {
+        // Handle logo error
+        const logo = document.getElementById("headerLogo");
+        logo.addEventListener("error", function () {
+          this.style.display = "none";
+        });
+
+        // Load farmer data
+        loadFarmerData();
+      });
+
+      // Cleanup on page unload
+      window.addEventListener("beforeunload", function () {
+        stopMessageStatsRefresh();
+      });
+    </script>
+  </body>
+</html>
