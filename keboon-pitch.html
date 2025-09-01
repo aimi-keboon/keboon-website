@@ -3,516 +3,693 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keboon: Connecting Neighbours, Sharing Freshness</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <title>Keboon - Hyperlocal Fresh Produce Platform Malaysia</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vega/5.25.0/vega.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vega-lite/5.15.1/vega-lite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vega-embed/6.22.2/vega-embed.min.js"></script>
     <style>
-        :root {
-            --primary-color: #377E62;
-            --secondary-color: #52AE77;
-            --text-color: black;
-            --background-color: #F0F9F4;
-        }
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            background-color: var(--background-color);
         }
-        header, footer {
-            background-color: var(--primary-color);
-            color: white;
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
             text-align: center;
-            padding: 2em;
-            margin-bottom: 20px;
-            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         }
-        header h1, footer h2 {
-            color: white;
-            margin: 0;
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        h1, h2, h3 {
-            color: var(--primary-color);
+        .header p {
+            font-size: 1.3em;
+            color: #555;
+            margin-bottom: 0;
         }
         .section {
-            background-color: white;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .section h2 {
+            color: #2E7D32;
+            font-size: 2.2em;
             margin-bottom: 20px;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
         }
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+        .section h3 {
+            color: #4CAF50;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        .problem-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
+            margin: 20px 0;
         }
-        .card {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            padding: 20px;
-            flex: 1 1 calc(33.333% - 20px);
-            min-width: 250px;
-            transition: transform 0.3s ease;
-            box-sizing: border-box;
-            border: 1px solid var(--secondary-color);
-        }
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        .feature-icon {
-            font-size: 2em;
-            margin-bottom: 10px;
-            color: var(--secondary-color);
-        }
-        .table-container {
-            overflow-x: auto;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-            font-size: 0.9rem;
-        }
-        th, td {
-            border: 1px solid var(--secondary-color);
-            padding: 0.5rem;
-            text-align: left;
-        }
-        th {
-            background-color: var(--primary-color);
+        .stat-card {
+            background: linear-gradient(135deg, #FF5722, #FF7043);
             color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(255, 87, 34, 0.3);
         }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            display: block;
+        }
+        .solution-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .solution-card {
+            background: linear-gradient(135deg, #2E7D32, #4CAF50);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(46, 125, 50, 0.3);
         }
         .chart-container {
-            width: 100%;
-            max-width: 600px;
-            margin: 20px auto;
-        }
-        .journey-card {
-            position: relative;
-            padding-left: 50px;
-        }
-        .journey-number {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 40px;
-            height: 40px;
-            background-color: var(--secondary-color);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2em;
-            font-weight: bold;
-        }
-        .story-section {
-            background-color: #e6f3ed;
-            border-left: 5px solid var(--primary-color);
-            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
             margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .chart-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2E7D32;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .market-opportunity {
+            background: linear-gradient(135deg, #3F51B5, #5C6BC0);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .market-opportunity h2 {
+            color: white;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+        }
+        .cta {
+            background: linear-gradient(135deg, #FF6F00, #FFB74D);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .highlight {
+            background: rgba(76, 175, 80, 0.1);
+            padding: 15px;
+            border-left: 5px solid #4CAF50;
             border-radius: 0 10px 10px 0;
+            margin: 15px 0;
         }
-        .story-section h3 {
-            color: var(--primary-color);
-            margin-top: 0;
+        .platform-demo {
+            background: linear-gradient(135deg, #1E88E5, #42A5F5);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
         }
-        @media (max-width: 768px) {
-            .card {
-                flex: 1 1 100%;
-            }
+        .platform-demo h2 {
+            color: white;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+        }
+        .user-journey {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .journey-step {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .data-source {
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Keboon: Connecting Neighbours, Sharing Freshness</h1>
-    </header>
+    <div class="container">
+        <div class="header">
+            <h1>KEBOON</h1>
+            <p>Malaysia's Hyperlocal Fresh Produce Marketplace</p>
+            <p style="font-size: 1em; margin-top: 15px;"><em>"Connecting Local Growers with Nearby Consumers Using Geolocation Technology"</em></p>
+        </div>
 
-    <div class="section">
-        <h2>Introduction</h2>
-        <p>Keboon is an innovative platform addressing the issue of excess home-grown produce going to waste. We connect local producers with consumers, ensuring no produce goes to waste and promoting local, organic food consumption.</p>
-    </div>
+        <div class="section">
+            <h2>🚨 Malaysia's Fresh Produce Challenge</h2>
+            <div class="problem-stats">
+                <div class="stat-card">
+                    <span class="stat-number">RM78.9B</span>
+                    Food Imports (2023)
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">45.4%</span>
+                    Vegetable Self-Sufficiency
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">US$5.23B</span>
+                    Fresh Veg Market Size
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">841,000</span>
+                    Tonnes Local Production
+                </div>
+            </div>
 
-    <div class="section">
-        <h2>Problem Statement</h2>
-        <div class="card-container">
-            <div class="card">
-                <h3>Issue</h3>
-                <p>Excess home-grown produce often goes to waste.</p>
+            <div class="chart-container">
+                <div class="chart-title">Malaysia Food Import Growth (2014-2023)</div>
+                <div id="food-import-chart"></div>
+                <div class="data-source">Source: Statistics Malaysia, Department of Statistics Malaysia Official Portal</div>
             </div>
-            <div class="card">
-                <h3>Common Solution</h3>
-                <p>Sharing with neighbours, but not everyone has the time or network to do so effectively.</p>
-            </div>
-            <div class="card">
-                <h3>Opportunity</h3>
-                <p>Create a platform where local producers can sell their surplus, ensuring no produce goes to waste and promoting local, organic food consumption.</p>
-            </div>
-        </div>
-        <div class="story-section">
-            <h3>Meet Sarah: A Typical Home Gardener</h3>
-            <p>Sarah loves gardening and often finds herself with an abundance of tomatoes and cucumbers. She used to give them away to neighbors, but it became time-consuming to coordinate. Sometimes, her excess produce would end up in the compost bin. Sarah wishes there was an easy way to share her harvest with her community and maybe earn a little extra income.</p>
-        </div>
-    </div>
 
-    <div class="section">
-        <h2>Solution: Keboon</h2>
-        <p>An online marketplace connecting local producers with consumers.</p>
-        <div class="card-container">
-            <div class="card">
-                <div class="feature-icon">🌱</div>
-                <p>Sell surplus home-grown produce</p>
+            <div class="chart-container">
+                <div class="chart-title">Malaysia Vegetable Self-Sufficiency Ratio by Category (2023)</div>
+                <div id="ssr-chart"></div>
+                <div class="data-source">Source: Ministry of Agriculture and Food Security Malaysia, CodeBlue</div>
             </div>
-            <div class="card">
-                <div class="feature-icon">🛒</div>
-                <p>Buy organic, fresh, and locally-sourced products</p>
-            </div>
-            <div class="card">
-                <div class="feature-icon">🤝</div>
-                <p>Connect with local community</p>
-            </div>
-        </div>
-        <div class="story-section">
-            <h3>How Keboon Helps Sarah</h3>
-            <p>With Keboon, Sarah can easily list her extra tomatoes and cucumbers on the app. Her neighbors can see what's available nearby and purchase directly from her. Sarah reduces waste, earns some money, and connects with her community. Meanwhile, her neighbors get fresh, locally-grown produce at great prices.</p>
-        </div>
-    </div>
 
-    <div class="section">
-        <h2>Target Market</h2>
-        <p>Keboon targets 3 million Malaysians:</p>
-        <div class="chart-container">
-            <canvas id="targetMarketChart"></canvas>
+            <div class="highlight">
+                <h3>Key Problems We Solve:</h3>
+                <ul>
+                    <li><strong>54.6% Import Dependency:</strong> Malaysia imports majority of vegetables despite local production capacity</li>
+                    <li><strong>Disconnected Markets:</strong> Local growers struggle to reach nearby consumers directly</li>
+                    <li><strong>Long Supply Chains:</strong> Multiple intermediaries increase costs by 200-300%</li>
+                    <li><strong>Limited Fresh Access:</strong> Urban consumers pay premium for produce that's days old</li>
+                    <li><strong>Underutilized Growing Capacity:</strong> Potential growers lack market access</li>
+                    <li><strong>Information Gap:</strong> No platform connecting supply and demand at hyperlocal level</li>
+                </ul>
+            </div>
         </div>
-    </div>
 
-    <div class="section">
-        <h2>Target Market Profile</h2>
-        <div class="table-container">
-            <table>
-                <tr>
-                    <th>Target Market</th>
-                    <th>Needs</th>
-                    <th>Value Proposition</th>
-                </tr>
-                <tr>
-                    <td>Home Gardeners (1.5 million)</td>
-                    <td>A platform to sell excess produce, reduce waste, and earn additional income.</td>
-                    <td>Keboon provides an easy-to-use marketplace where producers can monetize their surplus, connect with local buyers, and contribute to the local economy.</td>
-                </tr>
-                <tr>
-                    <td>Urban Farmers (500,000)</td>
-                    <td>A platform to market and sell produce directly to local consumers and connections with other urban farmers and potential buyers.</td>
-                    <td>Keboon provides a marketplace to reach local consumers, enhancing profitability and visibility. It supports their mission to contribute to urban food security and sustainability.</td>
-                </tr>
-                <tr>
-                    <td>Eco-conscious Consumers (2 million)</td>
-                    <td>Access to fresh, organic, and locally-grown produce with a clear understanding of the food's origin.</td>
-                    <td>Keboon offers a convenient way to buy trusted, local produce directly from growers, often at more competitive prices than traditional grocery stores.</td>
-                </tr>
-            </table>
+        <div class="platform-demo">
+            <h2>📱 How Keboon Works - The Geolocation Advantage</h2>
+            <div class="user-journey">
+                <div class="journey-step">
+                    <h3>🌱 Growers Upload</h3>
+                    <p>List fresh produce with photos</p>
+                    <p>Set location and availability</p>
+                    <p>Price competitively</p>
+                    <p>Get discovered locally</p>
+                </div>
+                <div class="journey-step">
+                    <h3>📍 Smart Matching</h3>
+                    <p>Geolocation within 5-10km</p>
+                    <p>Real-time inventory</p>
+                    <p>Distance-based ranking</p>
+                    <p>Freshness optimization</p>
+                </div>
+                <div class="journey-step">
+                    <h3>🛒 Consumers Browse</h3>
+                    <p>See nearby fresh produce</p>
+                    <p>Compare prices and quality</p>
+                    <p>Order for pickup/delivery</p>
+                    <p>Support local growers</p>
+                </div>
+                <div class="journey-step">
+                    <h3>📈 Marketplace Growth</h3>
+                    <p>Community building</p>
+                    <p>Reviews and ratings</p>
+                    <p>Seasonal coordination</p>
+                    <p>Gig economy expansion</p>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="section">
-        <h2>Why Keboon?</h2>
-        <div class="card-container">
-            <div class="card">
-                <h3>Cost-Effective for Everyone</h3>
-                <p>Lower prices for consumers and fair earnings for producers</p>
+        <div class="market-opportunity">
+            <h2>📈 Market Opportunity</h2>
+            <div class="chart-container">
+                <div class="chart-title">Malaysia Fresh Vegetables Market Growth</div>
+                <div id="market-growth-chart"></div>
+                <div class="data-source">Source: Statista Market Forecast, IndexBox Malaysia Vegetable Market Report</div>
             </div>
-            <div class="card">
-                <h3>Reduce Waste, Support Sustainability</h3>
-                <p>Minimize food waste and environmental impact</p>
-            </div>
-            <div class="card">
-                <h3>Access to Fresh, Organic Produce</h3>
-                <p>Direct access to local, organic products</p>
-            </div>
-            <div class="card">
-                <h3>Empower Local Producers</h3>
-                <p>Enable earning from surplus produce</p>
-            </div>
-            <div class="card">
-                <h3>Strengthen Community Connections</h3>
-                <p>Foster stronger local food networks</p>
-            </div>
-            <div class="card">
-                <h3>Convenient and Trustworthy</h3>
-                <p>Easy-to-use platform with transparency</p>
-            </div>
+            <p>Malaysia's fresh vegetable market is <strong>US$5.23 billion (2024)</strong> growing at <strong>7.19% CAGR</strong></p>
+            <p>Only <strong>45.4% self-sufficient</strong> - massive opportunity to connect local supply with demand</p>
         </div>
-    </div>
 
-    <div class="section">
-        <h2>Revenue Model</h2>
-        <div class="card-container">
-            <div class="card">
-                <h3>Commission on Sales</h3>
-                <p>Percentage of each transaction</p>
+        <div class="section">
+            <h2>💡 Keboon Platform - Gig Economy for Growers</h2>
+            <div class="solution-stats">
+                <div class="solution-card">
+                    <span class="stat-number">5-10km</span>
+                    Hyperlocal Radius
+                </div>
+                <div class="solution-card">
+                    <span class="stat-number">0</span>
+                    Intermediaries
+                </div>
+                <div class="solution-card">
+                    <span class="stat-number">70-80%</span>
+                    Grower Revenue Share
+                </div>
+                <div class="solution-card">
+                    <span class="stat-number">24/7</span>
+                    Market Access
+                </div>
             </div>
-            <div class="card">
-                <h3>Subscription Plans</h3>
-                <p>Premium features for frequent users</p>
-            </div>
-            <div class="card">
-                <h3>Partnerships</h3>
-                <p>Collaborations with seed and fertilizer distributors</p>
-            </div>
-        </div>
-    </div>
 
-    <div class="section">
-        <h2>Sales Targets</h2>
-        <div class="chart-container">
-            <canvas id="salesTargetChart"></canvas>
-        </div>
-        <div class="table-container">
-            <h3>Detailed Sales Target Breakdown</h3>
-            <table>
-                <tr>
-                    <th>Year</th>
-                    <th>Users</th>
-                    <th>Average Transaction</th>
-                    <th>Transactions per User</th>
-                    <th>Transaction Fee</th>
-                    <th>Pro Plan Subscribers</th>
-                    <th>Pro Plan Fee</th>
-                    <th>Total Revenue</th>
-                </tr>
-                <tr>
-                    <td>Year 1</td>
-                    <td>50,000</td>
-                    <td>RM50</td>
-                    <td>10</td>
-                    <td>RM0.50</td>
-                    <td>2,500 (5%)</td>
-                    <td>RM50/year</td>
-                    <td>RM375,000</td>
-                </tr>
-                <tr>
-                    <td>Year 2</td>
-                    <td>100,000</td>
-                    <td>RM50</td>
-                    <td>10</td>
-                    <td>RM1.00</td>
-                    <td>5,000 (5%)</td>
-                    <td>RM50/year</td>
-                    <td>RM1,250,000</td>
-                </tr>
-            </table>
-        </div>
-        <div class="story-section">
-            <h3>How We Plan to Achieve These Targets</h3>
-            <h4>Year 1 Strategy:</h4>
+            <h3>Gig Economy Model - Everyone Can Be a Grower:</h3>
             <ul>
-                <li>Focus on user acquisition through targeted marketing campaigns</li>
-                <li>Implement a referral program to encourage organic growth</li>
-                <li>Partner with local community gardens and urban farming initiatives</li>
-                <li>Offer promotional rates to early adopters</li>
-                <li>Continuously gather and implement user feedback to improve the platform</li>
+                <li><strong>Backyard Growers:</strong> Monetize excess vegetables from home gardens</li>
+                <li><strong>Rooftop Farmers:</strong> Urban dwellers growing herbs, leafy greens</li>
+                <li><strong>Community Gardens:</strong> Schools, condos, offices selling surplus</li>
+                <li><strong>Weekend Farmers:</strong> Part-time growers with small plots</li>
+                <li><strong>Seasonal Growers:</strong> Flexible participation based on growing cycles</li>
             </ul>
-            <h4>Year 2 Strategy:</h4>
+
+            <h3>Platform Features:</h3>
             <ul>
-                <li>Expand marketing efforts to reach a broader audience</li>
-                <li>Introduce the Pro Plan with advanced features to incentivize upgrades</li>
-                <li>Develop partnerships with environmental organizations and local governments</li>
-                <li>Implement a loyalty program to increase user retention and transaction frequency</li>
-                <li>Explore B2B opportunities to diversify revenue streams</li>
+                <li><strong>Geolocation Matching:</strong> Smart proximity-based discovery</li>
+                <li><strong>Quality Verification:</strong> Photo uploads, ratings, freshness tracking</li>
+                <li><strong>Flexible Fulfillment:</strong> Pickup, local delivery, meet-up points</li>
+                <li><strong>Growing Guidance:</strong> Tips, seasonal calendars, demand insights</li>
+                <li><strong>Community Building:</strong> Local food networks, knowledge sharing</li>
+            </ul>
+
+            <div class="chart-container">
+                <div class="chart-title">Projected User Growth - Gig Economy Model</div>
+                <div id="user-growth-chart"></div>
+                <div class="data-source">Keboon Internal Projections</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>💰 Business Model - Multiple Revenue Streams</h2>
+            
+            <div class="chart-container">
+                <div class="chart-title">Revenue Streams Projection (5-Year)</div>
+                <div id="revenue-streams-chart"></div>
+                <div class="data-source">Keboon Financial Model</div>
+            </div>
+
+            <h3>6 Primary Revenue Streams:</h3>
+            <ul>
+                <li><strong>Transaction Commission (40%):</strong> 8-15% on successful sales</li>
+                <li><strong>Premium Subscriptions (25%):</strong> Enhanced features for growers (RM30-80/month)</li>
+                <li><strong>Advertising Revenue (15%):</strong> Featured listings, sponsored products</li>
+                <li><strong>Data & Analytics (10%):</strong> Market insights to agricultural businesses</li>
+                <li><strong>Logistics Partner Fees (7%):</strong> Commission from delivery services</li>
+                <li><strong>Equipment & Supplies (3%):</strong> Seeds, tools, growing supplies marketplace</li>
+            </ul>
+
+            <h3>Unit Economics Target (Year 3):</h3>
+            <ul>
+                <li><strong>Average Transaction:</strong> RM45</li>
+                <li><strong>Commission Rate:</strong> 12%</li>
+                <li><strong>Customer Acquisition Cost:</strong> RM35</li>
+                <li><strong>Customer Lifetime Value:</strong> RM520</li>
+                <li><strong>Monthly Active Users:</strong> 50,000</li>
             </ul>
         </div>
-    </div>
 
-    <div class="section">
-        <h2>Keboon Journey: From Concept to Market Leader</h2>
-        <div class="card-container">
-            <div class="card journey-card">
-                <div class="journey-number">1</div>
-                <h3>Development and Launch</h3>
+        <div class="section">
+            <h2>🎯 Target Market Analysis</h2>
+            
+            <div class="chart-container">
+                <div class="chart-title">Target Market Segments</div>
+                <div id="market-segments-chart"></div>
+                <div class="data-source">Malaysia Consumer Market Analysis</div>
+            </div>
+
+            <h3>Consumer Segments:</h3>
+            <ul>
+                <li><strong>Health-Conscious Urban Families (35%):</strong> Premium for fresh, local produce</li>
+                <li><strong>Environmentally Conscious Millennials (25%):</strong> Sustainability-focused purchasing</li>
+                <li><strong>Local Community Supporters (20%):</strong> Supporting neighbors and local economy</li>
+                <li><strong>Convenience Seekers (15%):</strong> Easy access to fresh produce</li>
+                <li><strong>Small Businesses (5%):</strong> Restaurants, cafes sourcing ingredients</li>
+            </ul>
+
+            <h3>Grower Segments:</h3>
+            <ul>
+                <li><strong>Home Gardeners:</strong> 2.5M Malaysian households with gardens</li>
+                <li><strong>Urban Growers:</strong> Apartment/condo dwellers with growing setups</li>
+                <li><strong>Small-scale Farmers:</strong> Looking for direct market access</li>
+                <li><strong>Community Gardens:</strong> Schools, offices, residential communities</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>📊 Financial Projections</h2>
+            
+            <div class="chart-container">
+                <div class="chart-title">5-Year Revenue and User Projections</div>
+                <div id="financial-forecast-chart"></div>
+                <div class="data-source">Keboon Business Plan Model</div>
+            </div>
+
+            <div class="highlight">
+                <h3>Funding Requirements:</h3>
                 <ul>
-                    <li>Develop core functionalities</li>
-                    <li>Create user-friendly interface</li>
-                    <li>Implement secure payments</li>
-                    <li>Soft launch in select communities</li>
-                    <li>Gather and implement feedback</li>
+                    <li><strong>Seed Round: RM2M</strong> - Platform development, pilot launch Klang Valley</li>
+                    <li><strong>Series A: RM8M</strong> - National expansion, advanced features</li>
+                    <li><strong>Series B: RM20M</strong> - Regional expansion, AI/ML capabilities</li>
                 </ul>
             </div>
-            <div class="card journey-card">
-                <div class="journey-number">2</div>
-                <h3>Expand and Reward</h3>
-                <ul>
-                    <li>Launch marketing campaigns</li>
-                    <li>Implement rewards system</li>
-                    <li>Introduce referral program</li>
-                    <li>Enhance customer support</li>
-                    <li>Analyze and improve performance</li>
-                </ul>
+
+            <h3>Key Metrics by Year 5:</h3>
+            <ul>
+                <li><strong>Revenue:</strong> RM85M annually</li>
+                <li><strong>Active Users:</strong> 150,000 consumers, 12,000 growers</li>
+                <li><strong>Transactions:</strong> 2.5M annually</li>
+                <li><strong>Market Share:</strong> 15% of online fresh produce in Malaysia</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>🌍 Environmental & Social Impact</h2>
+            
+            <div class="chart-container">
+                <div class="chart-title">Impact Projections (Cumulative by 2029)</div>
+                <div id="impact-chart"></div>
+                <div class="data-source">Keboon Impact Assessment Model</div>
             </div>
-            <div class="card journey-card">
-                <div class="journey-number">3</div>
-                <h3>New Features</h3>
-                <ul>
-                    <li>Add planting scheduler</li>
-                    <li>Implement recycling integration</li>
-                    <li>Enhance sustainability metrics</li>
-                    <li>Partner with environmental orgs</li>
-                    <li>Launch educational content</li>
-                </ul>
-            </div>
-            <div class="card journey-card">
-                <div class="journey-number">4</div>
-                <h3>Scale and Explore</h3>
-                <ul>
-                    <li>Expand to new areas in Malaysia</li>
-                    <li>Introduce B2B features</li>
-                    <li>Develop new partnerships</li>
-                    <li>Explore international expansion</li>
-                    <li>Continuous innovation</li>
-                </ul>
-            </div>
+
+            <h3>Environmental Benefits:</h3>
+            <ul>
+                <li><strong>Carbon Reduction:</strong> 25,000 tonnes CO2 saved (reduced transport)</li>
+                <li><strong>Food Miles Eliminated:</strong> 15 million kilometers annually</li>
+                <li><strong>Local Production Boost:</strong> 5% increase in small-scale growing</li>
+                <li><strong>Food Waste Reduction:</strong> 2,000 tonnes prevented (direct sales)</li>
+            </ul>
+
+            <h3>Social & Economic Impact:</h3>
+            <ul>
+                <li><strong>Grower Income:</strong> Average RM800/month additional income</li>
+                <li><strong>Job Creation:</strong> 5,000 gig economy opportunities</li>
+                <li><strong>Community Building:</strong> 500 local food networks established</li>
+                <li><strong>Food Security:</strong> Improved access for 200,000 consumers</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>🏆 Why Keboon Will Succeed</h2>
+            <h3>Market Readiness:</h3>
+            <ul>
+                <li><strong>Post-COVID Awareness:</strong> Increased focus on local food security</li>
+                <li><strong>Government Support:</strong> National Food Security Policy encourages local production</li>
+                <li><strong>Technology Adoption:</strong> High smartphone penetration (89% in urban areas)</li>
+                <li><strong>Growing Movement:</strong> Urban gardening trending among Malaysians</li>
+            </ul>
+
+            <h3>Competitive Advantages:</h3>
+            <ul>
+                <li><strong>Hyperlocal Focus:</strong> 5-10km radius vs. city-wide competitors</li>
+                <li><strong>Gig Economy Model:</strong> Everyone can participate as grower</li>
+                <li><strong>Malaysian-First:</strong> Local vegetables, cultural preferences</li>
+                <li><strong>Community-Driven:</strong> Social connections beyond transactions</li>
+                <li><strong>Lower Barriers:</strong> Easy entry for small-scale growers</li>
+            </ul>
+        </div>
+
+        <div class="cta">
+            <h2>🚀 Join Malaysia's Local Food Revolution</h2>
+            <p>Keboon bridges the gap between Malaysia's 45.4% vegetable self-sufficiency and growing demand for fresh, local produce.</p>
+            <p><strong>We're building the infrastructure for Malaysia's food security - one neighborhood at a time.</strong></p>
         </div>
     </div>
-
-    <div class="section">
-        <h2>Funding Request from Cradle</h2>
-        <div class="table-container">
-            <table>
-                <tr>
-                    <th>Category</th>
-                    <th>Amount (RM)</th>
-                </tr>
-                <tr>
-                    <td>Software Development</td>
-                    <td>60,000</td>
-                </tr>
-                <tr>
-                    <td>UI/UX Design</td>
-                    <td>20,000</td>
-                </tr>
-                <tr>
-                    <td>Server and Infrastructure</td>
-                    <td>15,000</td>
-                </tr>
-                <tr>
-                    <td>Marketing and User Acquisition</td>
-                    <td>25,000</td>
-                </tr>
-                <tr>
-                    <td>Legal and Compliance</td>
-                    <td>10,000</td>
-                </tr>
-                <tr>
-                    <td>Market Research and Testing</td>
-                    <td>15,000</td>
-                </tr>
-                <tr>
-                    <td>Contingency Fund</td>
-                    <td>5,000</td>
-                </tr>
-                <tr>
-                    <th>Total Funding Requested</th>
-                    <th>150,000</th>
-                </tr>
-            </table>
-        </div>
-        <div class="story-section">
-            <h3>Funding Allocation and Strategy</h3>
-            <p>This funding will cover the development of our MVP, initial market launch, and operations for the first 12 months. The allocation prioritizes core technology development while ensuring adequate resources for user acquisition and market validation. The requested amount maximizes the available funding from Cradle to accelerate Keboon's development and market entry, setting a strong foundation for future growth and potential additional funding rounds.</p>
-        </div>
-    </div>
-
-    <footer>
-        <h2>Contact Us</h2>
-        <p>Website: keboon.net</p>
-        <p>Company: Keboon Technology Solution</p>
-        <p>Business Registration Number: 003639101-D</p>
-    </footer>
 
     <script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        // Target Market Chart
-        var ctx = document.getElementById('targetMarketChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Home Gardeners', 'Urban Farmers', 'Eco-conscious Consumers'],
-                datasets: [{
-                    data: [1.5, 0.5, 2],
-                    backgroundColor: ['#377E62', '#52AE77', '#8FD3A5']
-                }]
+        // Food Import Growth Chart
+        const importGrowthSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "width": 500,
+            "height": 300,
+            "data": {
+                "values": [
+                    {"year": "2014", "imports": 42.64},
+                    {"year": "2015", "imports": 45.2},
+                    {"year": "2016", "imports": 47.8},
+                    {"year": "2017", "imports": 52.1},
+                    {"year": "2018", "imports": 58.3},
+                    {"year": "2019", "imports": 62.7},
+                    {"year": "2020", "imports": 68.2},
+                    {"year": "2021", "imports": 71.5},
+                    {"year": "2022", "imports": 75.62},
+                    {"year": "2023", "imports": 78.9}
+                ]
             },
-            options: {
-                responsive: true,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Keboon Target Market (Millions)',
-                        color: 'black'
-                    },
-                    legend: {
-                        labels: {
-                            color: 'black'
-                        }
-                    }
+            "mark": {"type": "line", "point": {"size": 100}, "color": "#FF5722", "strokeWidth": 4},
+            "encoding": {
+                "x": {"field": "year", "type": "ordinal", "title": "Year", "axis": {"labelAngle": -45}},
+                "y": {"field": "imports", "type": "quantitative", "title": "Food Imports (RM Billion)", "scale": {"zero": false}}
+            }
+        };
+
+        // Self-Sufficiency Ratio Chart
+        const ssrSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "width": 500,
+            "height": 300,
+            "data": {
+                "values": [
+                    {"category": "Tomatoes", "ssr": 123.7, "status": "Surplus"},
+                    {"category": "Spinach", "ssr": 112.0, "status": "Surplus"},
+                    {"category": "Lettuce", "ssr": 114.0, "status": "Surplus"},
+                    {"category": "Cucumber", "ssr": 112.1, "status": "Surplus"},
+                    {"category": "Long Beans", "ssr": 107.2, "status": "Surplus"},
+                    {"category": "Brinjal", "ssr": 112.3, "status": "Surplus"},
+                    {"category": "Lady's Finger", "ssr": 102.2, "status": "Surplus"},
+                    {"category": "Chili", "ssr": 29.3, "status": "Deficit"},
+                    {"category": "Onions", "ssr": 0, "status": "Deficit"},
+                    {"category": "Garlic", "ssr": 0, "status": "Deficit"}
+                ]
+            },
+            "mark": {"type": "bar", "tooltip": true},
+            "encoding": {
+                "x": {"field": "category", "type": "nominal", "title": "Vegetable Category", "axis": {"labelAngle": -45}},
+                "y": {"field": "ssr", "type": "quantitative", "title": "Self-Sufficiency Ratio (%)"},
+                "color": {
+                    "field": "status",
+                    "type": "nominal",
+                    "scale": {"range": ["#FF5722", "#4CAF50"]},
+                    "title": "Status"
                 }
             }
-        });
+        };
 
-        // Sales Target Chart
-        var salesCtx = document.getElementById('salesTargetChart').getContext('2d');
-        new Chart(salesCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Year 1', 'Year 2'],
-                datasets: [{
-                    label: 'Revenue (RM)',
-                    data: [375000, 1250000],
-                    backgroundColor: ['#377E62', '#52AE77']
-                }]
+        // Market Growth Chart
+        const marketGrowthSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "width": 500,
+            "height": 300,
+            "data": {
+                "values": [
+                    {"year": "2024", "market_size": 5.23},
+                    {"year": "2025", "market_size": 5.61},
+                    {"year": "2026", "market_size": 6.01},
+                    {"year": "2027", "market_size": 6.44},
+                    {"year": "2028", "market_size": 6.91},
+                    {"year": "2029", "market_size": 7.40}
+                ]
             },
-            options: {
-                responsive: true,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Projected Sales Targets',
-                        color: 'black'
-                    },
-                    legend: {
-                        labels: {
-                            color: 'black'
-                        }
+            "mark": {"type": "area", "color": "#4CAF50", "opacity": 0.7},
+            "encoding": {
+                "x": {"field": "year", "type": "ordinal", "title": "Year"},
+                "y": {"field": "market_size", "type": "quantitative", "title": "Market Size (USD Billion)"}
+            }
+        };
+
+        // User Growth Chart
+        const userGrowthSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "width": 500,
+            "height": 300,
+            "data": {
+                "values": [
+                    {"year": "2025", "consumers": 2500, "growers": 400},
+                    {"year": "2026", "consumers": 8500, "growers": 1200},
+                    {"year": "2027", "consumers": 25000, "growers": 3500},
+                    {"year": "2028", "consumers": 65000, "growers": 7500},
+                    {"year": "2029", "consumers": 150000, "growers": 12000}
+                ]
+            },
+            "transform": [
+                {"fold": ["consumers", "growers"], "as": ["user_type", "count"]}
+            ],
+            "mark": {"type": "line", "point": true, "strokeWidth": 3},
+            "encoding": {
+                "x": {"field": "year", "type": "ordinal", "title": "Year"},
+                "y": {"field": "count", "type": "quantitative", "title": "Active Users"},
+                "color": {
+                    "field": "user_type",
+                    "type": "nominal",
+                    "scale": {"range": ["#2E7D32", "#FF9800"]},
+                    "title": "User Type"
+                }
+            }
+        };
+
+        // Revenue Streams Chart
+        const revenueStreamsSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "width": 500,
+            "height": 300,
+            "data": {
+                "values": [
+                    {"year": "2025", "commissions": 1.2, "subscriptions": 0.8, "advertising": 0.4, "data": 0.2, "logistics": 0.1},
+                    {"year": "2026", "commissions": 4.5, "subscriptions": 3.0, "advertising": 1.5, "data": 0.8, "logistics": 0.5},
+                    {"year": "2027", "commissions": 12.0, "subscriptions": 8.0, "advertising": 4.0, "data": 2.5, "logistics": 1.8},
+                    {"year": "2028", "commissions": 28.5, "subscriptions": 19.0, "advertising": 9.5, "data": 6.0, "logistics": 4.2},
+                    {"year": "2029", "commissions": 51.0, "subscriptions": 34.0, "advertising": 17.0, "data": 10.5, "logistics": 7.5}
+                ]
+            },
+            "transform": [
+                {"fold": ["commissions", "subscriptions", "advertising", "data", "logistics"], "as": ["stream", "revenue"]}
+            ],
+            "mark": {"type": "bar", "tooltip": true},
+            "encoding": {
+                "x": {"field": "year", "type": "ordinal", "title": "Year"},
+                "y": {"field": "revenue", "type": "quantitative", "title": "Revenue (RM Million)"},
+                "color": {
+                    "field": "stream",
+                    "type": "nominal",
+                    "scale": {"range": ["#1976D2", "#42A5F5", "#90CAF9", "#E3F2FD", "#BBDEFB"]},
+                    "title": "Revenue Stream"
+                }
+            }
+        };
+
+        // Market Segments Chart
+        const marketSegmentsSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "width": 400,
+            "height": 400,
+            "data": {
+                "values": [
+                    {"segment": "Health-Conscious Families", "percentage": 35},
+                    {"segment": "Eco Millennials", "percentage": 25},
+                    {"segment": "Community Supporters", "percentage": 20},
+                    {"segment": "Convenience Seekers", "percentage": 15},
+                    {"segment": "Small Businesses", "percentage": 5}
+                ]
+            },
+            "mark": {"type": "arc", "innerRadius": 50},
+            "encoding": {
+                "theta": {"field": "percentage", "type": "quantitative"},
+                "color": {
+                    "field": "segment",
+                    "type": "nominal",
+                    "scale": {"range": ["#2E7D32", "#4CAF50", "#81C784", "#A5D6A7", "#C8E6C9"]},
+                    "title": "Consumer Segment"
+                },
+                "tooltip": [
+                    {"field": "segment", "type": "nominal"},
+                    {"field": "percentage", "type": "quantitative", "title": "Percentage"}
+                ]
+            }
+        };
+
+        // Financial Forecast Chart
+        const financialForecastSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "width": 500,
+            "height": 300,
+            "data": {
+                "values": [
+                    {"year": "2025", "revenue": 2.7, "users": 2900},
+                    {"year": "2026", "revenue": 10.3, "users": 9700},
+                    {"year": "2027", "revenue": 28.3, "users": 28500},
+                    {"year": "2028", "revenue": 67.2, "users": 72500},
+                    {"year": "2029", "revenue": 120.0, "users": 162000}
+                ]
+            },
+            "resolve": {"scale": {"y": "independent"}},
+            "layer": [
+                {
+                    "mark": {"type": "bar", "opacity": 0.7, "color": "#4CAF50"},
+                    "encoding": {
+                        "x": {"field": "year", "type": "ordinal", "title": "Year"},
+                        "y": {"field": "revenue", "type": "quantitative", "title": "Revenue (RM Million)"}
                     }
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Revenue (RM)',
-                            color: 'black'
-                        },
-                        ticks: {
-                            color: 'black'
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            color: 'black'
-                        }
+                {
+                    "mark": {"type": "line", "point": true, "color": "#FF9800", "strokeWidth": 3},
+                    "encoding": {
+                        "x": {"field": "year", "type": "ordinal"},
+                        "y": {"field": "users", "type": "quantitative", "title": "Total Users", "scale": {"zero": false}}
                     }
                 }
+            ]
+        };
+
+        // Impact Chart
+        const impactSpec = {
+            "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+            "width": 500,
+            "height": 300,
+            "data": {
+                "values": [
+                    {"metric": "CO2 Saved (tonnes)", "value": 25000, "category": "Environmental"},
+                    {"metric": "Food Miles Eliminated (M km)", "value": 15, "category": "Environmental"},
+                    {"metric": "Food Waste Prevented (tonnes)", "value": 2000, "category": "Environmental"},
+                    {"metric": "Grower Jobs Created", "value": 5000, "category": "Social"},
+                    {"metric": "Local Networks", "value": 500, "category": "Social"},
+                    {"metric": "Consumers Served (000s)", "value": 200, "category": "Social"}
+                ]
+            },
+            "mark": {"type": "bar", "tooltip": true},
+            "encoding": {
+                "x": {"field": "metric", "type": "nominal", "title": "Impact Metric", "axis": {"labelAngle": -45}},
+                "y": {"field": "value", "type": "quantitative", "title": "Impact Value"},
+                "color": {
+                    "field": "category",
+                    "type": "nominal",
+                    "scale": {"range": ["#00BCD4", "#FF9800"]},
+                    "title": "Impact Category"
+                }
             }
-        });
-    });
+        };
+
+        // Render all charts
+        vegaEmbed('#food-import-chart', importGrowthSpec);
+        vegaEmbed('#ssr-chart', ssrSpec);
+        vegaEmbed('#market-growth-chart', marketGrowthSpec);
+        vegaEmbed('#user-growth-chart', userGrowthSpec);
+        vegaEmbed('#revenue-streams-chart', revenueStreamsSpec);
+        vegaEmbed('#market-segments-chart', marketSegmentsSpec);
+        vegaEmbed('#financial-forecast-chart', financialForecastSpec);
+        vegaEmbed('#impact-chart', impactSpec);
     </script>
 </body>
 </html>
