@@ -1,1911 +1,476 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Keboon Technology Solution — Web &amp; IT Services</title>
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <!-- Font Awesome -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      rel="stylesheet"
-    />
-    <!-- AOS for scroll animations -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
-      rel="stylesheet"
-    />
-    <!-- LinkedIn Badge Script -->
-    <script
-      src="https://platform.linkedin.com/badges/js/profile.js"
-      async
-      defer
-    ></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<html lang="en-MY">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <style>
-      :root {
-        --color-primary: #6366f1;
-        --color-primary-dark: #4f46e5;
-        --color-secondary: #06b6d4;
-        --color-accent: #f59e0b;
-        --color-success: #10b981;
-        --color-danger: #ef4444;
-        --color-bg: #0f172a;
-        --color-surface: #1e293b;
-        --color-surface-light: #334155;
-        --color-text: #f8fafc;
-        --color-text-muted: #94a3b8;
-        --color-border: #334155;
-        --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-        --gradient-secondary: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
-        --gradient-accent: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
-        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-        --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-        --blur-backdrop: backdrop-filter: blur(16px);
-      }
+  <!-- Primary SEO Meta Tags -->
+  <title>Keboon Technology Solution (KTS) | Affordable Software Development Services in Malaysia</title>
+  <meta name="title" content="Keboon Technology Solution (KTS) | Affordable Software Development Services in Malaysia" />
+  <meta name="description" content="Keboon Technology Solution (KTS) provides affordable software development, business websites, web apps, booking systems, dashboards, integrations, and support add-ons for Malaysian SMEs." />
+  <meta name="keywords" content="software development Malaysia, affordable website Malaysia, web app development Malaysia, SME website developer, business website Malaysia, custom system development, KTS, Keboon Technology Solution, low cost website Malaysia, software support Malaysia" />
+  <meta name="author" content="Keboon Technology Solution" />
+  <meta name="robots" content="index, follow" />
+  <meta name="language" content="English" />
+  <meta name="geo.region" content="MY" />
+  <meta name="geo.placename" content="Malaysia" />
+  <link rel="canonical" href="https://keboon.net/" />
 
-      * {
-        box-sizing: border-box;
-      }
+  <!-- Favicon / Browser Tab Icon -->
+  <link rel="icon" type="image/png" href="/assets/img/ICN-LOGO-1.png" />
+  <link rel="shortcut icon" href="/assets/img/ICN-LOGO-1.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/img/ICN-LOGO-1.png" />
+  <meta name="theme-color" content="#08111f" />
 
-      html {
-        scroll-behavior: smooth;
-      }
+  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://keboon.net/" />
+  <meta property="og:title" content="Keboon Technology Solution (KTS) | Affordable Software Development Services" />
+  <meta property="og:description" content="Lower-tier pricing for websites, web apps, booking systems, dashboards, and support add-ons for SMEs in Malaysia." />
+  <meta property="og:image" content="/assets/img/ICN-LOGO-1.png" />
+  <meta property="og:site_name" content="Keboon Technology Solution" />
+  <meta property="og:locale" content="en_MY" />
 
-      body {
-        margin: 0;
-        background: var(--color-bg);
-        color: var(--color-text);
-        font-family: "Inter", sans-serif;
-        line-height: 1.6;
-        overflow-x: hidden;
-        padding-top: 70px;
-      }
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://keboon.net/" />
+  <meta name="twitter:title" content="KTS | Affordable Software Development Services in Malaysia" />
+  <meta name="twitter:description" content="Affordable software development, websites, dashboards, automation, integrations, and maintenance support for growing businesses." />
+  <meta name="twitter:image" content="/assets/img/ICN-LOGO-1.png" />
 
-      /* Animated background */
-      body::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: 
-          radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-          radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-          radial-gradient(circle at 40% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
-        z-index: -1;
-        animation: float 20s ease-in-out infinite;
-      }
+  <!-- Local Business Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Keboon Technology Solution",
+    "alternateName": "KTS",
+    "url": "https://keboon.net/",
+    "logo": "https://keboon.net//assets/img/ICN-LOGO-1.png",
+    "image": "https://keboon.net//assets/img/ICN-LOGO-1.png",
+    "description": "Affordable software development services for websites, web applications, booking systems, dashboards, integrations, and support in Malaysia.",
+    "areaServed": "Malaysia",
+    "priceRange": "RM800 - RM12000+",
+    "serviceType": [
+      "Website Development",
+      "Software Development",
+      "Web Application Development",
+      "System Maintenance",
+      "Business Automation",
+      "API Integration"
+    ]
+  }
+  </script>
 
-      @keyframes float {
-        0%, 100% { transform: translateY(0px) rotate(0deg); }
-        33% { transform: translateY(-20px) rotate(1deg); }
-        66% { transform: translateY(10px) rotate(-1deg); }
-      }
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-      a {
-        color: var(--color-primary);
-        text-decoration: none;
-        transition: all 0.3s ease;
-      }
 
-      a:hover {
-        color: var(--color-secondary);
-        transform: translateY(-1px);
-      }
+  <style>
+    :root {
+      --bg: #08111f;
+      --bg-soft: #101c2f;
+      --card: rgba(255, 255, 255, 0.08);
+      --card-strong: rgba(255, 255, 255, 0.12);
+      --text: #f8fbff;
+      --muted: #b6c4d8;
+      --primary: #38bdf8;
+      --primary-dark: #0284c7;
+      --accent: #a7f3d0;
+      --border: rgba(255, 255, 255, 0.14);
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+      --radius: 24px;
+    }
 
-      .text-accent {
-        color: var(--color-accent) !important;
-      }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 86px; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.22), transparent 30rem),
+        radial-gradient(circle at top right, rgba(167, 243, 208, 0.14), transparent 28rem),
+        var(--bg);
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
 
-      /* Enhanced Navbar */
-      .navbar {
-        background: rgba(15, 23, 42, 0.9) !important;
-        backdrop-filter: blur(16px);
-        border-bottom: 1px solid var(--color-border);
-        transition: all 0.3s ease;
+    .navbar {
+      backdrop-filter: blur(18px);
+      background: rgba(8, 17, 31, 0.78);
+      border-bottom: 1px solid var(--border);
+    }
+    .navbar-brand { padding: 0; }
+    .site-logo {
+      display: block;
+      width: auto;
+      height: 44px;
+      max-width: 180px;
+      object-fit: contain;
+    }
+    .nav-link { color: var(--muted); font-weight: 700; }
+    .nav-link:hover, .nav-link.active { color: var(--text); }
+
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      align-items: center;
+      padding: 8rem 0 4rem;
+      position: relative;
+    }
+    .hero-badge, .mini-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.55rem 0.9rem; border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.07); border-radius: 999px;
+      color: var(--muted); font-weight: 800; font-size: 0.9rem;
+    }
+    .hero h1 {
+      max-width: 980px; margin-top: 1.4rem;
+      font-size: clamp(2.55rem, 7vw, 6.2rem);
+      line-height: 0.92; letter-spacing: -0.08em; font-weight: 950;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #fff, var(--primary), var(--accent));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero-copy {
+      max-width: 760px; margin: 1.35rem 0 0; color: var(--muted);
+      font-size: clamp(1.03rem, 2vw, 1.25rem); line-height: 1.75;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+    .btn {
+      border-radius: 999px; font-weight: 900; padding: 0.85rem 1.35rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border: 0; box-shadow: 0 16px 34px rgba(56, 189, 248, 0.25);
+    }
+    .btn-outline-light { border-color: var(--border); color: var(--text); }
+
+    .hero-panel {
+      margin-top: 3rem; padding: 1rem; border: 1px solid var(--border);
+      border-radius: var(--radius); background: rgba(255, 255, 255, 0.06); box-shadow: var(--shadow);
+    }
+    .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; }
+    .stat-card {
+      padding: 1.15rem; border-radius: 20px; background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+    }
+    .stat-card strong { display: block; font-size: 1.55rem; letter-spacing: -0.04em; }
+    .stat-card span { color: var(--muted); font-size: 0.9rem; }
+
+    .page-section { padding: 5.5rem 0; }
+    .section-heading {
+      font-size: clamp(2rem, 4vw, 3.8rem); font-weight: 950;
+      letter-spacing: -0.06em; margin-bottom: 1rem;
+    }
+    .section-subtitle {
+      color: var(--muted); max-width: 760px; margin: 0 auto 3rem;
+      line-height: 1.75; font-size: 1.08rem;
+    }
+
+    .glass-card {
+      height: 100%; padding: 1.5rem; border-radius: var(--radius);
+      background: var(--card); border: 1px solid var(--border);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.16);
+      transition: transform 0.22s ease, background 0.22s ease, border-color 0.22s ease;
+    }
+    .glass-card:hover { transform: translateY(-6px); background: var(--card-strong); border-color: rgba(56, 189, 248, 0.42); }
+    .icon-circle {
+      width: 52px; height: 52px; display: grid; place-items: center;
+      border-radius: 18px; background: rgba(56, 189, 248, 0.14);
+      color: var(--primary); font-size: 1.25rem; margin-bottom: 1rem;
+    }
+    .muted { color: var(--muted); }
+
+    .pricing-card { position: relative; overflow: hidden; }
+    .pricing-card.featured { border-color: rgba(167, 243, 208, 0.52); transform: translateY(-8px); }
+    .pricing-card.featured::before {
+      content: "Best Starter Value"; position: absolute; top: 1rem; right: -2.6rem; transform: rotate(35deg);
+      background: var(--accent); color: #062018; font-size: 0.72rem; font-weight: 950; padding: 0.35rem 3rem;
+    }
+    .price { font-size: 2.25rem; font-weight: 950; letter-spacing: -0.06em; margin: 0.6rem 0; }
+    .price small { font-size: 0.95rem; color: var(--muted); font-weight: 700; letter-spacing: 0; }
+    .feature-list { list-style: none; padding: 0; margin: 1.25rem 0 0; }
+    .feature-list li { display: flex; gap: 0.65rem; margin-bottom: 0.8rem; color: var(--muted); }
+    .feature-list i { color: var(--accent); margin-top: 0.2rem; }
+
+    .addon-pill {
+      display: flex; justify-content: space-between; gap: 1rem; padding: 1rem;
+      border-radius: 18px; border: 1px solid var(--border); background: rgba(255, 255, 255, 0.06); margin-bottom: 0.8rem;
+    }
+    .addon-pill strong:last-child { white-space: nowrap; color: var(--accent); }
+
+    .tabs { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin-bottom: 2rem; }
+    .tab-btn {
+      border: 1px solid var(--border); background: rgba(255, 255, 255, 0.06);
+      color: var(--muted); border-radius: 999px; padding: 0.75rem 1rem; font-weight: 850;
+    }
+    .tab-btn.active { color: #06101f; background: var(--accent); border-color: var(--accent); }
+    .portfolio-frame {
+      border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.06); box-shadow: var(--shadow);
+    }
+    .portfolio-frame header {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: 0.85rem 1rem; border-bottom: 1px solid var(--border);
+    }
+    .window-dots { display: flex; gap: 0.4rem; }
+    .window-dots span { width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.32); }
+    iframe { display: block; width: 100%; height: min(60vh, 540px); border: 0; background: #fff; }
+
+    .process-step { position: relative; padding-left: 4.3rem; }
+    .process-number {
+      position: absolute; left: 0; top: 0; width: 48px; height: 48px;
+      display: grid; place-items: center; border-radius: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #06101f; font-weight: 950;
+    }
+
+    .card, .form-control, .form-select {
+      background: rgba(255, 255, 255, 0.08); border: 1px solid var(--border);
+      color: var(--text); border-radius: 18px;
+    }
+    .card { box-shadow: var(--shadow); backdrop-filter: blur(16px); }
+    .form-control, .form-select { padding: 0.9rem 1rem; }
+    .form-control::placeholder { color: rgba(248, 251, 255, 0.58); }
+    .form-control:focus, .form-select:focus {
+      background: rgba(255, 255, 255, 0.1); color: var(--text); border-color: var(--primary);
+      box-shadow: 0 0 0 0.2rem rgba(56, 189, 248, 0.16);
+    }
+    .form-select option { background: #101c2f; color: var(--text); }
+
+    footer { padding: 2rem 0; border-top: 1px solid var(--border); color: var(--muted); }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 991px) {
+      .stat-grid { grid-template-columns: repeat(2, 1fr); }
+      .pricing-card.featured { transform: none; }
+      .navbar-collapse {
         padding: 1rem 0;
       }
-
-      .navbar.scrolled {
-        padding: 0.5rem 0;
-        background: rgba(15, 23, 42, 0.95) !important;
-      }
-
-      .navbar-brand {
-        font-weight: 700;
-        font-size: 1.25rem;
-        background: var(--gradient-primary);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .nav-link {
-        position: relative;
-        font-weight: 500;
-        color: var(--color-text-muted) !important;
-        transition: all 0.3s ease;
-      }
-
-      .nav-link::after {
-        content: '';
-        position: absolute;
-        bottom: -5px;
-        left: 0;
-        width: 0;
-        height: 2px;
-        background: var(--gradient-primary);
-        transition: width 0.3s ease;
-      }
-
-      .nav-link:hover {
-        color: var(--color-text) !important;
-      }
-
-      .nav-link:hover::after {
+      .navbar .btn {
         width: 100%;
-      }
-
-      .navbar-toggler {
-        border: none;
-        color: var(--color-text);
-      }
-
-      .navbar-toggler:focus {
-        box-shadow: none;
-      }
-
-      /* Hero Section */
-      #hero {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        padding: 0 1rem;
-        background: 
-          linear-gradient(rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.9)),
-          url("https://source.unsplash.com/1600x900/?technology,digital,abstract") center/cover no-repeat;
-        text-align: center;
-        color: var(--color-text);
-        position: relative;
-        overflow: hidden;
-      }
-
-      #hero::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: 
-          radial-gradient(circle at 30% 40%, rgba(99, 102, 241, 0.2) 0%, transparent 50%),
-          radial-gradient(circle at 70% 60%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
-        animation: pulse 4s ease-in-out infinite alternate;
-      }
-
-      @keyframes pulse {
-        0% { opacity: 0.5; }
-        100% { opacity: 1; }
-      }
-
-      #hero .container {
-        position: relative;
-        z-index: 2;
-      }
-
-      #hero h1 {
-        font-size: clamp(2rem, 5vw, 3.5rem);
-        font-weight: 700;
-        margin-bottom: 1.5rem;
-        background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        text-shadow: none;
-        line-height: 1.2;
-      }
-
-      #hero p.lead {
-        font-size: clamp(1rem, 2.5vw, 1.25rem);
-        margin-bottom: 2rem;
-        color: var(--color-text-muted);
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      #hero .btn {
-        padding: 1rem 2.5rem;
-        font-size: 1.1rem;
-        font-weight: 600;
-        border-radius: 50px;
-        background: var(--gradient-primary);
-        border: none;
-        color: white;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        transition: all 0.3s ease;
-        box-shadow: var(--shadow-lg);
-        position: relative;
-        overflow: hidden;
-      }
-
-      #hero .btn::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        transition: left 0.5s;
-      }
-
-      #hero .btn:hover::before {
-        left: 100%;
-      }
-
-      #hero .btn:hover {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-xl);
-      }
-
-      /* Section Styling */
-      .page-section {
-        padding: 5rem 0;
-        position: relative;
-      }
-
-      .section-heading {
-        font-size: clamp(2rem, 4vw, 2.5rem);
-        font-weight: 700;
-        margin-bottom: 3rem;
-        background: var(--gradient-primary);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        position: relative;
-      }
-
-      .section-heading::after {
-        content: '';
-        position: absolute;
-        bottom: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 60px;
-        height: 3px;
-        background: var(--gradient-primary);
-        border-radius: 2px;
-      }
-
-      /* Enhanced Cards */
-      .card {
-        background: rgba(30, 41, 59, 0.7);
-        border: 1px solid var(--color-border);
-        border-radius: 20px;
-        transition: all 0.4s ease;
-        backdrop-filter: blur(16px);
-        overflow: hidden;
-        position: relative;
-      }
-
-      .card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
-        transition: left 0.6s;
-      }
-
-      .card:hover::before {
-        left: 100%;
-      }
-
-      .card:hover {
-        transform: translateY(-10px) scale(1.02);
-        box-shadow: var(--shadow-xl);
-        border-color: var(--color-primary);
-      }
-
-      .card-header {
-        background: var(--gradient-primary) !important;
-        border: none;
-        padding: 1rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        color: white !important;
-      }
-
-      .card-body {
-        color: var(--color-text) !important;
-      }
-
-      .package-card .card-header {
-        position: relative;
-        overflow: hidden;
-        color: white !important;
-      }
-
-      .package-card .card-body {
-        color: var(--color-text) !important;
-      }
-
-      .package-price {
-        font-size: 1.5rem;
-        font-weight: 700;
-        font-family: "JetBrains Mono", monospace;
-      }
-
-      .optional-note {
-        font-size: 0.875rem;
-        color: var(--color-text-muted);
-        font-style: italic;
-      }
-
-      /* Enhanced Buttons */
-      .btn {
-        border-radius: 50px;
-        font-weight: 600;
-        padding: 0.75rem 2rem;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-
-      .btn-outline-primary {
-        border: 2px solid var(--color-primary);
-        color: var(--color-primary);
-        background: transparent;
-      }
-
-      .btn-outline-primary:hover {
-        background: var(--color-primary);
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-lg);
-      }
-
-      .btn-outline-info {
-        border: 2px solid var(--color-secondary);
-        color: var(--color-secondary);
-        background: transparent;
-      }
-
-      .btn-outline-info:hover {
-        background: var(--color-secondary);
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-lg);
-      }
-
-      .btn-outline-success {
-        border: 2px solid var(--color-success);
-        color: var(--color-success);
-        background: transparent;
-      }
-
-      .btn-outline-success:hover {
-        background: var(--color-success);
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-lg);
-      }
-
-      .btn-outline-warning {
-        border: 2px solid var(--color-accent);
-        color: var(--color-accent);
-        background: transparent;
-      }
-
-      .btn-outline-warning:hover {
-        background: var(--color-accent);
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-lg);
-      }
-
-      .btn-outline-dark {
-        border: 2px solid var(--color-text);
-        color: var(--color-text);
-        background: transparent;
-      }
-
-      .btn-outline-dark:hover {
-        background: var(--color-text);
-        color: var(--color-bg);
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-lg);
-      }
-
-      /* Enhanced Table */
-      .table {
-        background: rgba(30, 41, 59, 0.7);
-        border-radius: 15px;
-        overflow: hidden;
-        backdrop-filter: blur(16px);
-        border: 1px solid var(--color-border);
-      }
-
-      .table th {
-        background: var(--gradient-primary);
-        color: white;
-        font-weight: 600;
-        border: none;
-        padding: 1rem;
-      }
-
-      .table td {
-        border-color: var(--color-border);
-        color: var(--color-bg) !important;
-        padding: 1rem;
-        font-weight: 500;
-      }
-
-      .table td strong {
-        color: var(--color-bg) !important;
-      }
-
-      .table td i {
-        color: var(--color-success) !important;
-      }
-
-      .table tbody tr:hover td {
-        color: var(--color-bg) !important;
-      }
-
-      .table-hover tbody tr:hover {
-        background: rgba(99, 102, 241, 0.1);
-      }
-
-      /* Enhanced Accordion */
-      .accordion-item {
-        background: rgba(30, 41, 59, 0.7);
-        border: 1px solid var(--color-border);
-        border-radius: 15px !important;
-        margin-bottom: 1rem;
-        backdrop-filter: blur(16px);
-      }
-
-      .accordion-button {
-        background: transparent;
-        color: var(--color-text);
-        border: none;
-        font-weight: 600;
-        padding: 1rem;
-        border-radius: 15px !important;
-        font-size: 0.9rem;
-      }
-
-      .accordion-button:not(.collapsed) {
-        background: var(--gradient-primary);
-        color: white;
-      }
-
-      .accordion-button:focus {
-        box-shadow: none;
-        border: none;
-      }
-
-      .accordion-body {
-        background: rgba(51, 65, 85, 0.3);
-        color: var(--color-text-muted);
-        padding: 1rem;
-        font-size: 0.875rem;
-      }
-
-      /* Enhanced Form */
-      .form-control, .form-select {
-        background: rgba(30, 41, 59, 0.7);
-        border: 2px solid var(--color-border);
-        border-radius: 15px;
-        color: var(--color-text);
-        padding: 1rem;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(16px);
-      }
-
-      .form-control:focus, .form-select:focus {
-        background: rgba(30, 41, 59, 0.9);
-        border-color: var(--color-primary);
-        box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
-        color: var(--color-text);
-      }
-
-      .form-control::placeholder {
-        color: var(--color-text-muted);
-      }
-
-      /* Enhanced sections */
-      .bg-light {
-        background: rgba(30, 41, 59, 0.3) !important;
-        backdrop-filter: blur(16px);
-      }
-
-      /* Portfolio iframe styling */
-      iframe {
-        border-radius: 10px;
-        box-shadow: var(--shadow-md);
-        transition: all 0.3s ease;
-      }
-
-      iframe:hover {
-        box-shadow: var(--shadow-lg);
-        transform: scale(1.02);
-      }
-
-      /* Enhanced Footer */
-      footer {
-        background: var(--color-surface) !important;
-        border-top: 1px solid var(--color-border);
-        color: var(--color-text) !important;
-        padding: 2rem 0;
-      }
-
-      /* Icon wrapper styling */
-      .icon-wrapper {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(99, 102, 241, 0.1);
-        flex-shrink: 0;
-      }
-
-      /* Mobile Optimizations */
-      @media (max-width: 768px) {
-        .page-section {
-          padding: 3rem 0;
-        }
-
-        .card {
-          margin-bottom: 1.5rem;
-        }
-
-        .table-responsive {
-          font-size: 0.875rem;
-        }
-
-        .btn {
-          padding: 0.75rem 1.5rem;
-          font-size: 0.9rem;
-        }
-
-        body {
-          padding-top: 60px;
-        }
-
-        .navbar {
-          padding: 0.5rem 0;
-        }
-
-        #navbarResponsive {
-          display: none;
-        }
-
-        #navbarResponsive.show {
-          display: block;
-        }
-      }
-
-      /* Scroll animations */
-      [data-aos] {
-        pointer-events: none;
-      }
-
-      [data-aos].aos-animate {
-        pointer-events: auto;
-      }
-
-      /* Custom scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      ::-webkit-scrollbar-track {
-        background: var(--color-bg);
-      }
-
-      ::-webkit-scrollbar-thumb {
-        background: var(--gradient-primary);
-        border-radius: 4px;
-      }
-
-      ::-webkit-scrollbar-thumb:hover {
-        background: var(--color-primary-dark);
-      }
-
-      /* Loading animation for iframes - REMOVED */
-      .card-body {
-        position: relative;
-        color: var(--color-text) !important;
-      }
-
-      iframe {
-        position: relative;
-        z-index: 2;
-      }
-
-      /* Offcanvas styling */
-      .offcanvas {
-        background: var(--color-surface);
-        color: var(--color-text);
-      }
-
-      .offcanvas-header {
-        border-bottom: 1px solid var(--color-border);
-      }
-
-      .btn-close {
-        filter: invert(1);
-      }
-    </style>
-  </head>
-
-  <body>
-    <nav
-      class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
-      id="mainNav"
-    >
-      <div class="container">
-        <a class="navbar-brand" href="#page-top">
-          <i class="fas fa-code me-2"></i>Keboon Technology Solution
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarResponsive"
-          aria-controls="navbarResponsive"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-            <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
-            <li class="nav-item">
-              <a class="nav-link" href="#pricing">Pricing</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#support">Support</a>
-            </li>
-            <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
-            <li class="nav-item">
-              <a class="nav-link" href="#live">Demos</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#developer-profile">Team</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#contact">Contact</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <!-- offcanvas for mobile, hidden on desktop -->
-    <div
-      class="offcanvas offcanvas-end d-lg-none"
-      tabindex="-1"
-      id="offcanvasNav"
-      aria-labelledby="offcanvasNavLabel"
-      style="--bs-offcanvas-width: 180px"
-    >
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasNavLabel">Menu</h5>
-        <button
-          type="button"
-          class="btn-close text-reset"
-          data-bs-dismiss="offcanvas"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="offcanvas-body">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#hero" data-bs-dismiss="offcanvas"
-              >Home</a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#pricing" data-bs-dismiss="offcanvas"
-              >Pricing</a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#support" data-bs-dismiss="offcanvas"
-              >Support</a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#faq" data-bs-dismiss="offcanvas">FAQ</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#live" data-bs-dismiss="offcanvas"
-              >Demos</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              href="#developer-profile"
-              data-bs-dismiss="offcanvas"
-              >Team</a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#contact" data-bs-dismiss="offcanvas"
-              >Contact</a
-            >
-          </li>
+        margin-top: 0.5rem;
+      }
+    }
+
+    @media (max-width: 575px) {
+      html { scroll-padding-top: 76px; }
+      .container { padding-left: 1.05rem; padding-right: 1.05rem; }
+      .hero { min-height: auto; padding: 7rem 0 3rem; }
+      .hero h1 { letter-spacing: -0.065em; line-height: 0.98; }
+      .hero-copy { line-height: 1.65; }
+      .hero-actions .btn { width: 100%; display: inline-flex; justify-content: center; align-items: center; min-height: 52px; }
+      .hero-panel { margin-top: 2rem; }
+      .stat-grid { grid-template-columns: 1fr; }
+      .page-section { padding: 4rem 0; }
+      .section-subtitle { margin-bottom: 2rem; }
+      .glass-card { padding: 1.25rem; }
+      .tabs { justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 0.35rem; scroll-snap-type: x mandatory; }
+      .tab-btn { white-space: nowrap; scroll-snap-align: start; }
+      .portfolio-frame header { align-items: flex-start; flex-direction: column; }
+      iframe { height: 430px; }
+      .addon-pill { align-items: flex-start; flex-direction: column; }
+      .process-step { padding-left: 0; padding-top: 4rem; }
+      .card-body { padding: 1.15rem !important; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="#top" aria-label="Keboon Technology Solution home">
+        <img src="/assets/img/keboon-writing.png" alt="Keboon Technology Solution logo" class="site-logo" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="#pricing">Fees</a></li>
+          <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#addons">Support</a></li>
+          <li class="nav-item"><a class="btn btn-primary ms-lg-2" href="#contact">Get Quote</a></li>
         </ul>
       </div>
     </div>
+  </nav>
 
-    <!-- HERO -->
-    <header id="hero" data-aos="fade-in">
-      <div class="container" data-aos="fade-up" data-aos-delay="200">
-        <h1 class="fw-bold" data-aos="fade-down" data-aos-delay="100">
-          Custom Websites &amp; Branded Emails
-        </h1>
-        <p class="lead" data-aos="fade-up" data-aos-delay="200">
-          Everything you need for a professional online presence<br />
-          Websites, domains, emails &amp; support—handled end to end.
-        </p>
-        <a
-          href="#pricing"
-          class="btn btn-light btn-lg mt-4"
-          data-aos="zoom-in"
-          data-aos-delay="300"
-        >
-          <i class="fas fa-rocket me-2"></i>Get Started Today
-        </a>
-      </div>
-    </header>
-
-    <!-- ABOUT / VALUE PROPOSITION -->
-    <section id="about" class="page-section bg-light" data-aos="fade-up">
+  <main id="top">
+    <section class="hero">
       <div class="container">
-        <div class="row gy-5 justify-content-center">
-          <div class="col-md-6 col-lg-5" data-aos="fade-right">
-            <h2 class="section-heading text-center">We Help</h2>
-            <ul class="list-unstyled">
-              <li class="mb-3 d-flex align-items-center">
-                <div class="icon-wrapper me-3">
-                  <i class="fas fa-user-tie text-secondary"></i>
-                </div>
-                <span>Professionals</span>
-              </li>
-              <li class="mb-3 d-flex align-items-center">
-                <div class="icon-wrapper me-3">
-                  <i class="fas fa-store text-secondary"></i>
-                </div>
-                <span>Small businesses &amp; startups</span>
-              </li>
-              <li class="mb-3 d-flex align-items-center">
-                <div class="icon-wrapper me-3">
-                  <i class="fas fa-user-circle text-secondary"></i>
-                </div>
-                <span>Freelancers &amp; consultants</span>
-              </li>
-              <li class="mb-3 d-flex align-items-center">
-                <div class="icon-wrapper me-3">
-                  <i class="fas fa-concierge-bell text-secondary"></i>
-                </div>
-                <span>Service providers</span>
-              </li>
-              <li class="d-flex align-items-center">
-                <div class="icon-wrapper me-3">
-                  <i class="fas fa-shopping-bag text-secondary"></i>
-                </div>
-                <span>Retail &amp; eCommerce owners</span>
-              </li>
-            </ul>
-          </div>
-          <div class="col-md-6 col-lg-5" data-aos="fade-left">
-            <h2 class="section-heading text-center">Why Work With Us</h2>
-            <ul class="list-unstyled">
-              <li class="mb-3 d-flex align-items-center">
-                <div class="icon-wrapper me-3">
-                  <i class="fas fa-handshake text-accent"></i>
-                </div>
-                <span>No agencies. No middlemen.</span>
-              </li>
-              <li class="mb-3 d-flex align-items-center">
-                <div class="icon-wrapper me-3">
-                  <i class="fas fa-phone text-accent"></i>
-                </div>
-                <span>One point of contact for everything IT.</span>
-              </li>
-              <li class="mb-3 d-flex align-items-center">
-                <div class="icon-wrapper me-3">
-                  <i class="fas fa-tag text-accent"></i>
-                </div>
-                <span>Transparent pricing. No surprises.</span>
-              </li>
-              <li class="mb-3 d-flex align-items-center">
-                <div class="icon-wrapper me-3">
-                  <i class="fas fa-heart text-accent"></i>
-                </div>
-                <span>Long-term support &amp; growth partnership.</span>
-              </li>
-              <li class="d-flex align-items-center">
-                <div class="icon-wrapper me-3">
-                  <i class="fas fa-thumbs-up text-accent"></i>
-                </div>
-                <span>Trusted by professionals &amp; small businesses.</span>
-              </li>
-            </ul>
+        <div class="hero-badge reveal"><i class="fas fa-code"></i> Lower-tier software development for Malaysian SMEs</div>
+        <h1 class="reveal">Build useful software without <span class="gradient-text">enterprise-level pricing.</span></h1>
+        <p class="hero-copy reveal">Keboon Technology Solution (KTS) helps small businesses launch websites, web apps, internal tools, booking systems, dashboards, and integrations with clear pricing, lean delivery, and optional support add-ons.</p>
+        <div class="hero-actions reveal">
+          <a class="btn btn-primary btn-lg" href="#pricing"><i class="fas fa-tags me-2"></i>View Fees</a>
+          <a class="btn btn-outline-light btn-lg" href="#portfolio"><i class="fas fa-window-restore me-2"></i>See Work</a>
+        </div>
+        <div class="hero-panel reveal">
+          <div class="stat-grid">
+            <div class="stat-card"><strong>RM800+</strong><span>Starter website builds</span></div>
+            <div class="stat-card"><strong>2–8 weeks</strong><span>Typical delivery range</span></div>
+            <div class="stat-card"><strong>Add-on</strong><span>Support only when needed</span></div>
+            <div class="stat-card"><strong>SME-first</strong><span>Practical scope and pricing</span></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Pricing & Packages Section -->
-    <section id="pricing" class="page-section" data-aos="fade-up">
+    <section id="services" class="page-section">
       <div class="container">
-        <h2 class="section-heading text-center mb-5">Pricing &amp; Packages</h2>
-        <div class="row gx-4 gy-4 justify-content-center">
-          <!-- Starter -->
-          <div class="col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="50">
-            <div class="card package-card h-100 text-center">
-              <div class="card-header">
-                <i class="fas fa-rocket me-2"></i>Starter
-              </div>
-              <div class="card-body d-flex flex-column">
-                <div class="package-price text-info mb-2">
-                  From <strong>RM699</strong> One-off
-                </div>
-                <div class="optional-note mb-3">
-                  Add-On Support:<br />RM 99/mo or RM 1,080/yr
-                </div>
-                <ul class="list-unstyled text-start mb-4 flex-grow-1">
-                  <li class="d-flex align-items-start mb-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-info"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Up to 1 responsive page
-                  </li>
-                  <li class="d-flex align-items-start mb-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-info"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    1 mailbox
-                  </li>
-                  <li class="d-flex align-items-start mb-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-info"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Contact form
-                  </li>
-                  <li class="d-flex align-items-start mb-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-info"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Google Workspace - Starter
-                  </li>
-                  <li class="d-flex align-items-start">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-info"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Hosting setup
-                  </li>
-                </ul>
-                <a
-                  href="#contact"
-                  class="btn btn-outline-info mt-auto"
-                  onclick="populatePackage('Starter')"
-                >
-                  <i class="fas fa-arrow-right me-2"></i>Select Starter
-                </a>
-              </div>
+        <div class="text-center reveal">
+          <span class="mini-badge"><i class="fas fa-screwdriver-wrench"></i> What KTS builds</span>
+          <h2 class="section-heading mt-3">Software that solves real business problems.</h2>
+          <p class="section-subtitle">Start small, validate quickly, then improve in phases. KTS keeps the first version lean so your budget goes into the features that matter most.</p>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4 reveal"><div class="glass-card"><div class="icon-circle"><i class="fas fa-globe"></i></div><h3 class="h5 fw-bold">Business Websites</h3><p class="muted mb-0">Landing pages, company profiles, service pages, SEO-friendly content structure, inquiry forms, and mobile responsive layouts.</p></div></div>
+          <div class="col-md-6 col-lg-4 reveal"><div class="glass-card"><div class="icon-circle"><i class="fas fa-laptop-code"></i></div><h3 class="h5 fw-bold">Web Applications</h3><p class="muted mb-0">Custom portals, booking workflows, membership areas, admin panels, CRUD systems, and simple SaaS-style tools.</p></div></div>
+          <div class="col-md-6 col-lg-4 reveal"><div class="glass-card"><div class="icon-circle"><i class="fas fa-chart-line"></i></div><h3 class="h5 fw-bold">Dashboards & Reports</h3><p class="muted mb-0">Operational dashboards, sales tracking, simple analytics, exported reports, and internal performance summaries.</p></div></div>
+          <div class="col-md-6 col-lg-4 reveal"><div class="glass-card"><div class="icon-circle"><i class="fas fa-plug"></i></div><h3 class="h5 fw-bold">API & Tool Integrations</h3><p class="muted mb-0">Connect forms, payment links, WhatsApp flows, email notifications, Google Sheets, CRMs, and other business tools.</p></div></div>
+          <div class="col-md-6 col-lg-4 reveal"><div class="glass-card"><div class="icon-circle"><i class="fas fa-bolt"></i></div><h3 class="h5 fw-bold">Automation</h3><p class="muted mb-0">Reduce manual work with simple workflows such as lead routing, reminders, quote requests, booking confirmations, and data entry helpers.</p></div></div>
+          <div class="col-md-6 col-lg-4 reveal"><div class="glass-card"><div class="icon-circle"><i class="fas fa-life-ring"></i></div><h3 class="h5 fw-bold">Maintenance Add-ons</h3><p class="muted mb-0">Support is optional. Choose monthly care, bug fixes, content updates, monitoring, or feature improvements only when your business needs it.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="page-section">
+      <div class="container">
+        <div class="text-center reveal">
+          <span class="mini-badge"><i class="fas fa-coins"></i> Lower-tier RM fee structure</span>
+          <h2 class="section-heading mt-3">Simple packages, practical scope.</h2>
+          <p class="section-subtitle">These prices are designed for smaller businesses that need reliable digital tools without heavy retainers. Hosting, domain, paid plugins, payment gateway fees, and third-party subscription costs are not included unless stated.</p>
+        </div>
+        <div class="row g-4 align-items-stretch">
+          <div class="col-lg-3 col-md-6 reveal">
+            <div class="glass-card pricing-card">
+              <h3 class="h5 fw-bold">Starter Website</h3>
+              <p class="muted">Best for new businesses that need an online presence.</p>
+              <div class="price">RM800–1,500</div>
+              <ul class="feature-list">
+                <li><i class="fas fa-check"></i> 1–3 pages</li>
+                <li><i class="fas fa-check"></i> Mobile-friendly layout</li>
+                <li><i class="fas fa-check"></i> Basic SEO meta setup</li>
+                <li><i class="fas fa-check"></i> Contact form integration</li>
+                <li><i class="fas fa-check"></i> 1 revision round</li>
+              </ul>
             </div>
           </div>
-
-          <!-- Basic -->
-          <div
-            class="col-md-6 col-lg-3"
-            data-aos="zoom-in"
-            data-aos-delay="150"
-          >
-            <div class="card package-card h-100 text-center">
-              <div class="card-header">
-                <i class="fas fa-star me-2"></i>Basic
-              </div>
-              <div class="card-body d-flex flex-column">
-                <div class="package-price text-primary mb-2">
-                  From <strong>RM 1,799</strong> One-off
-                </div>
-                <div class="optional-note mb-3">
-                  Add-On Support:<br />RM 149/mo or RM 1,620/yr
-                </div>
-                <ul class="list-unstyled text-start mb-4 flex-grow-1">
-                  <li class="d-flex align-items-start mb-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-primary"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Up to 3 responsive pages
-                  </li>
-                  <li class="d-flex align-items-start mb-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-primary"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Up to 1 mailbox
-                  </li>
-                  <li class="d-flex align-items-start mb-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-primary"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Contact form
-                  </li>
-                  <li class="d-flex align-items-start mb-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-primary"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Google Workspace - Starter
-                  </li>
-                  <li class="d-flex align-items-start">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-primary"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Hosting setup
-                  </li>
-                </ul>
-                <a
-                  href="#contact"
-                  class="btn btn-outline-primary mt-auto"
-                  onclick="populatePackage('Basic')"
-                >
-                  <i class="fas fa-arrow-right me-2"></i>Select Basic
-                </a>
-              </div>
+          <div class="col-lg-3 col-md-6 reveal">
+            <div class="glass-card pricing-card featured">
+              <h3 class="h5 fw-bold">SME Business Site</h3>
+              <p class="muted">Best for service companies, clinics, agencies, and local brands.</p>
+              <div class="price">RM1,800–3,500</div>
+              <ul class="feature-list">
+                <li><i class="fas fa-check"></i> 4–8 pages</li>
+                <li><i class="fas fa-check"></i> Service sections</li>
+                <li><i class="fas fa-check"></i> WhatsApp / form leads</li>
+                <li><i class="fas fa-check"></i> On-page SEO structure</li>
+                <li><i class="fas fa-check"></i> 2 revision rounds</li>
+              </ul>
             </div>
           </div>
-
-          <!-- Standard -->
-          <div
-            class="col-md-6 col-lg-3"
-            data-aos="zoom-in"
-            data-aos-delay="250"
-          >
-            <div class="card package-card h-100 text-center">
-              <div class="card-header">
-                <i class="fas fa-crown me-2"></i>Standard
-              </div>
-              <div class="card-body d-flex flex-column">
-                <div class="package-price text-success mb-2">
-                  From <strong>2,699</strong> One-off
-                </div>
-                <div class="optional-note mb-3">
-                  Add-On Support:<br />RM 249/mo or RM 2,700/yr
-                </div>
-                <ul class="list-unstyled text-start mb-4 flex-grow-1">
-                  <li class="d-flex align-items-start mb-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-success"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Up to 6 responsive pages
-                  </li>
-                  <li class="d-flex align-items-start mb-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-success"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Up to 3 mailboxes
-                  </li>
-                  <li class="d-flex align-items-start mb-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-success"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Contact form
-                  </li>
-                  <li class="d-flex align-items-start mb-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-success"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Google Workspace - Starter
-                  </li>
-                  <li class="d-flex align-items-start">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-success"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Hosting setup
-                  </li>
-                </ul>
-                <a
-                  href="#contact"
-                  class="btn btn-outline-success mt-auto"
-                  onclick="populatePackage('Standard')"
-                >
-                  <i class="fas fa-arrow-right me-2"></i>Select Standard
-                </a>
-              </div>
+          <div class="col-lg-3 col-md-6 reveal">
+            <div class="glass-card pricing-card">
+              <h3 class="h5 fw-bold">Web App MVP</h3>
+              <p class="muted">Best for a lean custom system or first product version.</p>
+              <div class="price">RM4,500–8,500</div>
+              <ul class="feature-list">
+                <li><i class="fas fa-check"></i> Login / user roles</li>
+                <li><i class="fas fa-check"></i> Admin dashboard</li>
+                <li><i class="fas fa-check"></i> Core CRUD modules</li>
+                <li><i class="fas fa-check"></i> Basic reporting</li>
+                <li><i class="fas fa-check"></i> Deployment guidance</li>
+              </ul>
             </div>
           </div>
-
-          <!-- Premium -->
-          <div
-            class="col-md-6 col-lg-3"
-            data-aos="zoom-in"
-            data-aos-delay="350"
-          >
-            <div class="card package-card h-100 text-center">
-              <div class="card-header">
-                <i class="fas fa-gem me-2"></i>Premium
-              </div>
-              <div class="card-body d-flex flex-column">
-                <div class="package-price text-warning mb-2">
-                  From <strong>RM 3,599</strong> One-off
-                </div>
-                <div class="optional-note mb-3">
-                  Add-On Support:<br />RM 349/mo or RM 3,780/yr
-                </div>
-                <ul class="list-unstyled text-start mb-4 flex-grow-1">
-                  <li class="d-flex align-items-start mb-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-warning"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Up to 9 responsive pages
-                  </li>
-                  <li class="d-flex align-items-start mb-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-dark"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Up to 5 mailboxes
-                  </li>
-                  <li class="d-flex align-items-start mb-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-dark"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Contact form
-                  </li>
-                  <li class="d-flex align-items-start mb-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-dark"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Google Workspace - Starter
-                  </li>
-                  <li class="d-flex align-items-start mb-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-dark"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Hosting setup
-                  </li>
-                  <li class="d-flex align-items-start mb-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      fill="currentColor"
-                      class="bi bi-check-circle me-2 text-dark"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14ZM3.646 7.646a.5.5 0 
-                    1 1 .708-.708L7 9.293l4.646-4.647a.5.5 0 0 1 .708.708L7.707 10l-4.061-4.061Z"
-                      />
-                    </svg>
-                    Backend system integration
-                  </li>
-                </ul>
-                <a
-                  href="#contact"
-                  class="btn btn-outline-dark mt-auto"
-                  onclick="populatePackage('Premium')"
-                >
-                  <i class="fas fa-arrow-right me-2"></i>Select Premium
-                </a>
-              </div>
+          <div class="col-lg-3 col-md-6 reveal">
+            <div class="glass-card pricing-card">
+              <h3 class="h5 fw-bold">Custom System</h3>
+              <p class="muted">Best for booking, operations, inventory, workflow, or integrations.</p>
+              <div class="price">RM8,500–12,000+</div>
+              <ul class="feature-list">
+                <li><i class="fas fa-check"></i> Custom workflow</li>
+                <li><i class="fas fa-check"></i> API integrations</li>
+                <li><i class="fas fa-check"></i> Database design</li>
+                <li><i class="fas fa-check"></i> Admin tools</li>
+                <li><i class="fas fa-check"></i> Phased delivery</li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Add-On Support Details Section -->
-    <section id="support" class="page-section bg-light">
+    <section id="addons" class="page-section">
       <div class="container">
-        <h2 class="section-heading text-center mb-4">Add-On Support</h2>
-        <p class="text-center mb-5 lead">
-          <em>
-            <i class="fas fa-gift me-2 text-accent"></i>
-            First month free on any plan. Pre-pay 12 months and get 10% off.
-          </em>
-        </p>
-
-        <div class="table-responsive mb-4" data-aos="fade-up">
-          <table class="table table-bordered table-hover text-center">
-            <thead class="table-light">
-              <tr>
-                <th><i class="fas fa-cog me-2"></i>Feature</th>
-                <th><i class="fas fa-times me-2"></i>No Support</th>
-                <th><i class="fas fa-clock me-2"></i>On-Demand</th>
-                <th><i class="fas fa-rocket me-2"></i>Starter</th>
-                <th><i class="fas fa-star me-2"></i>Basic</th>
-                <th><i class="fas fa-crown me-2"></i>Standard</th>
-                <th><i class="fas fa-gem me-2"></i>Premium</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Monthly Fee</strong></td>
-                <td>&mdash;</td>
-                <td>Plan rate + RM 50</td>
-                <td>RM 99</td>
-                <td>RM 149</td>
-                <td>RM 249</td>
-                <td>RM 349</td>
-              </tr>
-              <tr>
-                <td><strong>Monthly Change Requests</strong></td>
-                <td>Self-managed</td>
-                <td>Same as plan cap</td>
-                <td>1</td>
-                <td>2</td>
-                <td>4</td>
-                <td>8</td>
-              </tr>
-              <tr>
-                <td><strong>SLA</strong></td>
-                <td>Self-managed</td>
-                <td>Plan SLA</td>
-                <td>10 days</td>
-                <td>8 days</td>
-                <td>4 days</td>
-                <td>2 days</td>
-              </tr>
-              <tr>
-                <td><strong>Hosting &amp; server maintenance</strong></td>
-                <td>Self-managed</td>
-                <td><i class="fas fa-check text-success"></i></td>
-                <td><i class="fas fa-check text-success"></i></td>
-                <td><i class="fas fa-check text-success"></i></td>
-                <td><i class="fas fa-check text-success"></i></td>
-                <td><i class="fas fa-check text-success"></i></td>
-              </tr>
-              <tr>
-                <td><strong>Google Workspace billing &amp; licences</strong></td>
-                <td>Self-managed</td>
-                <td><i class="fas fa-check text-success"></i></td>
-                <td><i class="fas fa-check text-success"></i></td>
-                <td><i class="fas fa-check text-success"></i></td>
-                <td><i class="fas fa-check text-success"></i></td>
-                <td><i class="fas fa-check text-success"></i></td>
-              </tr>
-              <tr>
-                <td><strong>Security &amp; plugin updates</strong></td>
-                <td>Self-managed</td>
-                <td><i class="fas fa-check text-success"></i></td>
-                <td><i class="fas fa-check text-success"></i></td>
-                <td><i class="fas fa-check text-success"></i></td>
-                <td><i class="fas fa-check text-success"></i></td>
-                <td><i class="fas fa-check text-success"></i></td>
-              </tr>
-              <tr>
-                <td><strong>Change request details</strong></td>
-                <td>Self-managed</td>
-                <td colspan="5">
-                  Text edits, graphic tweaks, new content sections, minor layout
-                  adjustments up to your monthly cap
-                </td>
-              </tr>
-              <tr>
-                <td><strong>First Month Free After Launch</strong></td>
-                <td><i class="fas fa-check text-success"></i></td>
-                <td><i class="fas fa-check text-success"></i></td>
-                <td><i class="fas fa-check text-success"></i></td>
-                <td><i class="fas fa-check text-success"></i></td>
-                <td><i class="fas fa-check text-success"></i></td>
-                <td><i class="fas fa-check text-success"></i></td>
-              </tr>
-              <tr>
-                <td><strong>Annual Pre-Pay Discount</strong></td>
-                <td colspan="7">10% off</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq" class="page-section" data-aos="fade-up">
-      <div class="container">
-        <h2 class="section-heading text-center mb-5">
-          <i class="fas fa-question-circle me-3"></i>FAQ
-        </h2>
-        <div class="accordion" id="faqAccordion">
-          <!-- 1 -->
-          <div class="accordion-item" data-aos="fade-up" data-aos-delay="50">
-            <h2 class="accordion-header" id="faq1Heading">
-          <!-- 2 -->
-          <div class="accordion-item" data-aos="fade-up" data-aos-delay="100">
-            <h2 class="accordion-header" id="faq2Heading">
-              <button
-                class="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#faq2"
-                aria-expanded="false"
-                aria-controls="faq2"
-              >
-                <i class="fas fa-globe me-2"></i>
-                Can we use our own domain name?
-              </button>
-            </h2>
-            <div
-              id="faq2"
-              class="accordion-collapse collapse"
-              data-bs-parent="#faqAccordion"
-            >
-              <div class="accordion-body">
-                Yes—or we can handle the purchase and ongoing management for
-                you.
-              </div>
-            </div>
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-5 reveal">
+            <span class="mini-badge"><i class="fas fa-headset"></i> Support add-ons</span>
+            <h2 class="section-heading mt-3">Pay for support only when you need it.</h2>
+            <p class="muted">KTS keeps base project prices lower by making maintenance optional. Pick a monthly care plan or request one-off help when something needs to be updated.</p>
           </div>
-
-          <!-- 3 -->
-          <div class="accordion-item" data-aos="fade-up" data-aos-delay="150">
-            <h2 class="accordion-header" id="faq3Heading">
-              <button
-                class="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#faq3"
-                aria-expanded="false"
-                aria-controls="faq3"
-              >
-                <i class="fas fa-laptop me-2"></i>
-                What if we only need a basic website?
-              </button>
-            </h2>
-            <div
-              id="faq3"
-              class="accordion-collapse collapse"
-              data-bs-parent="#faqAccordion"
-            >
-              <div class="accordion-body">
-                No problem—We'll tailor the package to include only the pages
-                and features you need.
-              </div>
-            </div>
-          </div>
-
-          <!-- 4 -->
-          <div class="accordion-item" data-aos="fade-up" data-aos-delay="200">
-            <h2 class="accordion-header" id="faq4Heading">
-              <button
-                class="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#faq4"
-                aria-expanded="false"
-                aria-controls="faq4"
-              >
-                <i class="fas fa-contract me-2"></i>
-                Is a long-term contract required for support?
-              </button>
-            </h2>
-            <div
-              id="faq4"
-              class="accordion-collapse collapse"
-              data-bs-parent="#faqAccordion"
-            >
-              <div class="accordion-body">
-                Nope—cancel support anytime, though most clients stay because of
-                the ongoing value.
-              </div>
-            </div>
-          </div>
-
-          <!-- 5 -->
-          <div class="accordion-item" data-aos="fade-up" data-aos-delay="250">
-            <h2 class="accordion-header" id="faq5Heading">
-              <button
-                class="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#faq5"
-                aria-expanded="false"
-                aria-controls="faq5"
-              >
-                <i class="fas fa-gift me-2"></i>
-                What happens during the first free month of support after
-                launch?
-              </button>
-            </h2>
-            <div
-              id="faq5"
-              class="accordion-collapse collapse"
-              data-bs-parent="#faqAccordion"
-            >
-              <div class="accordion-body">
-                We provide the first month of Add-On Support free—covering
-                hosting maintenance, security updates, and up to your monthly
-                change-request cap.
-              </div>
-            </div>
-          </div>
-
-          <!-- 6 -->
-          <div class="accordion-item" data-aos="fade-up" data-aos-delay="300">
-            <h2 class="accordion-header" id="faq6Heading">
-              <button
-                class="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#faq6"
-                aria-expanded="false"
-                aria-controls="faq6"
-              >
-                <i class="fas fa-calendar-alt me-2"></i>
-                What happens after the first free month of support?
-              </button>
-            </h2>
-            <div
-              id="faq6"
-              class="accordion-collapse collapse"
-              data-bs-parent="#faqAccordion"
-            >
-              <div class="accordion-body">
-                You'll automatically transition to month-to-month support at
-                your plan's standard rate (Starter RM 99, Basic RM 149, Standard
-                RM 249, Premium RM 349).
-              </div>
-            </div>
-          </div>
-
-          <!-- 7 -->
-          <div class="accordion-item" data-aos="fade-up" data-aos-delay="350">
-            <h2 class="accordion-header" id="faq7Heading">
-              <button
-                class="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#faq7"
-                aria-expanded="false"
-                aria-controls="faq7"
-              >
-                <i class="fas fa-pause me-2"></i>
-                What if we opt out or pause continuous support?
-              </button>
-            </h2>
-            <div
-              id="faq7"
-              class="accordion-collapse collapse"
-              data-bs-parent="#faqAccordion"
-            >
-              <div class="accordion-body">
-                If you pause or cancel continuous support, you switch to
-                on-demand mode. Each on-demand month is billed at your standard
-                rate plus RM 50. After three consecutive on-demand months, you
-                may reactivate continuous support at the base rate with no extra
-                fees.
-              </div>
-            </div>
-          </div>
-
-          <!-- 8 -->
-          <div class="accordion-item" data-aos="fade-up" data-aos-delay="400">
-            <h2 class="accordion-header" id="faq8Heading">
-              <button
-                class="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#faq8"
-                aria-expanded="false"
-                aria-controls="faq8"
-              >
-                <i class="fas fa-calendar-check me-2"></i>
-                Can we choose month-to-month support instead of an annual plan?
-              </button>
-            </h2>
-            <div
-              id="faq8"
-              class="accordion-collapse collapse"
-              data-bs-parent="#faqAccordion"
-            >
-              <div class="accordion-body">
-                Yes—month-to-month support at the standard rate is available
-                with no upfront commitment. For a 10% discount, billing
-                simplicity, and rate stability, we recommend our annual plan.
-              </div>
-            </div>
-          </div>
-
-          <!-- 9 -->
-          <div class="accordion-item" data-aos="fade-up" data-aos-delay="450">
-            <h2 class="accordion-header" id="faq9Heading">
-              <button
-                class="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#faq9"
-                aria-expanded="false"
-                aria-controls="faq9"
-              >
-                <i class="fas fa-box me-2"></i>
-                What does the one-off fee include?
-              </button>
-            </h2>
-            <div
-              id="faq9"
-              class="accordion-collapse collapse"
-              data-bs-parent="#faqAccordion"
-            >
-              <div class="accordion-body">
-                The one-off fee includes training, full handover, and delivery
-                of your site's source code.
-              </div>
-            </div>
-          </div>
-
-          <!-- 10 -->
-          <div class="accordion-item" data-aos="fade-up" data-aos-delay="500">
-            <h2 class="accordion-header" id="faq10Heading">
-              <button
-                class="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#faq10"
-                aria-expanded="false"
-                aria-controls="faq10"
-              >
-                <i class="fas fa-envelope-plus me-2"></i>
-                Are extra mailboxes or Google Workspace upgrades covered?
-              </button>
-            </h2>
-            <div
-              id="faq10"
-              class="accordion-collapse collapse"
-              data-bs-parent="#faqAccordion"
-            >
-              <div class="accordion-body">
-                Extra mailboxes and Workspace upgrades follow Google's published
-                rates and aren't covered by your support fee.
-              </div>
-            </div>
-          </div>
-
-          <!-- 11 -->
-          <div class="accordion-item" data-aos="fade-up" data-aos-delay="550">
-            <h2 class="accordion-header" id="faq11Heading">
-              <button
-                class="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#faq11"
-                aria-expanded="false"
-                aria-controls="faq11"
-              >
-                <i class="fas fa-user-slash me-2"></i>
-                What if I choose no support?
-              </button>
-            </h2>
-            <div
-              id="faq11"
-              class="accordion-collapse collapse"
-              data-bs-parent="#faqAccordion"
-            >
-              <div class="accordion-body">
-                Clients who opt out of support must handle hosting, billing,
-                security updates, and any change requests themselves.
-              </div>
-            </div>
-          </div>
-
-          <!-- 12 -->
-          <div class="accordion-item" data-aos="fade-up" data-aos-delay="600">
-            <h2 class="accordion-header" id="faq12Heading">
-              <button
-                class="accordion-button collapsed"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#faq12"
-                aria-expanded="false"
-                aria-controls="faq12"
-              >
-                <i class="fas fa-hand-paper me-2"></i>
-                How does On-Demand support work?
-              </button>
-            </h2>
-            <div
-              id="faq12"
-              class="accordion-collapse collapse"
-              data-bs-parent="#faqAccordion"
-            >
-              <div class="accordion-body">
-                On-Demand support is billed at your plan rate plus RM 50 per
-                month, with all features and caps of your chosen plan.
-              </div>
+          <div class="col-lg-7 reveal">
+            <div class="glass-card">
+              <div class="addon-pill"><strong>Basic Care</strong><span class="muted">Minor updates, backups check, uptime check</span><strong>RM150/mo</strong></div>
+              <div class="addon-pill"><strong>Growth Care</strong><span class="muted">Content updates, bug fixes, priority response</span><strong>RM350/mo</strong></div>
+              <div class="addon-pill"><strong>Priority Support</strong><span class="muted">Faster fixes and monthly improvement tasks</span><strong>RM650/mo</strong></div>
+              <div class="addon-pill"><strong>One-off Fix</strong><span class="muted">Small bug fix, page edit, form change, quick request</span><strong>RM80/hr</strong></div>
+              <div class="addon-pill"><strong>Feature Sprint</strong><span class="muted">New feature, module, integration, or workflow enhancement</span><strong>RM800+</strong></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-
-    <!-- Live Portfolio Section -->
-    <section id="live" class="page-section" data-aos="fade-up">
+    <section id="portfolio" class="page-section">
       <div class="container">
-        <h2 class="section-heading text-center mb-5">
-          <i class="fas fa-globe me-3"></i>Live Portfolio
-        </h2>
-        <!-- Live Portfolio Section -->
-    <div class="row gy-4 justify-content-center">
-      <!-- Keboon Marketplace -->
-      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-        <div class="card h-100 shadow-sm">
-          <div class="card-header bg-light text-center">
-            <img
-              src="../assets/img/keboon-writing.png"
-              alt="Keboon Logo"
-              class="img-fluid mb-2"
-              style="max-height: 60px"
-            />
-          </div>
-          <div class="card-body text-center">
-            <p class="card-text mb-3">
-              Local Produce Marketplace connecting neighbours to share
-              fresh, home-grown produce.
-            </p>
-            <div class="d-flex justify-content-center gap-2 flex-wrap">
-              <a
-                href="https://keboon.net"
-                target="_blank"
-                class="btn btn-outline-primary btn-sm"
-                >
-                <i class="fas fa-external-link-alt me-2"></i>Visit keboon.net
-              </a>
-              <a
-                href="https://keboon.net/directory"
-                target="_blank"
-                class="btn btn-outline-secondary btn-sm"
-                >
-                <i class="fas fa-mobile-alt me-2"></i>Visit Keboon Directory
-              </a>
-            </div>
-          </div>
+        <div class="text-center reveal">
+          <span class="mini-badge"><i class="fas fa-briefcase"></i> Portfolio preview</span>
+          <h2 class="section-heading mt-3">Selected work and web properties.</h2>
+          <p class="section-subtitle">Use the tabs to preview each site directly. Some websites may block iframe embedding depending on their server security settings; the “Open Site” link is included as a fallback.</p>
         </div>
-      </div>
-
-
-      <!-- Teman Malaysia - Work in Progress -->
-      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
-        <div class="card h-100 shadow-sm">
-          <div class="card-header bg-warning text-dark text-center">
-            <img
-              src="../assets/img/customer/teman-logo.png"
-              alt="Teman Malaysia Logo"
-              class="img-fluid mb-2"
-              style="max-height: 60px"
-            />
-            <span class="badge bg-info ms-2">
-              <i class="fas fa-hammer me-1"></i>In Progress
-            </span>
-          </div>
-          <div class="card-body text-center">
-            <p class="card-text mb-3">
-              Care companionship platform matching customers with "Temanions" 
-              for daily assistance, appointments, and activities.
-            </p>
-            <div class="mb-3">
-              <small class="text-muted">
-                <i class="fas fa-info-circle me-1"></i>
-                Currently in active development - features being added weekly
-              </small>
-            </div>
-            <a
-              href="https://aimi-keboon.github.io/teman-malaysia/"
-              target="_blank"
-              class="btn btn-outline-warning"
-            >
-              <i class="fas fa-eye me-2"></i>Preview Development
-            </a>
-          </div>
+        <div class="tabs reveal" role="tablist" aria-label="Portfolio website previews">
+          <button class="tab-btn active" type="button" data-site="https://mykitacare.com" data-title="mykitacare.com">mykitacare.com</button>
+          <button class="tab-btn" type="button" data-site="https://keboon.net" data-title="keboon.net">keboon.net</button>
+          <button class="tab-btn" type="button" data-site="https://langkawi-serenity.com" data-title="langkawi-serenity">langkawi-serenity</button>
+          <button class="tab-btn" type="button" data-site="https://temanmalaysia.com" data-title="temanmalaysia.com">temanmalaysia.com</button>
+          <button class="tab-btn" type="button" data-site="https://nusapulse.my" data-title="nusapulse.my">nusapulse.my</button>
         </div>
-      </div>
-      <!-- PPE5QNA - In Progress -->
-<div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
-  <div class="card h-100 shadow-sm">
-    <div class="card-header bg-warning text-dark text-center">
-      <strong>PPE5QNA Portal</strong>
-      <span class="badge bg-info ms-2">
-        <i class="fas fa-hammer me-1"></i>In Progress
-      </span>
-    </div>
-    <div class="card-body text-center">
-      <p class="card-text mb-3">
-        A website for the PPE5QNA neighbourhood community in Bandar Springhill, Port Dickson—focused on local updates and connectivity.
-      </p>
-      <a
-        href="https://aimi-keboon.github.io/ppe5qna/"
-        target="_blank"
-        class="btn btn-outline-warning"
-      >
-        <i class="fas fa-eye me-2"></i>Preview Development
-      </a>
-    </div>
-  </div>
-</div>
-<!-- Nusapulse - In Progress -->
-<div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="500">
-  <div class="card h-100 shadow-sm">
-    <div class="card-header bg-warning text-dark text-center">
-      <strong>Nusapulse</strong>
-      <span class="badge bg-info ms-2">
-        <i class="fas fa-hammer me-1"></i>In Progress
-      </span>
-    </div>
-    <div class="card-body text-center">
-      <p class="card-text mb-3">
-        A comprehensive lifestyle healthcare platform offering screening, body scanning, diet & activity planning, and progress tracking for individuals with medical conditions.
-      </p>
-      <a
-        href="https://aimi-keboon.github.io/nusapulse/"
-        target="_blank"
-        class="btn btn-outline-warning"
-      >
-        <i class="fas fa-eye me-2"></i>Preview Development
-      </a>
-    </div>
-  </div>
-</div>
-
-    </div>
+        <div class="portfolio-frame reveal">
+          <header>
+            <div class="d-flex align-items-center gap-3">
+              <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+              <strong id="portfolioTitle">mykitacare.com</strong>
+            </div>
+            <a id="portfolioLink" class="btn btn-outline-light btn-sm" href="https://mykitacare.com" target="_blank" rel="noopener">Open Site <i class="fas fa-arrow-up-right-from-square ms-1"></i></a>
+          </header>
+          <iframe id="portfolioFrame" title="Portfolio website preview" src="https://mykitacare.com" loading="lazy"></iframe>
+        </div>
       </div>
     </section>
 
-    <!-- Developer Profile -->
-    <section id="developer-profile" class="text-center page-section bg-light">
+    <section id="process" class="page-section">
       <div class="container">
-        <h2 class="section-heading mb-5">
-          <i class="fas fa-users me-3"></i>Developer Profile
-        </h2>
-        <div class="d-flex justify-content-center mb-4" data-aos="zoom-in">
-          <div
-            class="badge-base LI-profile-badge"
-            data-locale="en_US"
-            data-size="medium"
-            data-theme="light"
-            data-type="VERTICAL"
-            data-vanity="aimi-misman-065b2a150"
-            data-version="v1"
-          >
-            <a
-              class="badge-base__link LI-simple-link"
-              href="https://www.linkedin.com/in/aimi-misman-065b2a150?trk=profile-badge"
-            >
-              Aimi Misman
-            </a>
-          </div>
+        <div class="text-center reveal">
+          <span class="mini-badge"><i class="fas fa-route"></i> Lean delivery process</span>
+          <h2 class="section-heading mt-3">From idea to launch, without overcomplication.</h2>
         </div>
-        <p class="lead" data-aos="fade-up">
-          <i class="fas fa-users-cog me-2 text-accent"></i>
-          We're expanding our team! Contact us below if you'd like to join.
-        </p>
+        <div class="row g-4 mt-1">
+          <div class="col-md-6 col-lg-3 reveal"><div class="glass-card process-step"><div class="process-number">1</div><h3 class="h5 fw-bold">Scope</h3><p class="muted mb-0">Confirm business goal, key pages, modules, timeline, and must-have features.</p></div></div>
+          <div class="col-md-6 col-lg-3 reveal"><div class="glass-card process-step"><div class="process-number">2</div><h3 class="h5 fw-bold">Prototype</h3><p class="muted mb-0">Create layout, content structure, and user flow before heavy development starts.</p></div></div>
+          <div class="col-md-6 col-lg-3 reveal"><div class="glass-card process-step"><div class="process-number">3</div><h3 class="h5 fw-bold">Build</h3><p class="muted mb-0">Develop the website or system in practical milestones for easier review.</p></div></div>
+          <div class="col-md-6 col-lg-3 reveal"><div class="glass-card process-step"><div class="process-number">4</div><h3 class="h5 fw-bold">Launch</h3><p class="muted mb-0">Deploy, test forms, optimize mobile layout, and hand over basic usage notes.</p></div></div>
+        </div>
       </div>
     </section>
 
@@ -1989,88 +554,65 @@
         </div>
       </div>
     </section>
+  </main>
 
-    <!-- FOOTER -->
-    <footer class="text-center py-4">
-      <div class="container">
-        <p class="mb-1">
-          © <span id="year"></span> Keboon Technology Solution.
-        </p>
-      </div>
-    </footer>
+  <footer>
+    <div class="container d-flex flex-column flex-md-row justify-content-between gap-2">
+      <span>© <span id="year"></span> Keboon Technology Solution (KTS). All rights reserved.</span>
+      <span>Affordable software development for practical business growth.</span>
+    </div>
+  </footer>
 
-    <!-- Populate & Submit Scripts -->
-    <script>
-      // Navbar scroll effect
-      window.addEventListener('scroll', function() {
-        const navbar = document.getElementById('mainNav');
-        if (window.scrollY > 100) {
-          navbar.classList.add('scrolled');
-        } else {
-          navbar.classList.remove('scrolled');
-        }
-      });
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('year').textContent = new Date().getFullYear();
 
-      // Set current year
-      document.getElementById("year").textContent = new Date().getFullYear();
-
-      // Prefill form when package selected
-      function populatePackage(pkg) {
-        document.getElementById("_subject").value = "Package Inquiry: " + pkg;
-        document.getElementById("inquiryType").value = "Client Inquiry";
-
-        const contact = document.getElementById("contactNumber").value;
-        const msg = document.getElementById("messageField");
-        msg.value =
-          "Hello—\n\nI'm interested in the " +
-          pkg +
-          " package. Could you please share more details and next steps?\n\nThanks!";
-
-        if (contact) {
-          msg.value += "\n\nMy contact number is: " + contact;
-        }
-
-        msg.focus();
-        
-        // Smooth scroll to contact section
-        document.getElementById('contact').scrollIntoView({
-          behavior: 'smooth'
-        });
-      }
-
-      // Fallback for manual submit
-      document.getElementById("contactForm").addEventListener("submit", () => {
-        if (!document.getElementById("_subject").value) {
-          const type = document.getElementById("inquiryType").value;
-          document.getElementById("_subject").value = type + " from Website";
-        }
-      });
-
-      // Smooth scrolling for nav links
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute('href'));
-          if (target) {
-            target.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            });
+      const revealItems = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
           }
         });
-      });
-    </script>
+      }, { threshold: 0.12 });
+      revealItems.forEach((item) => observer.observe(item));
 
-    <!-- Bootstrap JS & AOS Init -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script>
-      AOS.init({ 
-        duration: 800, 
-        once: true,
-        offset: 100,
-        easing: 'ease-out-quart'
+      const navLinks = document.querySelectorAll('.nav-link, .navbar .btn');
+      const navbarCollapse = document.getElementById('mainNav');
+      navLinks.forEach((link) => {
+        link.addEventListener('click', () => {
+          const collapse = bootstrap.Collapse.getInstance(navbarCollapse);
+          if (collapse) collapse.hide();
+        });
       });
-    </script>
-  </body>
+
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const frame = document.getElementById('portfolioFrame');
+      const title = document.getElementById('portfolioTitle');
+      const link = document.getElementById('portfolioLink');
+
+      tabButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          tabButtons.forEach((btn) => btn.classList.remove('active'));
+          button.classList.add('active');
+          const site = button.dataset.site;
+          const siteTitle = button.dataset.title;
+          frame.src = site;
+          title.textContent = siteTitle;
+          link.href = site;
+        });
+      });
+
+      const inquiryType = document.getElementById('inquiryType');
+      const subject = document.getElementById('_subject');
+      const setSubject = () => {
+        subject.value = `KTS Website Inquiry - ${inquiryType.value}`;
+      };
+      inquiryType.addEventListener('change', setSubject);
+      setSubject();
+    });
+  </script>
+</body>
 </html>
