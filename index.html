@@ -1,1306 +1,2721 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="Keboon - Connecting Neighbours, Sharing Freshness" />
-    <meta name="author" content="Keboon" />
-    <title>Keboon - Local Produce Marketplace</title>
-    <link rel="icon" type="image/png" href="assets/img/ICN-LOGO-1.png" />
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary-green: #2D8A54;
-            --secondary-green: #52AE77;
-            --accent-yellow: #FFE066;
-            --accent-orange: #FF8A50;
-            --dark-green: #1B5E3F;
-            --light-green: #E8F5E9;
-            --text-dark: #2C3E50;
-            --text-light: #6C757D;
-            --gradient-primary: linear-gradient(135deg, #2D8A54 0%, #52AE77 100%);
-            --gradient-accent: linear-gradient(135deg, #FFE066 0%, #FF8A50 100%);
-            --gradient-dark: linear-gradient(135deg, #1B5E3F 0%, #2D8A54 100%);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            color: var(--text-dark);
-            overflow-x: hidden;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-        }
-
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary-green);
-            border-radius: 4px;
-        }
-
-        /* Static Navigation - No Animations */
-        .navbar {
-            background: rgba(255, 255, 255, 0.98) !important;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 0.8rem 0;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .navbar.scrolled {
-            background: rgba(255, 255, 255, 0.99) !important;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .navbar-brand img {
-            height: 35px;
-        }
-
-        .navbar-nav .nav-link {
-            color: var(--text-dark) !important;
-            font-weight: 500;
-            margin: 0 0.5rem;
-            padding: 0.5rem 0.75rem !important;
-            border-radius: 8px;
-        }
-
-        .navbar-nav .nav-link:hover {
-            color: var(--primary-green) !important;
-            background-color: var(--light-green);
-        }
-
-        .navbar-nav .nav-link.active {
-            color: var(--primary-green) !important;
-            background-color: var(--light-green);
-        }
-
-        /* Simplified navbar toggler */
-        .navbar-toggler {
-            border: none;
-            padding: 4px 8px;
-        }
-
-        .navbar-toggler:focus {
-            box-shadow: none;
-        }
-
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2845, 138, 84, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-        }
-
-        /* Clean Hero Section - No Animations */
-        .hero {
-            min-height: 100vh;
-            background: var(--gradient-dark);
-            position: relative;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient></defs><circle cx="200" cy="200" r="150" fill="url(%23a)"/><circle cx="800" cy="300" r="200" fill="url(%23a)"/><circle cx="400" cy="700" r="180" fill="url(%23a)"/></svg>') no-repeat center center;
-            background-size: cover;
-            opacity: 0.3;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Clean hero logo - no animations */
-        .hero-logo {
-            width: 350px;
-            max-width: 100%;
-            margin-bottom: 2rem;
-            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
-        }
-
-        /* Clean hero text - no typewriter effect */
-        .hero-text {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            font-weight: 300;
-            color: white;
-            margin-bottom: 3rem;
-            line-height: 1.4;
-        }
-
-        /* Simple CTA button */
-        .cta-button {
-            background: var(--gradient-accent);
-            border: none;
-            padding: 1rem 3rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 50px;
-            color: var(--text-dark);
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(255, 224, 102, 0.3);
-            margin: 0.5rem;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(255, 224, 102, 0.4);
-            color: var(--text-dark);
-        }
-
-        .cta-button.secondary {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .cta-button.secondary:hover {
-            background: rgba(255, 255, 255, 0.3);
-            color: white;
-        }
-
-        /* Sections */
-        .section {
-            padding: 5rem 0;
-            position: relative;
-        }
-
-        .section-title {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section-subtitle {
-            font-size: 1.2rem;
-            color: var(--text-light);
-            margin-bottom: 3rem;
-        }
-
-        /* Cards */
-        .modern-card {
-            background: white;
-            border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(82, 174, 119, 0.1);
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .modern-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient-primary);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease;
-        }
-
-        .modern-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(45, 138, 84, 0.15);
-        }
-
-        .modern-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .card-icon {
-            width: 70px;
-            height: 70px;
-            background: var(--gradient-primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .modern-card:hover .card-icon {
-            transform: scale(1.1) rotate(10deg);
-        }
-
-        /* MVP Progress */
-        .mvp-progress {
-            background: var(--light-green);
-        }
-
-        .roadmap-item {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            border-left: 5px solid var(--primary-green);
-            position: relative;
-        }
-
-        .roadmap-item.current {
-            border-left-color: var(--accent-orange);
-            background: linear-gradient(135deg, #fff7e6 0%, #ffffff 100%);
-        }
-
-        .roadmap-item.future {
-            border-left-color: var(--text-light);
-            opacity: 0.7;
-        }
-
-        .roadmap-item:hover {
-            transform: translateX(10px);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
-        }
-
-        .status-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .status-badge.live {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status-badge.current {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .status-badge.planned {
-            background: #e2e3e5;
-            color: #495057;
-        }
-
-        /* Problem/Solution alternating layout */
-        .problem-solution {
-            background: var(--light-green);
-        }
-
-        .solution-card {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
-            border-left: 5px solid var(--primary-green);
-            transition: all 0.3s ease;
-        }
-
-        .solution-card:hover {
-            transform: translateX(10px);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
-        }
-
-        /* Features Section */
-        .features {
-            background: var(--gradient-dark);
-            color: white;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .feature-card:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-5px);
-        }
-
-        /* Market visualization */
-        .market-viz {
-            position: relative;
-            width: 400px;
-            height: 400px;
-            margin: 0 auto;
-        }
-
-        .market-circle {
-            position: absolute;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: white;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .tam {
-            width: 100%;
-            height: 100%;
-            background: var(--gradient-primary);
-            opacity: 0.3;
-        }
-
-        .sam {
-            width: 70%;
-            height: 70%;
-            background: var(--gradient-primary);
-            opacity: 0.6;
-            top: 15%;
-            left: 15%;
-        }
-
-        .som {
-            width: 40%;
-            height: 40%;
-            background: var(--gradient-primary);
-            opacity: 0.9;
-            top: 30%;
-            left: 30%;
-        }
-
-        .market-circle:hover {
-            transform: scale(1.05);
-        }
-
-        /* SDGs Section */
-        .sdg-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-
-        .sdg-card {
-            background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            border-left: 4px solid var(--primary-green);
-        }
-
-        .sdg-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-        }
-
-        /* Ecosystem carousel */
-        .ecosystem-slider {
-            overflow: hidden;
-            padding: 2rem 0;
-        }
-
-        .ecosystem-track {
-            display: flex;
-            animation: slide 20s linear infinite;
-            gap: 2rem;
-        }
-
-        .ecosystem-card {
-            min-width: 300px;
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .ecosystem-card:hover {
-            transform: scale(1.05);
-        }
-
-        .ecosystem-card img {
-            max-height: 60px;
-            max-width: 120px;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            margin-bottom: 1rem;
-            filter: grayscale(0.3);
-            transition: filter 0.3s ease;
-        }
-
-        .ecosystem-card:hover img {
-            filter: grayscale(0);
-        }
-
-        @keyframes slide {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* Contact section */
-        .contact {
-            background: var(--gradient-dark);
-            color: white;
-        }
-
-        .contact-form {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 3rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .form-control {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            color: white;
-            padding: 0.75rem 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: var(--accent-yellow);
-            box-shadow: 0 0 0 0.2rem rgba(255, 224, 102, 0.25);
-            color: white;
-        }
-
-        .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        /* Footer */
-        .footer {
-            background: #1a1a1a;
-            color: white;
-            padding: 3rem 0 1rem;
-        }
-
-        .social-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--gradient-primary);
-            color: white;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            margin: 0 0.5rem;
-            transition: all 0.3s ease;
-            font-size: 1.2rem;
-        }
-
-        .social-btn:hover {
-            transform: translateY(-3px);
-            color: white;
-            box-shadow: 0 10px 25px rgba(45, 138, 84, 0.3);
-        }
-
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .fade-in-left {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: all 0.6s ease;
-        }
-
-        .fade-in-left.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .fade-in-right {
-            opacity: 0;
-            transform: translateX(50px);
-            transition: all 0.6s ease;
-        }
-
-        .fade-in-right.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 0.5rem 0;
-            }
-
-            .navbar-brand img {
-                height: 30px;
-            }
-            
-            .section {
-                padding: 3rem 0;
-            }
-            
-            .hero-logo {
-                width: 250px;
-            }
-            
-            .hero-text {
-                font-size: 1.5rem;
-                margin-bottom: 2rem;
-            }
-            
-            .modern-card {
-                padding: 1.5rem;
-                margin-bottom: 2rem;
-            }
-            
-            .market-viz {
-                width: 300px;
-                height: 300px;
-            }
-            
-            .contact-form {
-                padding: 2rem;
-            }
-            
-            .feature-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            
-            .sdg-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-            
-            .ecosystem-card {
-                min-width: 250px;
-                padding: 1.5rem;
-            }
-            
-            .ecosystem-card img {
-                max-height: 50px;
-                max-width: 100px;
-            }
-            
-            .solution-card {
-                padding: 1.5rem;
-                margin-bottom: 1.5rem;
-            }
-            
-            .cta-button {
-                padding: 0.8rem 2rem;
-                font-size: 1rem;
-                margin: 0.25rem;
-                display: block;
-                text-align: center;
-            }
-            
-            .hero {
-                padding: 0 1rem;
-            }
-            
-            .navbar-nav .nav-link {
-                padding: 0.5rem 0;
-                margin: 0.2rem 0;
-            }
-
-            .roadmap-item {
-                padding: 1.5rem;
-                margin-bottom: 1.5rem;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .hero-text {
-                font-size: 1.3rem;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .modern-card {
-                padding: 1rem;
-            }
-            
-            .contact-form {
-                padding: 1.5rem;
-            }
-            
-            .market-viz {
-                width: 250px;
-                height: 250px;
-            }
-            
-            .ecosystem-card {
-                min-width: 200px;
-                padding: 1rem;
-            }
-            
-            .ecosystem-card h5 {
-                font-size: 0.9rem;
-            }
-            
-            .ecosystem-card p {
-                font-size: 0.8rem;
-            }
-        }
-
-        /* Custom utilities */
-        .text-gradient {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .bg-glass {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keboon | Connecting Neighbours, Sharing Freshness</title>
+
+  <style>
+    :root {
+      --green: #2e7d32;
+      --green-dark: #1b5e20;
+      --green-soft: #e8f5e9;
+      --lime: #c8e6c9;
+      --cream: #fffdf3;
+      --ink: #1f2a24;
+      --muted: #607468;
+      --white: #ffffff;
+      --shadow: 0 20px 60px rgba(28, 82, 42, 0.15);
+      --radius: 26px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(200, 230, 201, 0.7), transparent 34rem),
+        radial-gradient(circle at top right, rgba(255, 243, 196, 0.8), transparent 28rem),
+        linear-gradient(180deg, #fbfff8 0%, #f7fbf4 60%, #ffffff 100%);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    .icon {
+      width: 1.25em;
+      height: 1.25em;
+      display: inline-block;
+      vertical-align: -0.2em;
+      fill: currentColor;
+      flex: 0 0 auto;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    /* =========================
+       Navigation
+       ========================= */
+
+    .nav {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1120px, calc(100% - 32px));
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px 12px 18px;
+      border: 1px solid rgba(46, 125, 50, 0.14);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 14px 38px rgba(31, 42, 36, 0.08);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      line-height: 1;
+    }
+
+    .brand-icon {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .brand-wordmark {
+      height: 24px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-links a {
+      padding: 10px 13px;
+      border-radius: 999px;
+      color: #395146;
+      font-size: 0.92rem;
+      transition: 0.25s ease;
+    }
+
+    .nav-links a:hover {
+      background: var(--green-soft);
+      color: var(--green-dark);
+    }
+
+    .nav-cta {
+      padding: 10px 16px !important;
+      border-radius: 999px;
+      background: var(--green);
+      color: white !important;
+      box-shadow: 0 10px 24px rgba(46, 125, 50, 0.25);
+      font-weight: 800;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      background: var(--green-dark) !important;
+    }
+
+    .menu-btn {
+      display: none;
+      border: none;
+      background: var(--green-soft);
+      color: var(--green-dark);
+      border-radius: 999px;
+      padding: 10px 12px;
+      cursor: pointer;
+    }
+
+    /* =========================
+       Hero
+       ========================= */
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      align-items: center;
+      padding: 140px 24px 70px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 44px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      padding: 8px 12px;
+      border: 1px solid rgba(46, 125, 50, 0.18);
+      border-radius: 999px;
+      background: rgba(232, 245, 233, 0.85);
+      color: var(--green-dark);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .pulse {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 rgba(46, 125, 50, 0.5);
+      animation: pulse 1.7s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.5);
+      }
+
+      70% {
+        box-shadow: 0 0 0 12px rgba(46, 125, 50, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(46, 125, 50, 0);
+      }
+    }
+
+    h1 {
+      font-size: clamp(3.2rem, 8vw, 7.4rem);
+      line-height: 0.9;
+      letter-spacing: -0.08em;
+      color: #173c22;
+      margin-bottom: 18px;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.15rem, 2.2vw, 1.55rem);
+      line-height: 1.55;
+      color: #446154;
+      max-width: 670px;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-weight: 800;
+      transition: 0.25s ease;
+    }
+
+    .btn-primary {
+      background: var(--green);
+      color: #fff;
+      box-shadow: 0 16px 36px rgba(46, 125, 50, 0.25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      background: var(--green-dark);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.7);
+      border-color: rgba(46, 125, 50, 0.18);
+      color: var(--green-dark);
+    }
+
+    .btn-secondary:hover {
+      background: var(--green-soft);
+      transform: translateY(-3px);
+    }
+
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-width: 640px;
+    }
+
+    .stat-pill {
+      padding: 16px;
+      border: 1px solid rgba(46, 125, 50, 0.13);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.68);
+      box-shadow: 0 10px 30px rgba(31, 42, 36, 0.06);
+    }
+
+    .stat-pill strong {
+      display: block;
+      font-size: 1.6rem;
+      color: var(--green-dark);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-pill span {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .phone-wrap {
+      position: relative;
+      display: grid;
+      place-items: center;
+      isolation: isolate;
+    }
+
+    .orbit {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      border: 1px dashed rgba(46, 125, 50, 0.2);
+      animation: rotate 32s linear infinite;
+      z-index: 0;
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .phone {
+      position: relative;
+      width: min(360px, 92vw);
+      border-radius: 42px;
+      padding: 16px;
+      background: #193f25;
+      box-shadow: var(--shadow), inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+      transform: rotate(1.5deg);
+      z-index: 2;
+    }
+
+    .phone-screen {
+      min-height: 590px;
+      border-radius: 32px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #f7fff3, #ffffff);
+      position: relative;
+    }
+
+    .app-top {
+      padding: 20px 18px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .app-title strong {
+      color: var(--green-dark);
+      font-size: 1.2rem;
+    }
+
+    .app-title span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-top: 2px;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--green-soft);
+      color: var(--green-dark);
+      font-weight: 900;
+    }
+
+    .searchbar {
+      margin: 0 18px 12px;
+      padding: 12px 14px;
+      border-radius: 999px;
+      background: #eef8ed;
+      color: #5b7164;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+
+    .map-card {
+      margin: 14px 18px;
+      height: 205px;
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(46, 125, 50, 0.1) 1px, transparent 1px),
+        linear-gradient(rgba(46, 125, 50, 0.1) 1px, transparent 1px),
+        linear-gradient(135deg, #f4fbef, #dff4dc);
+      background-size: 34px 34px;
+      box-shadow: inset 0 0 0 1px rgba(46, 125, 50, 0.12);
+    }
+
+    .pin {
+      position: absolute;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50% 50% 50% 8px;
+      background: var(--green);
+      color: white;
+      transform: rotate(-45deg);
+      box-shadow: 0 10px 18px rgba(46, 125, 50, 0.25);
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .pin .icon {
+      width: 18px;
+      height: 18px;
+      transform: rotate(45deg);
+    }
+
+    .pin:hover {
+      transform: rotate(-45deg) scale(1.12);
+      background: var(--green-dark);
+    }
+
+    .pin.one {
+      top: 44px;
+      left: 42px;
+    }
+
+    .pin.two {
+      top: 102px;
+      left: 172px;
+    }
+
+    .pin.three {
+      top: 55px;
+      right: 48px;
+    }
+
+    .listing {
+      margin: 12px 18px;
+      padding: 13px;
+      border: 1px solid rgba(46, 125, 50, 0.12);
+      border-radius: 20px;
+      display: grid;
+      grid-template-columns: 54px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      background: white;
+      box-shadow: 0 10px 24px rgba(31, 42, 36, 0.06);
+    }
+
+    .produce-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: var(--green-soft);
+      color: var(--green-dark);
+    }
+
+    .produce-icon .icon {
+      width: 30px;
+      height: 30px;
+    }
+
+    .listing h4 {
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .listing p {
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .distance {
+      color: var(--green-dark);
+      font-weight: 900;
+      font-size: 0.82rem;
+    }
+
+    .floating-card {
+      position: absolute;
+      padding: 14px 16px;
+      border: 1px solid rgba(46, 125, 50, 0.16);
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+      font-size: 0.92rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: floaty 4s ease-in-out infinite;
+      z-index: 4;
+    }
+
+    .floating-card.left {
+      left: -52px;
+      bottom: 90px;
+    }
+
+    .floating-card.right {
+      right: -52px;
+      top: 92px;
+      animation-delay: 1.2s;
+    }
+
+    @keyframes floaty {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-12px);
+      }
+    }
+
+    /* =========================
+       Common Sections
+       ========================= */
+
+    section {
+      padding: 84px 24px;
+      content-visibility: auto;
+      contain-intrinsic-size: 900px;
+    }
+
+    .section-head {
+      max-width: 770px;
+      margin-bottom: 34px;
+    }
+
+    .section-kicker {
+      color: var(--green);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.78rem;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1.02;
+      letter-spacing: -0.06em;
+      color: #173c22;
+      margin-bottom: 14px;
+    }
+
+    .section-lead {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.7;
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid rgba(46, 125, 50, 0.14);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.75);
+      box-shadow: 0 14px 38px rgba(31, 42, 36, 0.06);
+      padding: 24px;
+      transition: 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 46px rgba(31, 42, 36, 0.1);
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: var(--green-soft);
+      color: var(--green-dark);
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+    }
+
+    .card-icon .icon {
+      width: 27px;
+      height: 27px;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: #173c22;
+    }
+
+    .card p {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 0.96rem;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .tab {
+      border: 1px solid rgba(46, 125, 50, 0.18);
+      background: white;
+      color: var(--green-dark);
+      padding: 10px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 800;
+      transition: 0.2s ease;
+    }
+
+    .tab.active,
+    .tab:hover {
+      background: var(--green);
+      color: white;
+    }
+
+    .tab-panel {
+      display: none;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .tab-panel.active {
+      display: grid;
+    }
+
+    .journey {
+      display: grid;
+      gap: 12px;
+    }
+
+    .journey-step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 15px;
+      border-radius: 18px;
+      background: white;
+      border: 1px solid rgba(46, 125, 50, 0.12);
+    }
+
+    .step-num {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .market-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .meter-card {
+      display: grid;
+      gap: 14px;
+    }
+
+    .meter-row {
+      display: grid;
+      gap: 8px;
+    }
+
+    .meter-label {
+      display: flex;
+      justify-content: space-between;
+      color: #33493f;
+      font-weight: 800;
+      font-size: 0.93rem;
+    }
+
+    .meter {
+      height: 13px;
+      border-radius: 999px;
+      background: #e5efe4;
+      overflow: hidden;
+    }
+
+    .meter span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--green), #81c784);
+      border-radius: inherit;
+      transition: width 1.2s ease;
+    }
+
+    .roadmap {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+
+    .roadmap::before {
+      content: "";
+      position: absolute;
+      top: 34px;
+      left: 8%;
+      right: 8%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--green), #a5d6a7);
+      border-radius: 999px;
+      z-index: 0;
+    }
+
+    .road-card {
+      position: relative;
+      z-index: 1;
+      padding: 72px 16px 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(46, 125, 50, 0.14);
+      background: rgba(255, 255, 255, 0.88);
+      min-height: 220px;
+    }
+
+    .road-dot {
+      position: absolute;
+      left: 50%;
+      top: 20px;
+      transform: translateX(-50%);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--green);
+      border: 5px solid var(--green-soft);
+      box-shadow: 0 8px 20px rgba(46, 125, 50, 0.25);
+    }
+
+    .road-card h3 {
+      color: var(--green-dark);
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .road-card p {
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 0.9rem;
+    }
+
+    /* =========================
+   Simple Flow Chart Styles
+   ========================= */
+
+    .flow-card {
+      border: 1px solid rgba(46, 125, 50, 0.14);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: var(--shadow);
+      padding: 28px;
+    }
+
+    .flow-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--green-dark);
+      margin-bottom: 18px;
+    }
+
+    .simple-flow {
+      display: grid;
+      gap: 18px;
+    }
+
+    .flow-row {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .flow-node {
+      min-width: 180px;
+      max-width: 240px;
+      padding: 18px 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(46, 125, 50, 0.15);
+      background: white;
+      text-align: center;
+      box-shadow: 0 10px 24px rgba(31, 42, 36, 0.06);
+    }
+
+    .flow-node.primary {
+      background: linear-gradient(135deg, var(--green-dark), var(--green));
+      color: white;
+      border: none;
+      font-weight: 800;
+    }
+
+    .flow-node.primary strong,
+    .flow-node.primary span {
+      color: white;
+    }
+
+    .flow-node strong {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 6px;
+      color: var(--green-dark);
+    }
+
+    .flow-node span {
+      display: block;
+      font-size: 0.86rem;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .flow-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--green);
+      min-width: 28px;
+    }
+
+    .flow-support {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .flow-support .flow-node {
+      min-width: 0;
+      max-width: unset;
+    }
+
+    .flow-caption {
+      margin-top: 16px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .impact-flow {
+      display: grid;
+      gap: 12px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .impact-stage {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 20px;
+      border-radius: 20px;
+      border: 1px solid rgba(46, 125, 50, 0.14);
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 10px 24px rgba(31, 42, 36, 0.06);
+    }
+
+    .impact-stage-number {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--green);
+      color: white;
+      font-weight: 900;
+    }
+
+    .impact-stage-content strong {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 4px;
+      color: var(--green-dark);
+    }
+
+    .impact-stage-content span {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .impact-down {
+      text-align: center;
+      color: var(--green);
+      font-size: 1.35rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    @media (max-width: 960px) {
+      .flow-support {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .flow-arrow {
+        transform: rotate(90deg);
+        min-height: 28px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .flow-card {
+        padding: 20px;
+      }
+
+      .impact-stage {
+        align-items: flex-start;
+      }
+    }
+
+    /* =========================
+       Directory + Contact
+       ========================= */
+
+    .live-demo-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .directory-frame-card {
+      border: 1px solid rgba(46, 125, 50, 0.14);
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .frame-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .frame-dots {
+      display: flex;
+      gap: 7px;
+    }
+
+    .frame-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--lime);
+    }
+
+    .frame-dots span:nth-child(2) {
+      background: #a5d6a7;
+    }
+
+    .frame-dots span:nth-child(3) {
+      background: var(--green);
+    }
+
+    .frame-toolbar strong {
+      color: var(--green-dark);
+      font-size: 0.95rem;
+    }
+
+    .directory-iframe-wrap {
+      position: relative;
+      height: 620px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: var(--green-soft);
+      border: 1px solid rgba(46, 125, 50, 0.14);
+    }
+
+    .directory-iframe-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: white;
+    }
+
+    .contact-form-card {
+      border-radius: var(--radius);
+      padding: 28px;
+      background: linear-gradient(135deg, var(--green-dark), var(--green));
+      color: white;
+      box-shadow: 0 26px 70px rgba(46, 125, 50, 0.28);
+    }
+
+    .contact-form-card h3 {
+      font-size: 2rem;
+      letter-spacing: -0.04em;
+      margin-bottom: 10px;
+    }
+
+    .contact-form-card p {
+      color: rgba(255, 255, 255, 0.78);
+      line-height: 1.65;
+      margin-bottom: 22px;
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 13px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 14px 15px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      background: rgba(255, 255, 255, 0.12);
+      color: white;
+      outline: none;
+    }
+
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: rgba(255, 255, 255, 0.72);
+      background: rgba(255, 255, 255, 0.17);
+    }
+
+    .contact-form textarea {
+      resize: vertical;
+      min-height: 150px;
+    }
+
+    .send-button {
+      justify-content: center;
+      width: 100%;
+      background: white;
+      color: var(--green-dark);
+    }
+
+    .send-button:hover {
+      background: var(--green-soft);
+    }
+
+    .contact-note {
+      margin-top: 14px;
+      font-size: 0.86rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* =========================
+       Improved Impact Graph
+       ========================= */
+
+    .impact-panel {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .impact-graph {
+      position: relative;
+      min-height: 500px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(46, 125, 50, 0.14);
+      background:
+        radial-gradient(circle at center, rgba(232, 245, 233, 0.95), transparent 13rem),
+        linear-gradient(135deg, #ffffff, #eef9eb);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .impact-orbit {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 340px;
+      height: 340px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px dashed rgba(46, 125, 50, 0.22);
+    }
+
+    .impact-orbit.outer {
+      width: 440px;
+      height: 440px;
+      opacity: 0.45;
+    }
+
+    .impact-center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 150px;
+      height: 150px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--green-dark), var(--green));
+      color: white;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-weight: 950;
+      z-index: 4;
+      box-shadow: 0 20px 45px rgba(46, 125, 50, 0.3);
+    }
+
+    .impact-center span {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      opacity: 0.78;
+      margin-top: 4px;
+    }
+
+    .impact-node {
+      position: absolute;
+      width: 175px;
+      padding: 15px;
+      border-radius: 22px;
+      border: 1px solid rgba(46, 125, 50, 0.16);
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 14px 34px rgba(31, 42, 36, 0.09);
+      text-align: center;
+      transition: 0.25s ease;
+      z-index: 5;
+    }
+
+    .impact-node:hover {
+      transform: translateY(-6px);
+      background: var(--green-soft);
+    }
+
+    .impact-node strong {
+      display: block;
+      color: var(--green-dark);
+      margin-bottom: 6px;
+    }
+
+    .impact-node span {
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+
+    .impact-node::before {
+      content: "";
+      display: block;
+      width: 38px;
+      height: 38px;
+      margin: 0 auto 10px;
+      border-radius: 14px;
+      background: var(--green-soft);
+    }
+
+    .impact-node.i1 {
+      left: 50%;
+      top: 26px;
+      transform: translateX(-50%);
+    }
+
+    .impact-node.i1:hover {
+      transform: translateX(-50%) translateY(-6px);
+    }
+
+    .impact-node.i2 {
+      right: 35px;
+      top: 145px;
+    }
+
+    .impact-node.i3 {
+      right: 85px;
+      bottom: 42px;
+    }
+
+    .impact-node.i4 {
+      left: 85px;
+      bottom: 42px;
+    }
+
+    .impact-node.i5 {
+      left: 35px;
+      top: 145px;
+    }
+
+    .impact-arrow {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 2px;
+      height: 158px;
+      background: linear-gradient(to bottom, rgba(46, 125, 50, 0.35), rgba(46, 125, 50, 0));
+      transform-origin: top center;
+      z-index: 1;
+    }
+
+    .impact-arrow.a1 {
+      transform: rotate(0deg);
+    }
+
+    .impact-arrow.a2 {
+      transform: rotate(72deg);
+    }
+
+    .impact-arrow.a3 {
+      transform: rotate(144deg);
+    }
+
+    .impact-arrow.a4 {
+      transform: rotate(216deg);
+    }
+
+    .impact-arrow.a5 {
+      transform: rotate(288deg);
+    }
+
+    /* =========================
+       CTA + Footer
+       ========================= */
+
+    .cta-section {
+      padding-bottom: 110px;
+    }
+
+    .cta-box {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      padding: 52px;
+      background: linear-gradient(135deg, var(--green-dark), var(--green));
+      color: white;
+      box-shadow: 0 26px 70px rgba(46, 125, 50, 0.28);
+    }
+
+    .cta-box::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      top: -80px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .cta-box h2 {
+      color: white;
+      max-width: 770px;
+    }
+
+    .cta-box p {
+      color: rgba(255, 255, 255, 0.82);
+      max-width: 750px;
+      line-height: 1.7;
+      margin-bottom: 26px;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta-actions .btn-secondary {
+      background: rgba(255, 255, 255, 0.12);
+      color: white;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* =========================
+   Company Footer
+   ========================= */
+
+    .footer {
+      padding: 54px 24px 24px;
+      color: var(--muted);
+      border-top: 1px solid rgba(46, 125, 50, 0.12);
+      background:
+        radial-gradient(circle at top left, rgba(200, 230, 201, 0.35), transparent 24rem),
+        linear-gradient(180deg, #ffffff 0%, #f6fbf4 100%);
+    }
+
+    .footer-inner {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr 0.8fr 0.8fr 1fr;
+      gap: 34px;
+      align-items: start;
+    }
+
+    .footer-brand {
+      max-width: 390px;
+    }
+
+    .footer-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 16px;
+    }
+
+    .footer-brand-icon {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .footer-brand-wordmark {
+      height: 18px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .footer-brand p {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .footer-column {
+      display: grid;
+      gap: 10px;
+    }
+
+    .footer-column h4 {
+      color: var(--green-dark);
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .footer-column a,
+    .footer-column span {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .footer-column a {
+      transition: 0.2s ease;
+    }
+
+    .footer-column a:hover {
+      color: var(--green-dark);
+      transform: translateX(3px);
+    }
+
+    .footer-bottom {
+      width: min(1120px, calc(100% - 32px));
+      margin: 34px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid rgba(46, 125, 50, 0.12);
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: #6b7d72;
+      font-size: 0.88rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%) translateY(30px);
+      opacity: 0;
+      pointer-events: none;
+      padding: 13px 18px;
+      border-radius: 999px;
+      background: var(--green-dark);
+      color: white;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+      z-index: 300;
+      transition: 0.3s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* =========================
+       Mobile
+       ========================= */
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+
+    @media (max-width: 960px) {
+      .nav-links {
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 0;
+        width: min(320px, 90vw);
+        flex-direction: column;
+        align-items: stretch;
+        padding: 12px;
+        background: white;
+        border: 1px solid rgba(46, 125, 50, 0.14);
+        border-radius: 22px;
+        box-shadow: var(--shadow);
+        display: none;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        text-align: left;
+        justify-content: flex-start;
+      }
+
+      .menu-btn {
+        display: inline-flex;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 118px;
+        padding-bottom: 56px;
+      }
+
+      .hero-grid,
+      .tab-panel,
+      .market-grid,
+      .impact-panel,
+      .live-demo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-grid {
+        gap: 34px;
+      }
+
+      .hero-copy {
+        text-align: center;
+      }
+
+      .hero-subtitle {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-actions {
+        justify-content: center;
+      }
+
+      .quick-stats {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .phone-wrap {
+        margin-top: 20px;
+        transform: scale(0.92);
+        transform-origin: top center;
+      }
+
+      .orbit {
+        width: 420px;
+        height: 420px;
+      }
+
+      .floating-card {
+        font-size: 0.82rem;
+        padding: 11px 13px;
+      }
+
+      .floating-card.left {
+        left: 8px;
+        bottom: 60px;
+      }
+
+      .floating-card.right {
+        right: 8px;
+        top: 60px;
+      }
+
+      .phone {
+        width: min(330px, 92vw);
+      }
+
+      .phone-screen {
+        min-height: 540px;
+      }
+
+      .problem-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .roadmap {
+        grid-template-columns: 1fr;
+      }
+
+      .roadmap::before {
+        display: none;
+      }
+
+      .road-card {
+        padding-top: 54px;
+      }
+
+      .directory-iframe-wrap {
+        height: 540px;
+      }
+
+      .ecosystem-graph,
+      .impact-graph {
+        min-height: auto;
+        display: grid;
+        gap: 14px;
+        padding: 20px;
+      }
+
+      .ecosystem-ring,
+      .ecosystem-line,
+      .impact-orbit,
+      .impact-arrow {
+        display: none;
+      }
+
+      .eco-center,
+      .impact-center {
+        position: static;
+        transform: none;
+        width: auto;
+        height: auto;
+        border-radius: 24px;
+        padding: 22px;
+      }
+
+      .eco-node,
+      .impact-node {
+        position: static;
+        width: auto;
+        transform: none !important;
+      }
+
+      .eco-node:hover,
+      .impact-node:hover {
+        transform: translateY(-4px) !important;
+      }
+    }
+
+    @media (max-width: 640px) {
+
+      .container,
+      .footer-inner {
+        width: calc(100% - 20px);
+      }
+
+      .nav {
+        top: 10px;
+        width: calc(100% - 20px);
+        padding: 10px 12px;
+      }
+
+      .brand-icon {
+        width: 31px;
+        height: 31px;
+      }
+
+      .brand-wordmark {
+        height: 21px;
+      }
+
+      .hero {
+        padding-top: 118px;
+      }
+
+      h1 {
+        font-size: clamp(2.7rem, 15vw, 4.6rem);
+        letter-spacing: -0.07em;
+      }
+
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+
+      .hero-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .quick-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .phone-wrap {
+        transform: none;
+        margin-top: 8px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .orbit {
+        width: 310px;
+        height: 310px;
+      }
+
+      .phone {
+        width: min(305px, 94vw);
+        padding: 12px;
+        border-radius: 34px;
+        transform: none;
+        order: 2;
+      }
+
+      .phone-screen {
+        min-height: 500px;
+        border-radius: 26px;
+      }
+
+      .app-top {
+        padding: 16px 14px 10px;
+      }
+
+      .searchbar {
+        margin: 0 14px 10px;
+        font-size: 0.78rem;
+        padding: 10px 12px;
+      }
+
+      .map-card {
+        margin: 12px 14px;
+        height: 170px;
+      }
+
+      .listing {
+        margin: 10px 14px;
+        grid-template-columns: 44px 1fr;
+        gap: 10px;
+      }
+
+      .listing .distance {
+        grid-column: 2;
+        justify-self: start;
+      }
+
+      .produce-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 15px;
+      }
+
+      .produce-icon .icon {
+        width: 25px;
+        height: 25px;
+      }
+
+      .floating-card {
+        position: static;
+        margin: 8px auto;
+        width: fit-content;
+        max-width: 90%;
+        animation: none;
+        background: white;
+      }
+
+      .floating-card.right {
+        order: 1;
+      }
+
+      .floating-card.left {
+        order: 3;
+      }
+
+      .section-head {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .tabs {
+        justify-content: center;
+      }
+
+      .tab {
+        flex: 1 1 auto;
+        text-align: center;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-form-card h3 {
+        font-size: 1.7rem;
+      }
+
+      .frame-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .directory-iframe-wrap {
+        height: 440px;
+      }
+
+      .contact-form-card {
+        padding: 22px;
+      }
+
+      .cta-box {
+        padding: 32px 22px;
+        text-align: center;
+      }
+
+      .cta-actions {
+        display: grid;
+      }
+
+      .cta-actions .btn {
+        justify-content: center;
+      }
+
+      section {
+        padding: 64px 18px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .phone {
+        width: min(285px, 94vw);
+      }
+
+      .phone-screen {
+        min-height: 485px;
+      }
+
+      .map-card {
+        height: 150px;
+      }
+
+      .pin.one {
+        top: 34px;
+        left: 34px;
+      }
+
+      .pin.two {
+        top: 82px;
+        left: 136px;
+      }
+
+      .pin.three {
+        top: 42px;
+        right: 34px;
+      }
+
+      .directory-iframe-wrap {
+        height: 400px;
+      }
+    }
+
+    /* =========================
+   Footer mobile fix
+   Put this at the VERY END of your CSS
+   ========================= */
+
+    @media (max-width: 760px) {
+      .footer {
+        padding: 38px 18px 22px;
+        text-align: left;
+      }
+
+      .footer-inner {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .footer-brand {
+        max-width: 100%;
+      }
+
+      .footer-logo {
+        margin-bottom: 12px;
+      }
+
+      .footer-brand p {
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      .footer-column {
+        gap: 8px;
+        padding-top: 18px;
+        border-top: 1px solid rgba(46, 125, 50, 0.1);
+      }
+
+      .footer-column h4 {
+        font-size: 0.92rem;
+        margin-bottom: 2px;
+      }
+
+      .footer-column a,
+      .footer-column span {
+        font-size: 0.9rem;
+        line-height: 1.45;
+        word-break: break-word;
+      }
+
+      .footer-bottom {
+        width: 100%;
+        margin-top: 26px;
+        padding-top: 18px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        text-align: left;
+        font-size: 0.82rem;
+        line-height: 1.45;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .footer {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .footer-brand-icon {
+        width: 25px;
+        height: 25px;
+      }
+
+      .footer-brand-wordmark {
+        height: 14px;
+      }
+
+      .footer-column {
+        padding-top: 16px;
+      }
+
+      .footer-bottom {
+        font-size: 0.8rem;
+      }
+    }
+
+    /* =========================
+   Mobile fix for simple flow chart
+   ========================= */
+
+    @media (max-width: 640px) {
+      .flow-card {
+        padding: 18px;
+        overflow: hidden;
+      }
+
+      .simple-flow {
+        gap: 14px;
+      }
+
+      .flow-row {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        align-items: stretch;
+      }
+
+      .flow-node {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        padding: 16px 14px;
+      }
+
+      .flow-node.primary {
+        padding: 18px 14px;
+      }
+
+      .flow-node strong {
+        font-size: 0.98rem;
+      }
+
+      .flow-node span {
+        font-size: 0.84rem;
+        line-height: 1.45;
+      }
+
+      .flow-arrow {
+        width: 100%;
+        min-width: 0;
+        min-height: auto;
+        transform: none;
+        font-size: 1.15rem;
+        line-height: 1;
+      }
+
+      .flow-arrow::before {
+        content: "↓";
+      }
+
+      .flow-arrow {
+        color: transparent;
+        position: relative;
+      }
+
+      .flow-arrow::before {
+        color: var(--green);
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-items: center;
+      }
+
+      .flow-support {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .flow-caption {
+        font-size: 0.86rem;
+        text-align: left;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#home">
-                <img src="assets/img/keboon-writing.png" alt="Keboon" />
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#mvp">Our Journey</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://keboon.net/directory">Keboon Directory</a></li>
-                </ul>
-            </div>
+  <!-- Inline SVG sprite. No icon library needed. -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"
+    focusable="false">
+    <symbol id="icon-leaf" viewBox="0 0 24 24">
+      <path
+        d="M20.5 3.5C14.2 3.7 8.9 6.1 6.1 10c-2.2 3.1-2.1 6.9.2 9.2 2.3 2.3 6.1 2.4 9.2.2 3.9-2.8 6.3-8.1 6.5-14.4a1.5 1.5 0 0 0-1.5-1.5Z"
+        fill="currentColor" opacity=".9" />
+      <path d="M4 20c4.6-5.9 8.7-9.1 14-11" fill="none" stroke="currentColor" stroke-width="1.8"
+        stroke-linecap="round" />
+    </symbol>
+
+    <symbol id="icon-map-pin" viewBox="0 0 24 24">
+      <path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12Z" fill="currentColor" />
+      <circle cx="12" cy="10" r="2.6" fill="white" />
+    </symbol>
+
+    <symbol id="icon-basket" viewBox="0 0 24 24">
+      <path d="M6.5 9h11l-1.2 10.1A2.2 2.2 0 0 1 14.1 21H9.9a2.2 2.2 0 0 1-2.2-1.9L6.5 9Z" fill="currentColor"
+        opacity=".9" />
+      <path d="M8.5 9 12 3l3.5 6M5 9h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </symbol>
+
+    <symbol id="icon-sprout" viewBox="0 0 24 24">
+      <path d="M12 21V10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      <path d="M12 11C8.4 11.1 5.7 8.7 5 5c3.7.1 6.4 2.4 7 6Z" fill="currentColor" />
+      <path d="M12 13c3.7 0 6.4-2.4 7-6-3.7.1-6.4 2.4-7 6Z" fill="currentColor" opacity=".75" />
+    </symbol>
+
+    <symbol id="icon-store" viewBox="0 0 24 24">
+      <path d="M4 10h16l-1.1-5.2A1 1 0 0 0 18 4H6a1 1 0 0 0-1 .8L4 10Z" fill="currentColor" opacity=".9" />
+      <path d="M6 10v10h12V10M9 20v-5h6v5" fill="none" stroke="currentColor" stroke-width="1.8"
+        stroke-linejoin="round" />
+    </symbol>
+
+    <symbol id="icon-grower" viewBox="0 0 24 24">
+      <circle cx="12" cy="7" r="3.4" fill="currentColor" />
+      <path d="M5 21c.8-4 3.3-6.2 7-6.2s6.2 2.2 7 6.2" fill="currentColor" opacity=".75" />
+      <path d="M16.5 5.2c1.8-.7 3.1-2 3.8-3.2.2 2.1-.6 4-2.3 5.2" fill="currentColor" opacity=".55" />
+    </symbol>
+
+    <symbol id="icon-truck" viewBox="0 0 24 24">
+      <path d="M3 6h11v10H3V6Zm11 4h3.2l3.8 4v2h-7v-6Z" fill="currentColor" opacity=".85" />
+      <circle cx="7" cy="18" r="2" fill="currentColor" />
+      <circle cx="18" cy="18" r="2" fill="currentColor" />
+    </symbol>
+
+    <symbol id="icon-search" viewBox="0 0 24 24">
+      <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2" />
+      <path d="m16 16 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+    </symbol>
+
+    <symbol id="icon-send" viewBox="0 0 24 24">
+      <path d="M21 3 3 11l8 2 2 8 8-18Z" fill="currentColor" opacity=".9" />
+      <path d="M11 13 21 3" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" />
+    </symbol>
+  </svg>
+
+  <nav class="nav" aria-label="Main navigation">
+    <a href="#top" class="brand" aria-label="Keboon home">
+      <img src="/assets/img/ICN-LOGO-1.png" alt="Keboon icon" class="brand-icon">
+      <img src="/assets/img/keboon-writing.png" alt="Keboon" class="brand-wordmark">
+    </a>
+
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+
+    <div class="nav-links" id="navLinks">
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#ecosystem">Ecosystem</a>
+      <a href="#market">Market</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#demo">Directory</a>
+      <a href="#impact">Impact</a>
+      <a href="#contact" class="nav-cta">Collaborate</a>
+    </div>
+  </nav>
+
+  <main id="top">
+    <header class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <div class="eyebrow"><span class="pulse"></span> Malaysia-first local food ecosystem</div>
+          <h1>Connecting Neighbours, Sharing Freshness.</h1>
+          <p class="hero-subtitle">
+            Keboon is a geolocation-based platform that connects local food growers directly with nearby consumers,
+            making fresh produce easier to discover, sell, support, and share.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#solution" class="btn btn-primary">Explore the product →</a>
+            <a href="#contact" class="btn btn-secondary">Join the pilot</a>
+          </div>
+
+          <div class="quick-stats">
+            <div class="stat-pill"><strong>2-sided</strong><span>Growers + consumers</span></div>
+            <div class="stat-pill"><strong>Local</strong><span>Built around proximity</span></div>
+            <div class="stat-pill"><strong>Future</strong><span>Marketplace to ecosystem</span></div>
+          </div>
         </div>
-    </nav>
 
-    <!-- Clean Hero Section - No Animations -->
-    <section id="home" class="hero">
-        <div class="container">
-            <div class="row justify-content-center text-center">
-                <div class="col-lg-8 hero-content">
-                    <img src="assets/img/keboon-logo-white.png" alt="Keboon" class="hero-logo">
-                    <div class="hero-text">
-                        Connecting Neighbours, Sharing Freshness
-                    </div>
-                    <div class="mt-4">
-                        <a href="https://keboon.net/directory" target="_blank" class="cta-button">
-                            <i class="fas fa-map-marker-alt me-2"></i>Explore Directory
-                        </a>
-                        <a href="#mvp" class="cta-button secondary">
-                            <i class="fas fa-route me-2"></i>Our Journey
-                        </a>
-                    </div>
-                    <div class="mt-4">
-                        <small class="text-white-50">
-                            <i class="fas fa-seedling me-2"></i>
-                            Currently building our community through the Keboon Directory
-                        </small>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        <div class="phone-wrap reveal">
+          <div class="orbit"></div>
 
-    <!-- About Section -->
-    <section id="about" class="section">
-        <div class="container">
-            <div class="row justify-content-center text-center mb-5">
-                <div class="col-lg-8">
-                    <h2 class="section-title fade-in">Building the Future of Local Food</h2>
-                    <p class="section-subtitle fade-in">Starting with community, scaling to revolution</p>
-                </div>
-            </div>
-            <div class="row align-items-center mb-5">
-                <div class="col-lg-6 fade-in-left">
-                    <div class="modern-card">
-                        <div class="card-icon">
-                            <i class="fas fa-seedling"></i>
-                        </div>
-                        <h4 class="mb-3">Our Vision: The Full Keboon Platform</h4>
-                        <p class="mb-3">Keboon will be a comprehensive marketplace connecting home gardeners, urban farmers, and eco-conscious consumers. Imagine a platform where your neighbor's surplus tomatoes are just a tap away, complete with AI-powered growing tips and community rewards.</p>
-                        <p><strong>But we're taking a strategic approach.</strong> Before building the full app, we're validating our market and building community trust through simpler, proven solutions.</p>
-                    </div>
-                </div>
-                <div class="col-lg-6 fade-in-right">
-                    <div class="modern-card">
-                        <div class="card-icon">
-                            <i class="fas fa-map-marked-alt"></i>
-                        </div>
-                        <h4 class="mb-3">Starting Here: Keboon Directory</h4>
-                        <p class="mb-3">Our current MVP is the <strong>Keboon Directory</strong> - a comprehensive database of local farms and producers. Think of it as the foundation of our ecosystem, helping consumers discover fresh, local produce sources.</p>
-                        <p>This directory validates our core hypothesis: people want to connect with local food sources. Every farmer we onboard and every consumer we connect teaches us valuable lessons for the full platform.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 mb-4 fade-in">
-                    <div class="modern-card">
-                        <div class="card-icon">
-                            <i class="fas fa-eye"></i>
-                        </div>
-                        <h4>Our Vision</h4>
-                        <p>A world where communities thrive through sustainable, locally-sourced food systems, reducing waste and fostering meaningful connections between neighbors.</p>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-4 fade-in">
-                    <div class="modern-card">
-                        <div class="card-icon">
-                            <i class="fas fa-bullseye"></i>
-                        </div>
-                        <h4>Our Mission</h4>
-                        <p>Building step-by-step from community directory to full marketplace, validating each piece before creating the complete local food ecosystem.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+          <div class="floating-card right">
+            <svg class="icon" aria-hidden="true">
+              <use href="#icon-map-pin"></use>
+            </svg>
+            Fresh produce nearby
+          </div>
 
-    <!-- MVP Journey Section -->
-    <section id="mvp" class="section mvp-progress">
-        <div class="container">
-            <div class="row justify-content-center text-center mb-5">
-                <div class="col-lg-8">
-                    <h2 class="section-title fade-in">Our Strategic Journey</h2>
-                    <p class="section-subtitle fade-in">Building trust and community before scaling to the full vision</p>
+          <div class="phone" aria-label="Keboon app preview">
+            <div class="phone-screen">
+              <div class="app-top">
+                <div class="app-title">
+                  <strong>Keboon</strong>
+                  <span>Fresh near Petaling Jaya</span>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-8 mx-auto fade-in">
-                    <div class="roadmap-item">
-                        <span class="status-badge live">✓ LIVE</span>
-                        <h4><i class="fas fa-map-marker-alt text-success me-2"></i>Phase 1: Keboon Directory</h4>
-                        <p class="mb-3"><strong>What we're doing now:</strong> A comprehensive directory of local farms and producers with GPS mapping, contact details, product listings, and direct farmer profiles.</p>
-                        <ul class="mb-3">
-                            <li>Farm registration and management system</li>
-                            <li>Interactive map of local producers</li>
-                            <li>Product catalogs with pricing</li>
-                            <li>Direct contact facilitation</li>
-                            <li>Email notifications and updates</li>
-                        </ul>
-                        <p><strong>Why this first:</strong> Validates market demand, builds farmer network, establishes trust, and creates our foundational database.</p>
-                    </div>
-
-                    <div class="roadmap-item current">
-                        <span class="status-badge current">⚡ NEXT</span>
-                        <h4><i class="fas fa-shopping-cart text-warning me-2"></i>Phase 2: Basic Marketplace</h4>
-                        <p class="mb-3"><strong>Building on directory success:</strong> Add simple ordering and payment features to existing directory, enabling direct transactions.</p>
-                        <ul class="mb-3">
-                            <li>Online ordering system integration</li>
-                            <li>Basic payment processing</li>
-                            <li>Order management for farmers</li>
-                            <li>Customer review system</li>
-                            <li>Delivery coordination tools</li>
-                        </ul>
-                        <p><strong>Why this next:</strong> Proven farmer base + validated consumer demand = ready for transaction layer.</p>
-                    </div>
-
-                    <div class="roadmap-item future">
-                        <span class="status-badge planned">📋 PLANNED</span>
-                        <h4><i class="fas fa-users text-muted me-2"></i>Phase 3: Community Features</h4>
-                        <p class="mb-3"><strong>Expanding community:</strong> Add neighbor-to-neighbor sharing, community gardens, and local food groups.</p>
-                        <ul class="mb-3">
-                            <li>Home gardener profiles and surplus sharing</li>
-                            <li>Community garden coordination</li>
-                            <li>Local food group formation</li>
-                            <li>Bulk buying coordination</li>
-                            <li>Seasonal planning tools</li>
-                        </ul>
-                        <p><strong>Timeline:</strong> After marketplace stabilizes with commercial farmers.</p>
-                    </div>
-
-                    <div class="roadmap-item future">
-                        <span class="status-badge planned">🚀 FUTURE</span>
-                        <h4><i class="fas fa-brain text-muted me-2"></i>Phase 4: Full Platform Vision</h4>
-                        <p class="mb-3"><strong>The complete ecosystem:</strong> AI-powered features, advanced community tools, and comprehensive sustainability tracking.</p>
-                        <ul class="mb-3">
-                            <li>AI planting scheduler and grow recommendations</li>
-                            <li>Gamified rewards system</li>
-                            <li>Compost exchange marketplace</li>
-                            <li>Carbon footprint tracking</li>
-                            <li>Advanced community networking</li>
-                            <li>Mobile app with offline features</li>
-                        </ul>
-                        <p><strong>Timeline:</strong> After community adoption and proven economics.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="row mt-5">
-                <div class="col-lg-10 mx-auto text-center fade-in">
-                    <div class="modern-card">
-                        <h4 class="text-gradient mb-3">Why This Approach Works</h4>
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <div class="card-icon mx-auto">
-                                    <i class="fas fa-users"></i>
-                                </div>
-                                <h5>Community First</h5>
-                                <p>Build trust and relationships before asking for transactions</p>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <div class="card-icon mx-auto">
-                                    <i class="fas fa-chart-line"></i>
-                                </div>
-                                <h5>Validate & Learn</h5>
-                                <p>Each phase teaches us what users actually want</p>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <div class="card-icon mx-auto">
-                                    <i class="fas fa-puzzle-piece"></i>
-                                </div>
-                                <h5>Sustainable Growth</h5>
-                                <p>Build solid foundations before adding complexity</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Problem & Solution Section -->
-    <section id="solution" class="section problem-solution">
-        <div class="container">
-            <div class="row justify-content-center text-center mb-5">
-                <div class="col-lg-8">
-                    <h2 class="section-title fade-in">The Challenge We're Solving</h2>
-                    <p class="section-subtitle fade-in">Starting with discovery, scaling to full ecosystem</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 fade-in-left">
-                    <h3 class="text-gradient mb-4">Current Problems</h3>
-                    <div class="solution-card">
-                        <h5><i class="fas fa-search text-danger me-2"></i>Discovery Challenge</h5>
-                        <p>Consumers struggle to find local farms and fresh produce sources in their area.</p>
-                        <small class="text-success"><strong>✓ Solved by Keboon Directory</strong></small>
-                    </div>
-                    <div class="solution-card">
-                        <h5><i class="fas fa-phone text-warning me-2"></i>Connection Barriers</h5>
-                        <p>Farmers lack efficient ways to reach local customers and showcase their products.</p>
-                        <small class="text-success"><strong>✓ Solved by Keboon Directory</strong></small>
-                    </div>
-                    <div class="solution-card">
-                        <h5><i class="fas fa-trash-alt text-info me-2"></i>Future: Food Waste</h5>
-                        <p>Excess home-grown produce goes to waste due to lack of sharing networks.</p>
-                        <small class="text-muted"><strong>→ Phase 3: Community Features</strong></small>
-                    </div>
-                </div>
-                <div class="col-lg-6 fade-in-right">
-                    <h3 class="text-gradient mb-4">Our Solutions</h3>
-                    <div class="solution-card">
-                        <h5><i class="fas fa-map-marked-alt text-success me-2"></i>Local Farm Discovery</h5>
-                        <p>Interactive map showing all local farms, their products, prices, and contact information.</p>
-                        <small class="text-success"><strong>✓ Live Now</strong></small>
-                    </div>
-                    <div class="solution-card">
-                        <h5><i class="fas fa-store text-success me-2"></i>Farmer Showcase Platform</h5>
-                        <p>Professional profiles for farmers to display products, tell their story, and connect with customers.</p>
-                        <small class="text-success"><strong>✓ Live Now</strong></small>
-                    </div>
-                    <div class="solution-card">
-                        <h5><i class="fas fa-shopping-cart text-warning me-2"></i>Coming: Direct Marketplace</h5>
-                        <p>Seamless ordering and payment system built on top of our proven directory.</p>
-                        <small class="text-warning"><strong>→ Phase 2: Basic Marketplace</strong></small>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Current Features Section -->
-    <section id="features" class="section features">
-        <div class="container">
-            <div class="row justify-content-center text-center mb-5">
-                <div class="col-lg-8">
-                    <h2 class="section-title text-white fade-in">Keboon Directory Features</h2>
-                    <p class="section-subtitle text-white-50 fade-in">What's available right now</p>
-                </div>
-            </div>
-            <div class="feature-grid fade-in">
-                <div class="feature-card">
-                    <div class="card-icon bg-glass">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h4>Interactive Farm Map</h4>
-                    <p>GPS-powered map showing all registered farms with filtering by location, products, and farm type.</p>
-                    <span class="badge bg-success mt-2">Live Now</span>
-                </div>
-                <div class="feature-card">
-                    <div class="card-icon bg-glass">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
-                    <h4>Farmer Profiles</h4>
-                    <p>Detailed farm information including contact details, product listings with prices, and farm descriptions.</p>
-                    <span class="badge bg-success mt-2">Live Now</span>
-                </div>
-                <div class="feature-card">
-                    <div class="card-icon bg-glass">
-                        <i class="fas fa-leaf"></i>
-                    </div>
-                    <h4>Product Catalogs</h4>
-                    <p>Seasonal availability, pricing information, and product descriptions for easy discovery.</p>
-                    <span class="badge bg-success mt-2">Live Now</span>
-                </div>
-                <div class="feature-card">
-                    <div class="card-icon bg-glass">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h4>Mobile Responsive</h4>
-                    <p>Works perfectly on all devices - phone, tablet, or desktop for easy access anywhere.</p>
-                    <span class="badge bg-success mt-2">Live Now</span>
-                </div>
-                <div class="feature-card">
-                    <div class="card-icon bg-glass">
-                        <i class="fas fa-shopping-cart"></i>
-                    </div>
-                    <h4>Marketplace Integration</h4>
-                    <p>Simple ordering system and payment processing for direct farm-to-consumer sales.</p>
-                    <span class="badge bg-warning text-dark mt-2">Phase 2</span>
-                </div>
-                <div class="feature-card">
-                    <div class="card-icon bg-glass">
-                        <i class="fas fa-seedling"></i>
-                    </div>
-                    <h4>AI Growing Assistant</h4>
-                    <p>Smart planting recommendations and growth monitoring with ML-powered insights.</p>
-                    <span class="badge bg-info mt-2">Phase 4</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Target Market Section -->
-    <section class="section">
-        <div class="container">
-            <div class="row justify-content-center text-center mb-5">
-                <div class="col-lg-8">
-                    <h2 class="section-title fade-in">Market Opportunity</h2>
-                    <p class="section-subtitle fade-in">Building from directory users to marketplace participants</p>
-                </div>
-            </div>
-            <div class="row align-items-center">
-                <div class="col-lg-6 fade-in-left">
-                    <div class="market-viz">
-                        <div class="market-circle tam">TAM</div>
-                        <div class="market-circle sam">SAM</div>
-                        <div class="market-circle som">SOM</div>
-                    </div>
-                </div>
-                <div class="col-lg-6 fade-in-right">
-                    <div class="modern-card">
-                        <h4><i class="fas fa-globe text-success me-2"></i>TAM - Total Available Market</h4>
-                        <p class="mb-4">Eco-conscious consumers, farmers, and home gardeners across Southeast Asia. <strong>RM 15 billion</strong> annual revenue potential.</p>
-                        
-                        <h4><i class="fas fa-map-marker-alt text-success me-2"></i>SAM - Serviceable Available Market</h4>
-                        <p class="mb-4">Malaysian consumers seeking local produce and farmers needing better market access. <strong>RM 500 million</strong> estimated potential.</p>
-                        
-                        <h4><i class="fas fa-bullseye text-success me-2"></i>SOM - Current Focus</h4>
-                        <p class="mb-3">Starting with <strong>Selangor and KL farmers</strong> in our directory, then expanding marketplace features to proven user base.</p>
-                        <p><strong>Directory Goal:</strong> 1,000 farms by end of 2026<br>
-                        <strong>Marketplace Goal:</strong> RM 1 million GMV in first year</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Impact Section -->
-    <section class="section problem-solution">
-        <div class="container">
-            <div class="row justify-content-center text-center mb-5">
-                <div class="col-lg-8">
-                    <h2 class="section-title fade-in">Impact & Sustainability</h2>
-                    <p class="section-subtitle fade-in">Contributing to UN Sustainable Development Goals</p>
-                </div>
-            </div>
-            <div class="sdg-grid fade-in">
-                <div class="sdg-card">
-                    <h5><i class="fas fa-utensils text-success me-2"></i>Zero Hunger</h5>
-                    <p>Directory helps consumers find local food sources, while future features will reduce waste.</p>
-                </div>
-                <div class="sdg-card">
-                    <h5><i class="fas fa-briefcase text-success me-2"></i>Economic Growth</h5>
-                    <p>Giving farmers digital presence now, enabling direct sales and income growth in Phase 2.</p>
-                </div>
-                <div class="sdg-card">
-                    <h5><i class="fas fa-city text-success me-2"></i>Sustainable Communities</h5>
-                    <p>Building local food networks that will strengthen community bonds and reduce food miles.</p>
-                </div>
-                <div class="sdg-card">
-                    <h5><i class="fas fa-shopping-basket text-success me-2"></i>Responsible Consumption</h5>
-                    <p>Promoting local sourcing now, with future features for waste reduction and sharing.</p>
-                </div>
-                <div class="sdg-card">
-                    <h5><i class="fas fa-leaf text-success me-2"></i>Climate Action</h5>
-                    <p>Reducing food transportation through local connections, with carbon tracking in future phases.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Ecosystem Section -->
-    <section class="section">
-        <div class="container">
-            <div class="row justify-content-center text-center mb-5">
-                <div class="col-lg-8">
-                    <h2 class="section-title fade-in">Our Ecosystem of Support</h2>
-                    <p class="section-subtitle fade-in">Partners helping us build and scale Keboon</p>
-                </div>
-            </div>
-        </div>
-        <div class="ecosystem-slider fade-in">
-            <div class="ecosystem-track">
-                <div class="ecosystem-card">
-                    <img src="assets/img/partner/google.png" alt="Google for Startups">
-                    <h5>Google for Startups</h5>
-                    <p>Received Google Cloud credits to support infrastructure and scale efficiently during early growth.</p>
-                </div>
-                <div class="ecosystem-card">
-                    <img src="assets/img/partner/github.png" alt="GitHub">
-                    <h5>GitHub Student Pack</h5>
-                    <p>Using GitHub's tools and cloud services to support prototyping and streamline developer workflow.</p>
-                </div>
-                <div class="ecosystem-card">
-                    <img src="assets/img/partner/keboon_technology_solution.png" alt="Keboon Tech">
-                    <h5>Keboon Technology Solution</h5>
-                    <p>The team behind Keboon's MVP — delivering full-stack development, UI/UX design, and deployment.</p>
-                </div>
-                <!-- Duplicates for seamless loop -->
-                <div class="ecosystem-card">
-                  <img src="assets/img/partner/google.png" alt="Google for Startups">
-                  <h5>Google for Startups</h5>
-                  <p>Received Google Cloud credits to support infrastructure and scale efficiently during early growth.</p>
+                <div class="avatar">K</div>
               </div>
-              <div class="ecosystem-card">
-                  <img src="assets/img/partner/github.png" alt="GitHub">
-                  <h5>GitHub Student Pack</h5>
-                  <p>Using GitHub's tools and cloud services to support prototyping and streamline developer workflow.</p>
+
+              <div class="searchbar">
+                <svg class="icon" aria-hidden="true">
+                  <use href="#icon-search"></use>
+                </svg>
+                Search herbs, vegetables, fruits...
               </div>
-              <div class="ecosystem-card">
-                  <img src="assets/img/partner/keboon_technology_solution.png" alt="Keboon Tech">
-                  <h5>Keboon Technology Solution</h5>
-                  <p>The team behind Keboon's MVP — delivering full-stack development, UI/UX design, and deployment.</p>
+
+              <div class="map-card">
+                <div class="pin one" data-tip="Urban grower: kangkung available">
+                  <svg class="icon" aria-hidden="true">
+                    <use href="#icon-leaf"></use>
+                  </svg>
+                </div>
+                <div class="pin two" data-tip="Home gardener: herbs ready">
+                  <svg class="icon" aria-hidden="true">
+                    <use href="#icon-sprout"></use>
+                  </svg>
+                </div>
+                <div class="pin three" data-tip="Community garden: fresh tomatoes">
+                  <svg class="icon" aria-hidden="true">
+                    <use href="#icon-basket"></use>
+                  </svg>
+                </div>
               </div>
-              <div class="ecosystem-card">
-                <img src="assets/img/partner/google.png" alt="Google for Startups">
-                <h5>Google for Startups</h5>
-                <p>Received Google Cloud credits to support infrastructure and scale efficiently during early growth.</p>
+
+              <div class="listing">
+                <div class="produce-icon"><svg class="icon" aria-hidden="true">
+                    <use href="#icon-leaf"></use>
+                  </svg></div>
+                <div>
+                  <h4>Fresh Kangkung</h4>
+                  <p>Urban grower • ready today</p>
+                </div>
+                <div class="distance">0.8 km</div>
+              </div>
+
+              <div class="listing">
+                <div class="produce-icon"><svg class="icon" aria-hidden="true">
+                    <use href="#icon-sprout"></use>
+                  </svg></div>
+                <div>
+                  <h4>Mint & Basil Bundle</h4>
+                  <p>Home garden • limited harvest</p>
+                </div>
+                <div class="distance">1.3 km</div>
+              </div>
+
+              <div class="listing">
+                <div class="produce-icon"><svg class="icon" aria-hidden="true">
+                    <use href="#icon-basket"></use>
+                  </svg></div>
+                <div>
+                  <h4>Cherry Tomatoes</h4>
+                  <p>Community garden • pickup</p>
+                </div>
+                <div class="distance">2.1 km</div>
+              </div>
             </div>
-            <div class="ecosystem-card">
-                <img src="assets/img/partner/github.png" alt="GitHub">
-                <h5>GitHub Student Pack</h5>
-                <p>Using GitHub's tools and cloud services to support prototyping and streamline developer workflow.</p>
-            </div>
-            <div class="ecosystem-card">
-                <img src="assets/img/partner/keboon_technology_solution.png" alt="Keboon Tech">
-                <h5>Keboon Technology Solution</h5>
-                <p>The team behind Keboon's MVP — delivering full-stack development, UI/UX design, and deployment.</p>
-            </div>
-                
-            </div>
+          </div>
+
+          <div class="floating-card left">
+            <svg class="icon" aria-hidden="true">
+              <use href="#icon-leaf"></use>
+            </svg>
+            Direct grower visibility
+          </div>
         </div>
-        <div class="container">
-            <div class="text-center mt-4 fade-in">
-                <p class="text-muted">Interested in partnering with us? <a href="#contact" class="text-decoration-none">Let's collaborate</a> to build the future of local food systems.</p>
-            </div>
+      </div>
+    </header>
+
+    <section id="problem">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">The problem</div>
+          <h2>Local food supply and local demand are disconnected.</h2>
+          <p class="section-lead">
+            Consumers want fresher, more affordable and transparent produce. Growers need better visibility, direct
+            buyers and stronger income opportunities. Existing channels often leave both sides separated by logistics,
+            intermediaries or fragmented informal networks.
+          </p>
         </div>
+
+        <div class="problem-grid">
+          <article class="card reveal">
+            <div class="card-icon"><svg class="icon" aria-hidden="true">
+                <use href="#icon-store"></use>
+              </svg></div>
+            <h3>Consumers lack visibility</h3>
+            <p>People may want to support local growers, but often do not know who is growing food nearby, what is
+              available, or how to connect directly.</p>
+          </article>
+
+          <article class="card reveal">
+            <div class="card-icon"><svg class="icon" aria-hidden="true">
+                <use href="#icon-grower"></use>
+              </svg></div>
+            <h3>Growers lack direct access</h3>
+            <p>Urban growers, small farmers and home gardeners may have produce to sell but limited digital visibility,
+              inconsistent demand and small margins.</p>
+          </article>
+
+          <article class="card reveal">
+            <div class="card-icon"><svg class="icon" aria-hidden="true">
+                <use href="#icon-truck"></use>
+              </svg></div>
+            <h3>Supply chains are inefficient</h3>
+            <p>Fresh produce often depends on longer distribution routes, third-party channels and logistics that can
+              increase costs and reduce transparency.</p>
+          </article>
+        </div>
+      </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="section contact">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="contact-form fade-in">
-                        <h2 class="text-center mb-4 text-white">Get In Touch</h2>
-                        <p class="text-center text-white-50 mb-4">Ready to join the local food revolution? We'd love to hear from you.</p>
-                        <form action="https://formspree.io/f/xzzpopkr" method="POST">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <input type="text" class="form-control" name="name" placeholder="Your Name *" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <input type="email" class="form-control" name="email" placeholder="Your Email *" required>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <input type="tel" class="form-control" name="mobile" placeholder="Mobile Number *" required>
-                            </div>
-                            <div class="mb-3">
-                                <textarea class="form-control" name="message" rows="6" placeholder="Your Message *" required></textarea>
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" class="cta-button">
-                                    <i class="fas fa-paper-plane me-2"></i>Send Message
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+    <section id="solution">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">The solution</div>
+          <h2>A hyperlocal food platform built around proximity.</h2>
+          <p class="section-lead">
+            Keboon starts with a directory and grows into a marketplace: growers list what they have, consumers discover
+            what is nearby, and communities build stronger local food networks.
+          </p>
         </div>
+
+        <div class="tabs reveal" role="tablist" aria-label="User journeys">
+          <button class="tab active" data-tab="consumer">For Consumers</button>
+          <button class="tab" data-tab="grower">For Growers</button>
+          <button class="tab" data-tab="partner">For Partners</button>
+        </div>
+
+        <div class="tab-panel active" id="consumer">
+          <div class="card">
+            <h3>Find fresh produce near you</h3>
+            <p>Consumers can browse nearby growers, view listings, understand the source, reserve or connect, and
+              support a more sustainable local food cycle.</p>
+          </div>
+          <div class="journey">
+            <div class="journey-step"><span class="step-num">1</span>
+              <div><strong>Open Keboon</strong>
+                <p>Allow location or choose a neighbourhood.</p>
+              </div>
+            </div>
+            <div class="journey-step"><span class="step-num">2</span>
+              <div><strong>Discover nearby produce</strong>
+                <p>Browse fresh listings from growers around you.</p>
+              </div>
+            </div>
+            <div class="journey-step"><span class="step-num">3</span>
+              <div><strong>Connect and support</strong>
+                <p>Reserve, buy, message or arrange pickup.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="grower">
+          <div class="card">
+            <h3>Turn harvests into visibility and income</h3>
+            <p>Growers can create profiles, list available produce, get discovered by nearby consumers and build repeat
+              local customer relationships.</p>
+          </div>
+          <div class="journey">
+            <div class="journey-step"><span class="step-num">1</span>
+              <div><strong>Create grower profile</strong>
+                <p>Share what you grow and where you operate.</p>
+              </div>
+            </div>
+            <div class="journey-step"><span class="step-num">2</span>
+              <div><strong>List available produce</strong>
+                <p>Add quantity, price, harvest timing and pickup options.</p>
+              </div>
+            </div>
+            <div class="journey-step"><span class="step-num">3</span>
+              <div><strong>Reach nearby buyers</strong>
+                <p>Receive interest and build direct community demand.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="partner">
+          <div class="card">
+            <h3>Activate food security and sustainability</h3>
+            <p>Partners can use Keboon to support pilot communities, grower onboarding, sustainability campaigns, food
+              resilience and public awareness.</p>
+          </div>
+          <div class="journey">
+            <div class="journey-step"><span class="step-num">1</span>
+              <div><strong>Launch a pilot cluster</strong>
+                <p>Choose a community and onboard local growers.</p>
+              </div>
+            </div>
+            <div class="journey-step"><span class="step-num">2</span>
+              <div><strong>Measure participation</strong>
+                <p>Track sign-ups, listings, views, enquiries and repeat usage.</p>
+              </div>
+            </div>
+            <div class="journey-step"><span class="step-num">3</span>
+              <div><strong>Scale what works</strong>
+                <p>Replicate the model in more communities.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row align-items-center justify-content-between">
-                <div class="col-lg-4 text-center text-lg-start mb-3 mb-lg-0">
-                    <p>&copy; <span id="current-year"></span> KEBOON TECHNOLOGY SOLUTION</p>
-                    <small class="text-muted">Business RN: 003639101-D</small>
-                </div>
-                <div class="col-lg-4 text-center mb-3 mb-lg-0">
-                    <a href="https://instagram.com/keboonmy" class="social-btn" target="_blank" rel="noopener">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://facebook.com/keboon.tech" class="social-btn" target="_blank" rel="noopener">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="https://linkedin.com/company/keboon-tech/" class="social-btn" target="_blank" rel="noopener">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                </div>
-            </div>
+    <section id="ecosystem">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">Ecosystem vision</div>
+          <h2>Not just a marketplace. A local food ecosystem.</h2>
+          <p class="section-lead">
+            Keboon starts by connecting local growers and consumers directly, then expands into a broader support system
+            that strengthens community participation, partnerships, and future agricultural innovation.
+          </p>
         </div>
-    </footer>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script>
-        // Set current year
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+        <div class="flow-card reveal">
+          <div class="flow-title">How the Keboon ecosystem works</div>
 
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
+          <div class="simple-flow">
+            <div class="flow-row">
+              <div class="flow-node">
+                <strong>Growers</strong>
+                <span>Urban growers, small-scale farmers, home gardeners, and community growers list available
+                  produce.</span>
+              </div>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
+              <div class="flow-arrow" aria-hidden="true">→</div>
+
+              <div class="flow-node primary">
+                <strong>Keboon Platform</strong>
+                <span>Geolocation-based discovery, visibility, connection, and future local food transactions.</span>
+              </div>
+
+              <div class="flow-arrow">→</div>
+
+              <div class="flow-node">
+                <strong>Consumers</strong>
+                <span>People discover nearby produce, support local growers, and access fresher food more
+                  directly.</span>
+              </div>
+            </div>
+
+            <div class="flow-support">
+              <div class="flow-node">
+                <strong>Community Layer</strong>
+                <span>Forums, engagement, participation, and shared local food resilience.</span>
+              </div>
+
+              <div class="flow-node">
+                <strong>Partner Layer</strong>
+                <span>Government, NGOs, local councils, sustainability programs, and ecosystem collaborators.</span>
+              </div>
+
+              <div class="flow-node">
+                <strong>Future Tools</strong>
+                <span>Grower support, B2B sourcing, AI insights, and future IoT-enabled agriculture features.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-caption">
+            Keboon’s long-term value is not only in enabling transactions, but in building a trusted local food
+            ecosystem that links people, supply, and community support more efficiently.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="market">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">Market opportunity</div>
+          <h2>Malaysia-first, with Southeast Asia expansion potential.</h2>
+          <p class="section-lead">Keboon sits at the intersection of fresh produce commerce, digital marketplaces, local
+            food distribution, urban farming, sustainability and food security.</p>
+        </div>
+
+        <div class="market-grid">
+          <div class="card reveal meter-card">
+            <h3>Why now?</h3>
+            <p>Several market forces are converging: food price pressure, interest in local sourcing, sustainability
+              awareness, digital marketplace behaviour and growing food security concerns.</p>
+
+            <div class="meter-row">
+              <div class="meter-label"><span>Food security relevance</span><span>High</span></div>
+              <div class="meter"><span data-width="94%"></span></div>
+            </div>
+
+            <div class="meter-row">
+              <div class="meter-label"><span>Digital readiness</span><span>High</span></div>
+              <div class="meter"><span data-width="90%"></span></div>
+            </div>
+
+            <div class="meter-row">
+              <div class="meter-label"><span>Community participation</span><span>Growing</span></div>
+              <div class="meter"><span data-width="78%"></span></div>
+            </div>
+          </div>
+
+          <div class="card reveal">
+            <h3>Market wedge</h3>
+            <p>Keboon does not need to replace supermarkets or wet markets. It creates a new digital layer for local
+              food discovery and community-based access.</p>
+            <br />
+            <p><strong>Initial market:</strong> selected Malaysian urban and suburban communities.</p>
+            <br />
+            <p><strong>Expansion path:</strong> Malaysia-wide clusters → B2B local sourcing → Southeast Asia pilots →
+              global local-food ecosystem model.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="roadmap">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">Roadmap</div>
+          <h2>Ambitious, but phased and realistic.</h2>
+          <p class="section-lead">Keboon should prove local discovery first, then unlock transactions, community
+            features, grower services, data-driven planning and future smart farming tools.</p>
+        </div>
+
+        <div class="roadmap reveal">
+          <div class="road-card">
+            <div class="road-dot"></div>
+            <h3>Now</h3>
+            <p>Website live, Keboon Directory active, limited sign-ups and early validation.</p>
+          </div>
+          <div class="road-card">
+            <div class="road-dot"></div>
+            <h3>0–12 months</h3>
+            <p>Refine MVP, onboard growers, launch pilot communities and test enquiries.</p>
+          </div>
+          <div class="road-card">
+            <div class="road-dot"></div>
+            <h3>12–24 months</h3>
+            <p>Add payments, grower dashboards, reviews, featured listings and partner campaigns.</p>
+          </div>
+          <div class="road-card">
+            <div class="road-dot"></div>
+            <h3>2–5 years</h3>
+            <p>Scale Malaysia clusters, launch B2B sourcing and grower support marketplace.</p>
+          </div>
+          <div class="road-card">
+            <div class="road-dot"></div>
+            <h3>Future</h3>
+            <p>Introduce data insights, AI-assisted planning, IoT integrations and regional expansion.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">Live directory</div>
+          <h2>Explore the Keboon Directory experience.</h2>
+          <p class="section-lead">
+            The Keboon Directory is the first validation layer of the platform, helping users discover local growers and
+            food sources before the full marketplace rollout.
+          </p>
+        </div>
+
+        <div class="live-demo-grid">
+          <div class="directory-frame-card reveal">
+            <div class="frame-toolbar">
+              <div class="frame-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <strong>keboon.net/directory</strong>
+            </div>
+
+            <div class="directory-iframe-wrap">
+              <iframe src="https://keboon.net/directory" title="Keboon Directory Live Demo" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+            </div>
+          </div>
+
+          <div class="contact-form-card reveal" id="contact">
+            <h3>Get In Touch</h3>
+            <p>
+              Ready to join the local food revolution? Reach out as an investor,
+              pilot user, grower, partner, advisor, or technical collaborator.
+            </p>
+
+            <form class="contact-form" action="https://formspree.io/f/xzzpopkr" method="POST">
+              <div class="form-row">
+                <input type="text" name="name" placeholder="Your Name *" required>
+                <input type="email" name="email" placeholder="Your Email *" required>
+              </div>
+
+              <input type="tel" name="mobile" placeholder="Mobile Number *" required>
+
+              <textarea name="message" rows="6" placeholder="Your Message *" required></textarea>
+
+              <button type="submit" class="btn send-button">
+                <svg class="icon" aria-hidden="true">
+                  <use href="#icon-send"></use>
+                </svg>
+                Send Message
+              </button>
+            </form>
+
+            <div class="contact-note">
+              This form sends directly through Formspree.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="impact">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-kicker">Impact</div>
+          <h2>Fresh food closer to people. Growers closer to buyers.</h2>
+          <p class="section-lead">
+            Keboon’s long-term potential is to create a more resilient, transparent, and community-driven local food
+            system.
+          </p>
+        </div>
+
+        <div class="flow-card reveal">
+          <div class="flow-title">Impact pathway</div>
+
+          <div class="impact-flow">
+            <div class="impact-stage">
+              <div class="impact-stage-number">1</div>
+              <div class="impact-stage-content">
+                <strong>Local discovery becomes easier</strong>
+                <span>Consumers can find nearby growers, and growers gain visibility to nearby demand.</span>
+              </div>
+            </div>
+
+            <div class="impact-down">↓</div>
+
+            <div class="impact-stage">
+              <div class="impact-stage-number">2</div>
+              <div class="impact-stage-content">
+                <strong>Direct grower-consumer connection improves</strong>
+                <span>Shorter supply chains reduce dependency on fragmented and inefficient local distribution.</span>
+              </div>
+            </div>
+
+            <div class="impact-down">↓</div>
+
+            <div class="impact-stage">
+              <div class="impact-stage-number">3</div>
+              <div class="impact-stage-content">
+                <strong>Practical benefits are created</strong>
+                <span>Growers gain income opportunities, consumers gain fresher access, and local food waste can be
+                  reduced.</span>
+              </div>
+            </div>
+
+            <div class="impact-down">↓</div>
+
+            <div class="impact-stage">
+              <div class="impact-stage-number">4</div>
+              <div class="impact-stage-content">
+                <strong>Communities become more engaged and resilient</strong>
+                <span>People participate more actively in supporting local food production and self-reliant
+                  neighbourhood ecosystems.</span>
+              </div>
+            </div>
+
+            <div class="impact-down">↓</div>
+
+            <div class="impact-stage">
+              <div class="impact-stage-number">5</div>
+              <div class="impact-stage-content">
+                <strong>Long-term food security and sustainability improve</strong>
+                <span>Keboon contributes to stronger local food systems, better trust in food sources, and a more
+                  sustainable future.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section" id="collaborate">
+      <div class="container">
+        <div class="cta-box reveal">
+          <h2>Help Keboon validate, build and scale a local food ecosystem.</h2>
+          <p>Keboon is seeking funders, strategic partners, pilot communities, advisors, developers and community
+            collaborators to strengthen the platform, onboard growers and consumers, and launch focused pilots in
+            Malaysia.</p>
+
+          <div class="cta-actions">
+            <a class="btn btn-primary" href="#contact">Start a collaboration</a>
+            <a class="btn btn-secondary" href="https://keboon.net/directory" target="_blank" rel="noopener">Visit keboon
+              Directory</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="#top" class="footer-logo" aria-label="Keboon home">
+          <img src="assets/img/keboon-logo-1.png" alt="Keboon icon" class="footer-brand-icon">
+          <img src="assets/img/keboon-writing.png" alt="Keboon" class="footer-brand-wordmark">
+        </a>
+        <p>
+          Connecting Neighbours, Sharing Freshness. Keboon is building a local food ecosystem that connects growers,
+          consumers, communities, and partners.
+        </p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Explore</h4>
+        <a href="#problem">Problem</a>
+        <a href="#solution">Solution</a>
+        <a href="#ecosystem">Ecosystem</a>
+        <a href="#market">Market</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#impact">Impact</a>
+      </div>
+
+      <div class="footer-column">
+        <h4>Product</h4>
+        <a href="https://keboon.net" target="_blank" rel="noopener">Keboon Website</a>
+        <a href="https://keboon.net/directory" target="_blank" rel="noopener">Keboon Directory</a>
+        <a href="#contact">Collaborate</a>
+        <a href="#contact">Join Pilot</a>
+      </div>
+
+      <div class="footer-column">
+        <h4>Contact</h4>
+        <a href="mailto:keboon@keboon.net">keboon@keboon.net</a>
+        <span>Malaysia-first local food ecosystem</span>
+        <span>Business Reg. No. 003639101-D</span>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>
+        © <span id="currentYear"></span> Keboon Technology Solution. All rights reserved.
+      </div>
+      <div>
+        Business Registration No. 003639101-D
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast">Keboon local food signal selected.</div>
+
+  <script>
+    const navLinks = document.getElementById('navLinks');
+    const menuBtn = document.getElementById('menuBtn');
+
+    menuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+      });
+    });
+
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+
+          if (entry.target.querySelectorAll) {
+            entry.target.querySelectorAll('.meter span').forEach(bar => {
+              bar.style.width = bar.dataset.width || '0%';
             });
-        }, observerOptions);
+          }
+        }
+      });
+    }, { threshold: 0.14 });
 
-        // Observe all animation elements
-        document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => {
-            observer.observe(el);
-        });
+    revealElements.forEach(el => observer.observe(el));
 
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
 
-        // Static navbar background on scroll - no transitions
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
 
-        // Static active link highlighting - no animations
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section[id]');
-            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-            
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (scrollY >= (sectionTop - 200)) {
-                    current = section.getAttribute('id');
-                }
-            });
+    const toast = document.getElementById('toast');
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
+    document.querySelectorAll('.pin').forEach(pin => {
+      pin.addEventListener('click', () => {
+        toast.textContent = pin.dataset.tip;
+        toast.classList.add('show');
+
+        setTimeout(() => {
+          toast.classList.remove('show');
+          toast.textContent = 'Keboon local food signal selected.';
+        }, 2600);
+      });
+    });
+  </script>
 </body>
+
 </html>

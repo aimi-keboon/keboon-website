@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Keboon - Connecting Neighbours, Sharing Freshness" />
+    <meta name="author" content="Keboon" />
+    <title>Keboon - Local Produce Marketplace</title>
+    <link rel="icon" type="image/png" href="assets/img/ICN-LOGO-1.png" />
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-green: #2D8A54;
+            --secondary-green: #52AE77;
+            --accent-yellow: #FFE066;
+            --accent-orange: #FF8A50;
+            --dark-green: #1B5E3F;
+            --light-green: #E8F5E9;
+            --text-dark: #2C3E50;
+            --text-light: #6C757D;
+            --gradient-primary: linear-gradient(135deg, #2D8A54 0%, #52AE77 100%);
+            --gradient-accent: linear-gradient(135deg, #FFE066 0%, #FF8A50 100%);
+            --gradient-dark: linear-gradient(135deg, #1B5E3F 0%, #2D8A54 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-green);
+            border-radius: 4px;
+        }
+
+        /* Static Navigation - No Animations */
+        .navbar {
+            background: rgba(255, 255, 255, 0.98) !important;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 0.8rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.99) !important;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand img {
+            height: 35px;
+        }
+
+        .navbar-nav .nav-link {
+            color: var(--text-dark) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            padding: 0.5rem 0.75rem !important;
+            border-radius: 8px;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-green) !important;
+            background-color: var(--light-green);
+        }
+
+        .navbar-nav .nav-link.active {
+            color: var(--primary-green) !important;
+            background-color: var(--light-green);
+        }
+
+        /* Simplified navbar toggler */
+        .navbar-toggler {
+            border: none;
+            padding: 4px 8px;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2845, 138, 84, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        /* Clean Hero Section - No Animations */
+        .hero {
+            min-height: 100vh;
+            background: var(--gradient-dark);
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient></defs><circle cx="200" cy="200" r="150" fill="url(%23a)"/><circle cx="800" cy="300" r="200" fill="url(%23a)"/><circle cx="400" cy="700" r="180" fill="url(%23a)"/></svg>') no-repeat center center;
+            background-size: cover;
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Clean hero logo - no animations */
+        .hero-logo {
+            width: 350px;
+            max-width: 100%;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+        }
+
+        /* Clean hero text - no typewriter effect */
+        .hero-text {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 300;
+            color: white;
+            margin-bottom: 3rem;
+            line-height: 1.4;
+        }
+
+        /* Simple CTA button */
+        .cta-button {
+            background: var(--gradient-accent);
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            color: var(--text-dark);
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 224, 102, 0.3);
+            margin: 0.5rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 224, 102, 0.4);
+            color: var(--text-dark);
+        }
+
+        .cta-button.secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .cta-button.secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+        }
+
+        /* Cards */
+        .modern-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(82, 174, 119, 0.1);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modern-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .modern-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(45, 138, 84, 0.15);
+        }
+
+        .modern-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .modern-card:hover .card-icon {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        /* MVP Progress */
+        .mvp-progress {
+            background: var(--light-green);
+        }
+
+        .roadmap-item {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary-green);
+            position: relative;
+        }
+
+        .roadmap-item.current {
+            border-left-color: var(--accent-orange);
+            background: linear-gradient(135deg, #fff7e6 0%, #ffffff 100%);
+        }
+
+        .roadmap-item.future {
+            border-left-color: var(--text-light);
+            opacity: 0.7;
+        }
+
+        .roadmap-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .status-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-badge.live {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.current {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-badge.planned {
+            background: #e2e3e5;
+            color: #495057;
+        }
+
+        /* Problem/Solution alternating layout */
+        .problem-solution {
+            background: var(--light-green);
+        }
+
+        .solution-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid var(--primary-green);
+            transition: all 0.3s ease;
+        }
+
+        .solution-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Features Section */
+        .features {
+            background: var(--gradient-dark);
+            color: white;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        /* Market visualization */
+        .market-viz {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 0 auto;
+        }
+
+        .market-circle {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .tam {
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0.3;
+        }
+
+        .sam {
+            width: 70%;
+            height: 70%;
+            background: var(--gradient-primary);
+            opacity: 0.6;
+            top: 15%;
+            left: 15%;
+        }
+
+        .som {
+            width: 40%;
+            height: 40%;
+            background: var(--gradient-primary);
+            opacity: 0.9;
+            top: 30%;
+            left: 30%;
+        }
+
+        .market-circle:hover {
+            transform: scale(1.05);
+        }
+
+        /* SDGs Section */
+        .sdg-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .sdg-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary-green);
+        }
+
+        .sdg-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Ecosystem carousel */
+        .ecosystem-slider {
+            overflow: hidden;
+            padding: 2rem 0;
+        }
+
+        .ecosystem-track {
+            display: flex;
+            animation: slide 20s linear infinite;
+            gap: 2rem;
+        }
+
+        .ecosystem-card {
+            min-width: 300px;
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .ecosystem-card:hover {
+            transform: scale(1.05);
+        }
+
+        .ecosystem-card img {
+            max-height: 60px;
+            max-width: 120px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            margin-bottom: 1rem;
+            filter: grayscale(0.3);
+            transition: filter 0.3s ease;
+        }
+
+        .ecosystem-card:hover img {
+            filter: grayscale(0);
+        }
+
+        @keyframes slide {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Contact section */
+        .contact {
+            background: var(--gradient-dark);
+            color: white;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            color: white;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--accent-yellow);
+            box-shadow: 0 0 0 0.2rem rgba(255, 224, 102, 0.25);
+            color: white;
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            color: white;
+            box-shadow: 0 10px 25px rgba(45, 138, 84, 0.3);
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0.5rem 0;
+            }
+
+            .navbar-brand img {
+                height: 30px;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+            
+            .hero-logo {
+                width: 250px;
+            }
+            
+            .hero-text {
+                font-size: 1.5rem;
+                margin-bottom: 2rem;
+            }
+            
+            .modern-card {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+            
+            .market-viz {
+                width: 300px;
+                height: 300px;
+            }
+            
+            .contact-form {
+                padding: 2rem;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .sdg-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .ecosystem-card {
+                min-width: 250px;
+                padding: 1.5rem;
+            }
+            
+            .ecosystem-card img {
+                max-height: 50px;
+                max-width: 100px;
+            }
+            
+            .solution-card {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .cta-button {
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
+                margin: 0.25rem;
+                display: block;
+                text-align: center;
+            }
+            
+            .hero {
+                padding: 0 1rem;
+            }
+            
+            .navbar-nav .nav-link {
+                padding: 0.5rem 0;
+                margin: 0.2rem 0;
+            }
+
+            .roadmap-item {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-text {
+                font-size: 1.3rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .modern-card {
+                padding: 1rem;
+            }
+            
+            .contact-form {
+                padding: 1.5rem;
+            }
+            
+            .market-viz {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .ecosystem-card {
+                min-width: 200px;
+                padding: 1rem;
+            }
+            
+            .ecosystem-card h5 {
+                font-size: 0.9rem;
+            }
+            
+            .ecosystem-card p {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Custom utilities */
+        .text-gradient {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .bg-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">
+                <img src="assets/img/keboon-writing.png" alt="Keboon" />
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#mvp">Our Journey</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://keboon.net/directory">Keboon Directory</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Clean Hero Section - No Animations -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-8 hero-content">
+                    <img src="assets/img/keboon-logo-white.png" alt="Keboon" class="hero-logo">
+                    <div class="hero-text">
+                        Connecting Neighbours, Sharing Freshness
+                    </div>
+                    <div class="mt-4">
+                        <a href="https://keboon.net/directory" target="_blank" class="cta-button">
+                            <i class="fas fa-map-marker-alt me-2"></i>Explore Directory
+                        </a>
+                        <a href="#mvp" class="cta-button secondary">
+                            <i class="fas fa-route me-2"></i>Our Journey
+                        </a>
+                    </div>
+                    <div class="mt-4">
+                        <small class="text-white-50">
+                            <i class="fas fa-seedling me-2"></i>
+                            Currently building our community through the Keboon Directory
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="row justify-content-center text-center mb-5">
+                <div class="col-lg-8">
+                    <h2 class="section-title fade-in">Building the Future of Local Food</h2>
+                    <p class="section-subtitle fade-in">Starting with community, scaling to revolution</p>
+                </div>
+            </div>
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-6 fade-in-left">
+                    <div class="modern-card">
+                        <div class="card-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <h4 class="mb-3">Our Vision: The Full Keboon Platform</h4>
+                        <p class="mb-3">Keboon will be a comprehensive marketplace connecting home gardeners, urban farmers, and eco-conscious consumers. Imagine a platform where your neighbor's surplus tomatoes are just a tap away, complete with AI-powered growing tips and community rewards.</p>
+                        <p><strong>But we're taking a strategic approach.</strong> Before building the full app, we're validating our market and building community trust through simpler, proven solutions.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 fade-in-right">
+                    <div class="modern-card">
+                        <div class="card-icon">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <h4 class="mb-3">Starting Here: Keboon Directory</h4>
+                        <p class="mb-3">Our current MVP is the <strong>Keboon Directory</strong> - a comprehensive database of local farms and producers. Think of it as the foundation of our ecosystem, helping consumers discover fresh, local produce sources.</p>
+                        <p>This directory validates our core hypothesis: people want to connect with local food sources. Every farmer we onboard and every consumer we connect teaches us valuable lessons for the full platform.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4 fade-in">
+                    <div class="modern-card">
+                        <div class="card-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h4>Our Vision</h4>
+                        <p>A world where communities thrive through sustainable, locally-sourced food systems, reducing waste and fostering meaningful connections between neighbors.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4 fade-in">
+                    <div class="modern-card">
+                        <div class="card-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h4>Our Mission</h4>
+                        <p>Building step-by-step from community directory to full marketplace, validating each piece before creating the complete local food ecosystem.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MVP Journey Section -->
+    <section id="mvp" class="section mvp-progress">
+        <div class="container">
+            <div class="row justify-content-center text-center mb-5">
+                <div class="col-lg-8">
+                    <h2 class="section-title fade-in">Our Strategic Journey</h2>
+                    <p class="section-subtitle fade-in">Building trust and community before scaling to the full vision</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 mx-auto fade-in">
+                    <div class="roadmap-item">
+                        <span class="status-badge live">✓ LIVE</span>
+                        <h4><i class="fas fa-map-marker-alt text-success me-2"></i>Phase 1: Keboon Directory</h4>
+                        <p class="mb-3"><strong>What we're doing now:</strong> A comprehensive directory of local farms and producers with GPS mapping, contact details, product listings, and direct farmer profiles.</p>
+                        <ul class="mb-3">
+                            <li>Farm registration and management system</li>
+                            <li>Interactive map of local producers</li>
+                            <li>Product catalogs with pricing</li>
+                            <li>Direct contact facilitation</li>
+                            <li>Email notifications and updates</li>
+                        </ul>
+                        <p><strong>Why this first:</strong> Validates market demand, builds farmer network, establishes trust, and creates our foundational database.</p>
+                    </div>
+
+                    <div class="roadmap-item current">
+                        <span class="status-badge current">⚡ NEXT</span>
+                        <h4><i class="fas fa-shopping-cart text-warning me-2"></i>Phase 2: Basic Marketplace</h4>
+                        <p class="mb-3"><strong>Building on directory success:</strong> Add simple ordering and payment features to existing directory, enabling direct transactions.</p>
+                        <ul class="mb-3">
+                            <li>Online ordering system integration</li>
+                            <li>Basic payment processing</li>
+                            <li>Order management for farmers</li>
+                            <li>Customer review system</li>
+                            <li>Delivery coordination tools</li>
+                        </ul>
+                        <p><strong>Why this next:</strong> Proven farmer base + validated consumer demand = ready for transaction layer.</p>
+                    </div>
+
+                    <div class="roadmap-item future">
+                        <span class="status-badge planned">📋 PLANNED</span>
+                        <h4><i class="fas fa-users text-muted me-2"></i>Phase 3: Community Features</h4>
+                        <p class="mb-3"><strong>Expanding community:</strong> Add neighbor-to-neighbor sharing, community gardens, and local food groups.</p>
+                        <ul class="mb-3">
+                            <li>Home gardener profiles and surplus sharing</li>
+                            <li>Community garden coordination</li>
+                            <li>Local food group formation</li>
+                            <li>Bulk buying coordination</li>
+                            <li>Seasonal planning tools</li>
+                        </ul>
+                        <p><strong>Timeline:</strong> After marketplace stabilizes with commercial farmers.</p>
+                    </div>
+
+                    <div class="roadmap-item future">
+                        <span class="status-badge planned">🚀 FUTURE</span>
+                        <h4><i class="fas fa-brain text-muted me-2"></i>Phase 4: Full Platform Vision</h4>
+                        <p class="mb-3"><strong>The complete ecosystem:</strong> AI-powered features, advanced community tools, and comprehensive sustainability tracking.</p>
+                        <ul class="mb-3">
+                            <li>AI planting scheduler and grow recommendations</li>
+                            <li>Gamified rewards system</li>
+                            <li>Compost exchange marketplace</li>
+                            <li>Carbon footprint tracking</li>
+                            <li>Advanced community networking</li>
+                            <li>Mobile app with offline features</li>
+                        </ul>
+                        <p><strong>Timeline:</strong> After community adoption and proven economics.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-5">
+                <div class="col-lg-10 mx-auto text-center fade-in">
+                    <div class="modern-card">
+                        <h4 class="text-gradient mb-3">Why This Approach Works</h4>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="card-icon mx-auto">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <h5>Community First</h5>
+                                <p>Build trust and relationships before asking for transactions</p>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card-icon mx-auto">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h5>Validate & Learn</h5>
+                                <p>Each phase teaches us what users actually want</p>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card-icon mx-auto">
+                                    <i class="fas fa-puzzle-piece"></i>
+                                </div>
+                                <h5>Sustainable Growth</h5>
+                                <p>Build solid foundations before adding complexity</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem & Solution Section -->
+    <section id="solution" class="section problem-solution">
+        <div class="container">
+            <div class="row justify-content-center text-center mb-5">
+                <div class="col-lg-8">
+                    <h2 class="section-title fade-in">The Challenge We're Solving</h2>
+                    <p class="section-subtitle fade-in">Starting with discovery, scaling to full ecosystem</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 fade-in-left">
+                    <h3 class="text-gradient mb-4">Current Problems</h3>
+                    <div class="solution-card">
+                        <h5><i class="fas fa-search text-danger me-2"></i>Discovery Challenge</h5>
+                        <p>Consumers struggle to find local farms and fresh produce sources in their area.</p>
+                        <small class="text-success"><strong>✓ Solved by Keboon Directory</strong></small>
+                    </div>
+                    <div class="solution-card">
+                        <h5><i class="fas fa-phone text-warning me-2"></i>Connection Barriers</h5>
+                        <p>Farmers lack efficient ways to reach local customers and showcase their products.</p>
+                        <small class="text-success"><strong>✓ Solved by Keboon Directory</strong></small>
+                    </div>
+                    <div class="solution-card">
+                        <h5><i class="fas fa-trash-alt text-info me-2"></i>Future: Food Waste</h5>
+                        <p>Excess home-grown produce goes to waste due to lack of sharing networks.</p>
+                        <small class="text-muted"><strong>→ Phase 3: Community Features</strong></small>
+                    </div>
+                </div>
+                <div class="col-lg-6 fade-in-right">
+                    <h3 class="text-gradient mb-4">Our Solutions</h3>
+                    <div class="solution-card">
+                        <h5><i class="fas fa-map-marked-alt text-success me-2"></i>Local Farm Discovery</h5>
+                        <p>Interactive map showing all local farms, their products, prices, and contact information.</p>
+                        <small class="text-success"><strong>✓ Live Now</strong></small>
+                    </div>
+                    <div class="solution-card">
+                        <h5><i class="fas fa-store text-success me-2"></i>Farmer Showcase Platform</h5>
+                        <p>Professional profiles for farmers to display products, tell their story, and connect with customers.</p>
+                        <small class="text-success"><strong>✓ Live Now</strong></small>
+                    </div>
+                    <div class="solution-card">
+                        <h5><i class="fas fa-shopping-cart text-warning me-2"></i>Coming: Direct Marketplace</h5>
+                        <p>Seamless ordering and payment system built on top of our proven directory.</p>
+                        <small class="text-warning"><strong>→ Phase 2: Basic Marketplace</strong></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Current Features Section -->
+    <section id="features" class="section features">
+        <div class="container">
+            <div class="row justify-content-center text-center mb-5">
+                <div class="col-lg-8">
+                    <h2 class="section-title text-white fade-in">Keboon Directory Features</h2>
+                    <p class="section-subtitle text-white-50 fade-in">What's available right now</p>
+                </div>
+            </div>
+            <div class="feature-grid fade-in">
+                <div class="feature-card">
+                    <div class="card-icon bg-glass">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h4>Interactive Farm Map</h4>
+                    <p>GPS-powered map showing all registered farms with filtering by location, products, and farm type.</p>
+                    <span class="badge bg-success mt-2">Live Now</span>
+                </div>
+                <div class="feature-card">
+                    <div class="card-icon bg-glass">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h4>Farmer Profiles</h4>
+                    <p>Detailed farm information including contact details, product listings with prices, and farm descriptions.</p>
+                    <span class="badge bg-success mt-2">Live Now</span>
+                </div>
+                <div class="feature-card">
+                    <div class="card-icon bg-glass">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h4>Product Catalogs</h4>
+                    <p>Seasonal availability, pricing information, and product descriptions for easy discovery.</p>
+                    <span class="badge bg-success mt-2">Live Now</span>
+                </div>
+                <div class="feature-card">
+                    <div class="card-icon bg-glass">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4>Mobile Responsive</h4>
+                    <p>Works perfectly on all devices - phone, tablet, or desktop for easy access anywhere.</p>
+                    <span class="badge bg-success mt-2">Live Now</span>
+                </div>
+                <div class="feature-card">
+                    <div class="card-icon bg-glass">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h4>Marketplace Integration</h4>
+                    <p>Simple ordering system and payment processing for direct farm-to-consumer sales.</p>
+                    <span class="badge bg-warning text-dark mt-2">Phase 2</span>
+                </div>
+                <div class="feature-card">
+                    <div class="card-icon bg-glass">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h4>AI Growing Assistant</h4>
+                    <p>Smart planting recommendations and growth monitoring with ML-powered insights.</p>
+                    <span class="badge bg-info mt-2">Phase 4</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Market Section -->
+    <section class="section">
+        <div class="container">
+            <div class="row justify-content-center text-center mb-5">
+                <div class="col-lg-8">
+                    <h2 class="section-title fade-in">Market Opportunity</h2>
+                    <p class="section-subtitle fade-in">Building from directory users to marketplace participants</p>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-lg-6 fade-in-left">
+                    <div class="market-viz">
+                        <div class="market-circle tam">TAM</div>
+                        <div class="market-circle sam">SAM</div>
+                        <div class="market-circle som">SOM</div>
+                    </div>
+                </div>
+                <div class="col-lg-6 fade-in-right">
+                    <div class="modern-card">
+                        <h4><i class="fas fa-globe text-success me-2"></i>TAM - Total Available Market</h4>
+                        <p class="mb-4">Eco-conscious consumers, farmers, and home gardeners across Southeast Asia. <strong>RM 15 billion</strong> annual revenue potential.</p>
+                        
+                        <h4><i class="fas fa-map-marker-alt text-success me-2"></i>SAM - Serviceable Available Market</h4>
+                        <p class="mb-4">Malaysian consumers seeking local produce and farmers needing better market access. <strong>RM 500 million</strong> estimated potential.</p>
+                        
+                        <h4><i class="fas fa-bullseye text-success me-2"></i>SOM - Current Focus</h4>
+                        <p class="mb-3">Starting with <strong>Selangor and KL farmers</strong> in our directory, then expanding marketplace features to proven user base.</p>
+                        <p><strong>Directory Goal:</strong> 1,000 farms by end of 2026<br>
+                        <strong>Marketplace Goal:</strong> RM 1 million GMV in first year</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section class="section problem-solution">
+        <div class="container">
+            <div class="row justify-content-center text-center mb-5">
+                <div class="col-lg-8">
+                    <h2 class="section-title fade-in">Impact & Sustainability</h2>
+                    <p class="section-subtitle fade-in">Contributing to UN Sustainable Development Goals</p>
+                </div>
+            </div>
+            <div class="sdg-grid fade-in">
+                <div class="sdg-card">
+                    <h5><i class="fas fa-utensils text-success me-2"></i>Zero Hunger</h5>
+                    <p>Directory helps consumers find local food sources, while future features will reduce waste.</p>
+                </div>
+                <div class="sdg-card">
+                    <h5><i class="fas fa-briefcase text-success me-2"></i>Economic Growth</h5>
+                    <p>Giving farmers digital presence now, enabling direct sales and income growth in Phase 2.</p>
+                </div>
+                <div class="sdg-card">
+                    <h5><i class="fas fa-city text-success me-2"></i>Sustainable Communities</h5>
+                    <p>Building local food networks that will strengthen community bonds and reduce food miles.</p>
+                </div>
+                <div class="sdg-card">
+                    <h5><i class="fas fa-shopping-basket text-success me-2"></i>Responsible Consumption</h5>
+                    <p>Promoting local sourcing now, with future features for waste reduction and sharing.</p>
+                </div>
+                <div class="sdg-card">
+                    <h5><i class="fas fa-leaf text-success me-2"></i>Climate Action</h5>
+                    <p>Reducing food transportation through local connections, with carbon tracking in future phases.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ecosystem Section -->
+    <section class="section">
+        <div class="container">
+            <div class="row justify-content-center text-center mb-5">
+                <div class="col-lg-8">
+                    <h2 class="section-title fade-in">Our Ecosystem of Support</h2>
+                    <p class="section-subtitle fade-in">Partners helping us build and scale Keboon</p>
+                </div>
+            </div>
+        </div>
+        <div class="ecosystem-slider fade-in">
+            <div class="ecosystem-track">
+                <div class="ecosystem-card">
+                    <img src="assets/img/partner/google.png" alt="Google for Startups">
+                    <h5>Google for Startups</h5>
+                    <p>Received Google Cloud credits to support infrastructure and scale efficiently during early growth.</p>
+                </div>
+                <div class="ecosystem-card">
+                    <img src="assets/img/partner/github.png" alt="GitHub">
+                    <h5>GitHub Student Pack</h5>
+                    <p>Using GitHub's tools and cloud services to support prototyping and streamline developer workflow.</p>
+                </div>
+                <div class="ecosystem-card">
+                    <img src="assets/img/partner/keboon_technology_solution.png" alt="Keboon Tech">
+                    <h5>Keboon Technology Solution</h5>
+                    <p>The team behind Keboon's MVP — delivering full-stack development, UI/UX design, and deployment.</p>
+                </div>
+                <!-- Duplicates for seamless loop -->
+                <div class="ecosystem-card">
+                  <img src="assets/img/partner/google.png" alt="Google for Startups">
+                  <h5>Google for Startups</h5>
+                  <p>Received Google Cloud credits to support infrastructure and scale efficiently during early growth.</p>
+              </div>
+              <div class="ecosystem-card">
+                  <img src="assets/img/partner/github.png" alt="GitHub">
+                  <h5>GitHub Student Pack</h5>
+                  <p>Using GitHub's tools and cloud services to support prototyping and streamline developer workflow.</p>
+              </div>
+              <div class="ecosystem-card">
+                  <img src="assets/img/partner/keboon_technology_solution.png" alt="Keboon Tech">
+                  <h5>Keboon Technology Solution</h5>
+                  <p>The team behind Keboon's MVP — delivering full-stack development, UI/UX design, and deployment.</p>
+              </div>
+              <div class="ecosystem-card">
+                <img src="assets/img/partner/google.png" alt="Google for Startups">
+                <h5>Google for Startups</h5>
+                <p>Received Google Cloud credits to support infrastructure and scale efficiently during early growth.</p>
+            </div>
+            <div class="ecosystem-card">
+                <img src="assets/img/partner/github.png" alt="GitHub">
+                <h5>GitHub Student Pack</h5>
+                <p>Using GitHub's tools and cloud services to support prototyping and streamline developer workflow.</p>
+            </div>
+            <div class="ecosystem-card">
+                <img src="assets/img/partner/keboon_technology_solution.png" alt="Keboon Tech">
+                <h5>Keboon Technology Solution</h5>
+                <p>The team behind Keboon's MVP — delivering full-stack development, UI/UX design, and deployment.</p>
+            </div>
+                
+            </div>
+        </div>
+        <div class="container">
+            <div class="text-center mt-4 fade-in">
+                <p class="text-muted">Interested in partnering with us? <a href="#contact" class="text-decoration-none">Let's collaborate</a> to build the future of local food systems.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="contact-form fade-in">
+                        <h2 class="text-center mb-4 text-white">Get In Touch</h2>
+                        <p class="text-center text-white-50 mb-4">Ready to join the local food revolution? We'd love to hear from you.</p>
+                        <form action="https://formspree.io/f/xzzpopkr" method="POST">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <input type="text" class="form-control" name="name" placeholder="Your Name *" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <input type="email" class="form-control" name="email" placeholder="Your Email *" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <input type="tel" class="form-control" name="mobile" placeholder="Mobile Number *" required>
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control" name="message" rows="6" placeholder="Your Message *" required></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="cta-button">
+                                    <i class="fas fa-paper-plane me-2"></i>Send Message
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-lg-4 text-center text-lg-start mb-3 mb-lg-0">
+                    <p>&copy; <span id="current-year"></span> KEBOON TECHNOLOGY SOLUTION</p>
+                    <small class="text-muted">Business RN: 003639101-D</small>
+                </div>
+                <div class="col-lg-4 text-center mb-3 mb-lg-0">
+                    <a href="https://instagram.com/keboonmy" class="social-btn" target="_blank" rel="noopener">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://facebook.com/keboon.tech" class="social-btn" target="_blank" rel="noopener">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://linkedin.com/company/keboon-tech/" class="social-btn" target="_blank" rel="noopener">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Set current year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animation elements
+        document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Static navbar background on scroll - no transitions
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Static active link highlighting - no animations
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
