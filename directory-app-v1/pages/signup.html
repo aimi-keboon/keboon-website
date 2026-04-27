@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Grower Signup | Keboon Directory</title>
+
+<link rel="icon" type="image/png" href="../assets/images/logo.png" />
+<link rel="stylesheet" href="../styles/main.css" />
+
+    
+</head>
+
+<body>
+    <main class="auth-page">
+        <section class="auth-card">
+            <a class="back-link" href="../index.html">← Back to directory</a>
+
+            <div class="brand-header">
+                <img src="../assets/images/logo-writing.png" alt="Keboon" class="brand-logo" />
+            </div>
+
+            <h1>Join as a grower</h1>
+            <p class="muted">
+                Create your grower account. Your profile will be reviewed before appearing on the map.
+            </p>
+
+            <form id="signupForm" class="form-stack">
+                <label>
+                    Grower / Garden Name
+                    <input type="text" name="grower_name" placeholder="Example: Kebun Aimi" required />
+                </label>
+
+                <label>
+                    Contact Person Name
+                    <input type="text" name="contact_name" placeholder="Example: Aimi" required />
+                </label>
+
+                <label>
+                    Email
+                    <input type="email" name="email" placeholder="you@example.com" required />
+                </label>
+
+                <label>
+                    Password
+                    <input type="password" name="password" minlength="8" placeholder="Minimum 8 characters" required />
+                </label>
+
+                <div class="form-row">
+                    <label>
+                        Mobile Country
+                        <select name="phone_country_code" required>
+                            <option value="+673">Brunei (+673)</option>
+                            <option value="+855">Cambodia (+855)</option>
+                            <option value="+86">China (+86)</option>
+                            <option value="+91">India (+91)</option>
+                            <option value="+62">Indonesia (+62)</option>
+                            <option value="+856">Laos (+856)</option>
+                            <option value="+60" selected>Malaysia (+60)</option>
+                            <option value="+95">Myanmar (+95)</option>
+                            <option value="+63">Philippines (+63)</option>
+                            <option value="+65">Singapore (+65)</option>
+                            <option value="+66">Thailand (+66)</option>
+                            <option value="+670">Timor-Leste (+670)</option>
+                            <option value="+84">Vietnam (+84)</option>
+                            <option value="+44">United Kingdom (+44)</option>
+                            <option value="+61">Australia (+61)</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        Mobile Number
+                        <input type="tel" name="phone" placeholder="123456789" required />
+                    </label>
+                </div>
+
+                <label class="checkbox-label">
+                    <input type="checkbox" name="whatsapp_same_as_phone" id="whatsappSameAsPhone" checked />
+                    WhatsApp number is same as mobile number
+                </label>
+
+                <div id="whatsappFields" class="form-row hidden">
+                    <label>
+                        WhatsApp Country
+                        <select name="whatsapp_country_code">
+                            <option value="+673">Brunei (+673)</option>
+                            <option value="+855">Cambodia (+855)</option>
+                            <option value="+86">China (+86)</option>
+                            <option value="+91">India (+91)</option>
+                            <option value="+62">Indonesia (+62)</option>
+                            <option value="+856">Laos (+856)</option>
+                            <option value="+60" selected>Malaysia (+60)</option>
+                            <option value="+95">Myanmar (+95)</option>
+                            <option value="+63">Philippines (+63)</option>
+                            <option value="+65">Singapore (+65)</option>
+                            <option value="+66">Thailand (+66)</option>
+                            <option value="+670">Timor-Leste (+670)</option>
+                            <option value="+84">Vietnam (+84)</option>
+                            <option value="+44">United Kingdom (+44)</option>
+                            <option value="+61">Australia (+61)</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        WhatsApp Number
+                        <input type="tel" name="whatsapp" placeholder="123456789" />
+                    </label>
+                </div>
+
+                <button type="submit" class="primary-button">
+                    Create grower account
+                </button>
+
+                <p id="signupMessage" class="form-message"></p>
+            </form>
+
+            <p class="small-text">
+                Already have an account?
+                <a href="./signin.html">Sign in</a>
+            </p>
+        </section>
+    </main>
+
+    <script src="../scripts/config.js"></script>
+    <script src="../scripts/api.js"></script>
+    <script src="../scripts/auth.js"></script>
+</body>
+
+</html>

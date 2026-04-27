@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Edit Grower Profile | Keboon Directory</title>
+
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <link rel="stylesheet" href="../styles/main.css" />
+</head>
+
+<body>
+    <main class="dashboard-page">
+        <header class="dashboard-header">
+            <a href="./dashboard.html" class="dashboard-brand">
+                <img src="../assets/images/logo-writing.png" alt="Keboon" class="dashboard-logo" />
+            </a>
+
+            <a class="secondary-button text-button-link" href="./dashboard.html">
+                Back to dashboard
+            </a>
+        </header>
+
+        <section class="dashboard-hero">
+            <p class="eyebrow">Grower profile</p>
+            <h1>Edit your profile</h1>
+            <p class="muted">
+                Complete your public grower information. Your profile must be approved before it appears on the map.
+            </p>
+        </section>
+
+        <section class="content-card">
+            <form id="editProfileForm" class="form-stack">
+                <label>
+                    Grower / Garden Name
+                    <input type="text" name="grower_name" required />
+                </label>
+
+                <label>
+                    Contact Person Name
+                    <input type="text" name="contact_name" required />
+                </label>
+
+                <label>
+                    Location Label
+                    <input type="text" name="location_label" placeholder="Example: Alor Setar, Kedah" required />
+                </label>
+
+                <label>
+                    Address Text
+                    <textarea name="address_text" rows="3"
+                        placeholder="General area or pickup location details"></textarea>
+                </label>
+
+                <div class="location-picker">
+                    <div class="location-picker-header">
+                        <div>
+                            <h2>Pin your grower location</h2>
+                            <p class="muted">
+                                Use your current location or move the pin on the map.
+                            </p>
+                        </div>
+
+                        <button id="useCurrentLocationButton" class="secondary-button" type="button">
+                            Use current location
+                        </button>
+                    </div>
+
+                    <div id="profileLocationMap" class="profile-location-map"></div>
+
+                    <p id="locationMessage" class="small-text"></p>
+                </div>
+
+                <div class="form-row">
+                    <label>
+                        Latitude
+                        <input type="number" name="latitude" step="any" placeholder="Example: 6.1248" required />
+                    </label>
+
+                    <label>
+                        Longitude
+                        <input type="number" name="longitude" step="any" placeholder="Example: 100.3678" required />
+                    </label>
+                </div>
+
+                <label>
+                    Description
+                    <textarea name="description" rows="5"
+                        placeholder="Tell people what you grow and what makes your garden special"></textarea>
+                </label>
+
+                <label>
+                    Categories
+                    <input type="text" name="categories" placeholder="Example: Vegetables, Herbs, Fruits" />
+                </label>
+
+                <label class="checkbox-label">
+                    <input type="checkbox" name="is_public" />
+                    Make my profile public after approval
+                </label>
+
+                <button type="submit" class="primary-button">
+                    Save profile
+                </button>
+
+                <p id="editProfileMessage" class="form-message"></p>
+            </form>
+        </section>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script src="../scripts/config.js"></script>
+    <script src="../scripts/api.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/app.js"></script>
+</body>
+
+</html>

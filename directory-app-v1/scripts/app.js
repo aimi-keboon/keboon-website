@@ -1,0 +1,1151 @@
+document.addEventListener("DOMContentLoaded", () => {
+  initPublicDirectoryPage();
+  initDashboardPage();
+  initEditProfilePage();
+  initManageProducePage();
+});
+
+let profileMap = null;
+let profileMarker = null;
+let currentProducts = [];
+let directoryMap = null;
+let directoryMarkers = [];
+let publicDirectoryGrowers = [];
+let currentDirectoryResults = [];
+let currentUserLocation = null;
+let directoryCurrentPage = 1;
+const DIRECTORY_PAGE_SIZE = 10;
+const DIRECTORY_RADIUS_KM = 20;
+
+async function requireValidSession() {
+  const session = getStoredSession();
+
+  if (
+    !session.token ||
+    !session.expires_at ||
+    new Date(session.expires_at) <= new Date()
+  ) {
+    clearStoredSession();
+    window.location.href = "./signin.html";
+    return null;
+  }
+
+  try {
+    const grower = await apiPost("get_current_grower", {
+      session_token: session.token,
+    });
+
+    localStorage.setItem("keboon_grower_name", grower.grower_name || "");
+
+    return {
+      session,
+      grower,
+    };
+  } catch (error) {
+    clearStoredSession();
+    window.location.href = "./signin.html";
+    return null;
+  }
+}
+
+async function initDashboardPage() {
+  const dashboardTitle = document.getElementById("dashboardTitle");
+  const signoutButton = document.getElementById("signoutButton");
+
+  if (!dashboardTitle && !signoutButton) {
+    return;
+  }
+
+  if (dashboardTitle) {
+    dashboardTitle.textContent = "Loading dashboard...";
+  }
+
+  const auth = await requireValidSession();
+
+  if (!auth) {
+    return;
+  }
+
+  if (dashboardTitle) {
+    dashboardTitle.textContent = `Welcome, ${auth.grower.grower_name || "Grower"}`;
+  }
+
+  if (signoutButton) {
+    signoutButton.addEventListener("click", () => {
+      clearStoredSession();
+      window.location.href = "./signin.html";
+    });
+  }
+}
+
+async function initEditProfilePage() {
+  const form = document.getElementById("editProfileForm");
+
+  if (!form) {
+    return;
+  }
+
+  const messageEl = document.getElementById("editProfileMessage");
+  const submitButton = form.querySelector('button[type="submit"]');
+
+  messageEl.textContent = "Loading profile...";
+
+  const auth = await requireValidSession();
+
+  if (!auth) {
+    return;
+  }
+
+  fillEditProfileForm(form, auth.grower);
+  initProfileLocationMap(form, auth.grower);
+
+  messageEl.textContent = "";
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    messageEl.textContent = "";
+    messageEl.className = "form-message";
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Saving profile...";
+
+    try {
+      const formData = new FormData(form);
+
+      const result = await apiPost("update_current_grower_profile", {
+        session_token: auth.session.token,
+        grower_name: formData.get("grower_name"),
+        contact_name: formData.get("contact_name"),
+        location_label: formData.get("location_label"),
+        address_text: formData.get("address_text"),
+        latitude: formData.get("latitude"),
+        longitude: formData.get("longitude"),
+        description: formData.get("description"),
+        categories: formData.get("categories"),
+        is_public: formData.get("is_public") === "on",
+      });
+
+      messageEl.textContent = result.message || "Profile saved.";
+      messageEl.classList.add("success");
+    } catch (error) {
+      messageEl.textContent = error.message;
+      messageEl.classList.add("error");
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "Save profile";
+    }
+  });
+}
+
+async function initManageProducePage() {
+  const form = document.getElementById("produceForm");
+  const produceList = document.getElementById("produceList");
+
+  if (!form || !produceList) {
+    return;
+  }
+
+  const messageEl = document.getElementById("produceMessage");
+  const submitButton = form.querySelector('button[type="submit"]');
+  const clearButton = document.getElementById("clearProduceFormButton");
+
+  messageEl.textContent = "Loading produce...";
+
+  const auth = await requireValidSession();
+
+  if (!auth) {
+    return;
+  }
+
+  await loadCurrentGrowerProducts(auth.session.token);
+
+  messageEl.textContent = "";
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    messageEl.textContent = "";
+    messageEl.className = "form-message";
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Saving produce...";
+
+    try {
+      const formData = new FormData(form);
+
+      const result = await apiPost("save_current_grower_product", {
+        session_token: auth.session.token,
+        product_id: formData.get("product_id"),
+        product_name: formData.get("product_name"),
+        category: formData.get("category"),
+        description: formData.get("description"),
+        price_text: formData.get("price_text"),
+        availability_status: formData.get("availability_status"),
+        harvest_timing: formData.get("harvest_timing"),
+        pickup_options: formData.get("pickup_options"),
+        photo_url: formData.get("photo_url"),
+        is_public: formData.get("is_public") === "on",
+      });
+
+      messageEl.textContent = result.message || "Produce saved.";
+      messageEl.classList.add("success");
+
+      clearProduceForm(form);
+      await loadCurrentGrowerProducts(auth.session.token);
+    } catch (error) {
+      messageEl.textContent = error.message;
+      messageEl.classList.add("error");
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "Save produce";
+    }
+  });
+
+  if (clearButton) {
+    clearButton.addEventListener("click", () => {
+      clearProduceForm(form);
+      messageEl.textContent = "";
+      messageEl.className = "form-message";
+    });
+  }
+}
+
+async function loadCurrentGrowerProducts(sessionToken) {
+  const produceList = document.getElementById("produceList");
+
+  if (!produceList) {
+    return;
+  }
+
+  produceList.innerHTML = '<p class="muted">Loading produce...</p>';
+
+  try {
+    const result = await apiPost("get_current_grower_products", {
+      session_token: sessionToken,
+    });
+
+    currentProducts = result.products || [];
+    renderProduceList(currentProducts);
+  } catch (error) {
+    produceList.innerHTML = `<p class="form-message error">${escapeHtml(error.message)}</p>`;
+  }
+}
+
+function renderProduceList(products) {
+  const produceList = document.getElementById("produceList");
+
+  if (!produceList) {
+    return;
+  }
+
+  if (!products.length) {
+    produceList.innerHTML = '<p class="muted">No produce added yet.</p>';
+    return;
+  }
+
+  produceList.innerHTML = products
+    .map((product) => {
+      return `
+      <button class="produce-item" type="button" data-product-id="${escapeHtml(product.product_id)}">
+        <h3>${escapeHtml(product.product_name)}</h3>
+        <p>${escapeHtml(product.category || "Uncategorized")}</p>
+        <span class="status-pill">${escapeHtml(product.availability_status || "available")}</span>
+      </button>
+    `;
+    })
+    .join("");
+
+  produceList.querySelectorAll(".produce-item").forEach((button) => {
+    button.addEventListener("click", () => {
+      const productId = button.getAttribute("data-product-id");
+      const product = currentProducts.find(
+        (item) => item.product_id === productId,
+      );
+
+      if (product) {
+        fillProduceForm(product);
+      }
+    });
+  });
+}
+
+function fillProduceForm(product) {
+  const form = document.getElementById("produceForm");
+  const title = document.getElementById("produceFormTitle");
+
+  if (!form) {
+    return;
+  }
+
+  form.elements.product_id.value = product.product_id || "";
+  form.elements.product_name.value = product.product_name || "";
+  form.elements.category.value = product.category || "";
+  form.elements.description.value = product.description || "";
+  form.elements.price_text.value = product.price_text || "";
+  form.elements.availability_status.value =
+    product.availability_status || "available";
+  form.elements.harvest_timing.value = product.harvest_timing || "";
+  form.elements.pickup_options.value = product.pickup_options || "";
+  form.elements.photo_url.value = product.photo_url || "";
+  form.elements.is_public.checked =
+    String(product.is_public).toLowerCase() === "true";
+
+  if (title) {
+    title.textContent = "Edit produce";
+  }
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+}
+
+function clearProduceForm(form) {
+  form.reset();
+  form.elements.product_id.value = "";
+  form.elements.availability_status.value = "available";
+  form.elements.is_public.checked = true;
+
+  const title = document.getElementById("produceFormTitle");
+
+  if (title) {
+    title.textContent = "Add produce";
+  }
+}
+
+function fillEditProfileForm(form, grower) {
+  form.elements.grower_name.value = grower.grower_name || "";
+  form.elements.contact_name.value = grower.contact_name || "";
+  form.elements.location_label.value = grower.location_label || "";
+  form.elements.address_text.value = grower.address_text || "";
+  form.elements.latitude.value = grower.latitude || "";
+  form.elements.longitude.value = grower.longitude || "";
+  form.elements.description.value = grower.description || "";
+  form.elements.categories.value = grower.categories || "";
+  form.elements.is_public.checked =
+    String(grower.is_public).toLowerCase() === "true";
+}
+
+function initProfileLocationMap(form, grower) {
+  const mapEl = document.getElementById("profileLocationMap");
+  const locationButton = document.getElementById("useCurrentLocationButton");
+  const locationMessage = document.getElementById("locationMessage");
+
+  if (!mapEl || typeof L === "undefined") {
+    return;
+  }
+
+  const existingLat = Number(grower.latitude);
+  const existingLng = Number(grower.longitude);
+
+  const hasExistingLocation =
+    !Number.isNaN(existingLat) &&
+    !Number.isNaN(existingLng) &&
+    existingLat >= -90 &&
+    existingLat <= 90 &&
+    existingLng >= -180 &&
+    existingLng <= 180;
+
+  const defaultLat = hasExistingLocation
+    ? existingLat
+    : APP_CONFIG.DEFAULT_MAP.LAT;
+  const defaultLng = hasExistingLocation
+    ? existingLng
+    : APP_CONFIG.DEFAULT_MAP.LNG;
+  const defaultZoom = hasExistingLocation ? 15 : APP_CONFIG.DEFAULT_MAP.ZOOM;
+
+  profileMap = L.map(mapEl).setView([defaultLat, defaultLng], defaultZoom);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: "&copy; OpenStreetMap contributors",
+  }).addTo(profileMap);
+
+  profileMarker = L.marker([defaultLat, defaultLng], {
+    draggable: true,
+  }).addTo(profileMap);
+
+  if (!hasExistingLocation) {
+    setLocationMessage(
+      locationMessage,
+      "Use current location or move the pin to your grower location.",
+    );
+  }
+
+  profileMarker.on("dragend", () => {
+    const position = profileMarker.getLatLng();
+    updateLatLngFields(form, position.lat, position.lng);
+    setLocationMessage(locationMessage, "Location pin updated.");
+  });
+
+  profileMap.on("click", (event) => {
+    setMapLocation(form, event.latlng.lat, event.latlng.lng, 16);
+    setLocationMessage(locationMessage, "Location pin updated.");
+  });
+
+  form.elements.latitude.addEventListener("change", () => {
+    updateMapFromFields(form);
+  });
+
+  form.elements.longitude.addEventListener("change", () => {
+    updateMapFromFields(form);
+  });
+
+  if (locationButton) {
+    locationButton.addEventListener("click", () => {
+      useBrowserLocation(form, locationMessage);
+    });
+  }
+
+  if (!hasExistingLocation) {
+    useBrowserLocation(form, locationMessage, false);
+  }
+
+  setTimeout(() => {
+    profileMap.invalidateSize();
+  }, 250);
+}
+
+function useBrowserLocation(form, locationMessage, showErrors = true) {
+  if (!navigator.geolocation) {
+    if (showErrors) {
+      setLocationMessage(
+        locationMessage,
+        "Current location is not supported by this browser.",
+      );
+    }
+    return;
+  }
+
+  setLocationMessage(locationMessage, "Getting your current location...");
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+
+      setMapLocation(form, lat, lng, 16);
+      setLocationMessage(
+        locationMessage,
+        "Current location detected. You can move the pin if needed.",
+      );
+    },
+    () => {
+      if (showErrors) {
+        setLocationMessage(
+          locationMessage,
+          "Unable to get current location. You can move the pin manually.",
+        );
+      } else {
+        setLocationMessage(
+          locationMessage,
+          "Use current location or move the pin to your grower location.",
+        );
+      }
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 60000,
+    },
+  );
+}
+
+function setMapLocation(form, lat, lng, zoom) {
+  if (!profileMap || !profileMarker) {
+    return;
+  }
+
+  updateLatLngFields(form, lat, lng);
+
+  const nextLatLng = [Number(lat), Number(lng)];
+  profileMarker.setLatLng(nextLatLng);
+  profileMap.setView(nextLatLng, zoom || profileMap.getZoom());
+}
+
+function updateLatLngFields(form, lat, lng) {
+  form.elements.latitude.value = Number(lat).toFixed(6);
+  form.elements.longitude.value = Number(lng).toFixed(6);
+}
+
+function updateMapFromFields(form) {
+  const lat = Number(form.elements.latitude.value);
+  const lng = Number(form.elements.longitude.value);
+
+  if (
+    Number.isNaN(lat) ||
+    Number.isNaN(lng) ||
+    lat < -90 ||
+    lat > 90 ||
+    lng < -180 ||
+    lng > 180
+  ) {
+    return;
+  }
+
+  setMapLocation(form, lat, lng, 16);
+}
+
+function setLocationMessage(element, message) {
+  if (element) {
+    element.textContent = message || "";
+  }
+}
+
+function escapeHtml(value) {
+  return String(value || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+async function initPublicDirectoryPage() {
+  const mapEl = document.getElementById("directoryMap");
+  const listEl = document.getElementById("directoryList");
+
+  if (!mapEl || !listEl) {
+    return;
+  }
+
+  const statusEl = document.getElementById("directoryStatus");
+  const searchInput = document.getElementById("directorySearchInput");
+  const useLocationButton = document.getElementById(
+    "directoryUseLocationButton",
+  );
+  const showAllButton = document.getElementById('directoryShowAllButton');
+  const closeDrawerButton = document.getElementById("closeGrowerDrawerButton");
+
+  setDirectoryStatus("Loading directory...");
+
+  initDirectoryMap();
+
+  try {
+    const result = await apiGet("public_directory");
+
+    publicDirectoryGrowers = result.growers || [];
+    currentDirectoryResults = publicDirectoryGrowers;
+
+    trySetDirectoryLocationFromBrowser(false);
+
+    applyDirectoryFilters(1);
+    setDirectoryStatus(
+      `Directory updated at ${formatDisplayDateTime(result.generated_at)}.`,
+    );
+  } catch (error) {
+    setDirectoryStatus(error.message || "Unable to load directory.");
+    listEl.innerHTML = `<p class="form-message error">${escapeHtml(error.message)}</p>`;
+  }
+
+  if (searchInput) {
+  searchInput.addEventListener('input', () => {
+    applyDirectoryFilters(1);
+  });
+}
+
+  if (useLocationButton) {
+    useLocationButton.addEventListener("click", () => {
+      trySetDirectoryLocationFromBrowser(true);
+    });
+  }
+  if (showAllButton) {
+  showAllButton.addEventListener('click', () => {
+    currentUserLocation = null;
+    applyDirectoryFilters(1);
+    setDirectoryStatus('Showing all public growers.');
+
+    if (directoryMap && directoryMarkers.length) {
+      const group = L.featureGroup(directoryMarkers);
+      directoryMap.fitBounds(group.getBounds().pad(0.18));
+    }
+  });
+}
+
+  if (closeDrawerButton) {
+    closeDrawerButton.addEventListener("click", closeGrowerDrawer);
+  }
+
+  const drawer = document.getElementById("growerDrawer");
+
+  if (drawer) {
+    drawer.addEventListener("click", (event) => {
+      if (event.target === drawer) {
+        closeGrowerDrawer();
+      }
+    });
+  }
+}
+
+function initDirectoryMap() {
+  const mapEl = document.getElementById("directoryMap");
+
+  if (!mapEl || typeof L === "undefined") {
+    return;
+  }
+
+  directoryMap = L.map(mapEl).setView(
+    [APP_CONFIG.DEFAULT_MAP.LAT, APP_CONFIG.DEFAULT_MAP.LNG],
+    APP_CONFIG.DEFAULT_MAP.ZOOM,
+  );
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: "&copy; OpenStreetMap contributors",
+  }).addTo(directoryMap);
+
+  setTimeout(() => {
+    directoryMap.invalidateSize();
+  }, 250);
+}
+
+function renderDirectory(growers, page = 1) {
+  directoryCurrentPage = page;
+
+  renderDirectoryList(growers, page);
+  renderDirectoryMarkers(growers);
+  updateDirectoryCount(growers.length);
+  renderDirectoryPagination(growers);
+}
+
+function renderDirectoryList(growers, page = 1) {
+  const listEl = document.getElementById("directoryList");
+
+  if (!listEl) {
+    return;
+  }
+
+  if (!growers.length) {
+    listEl.innerHTML = '<p class="muted">No growers found.</p>';
+    return;
+  }
+
+  const startIndex = (page - 1) * DIRECTORY_PAGE_SIZE;
+  const pageGrowers = growers.slice(
+    startIndex,
+    startIndex + DIRECTORY_PAGE_SIZE,
+  );
+
+  listEl.innerHTML = pageGrowers
+    .map((grower) => {
+      const productCount = grower.products ? grower.products.length : 0;
+      const distanceText = currentUserLocation
+        ? formatDistanceKm(grower.distance_km)
+        : "Use location to see distance";
+
+      return `
+      <button class="directory-grower-card" type="button" data-grower-id="${escapeHtml(grower.grower_id)}">
+        <h3>${escapeHtml(grower.grower_name)}</h3>
+        <p>${escapeHtml(grower.location_label || "Location not listed")}</p>
+        <div class="grower-meta">
+          <span class="meta-pill">${escapeHtml(grower.categories || "Grower")}</span>
+          <span class="meta-pill">${productCount} produce listed</span>
+          <span class="meta-pill">${escapeHtml(distanceText)}</span>
+        </div>
+      </button>
+    `;
+    })
+    .join("");
+
+  listEl.querySelectorAll(".directory-grower-card").forEach((button) => {
+    button.addEventListener("click", () => {
+      const growerId = button.getAttribute("data-grower-id");
+      const grower = publicDirectoryGrowers.find(
+        (item) => item.grower_id === growerId,
+      );
+
+      if (grower) {
+        openGrowerDrawer(grower);
+        focusDirectoryGrower(grower);
+      }
+    });
+  });
+}
+
+function renderDirectoryMarkers(growers) {
+  if (!directoryMap) {
+    return;
+  }
+
+  directoryMarkers.forEach((marker) => marker.remove());
+  directoryMarkers = [];
+
+  growers.forEach((grower) => {
+    const lat = Number(grower.latitude);
+    const lng = Number(grower.longitude);
+
+    if (Number.isNaN(lat) || Number.isNaN(lng)) {
+      return;
+    }
+
+    const marker = L.marker([lat, lng]).addTo(directoryMap);
+
+    marker.bindPopup(`
+      <strong>${escapeHtml(grower.grower_name)}</strong><br>
+      ${escapeHtml(grower.location_label || "")}
+    `);
+
+    marker.on("click", () => {
+      openGrowerDrawer(grower);
+    });
+
+    directoryMarkers.push(marker);
+  });
+
+  if (directoryMarkers.length) {
+    const group = L.featureGroup(directoryMarkers);
+    directoryMap.fitBounds(group.getBounds().pad(0.18));
+  }
+}
+
+function updateDirectoryCount(count) {
+  const countEl = document.getElementById("directoryCount");
+
+  if (countEl) {
+    countEl.textContent = `${count} grower${count === 1 ? "" : "s"} found`;
+  }
+}
+
+function setDirectoryStatus(message) {
+  const statusEl = document.getElementById("directoryStatus");
+
+  if (statusEl) {
+    statusEl.textContent = message || "";
+  }
+}
+
+function focusDirectoryGrower(grower) {
+  if (!directoryMap) {
+    return;
+  }
+
+  const lat = Number(grower.latitude);
+  const lng = Number(grower.longitude);
+
+  if (Number.isNaN(lat) || Number.isNaN(lng)) {
+    return;
+  }
+
+  directoryMap.setView([lat, lng], 15);
+}
+
+function filterDirectoryGrowers(query) {
+  const searchTerm = String(query || "")
+    .trim()
+    .toLowerCase();
+
+  if (!searchTerm) {
+    return publicDirectoryGrowers;
+  }
+
+  return publicDirectoryGrowers.filter((grower) => {
+    const productText = (grower.products || [])
+      .map((product) =>
+        [
+          product.product_name,
+          product.category,
+          product.description,
+          product.availability_status,
+        ].join(" "),
+      )
+      .join(" ");
+
+    const searchableText = [
+      grower.grower_name,
+      grower.location_label,
+      grower.description,
+      grower.categories,
+      productText,
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    return searchableText.includes(searchTerm);
+  });
+}
+
+function formatDisplayDateTime(value) {
+  if (!value) {
+    return "";
+  }
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "";
+  }
+
+  return date.toLocaleString();
+}
+
+function openGrowerDrawer(grower) {
+  const drawer = document.getElementById("growerDrawer");
+  const content = document.getElementById("growerDrawerContent");
+
+  if (!drawer || !content) {
+    return;
+  }
+
+  const products = grower.products || [];
+
+  content.innerHTML = `
+    <h1 class="drawer-grower-title">${escapeHtml(grower.grower_name)}</h1>
+
+    <p class="muted">${escapeHtml(grower.location_label || "Location not listed")}</p>
+
+    <div class="grower-meta">
+      <span class="meta-pill">${escapeHtml(grower.categories || "Grower")}</span>
+      <span class="meta-pill">${products.length} produce listed</span>
+    </div>
+
+    <section class="drawer-section">
+      <h2>About</h2>
+      <p class="muted">
+        ${escapeHtml(grower.description || "No description added yet.")}
+      </p>
+    </section>
+
+        <section class="drawer-section">
+      <h2>Available produce</h2>
+      ${renderDrawerProducts(products)}
+    </section>
+
+    <section class="drawer-section">
+      <h2>Send enquiry</h2>
+      <form id="publicEnquiryForm" class="form-stack">
+        <input type="hidden" name="grower_id" value="${escapeHtml(grower.grower_id)}" />
+
+        <label>
+          Interested Produce
+          <select name="product_id">
+            <option value="">General enquiry</option>
+            ${products
+              .map(
+                (product) => `
+              <option value="${escapeHtml(product.product_id)}">
+                ${escapeHtml(product.product_name)}
+              </option>
+            `,
+              )
+              .join("")}
+          </select>
+        </label>
+
+        <label>
+          Your Name
+          <input type="text" name="sender_name" required />
+        </label>
+
+        <label>
+          Your Email
+          <input type="email" name="sender_email" required />
+        </label>
+
+        <label>
+          Your Phone
+          <input type="tel" name="sender_phone" />
+        </label>
+
+        <label>
+          Message
+          <textarea
+            name="message"
+            rows="4"
+            placeholder="Ask about availability, pickup, or anything you need to know"
+            required
+          ></textarea>
+        </label>
+
+        <button type="submit" class="primary-button">
+          Send enquiry
+        </button>
+
+        <p id="publicEnquiryMessage" class="form-message"></p>
+      </form>
+    </section>
+  `;
+
+  drawer.classList.add("is-open");
+  drawer.setAttribute("aria-hidden", "false");
+  initPublicEnquiryForm();
+}
+
+function closeGrowerDrawer() {
+  const drawer = document.getElementById("growerDrawer");
+
+  if (!drawer) {
+    return;
+  }
+
+  drawer.classList.remove("is-open");
+  drawer.setAttribute("aria-hidden", "true");
+}
+
+function renderDrawerProducts(products) {
+  if (!products.length) {
+    return '<p class="muted">No produce listed yet.</p>';
+  }
+
+  return `
+    <div class="drawer-product-list">
+      ${products
+        .map(
+          (product) => `
+        <article class="drawer-product-card">
+          <h3>${escapeHtml(product.product_name)}</h3>
+          <p>${escapeHtml(product.description || "")}</p>
+          <div class="grower-meta">
+            <span class="meta-pill">${escapeHtml(product.category || "Produce")}</span>
+            <span class="meta-pill">${escapeHtml(product.availability_status || "available")}</span>
+          </div>
+          ${product.price_text ? `<p><strong>Price:</strong> ${escapeHtml(product.price_text)}</p>` : ""}
+          ${product.harvest_timing ? `<p><strong>Timing:</strong> ${escapeHtml(product.harvest_timing)}</p>` : ""}
+          ${product.pickup_options ? `<p><strong>Pickup:</strong> ${escapeHtml(product.pickup_options)}</p>` : ""}
+        </article>
+      `,
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function initPublicEnquiryForm() {
+  const form = document.getElementById("publicEnquiryForm");
+
+  if (!form) {
+    return;
+  }
+
+  const messageEl = document.getElementById("publicEnquiryMessage");
+  const submitButton = form.querySelector('button[type="submit"]');
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    messageEl.textContent = "";
+    messageEl.className = "form-message";
+
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending enquiry...";
+
+    try {
+      const formData = new FormData(form);
+
+      const result = await apiPost("submit_public_enquiry", {
+        grower_id: formData.get("grower_id"),
+        product_id: formData.get("product_id"),
+        sender_name: formData.get("sender_name"),
+        sender_email: formData.get("sender_email"),
+        sender_phone: formData.get("sender_phone"),
+        message: formData.get("message"),
+        source_page: "public_directory",
+      });
+
+      messageEl.textContent = result.message || "Your enquiry has been sent.";
+      messageEl.classList.add("success");
+
+      form.reset();
+    } catch (error) {
+      messageEl.textContent = error.message;
+      messageEl.classList.add("error");
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "Send enquiry";
+    }
+  });
+}
+
+function trySetDirectoryLocationFromBrowser(showMessage) {
+  if (!navigator.geolocation) {
+    if (showMessage) {
+      setDirectoryStatus("Current location is not supported by this browser.");
+    }
+
+    applyDirectoryFilters(1);
+    return;
+  }
+
+  if (showMessage) {
+    setDirectoryStatus("Getting your current location...");
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      currentUserLocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
+
+      applyDirectoryFilters(1);
+
+      if (directoryMap) {
+        directoryMap.setView(
+          [currentUserLocation.lat, currentUserLocation.lng],
+          16,
+        );
+
+        L.circleMarker([currentUserLocation.lat, currentUserLocation.lng], {
+          radius: 7,
+        })
+          .addTo(directoryMap)
+          .bindPopup("Your location");
+      }
+
+      setDirectoryStatus(
+        `Showing growers within ${DIRECTORY_RADIUS_KM} km of your location.`,
+      );
+    },
+    () => {
+      if (showMessage) {
+        setDirectoryStatus(
+          "Unable to get current location. You can still browse all growers.",
+        );
+      }
+
+      applyDirectoryFilters(1);
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 60000,
+    },
+  );
+}
+
+function sortDirectoryByDistance() {
+  if (!currentUserLocation) {
+    return;
+  }
+
+  publicDirectoryGrowers.forEach((grower) => {
+    grower.distance_km = calculateDistanceKm(
+      currentUserLocation.lat,
+      currentUserLocation.lng,
+      Number(grower.latitude),
+      Number(grower.longitude),
+    );
+  });
+
+  currentDirectoryResults = currentDirectoryResults
+    .map((grower) => {
+      return {
+        ...grower,
+        distance_km: calculateDistanceKm(
+          currentUserLocation.lat,
+          currentUserLocation.lng,
+          Number(grower.latitude),
+          Number(grower.longitude),
+        ),
+      };
+    })
+    .filter((grower) => {
+      return (
+        Number.isFinite(grower.distance_km) &&
+        grower.distance_km <= DIRECTORY_RADIUS_KM
+      );
+    })
+    .sort((a, b) => a.distance_km - b.distance_km);
+}
+
+function calculateDistanceKm(lat1, lng1, lat2, lng2) {
+  if (
+    Number.isNaN(lat1) ||
+    Number.isNaN(lng1) ||
+    Number.isNaN(lat2) ||
+    Number.isNaN(lng2)
+  ) {
+    return null;
+  }
+
+  const earthRadiusKm = 6371;
+  const dLat = toRadians(lat2 - lat1);
+  const dLng = toRadians(lng2 - lng1);
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRadians(lat1)) *
+      Math.cos(toRadians(lat2)) *
+      Math.sin(dLng / 2) *
+      Math.sin(dLng / 2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  return earthRadiusKm * c;
+}
+
+function toRadians(degrees) {
+  return degrees * (Math.PI / 180);
+}
+
+function formatDistanceKm(distanceKm) {
+  if (!Number.isFinite(distanceKm)) {
+    return "Distance unavailable";
+  }
+
+  if (distanceKm < 1) {
+    return `${Math.round(distanceKm * 1000)} m away`;
+  }
+
+  return `${distanceKm.toFixed(1)} km away`;
+}
+
+function renderDirectoryPagination(growers) {
+  const listEl = document.getElementById("directoryList");
+
+  if (!listEl) {
+    return;
+  }
+
+  const totalPages = Math.ceil(growers.length / DIRECTORY_PAGE_SIZE);
+
+  if (totalPages <= 1) {
+    return;
+  }
+
+  const pagination = document.createElement("div");
+  pagination.className = "directory-pagination";
+
+  const previousButton = document.createElement("button");
+  previousButton.type = "button";
+  previousButton.className = "secondary-button";
+  previousButton.textContent = "Previous";
+  previousButton.disabled = directoryCurrentPage <= 1;
+
+  const pageText = document.createElement("span");
+  pageText.className = "pagination-text";
+  pageText.textContent = `Page ${directoryCurrentPage} of ${totalPages}`;
+
+  const nextButton = document.createElement("button");
+  nextButton.type = "button";
+  nextButton.className = "secondary-button";
+  nextButton.textContent = "Next";
+  nextButton.disabled = directoryCurrentPage >= totalPages;
+
+  previousButton.addEventListener("click", () => {
+    renderDirectory(growers, directoryCurrentPage - 1);
+  });
+
+  nextButton.addEventListener("click", () => {
+    renderDirectory(growers, directoryCurrentPage + 1);
+  });
+
+  pagination.appendChild(previousButton);
+  pagination.appendChild(pageText);
+  pagination.appendChild(nextButton);
+
+  listEl.appendChild(pagination);
+}
+
+function applyDirectoryFilters(page = 1) {
+  const searchInput = document.getElementById('directorySearchInput');
+  const query = searchInput ? searchInput.value : '';
+
+  currentDirectoryResults = filterDirectoryGrowers(query);
+
+  if (currentUserLocation) {
+    sortDirectoryByDistance();
+  }
+
+  renderDirectory(currentDirectoryResults, page);
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Keboon Directory</title>
+
+  <link rel="icon" type="image/png" href="./assets/images/logo.png" />
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <link rel="stylesheet" href="./styles/main.css" />
+</head>
+<body>
+  <main class="public-app">
+    <header class="public-header">
+      <a href="../index.html" class="public-brand">
+        <img
+          src="./assets/images/logo-writing.png"
+          alt="Keboon"
+          class="public-logo"
+        />
+      </a>
+
+      <nav class="public-nav">
+        <a href="./pages/signin.html" class="secondary-button text-button-link">
+          Grower sign in
+        </a>
+        <a href="./pages/signup.html" class="primary-button text-button-link">
+          Join as grower
+        </a>
+      </nav>
+    </header>
+
+    <section class="public-search-panel">
+      <div>
+        <p class="eyebrow">Local food directory</p>
+        <h1>Find nearby food growers</h1>
+        <p class="muted">
+          Discover growers, gardens, farms, and fresh produce near you.
+        </p>
+      </div>
+
+      <div class="public-search-controls">
+        <label>
+          Search
+          <input
+            id="directorySearchInput"
+            type="search"
+            placeholder="Search growers, produce, categories, locations"
+          />
+        </label>
+
+        <div class="directory-location-actions">
+  <button
+    id="directoryUseLocationButton"
+    class="secondary-button"
+    type="button"
+  >
+    Use my location
+  </button>
+
+  <button
+    id="directoryShowAllButton"
+    class="secondary-button"
+    type="button"
+  >
+    Show all growers
+  </button>
+</div>
+
+      <p id="directoryStatus" class="small-text">Loading directory...</p>
+    </section>
+
+    <section class="directory-layout">
+      <div id="directoryMap" class="directory-map"></div>
+
+      <aside class="directory-list-panel">
+        <div class="directory-list-header">
+          <h2>Growers</h2>
+          <p id="directoryCount" class="muted">Loading...</p>
+        </div>
+
+        <div id="directoryList" class="directory-list">
+          <p class="muted">Loading growers...</p>
+        </div>
+      </aside>
+    </section>
+
+    <section
+      id="growerDrawer"
+      class="grower-drawer"
+      aria-hidden="true"
+    >
+      <div class="grower-drawer-card">
+        <button
+          id="closeGrowerDrawerButton"
+          class="drawer-close-button"
+          type="button"
+          aria-label="Close grower profile"
+        >
+          Close
+        </button>
+
+        <div id="growerDrawerContent"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script src="./scripts/config.js"></script>
+  <script src="./scripts/api.js"></script>
+  <script src="./scripts/auth.js"></script>
+  <script src="./scripts/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Grower Dashboard | Keboon Directory</title>
+
+  <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+  <link rel="stylesheet" href="../styles/main.css" />
+</head>
+<body>
+  <main class="dashboard-page">
+    <header class="dashboard-header">
+      <a href="../index.html" class="dashboard-brand">
+        <img
+          src="../assets/images/logo-writing.png"
+          alt="Keboon"
+          class="dashboard-logo"
+        />
+      </a>
+
+      <button id="signoutButton" class="secondary-button" type="button">
+        Sign out
+      </button>
+    </header>
+
+    <section class="dashboard-hero">
+      <p class="eyebrow">Grower dashboard</p>
+      <h1 id="dashboardTitle">Welcome</h1>
+      <p class="muted">
+        Manage your grower profile and produce listings from here.
+      </p>
+    </section>
+
+    <section class="dashboard-grid">
+      <a class="dashboard-card" href="./edit-profile.html">
+        <h2>Edit grower profile</h2>
+        <p>
+          Add your location, description, categories, and public profile details.
+        </p>
+      </a>
+
+      <a class="dashboard-card" href="./manage-produce.html">
+        <h2>Manage produce</h2>
+        <p>
+          Add or update the food, herbs, fruits, and vegetables currently available.
+        </p>
+      </a>
+
+      <a class="dashboard-card" href="../index.html">
+        <h2>View public directory</h2>
+        <p>
+          Open the map and see how the public directory will look.
+        </p>
+      </a>
+    </section>
+  </main>
+
+  <script src="../scripts/config.js"></script>
+  <script src="../scripts/api.js"></script>
+  <script src="../scripts/auth.js"></script>
+  <script src="../scripts/app.js"></script>
+</body>
+</html>

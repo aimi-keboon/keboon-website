@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Manage Produce | Keboon Directory</title>
+
+  <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+  <link rel="stylesheet" href="../styles/main.css" />
+</head>
+<body>
+  <main class="dashboard-page">
+    <header class="dashboard-header">
+      <a href="./dashboard.html" class="dashboard-brand">
+        <img
+          src="../assets/images/logo-writing.png"
+          alt="Keboon"
+          class="dashboard-logo"
+        />
+      </a>
+
+      <a class="secondary-button text-button-link" href="./dashboard.html">
+        Back to dashboard
+      </a>
+    </header>
+
+    <section class="dashboard-hero">
+      <p class="eyebrow">Produce listings</p>
+      <h1>Manage produce</h1>
+      <p class="muted">
+        Add the food, herbs, fruits, vegetables, and other produce currently available from your grower profile.
+      </p>
+    </section>
+
+    <section class="content-card produce-layout">
+      <form id="produceForm" class="form-stack">
+        <input type="hidden" name="product_id" />
+
+        <h2 id="produceFormTitle">Add produce</h2>
+
+        <label>
+          Produce Name
+          <input
+            type="text"
+            name="product_name"
+            placeholder="Example: Fresh mint"
+            required
+          />
+        </label>
+
+        <label>
+          Category
+          <select name="category" required>
+            <option value="">Select category</option>
+            <option value="Vegetables">Vegetables</option>
+            <option value="Herbs">Herbs</option>
+            <option value="Fruits">Fruits</option>
+            <option value="Eggs">Eggs</option>
+            <option value="Honey">Honey</option>
+            <option value="Plants">Plants</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
+
+        <label>
+          Description
+          <textarea
+            name="description"
+            rows="4"
+            placeholder="Describe the produce, freshness, growing method, or pickup notes"
+          ></textarea>
+        </label>
+
+        <label>
+          Price Text
+          <input
+            type="text"
+            name="price_text"
+            placeholder="Example: RM5 per bundle, price varies, free sharing"
+          />
+        </label>
+
+        <label>
+          Availability
+          <select name="availability_status" required>
+            <option value="available">Available</option>
+            <option value="seasonal">Seasonal</option>
+            <option value="currently_unavailable">Currently unavailable</option>
+            <option value="hidden">Hidden</option>
+          </select>
+        </label>
+
+        <label>
+          Harvest Timing
+          <input
+            type="text"
+            name="harvest_timing"
+            placeholder="Example: Available this weekend"
+          />
+        </label>
+
+        <label>
+          Pickup Options
+          <textarea
+            name="pickup_options"
+            rows="3"
+            placeholder="Example: Self pickup only, pickup by appointment"
+          ></textarea>
+        </label>
+
+        <label>
+          Photo URL
+          <input
+            type="url"
+            name="photo_url"
+            placeholder="We will add upload later. For now, paste image URL if available."
+          />
+        </label>
+
+        <label class="checkbox-label">
+          <input type="checkbox" name="is_public" checked />
+          Show this produce publicly
+        </label>
+
+        <div class="form-actions">
+          <button type="submit" class="primary-button">
+            Save produce
+          </button>
+
+          <button id="clearProduceFormButton" type="button" class="secondary-button">
+            Clear form
+          </button>
+        </div>
+
+        <p id="produceMessage" class="form-message"></p>
+      </form>
+
+      <div class="produce-list-panel">
+        <h2>Your produce</h2>
+        <p class="muted">
+          Select an item to edit it.
+        </p>
+
+        <div id="produceList" class="produce-list">
+          <p class="muted">Loading produce...</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="../scripts/config.js"></script>
+  <script src="../scripts/api.js"></script>
+  <script src="../scripts/auth.js"></script>
+  <script src="../scripts/app.js"></script>
+</body>
+</html>
