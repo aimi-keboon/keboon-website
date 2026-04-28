@@ -26,69 +26,83 @@
         />
       </a>
 
-      <nav class="public-nav">
+      <nav class="public-nav" aria-label="Public navigation">
         <a href="./pages/signin.html" class="secondary-button text-button-link">
           Grower sign in
         </a>
+
         <a href="./pages/signup.html" class="primary-button text-button-link">
           Join as grower
         </a>
       </nav>
     </header>
 
-    <section class="public-search-panel">
-      <div>
-        <p class="eyebrow">Local food directory</p>
-        <h1>Find nearby food growers</h1>
-        <p class="muted">
-          Discover growers, gardens, farms, and fresh produce near you.
-        </p>
-      </div>
+    <section class="public-hero public-hero-compact">
+  <div class="public-hero-content">
+    <p class="eyebrow">Local food directory</p>
+    <h1>Find nearby food growers</h1>
+    <p class="muted">
+      Discover growers, gardens, farms, and fresh produce near you.
+    </p>
+  </div>
+</section>
 
-      <div class="public-search-controls">
-        <label>
-          Search
-          <input
-            id="directorySearchInput"
-            type="search"
-            placeholder="Search growers, produce, categories, locations"
-          />
-        </label>
-
-        <div class="directory-location-actions">
-  <button
-    id="directoryUseLocationButton"
-    class="secondary-button"
-    type="button"
-  >
-    Use my location
-  </button>
-
-  <button
-    id="directoryShowAllButton"
-    class="secondary-button"
-    type="button"
-  >
-    Show all growers
-  </button>
-</div>
-
-      <p id="directoryStatus" class="small-text">Loading directory...</p>
-    </section>
-
-    <section class="directory-layout">
-      <div id="directoryMap" class="directory-map"></div>
-
-      <aside class="directory-list-panel">
-        <div class="directory-list-header">
-          <h2>Growers</h2>
-          <p id="directoryCount" class="muted">Loading...</p>
+    <section class="public-directory-shell">
+      <section class="public-search-panel">
+        <div>
+          <p class="eyebrow">Directory search</p>
+          <h2>Search growers and produce</h2>
+          <p class="muted">
+            Use your location to find growers nearby, or show all public growers.
+          </p>
         </div>
 
-        <div id="directoryList" class="directory-list">
-          <p class="muted">Loading growers...</p>
+        <div class="public-search-controls">
+          <label>
+            Search
+            <input
+              id="directorySearchInput"
+              type="search"
+              placeholder="Search growers, produce, categories, locations"
+            />
+          </label>
+
+          <div class="directory-location-actions">
+            <button
+              id="directoryUseLocationButton"
+              class="secondary-button"
+              type="button"
+            >
+              Use my location
+            </button>
+
+            <button
+              id="directoryShowAllButton"
+              class="secondary-button"
+              type="button"
+            >
+              Show all growers
+            </button>
+          </div>
         </div>
-      </aside>
+
+        <p id="directoryStatus" class="small-text">Loading directory...</p>
+      </section>
+
+      <section class="directory-layout">
+        <div id="directoryMap" class="directory-map"></div>
+
+        <aside class="directory-list-panel">
+          <div class="directory-list-header">
+            <h2>Growers</h2>
+            <p id="directoryCount" class="muted">Loading...</p>
+          </div>
+
+          <div id="directoryList" class="directory-list">
+            <p class="muted">Loading growers...</p>
+          </div>
+        </aside>
+      </section>
     </section>
 
     <section

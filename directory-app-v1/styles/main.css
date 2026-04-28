@@ -671,12 +671,16 @@ select:focus {
   .public-nav {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
   }
 
   .public-nav .primary-button,
   .public-nav .secondary-button {
     width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 14px;
   }
 
   .public-search-controls {
@@ -1278,5 +1282,150 @@ select:focus {
 
   .profile-preview-header h2 {
     font-size: 24px;
+  }
+}
+
+/* Public directory page polish */
+
+.public-hero {
+  width: 100%;
+  padding: 28px 20px;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.public-hero-content {
+  max-width: 720px;
+}
+
+.public-hero h1 {
+  margin: 0 0 8px;
+  font-size: 34px;
+  line-height: 1.15;
+}
+
+.public-hero p {
+  margin: 0;
+}
+
+.public-hero-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.public-directory-shell {
+  padding: 18px;
+}
+
+.public-directory-shell .public-search-panel {
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 24px rgba(31, 41, 51, 0.04);
+}
+
+.public-directory-shell .directory-layout {
+  height: calc(100vh - 330px);
+  min-height: 560px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--white);
+}
+
+.public-directory-shell .directory-list-panel {
+  border-left: 1px solid var(--border);
+}
+
+@media (max-width: 900px) {
+  .public-hero {
+    display: grid;
+    align-items: start;
+  }
+
+  .public-hero-actions {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.public-hero-actions .primary-button,
+.public-hero-actions .secondary-button {
+  width: 100%;
+}
+
+  .public-directory-shell {
+    padding: 12px;
+  }
+
+  .public-directory-shell .directory-layout {
+    height: auto;
+    min-height: 0;
+    border-radius: 20px;
+  }
+
+  .public-directory-shell .directory-list-panel {
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+}
+
+@media (max-width: 640px) {
+  .public-hero {
+    padding: 22px 14px;
+  }
+
+  .public-hero h1 {
+    font-size: 28px;
+  }
+
+  .public-directory-shell .public-search-panel {
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .public-hero-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .public-hero-actions .primary-button,
+  .public-hero-actions .secondary-button {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 14px;
+  }
+}
+
+.public-hero-compact {
+  padding: 18px 20px;
+}
+
+.public-hero-compact .public-hero-content {
+  max-width: 900px;
+}
+
+.public-hero-compact h1 {
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
+.public-hero-compact .muted {
+  font-size: 14px;
+}
+
+@media (max-width: 640px) {
+  .public-hero-compact {
+    padding: 16px 14px;
+  }
+
+  .public-hero-compact h1 {
+    font-size: 23px;
   }
 }
