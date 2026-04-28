@@ -30,22 +30,33 @@ async function requireValidSession() {
     return null;
   }
 
-  try {
-    const grower = await apiPost("get_current_grower", {
-      session_token: session.token,
-    });
+  return {
+    session,
+    grower: getStoredGrower(),
+    products: getStoredProducts(),
+  };
+}
 
-    localStorage.setItem("keboon_grower_name", grower.grower_name || "");
+async function refreshGrowerAppData(sessionToken) {
+  const appData = await apiPost("get_current_grower_app_data", {
+    session_token: sessionToken,
+  });
 
-    return {
-      session,
-      grower,
-    };
-  } catch (error) {
-    clearStoredSession();
-    window.location.href = "./signin.html";
-    return null;
+  storeGrowerAppData(appData);
+
+  if (appData.grower) {
+    localStorage.setItem(
+      "keboon_grower_name",
+      appData.grower.grower_name || "",
+    );
   }
+
+  return appData;
+}
+
+function handleInvalidSession() {
+  clearStoredSession();
+  window.location.href = "./signin.html";
 }
 
 async function initDashboardPage() {
@@ -56,10 +67,6 @@ async function initDashboardPage() {
     return;
   }
 
-  if (dashboardTitle) {
-    dashboardTitle.textContent = "Loading dashboard...";
-  }
-
   const auth = await requireValidSession();
 
   if (!auth) {
@@ -67,13 +74,21 @@ async function initDashboardPage() {
   }
 
   if (dashboardTitle) {
-    dashboardTitle.textContent = `Welcome, ${auth.grower.grower_name || "Grower"}`;
+    dashboardTitle.textContent = `Welcome, ${auth.grower?.grower_name || auth.session.grower_name || "Grower"}`;
   }
 
   if (signoutButton) {
     signoutButton.addEventListener("click", () => {
       clearStoredSession();
       window.location.href = "./signin.html";
+    });
+  }
+
+  if (!isGrowerCacheFresh()) {
+    refreshGrowerAppDataQuietly(auth.session.token, (appData) => {
+      if (dashboardTitle) {
+        dashboardTitle.textContent = `Welcome, ${appData.grower?.grower_name || "Grower"}`;
+      }
     });
   }
 }
@@ -88,16 +103,43 @@ async function initEditProfilePage() {
   const messageEl = document.getElementById("editProfileMessage");
   const submitButton = form.querySelector('button[type="submit"]');
 
-  messageEl.textContent = "Loading profile...";
-
   const auth = await requireValidSession();
 
   if (!auth) {
     return;
   }
 
-  fillEditProfileForm(form, auth.grower);
-  initProfileLocationMap(form, auth.grower);
+  if (auth.grower) {
+    fillEditProfileForm(form, auth.grower);
+    initProfileLocationMap(form, auth.grower);
+  } else {
+    showGlobalLoading("Loading your profile...");
+
+    try {
+      const appData = await refreshGrowerAppData(auth.session.token);
+      fillEditProfileForm(form, appData.grower);
+      initProfileLocationMap(form, appData.grower);
+    } catch (error) {
+      handleInvalidSession();
+      return;
+    } finally {
+      hideGlobalLoading();
+    }
+  }
+
+  if (!isGrowerCacheFresh()) {
+    refreshGrowerAppDataQuietly(auth.session.token, (appData) => {
+      if (appData.grower) {
+        fillEditProfileForm(form, appData.grower);
+
+        if (!profileMap) {
+          initProfileLocationMap(form, appData.grower);
+        } else {
+          updateMapFromFields(form);
+        }
+      }
+    });
+  }
 
   messageEl.textContent = "";
 
@@ -111,6 +153,8 @@ async function initEditProfilePage() {
     submitButton.textContent = "Saving profile...";
 
     try {
+      showGlobalLoading("Saving your profile...");
+
       const formData = new FormData(form);
 
       const result = await apiPost("update_current_grower_profile", {
@@ -126,12 +170,19 @@ async function initEditProfilePage() {
         is_public: formData.get("is_public") === "on",
       });
 
+      const appData = await refreshGrowerAppData(auth.session.token);
+
+      if (appData.grower) {
+        fillEditProfileForm(form, appData.grower);
+      }
+
       messageEl.textContent = result.message || "Profile saved.";
       messageEl.classList.add("success");
     } catch (error) {
       messageEl.textContent = error.message;
       messageEl.classList.add("error");
     } finally {
+      hideGlobalLoading();
       submitButton.disabled = false;
       submitButton.textContent = "Save profile";
     }
@@ -150,15 +201,35 @@ async function initManageProducePage() {
   const submitButton = form.querySelector('button[type="submit"]');
   const clearButton = document.getElementById("clearProduceFormButton");
 
-  messageEl.textContent = "Loading produce...";
-
   const auth = await requireValidSession();
 
   if (!auth) {
     return;
   }
 
-  await loadCurrentGrowerProducts(auth.session.token);
+  currentProducts = auth.products || [];
+  renderProduceList(currentProducts);
+
+  if (!hasGrowerAppCache()) {
+    showGlobalLoading("Loading your produce...");
+
+    try {
+      const appData = await refreshGrowerAppData(auth.session.token);
+
+      currentProducts = appData.products || [];
+      renderProduceList(currentProducts);
+    } catch (error) {
+      handleInvalidSession();
+      return;
+    } finally {
+      hideGlobalLoading();
+    }
+  } else if (!isGrowerCacheFresh()) {
+    refreshGrowerAppDataQuietly(auth.session.token, (appData) => {
+      currentProducts = appData.products || [];
+      renderProduceList(currentProducts);
+    });
+  }
 
   messageEl.textContent = "";
 
@@ -172,6 +243,8 @@ async function initManageProducePage() {
     submitButton.textContent = "Saving produce...";
 
     try {
+      showGlobalLoading("Saving produce...");
+
       const formData = new FormData(form);
 
       const result = await apiPost("save_current_grower_product", {
@@ -188,15 +261,20 @@ async function initManageProducePage() {
         is_public: formData.get("is_public") === "on",
       });
 
+      clearProduceForm(form);
+
+      const appData = await refreshGrowerAppData(auth.session.token);
+
+      currentProducts = appData.products || [];
+      renderProduceList(currentProducts);
+
       messageEl.textContent = result.message || "Produce saved.";
       messageEl.classList.add("success");
-
-      clearProduceForm(form);
-      await loadCurrentGrowerProducts(auth.session.token);
     } catch (error) {
       messageEl.textContent = error.message;
       messageEl.classList.add("error");
     } finally {
+      hideGlobalLoading();
       submitButton.disabled = false;
       submitButton.textContent = "Save produce";
     }
@@ -515,7 +593,7 @@ async function initPublicDirectoryPage() {
   const useLocationButton = document.getElementById(
     "directoryUseLocationButton",
   );
-  const showAllButton = document.getElementById('directoryShowAllButton');
+  const showAllButton = document.getElementById("directoryShowAllButton");
   const closeDrawerButton = document.getElementById("closeGrowerDrawerButton");
 
   setDirectoryStatus("Loading directory...");
@@ -540,10 +618,10 @@ async function initPublicDirectoryPage() {
   }
 
   if (searchInput) {
-  searchInput.addEventListener('input', () => {
-    applyDirectoryFilters(1);
-  });
-}
+    searchInput.addEventListener("input", () => {
+      applyDirectoryFilters(1);
+    });
+  }
 
   if (useLocationButton) {
     useLocationButton.addEventListener("click", () => {
@@ -551,17 +629,17 @@ async function initPublicDirectoryPage() {
     });
   }
   if (showAllButton) {
-  showAllButton.addEventListener('click', () => {
-    currentUserLocation = null;
-    applyDirectoryFilters(1);
-    setDirectoryStatus('Showing all public growers.');
+    showAllButton.addEventListener("click", () => {
+      currentUserLocation = null;
+      applyDirectoryFilters(1);
+      setDirectoryStatus("Showing all public growers.");
 
-    if (directoryMap && directoryMarkers.length) {
-      const group = L.featureGroup(directoryMarkers);
-      directoryMap.fitBounds(group.getBounds().pad(0.18));
-    }
-  });
-}
+      if (directoryMap && directoryMarkers.length) {
+        const group = L.featureGroup(directoryMarkers);
+        directoryMap.fitBounds(group.getBounds().pad(0.18));
+      }
+    });
+  }
 
   if (closeDrawerButton) {
     closeDrawerButton.addEventListener("click", closeGrowerDrawer);
@@ -1138,8 +1216,8 @@ function renderDirectoryPagination(growers) {
 }
 
 function applyDirectoryFilters(page = 1) {
-  const searchInput = document.getElementById('directorySearchInput');
-  const query = searchInput ? searchInput.value : '';
+  const searchInput = document.getElementById("directorySearchInput");
+  const query = searchInput ? searchInput.value : "";
 
   currentDirectoryResults = filterDirectoryGrowers(query);
 
@@ -1148,4 +1226,19 @@ function applyDirectoryFilters(page = 1) {
   }
 
   renderDirectory(currentDirectoryResults, page);
+}
+
+async function refreshGrowerAppDataQuietly(sessionToken, onSuccess) {
+  try {
+    const appData = await refreshGrowerAppData(sessionToken);
+
+    if (typeof onSuccess === "function") {
+      onSuccess(appData);
+    }
+
+    return appData;
+  } catch (error) {
+    handleInvalidSession();
+    return null;
+  }
 }

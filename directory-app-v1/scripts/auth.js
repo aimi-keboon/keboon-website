@@ -107,6 +107,8 @@ async function handleSigninSubmit(event) {
   try {
     const formData = new FormData(form);
 
+    showGlobalLoading("Signing in...");
+
     const result = await apiPost("signin_grower", {
       email: formData.get("email"),
       password: formData.get("password"),
@@ -120,6 +122,14 @@ async function handleSigninSubmit(event) {
     localStorage.setItem("keboon_grower_id", result.grower_id);
     localStorage.setItem("keboon_grower_name", result.grower_name || "");
 
+    showGlobalLoading("Loading your grower data...");
+
+    const appData = await apiPost("get_current_grower_app_data", {
+      session_token: result.session_token,
+    });
+
+    storeGrowerAppData(appData);
+
     messageEl.textContent = "Signed in successfully. Redirecting...";
     messageEl.classList.add("success");
 
@@ -128,6 +138,7 @@ async function handleSigninSubmit(event) {
     messageEl.textContent = error.message;
     messageEl.classList.add("error");
   } finally {
+    hideGlobalLoading();
     submitButton.disabled = false;
     submitButton.textContent = "Sign in";
   }
@@ -147,37 +158,127 @@ function clearStoredSession() {
   localStorage.removeItem("keboon_session_expires_at");
   localStorage.removeItem("keboon_grower_id");
   localStorage.removeItem("keboon_grower_name");
+  clearStoredGrowerAppData();
 }
 
 async function handleForgotPasswordSubmit(event) {
   event.preventDefault();
 
   const form = event.target;
-  const messageEl = document.getElementById('forgotPasswordMessage');
+  const messageEl = document.getElementById("forgotPasswordMessage");
   const submitButton = form.querySelector('button[type="submit"]');
 
-  messageEl.textContent = '';
-  messageEl.className = 'form-message';
+  messageEl.textContent = "";
+  messageEl.className = "form-message";
 
   submitButton.disabled = true;
-  submitButton.textContent = 'Sending reset link...';
+  submitButton.textContent = "Sending reset link...";
 
   try {
     const formData = new FormData(form);
 
-    const result = await apiPost('request_password_reset', {
-      email: formData.get('email'),
+    const result = await apiPost("request_password_reset", {
+      email: formData.get("email"),
     });
 
-    messageEl.textContent = result.message || 'If an account exists for this email, a password reset link has been sent.';
-    messageEl.classList.add('success');
+    messageEl.textContent =
+      result.message ||
+      "If an account exists for this email, a password reset link has been sent.";
+    messageEl.classList.add("success");
 
     form.reset();
   } catch (error) {
     messageEl.textContent = error.message;
-    messageEl.classList.add('error');
+    messageEl.classList.add("error");
   } finally {
     submitButton.disabled = false;
-    submitButton.textContent = 'Send reset link';
+    submitButton.textContent = "Send reset link";
   }
+}
+
+function showGlobalLoading(message = "Loading...") {
+  const overlay = document.getElementById("globalLoadingOverlay");
+  const text = document.getElementById("globalLoadingText");
+
+  if (!overlay) {
+    return;
+  }
+
+  if (text) {
+    text.textContent = message;
+  }
+
+  overlay.classList.add("is-active");
+  overlay.setAttribute("aria-hidden", "false");
+}
+
+function hideGlobalLoading() {
+  const overlay = document.getElementById("globalLoadingOverlay");
+
+  if (!overlay) {
+    return;
+  }
+
+  overlay.classList.remove("is-active");
+  overlay.setAttribute("aria-hidden", "true");
+}
+
+function storeGrowerAppData(data) {
+  localStorage.setItem(
+    "keboon_current_grower",
+    JSON.stringify(data.grower || null),
+  );
+  localStorage.setItem(
+    "keboon_current_products",
+    JSON.stringify(data.products || []),
+  );
+  localStorage.setItem("keboon_cached_at", new Date().toISOString());
+}
+
+function getStoredGrower() {
+  try {
+    return JSON.parse(localStorage.getItem("keboon_current_grower") || "null");
+  } catch (error) {
+    return null;
+  }
+}
+
+function getStoredProducts() {
+  try {
+    return JSON.parse(localStorage.getItem("keboon_current_products") || "[]");
+  } catch (error) {
+    return [];
+  }
+}
+
+function clearStoredGrowerAppData() {
+  localStorage.removeItem("keboon_current_grower");
+  localStorage.removeItem("keboon_current_products");
+  localStorage.removeItem("keboon_cached_at");
+}
+
+function getGrowerCacheAgeMs() {
+  const cachedAt = localStorage.getItem("keboon_cached_at");
+
+  if (!cachedAt) {
+    return Infinity;
+  }
+
+  const cachedDate = new Date(cachedAt);
+
+  if (Number.isNaN(cachedDate.getTime())) {
+    return Infinity;
+  }
+
+  return Date.now() - cachedDate.getTime();
+}
+
+function hasGrowerAppCache() {
+  const grower = getStoredGrower();
+
+  return Boolean(grower && grower.grower_id);
+}
+
+function isGrowerCacheFresh(maxAgeMs = 5 * 60 * 1000) {
+  return hasGrowerAppCache() && getGrowerCacheAgeMs() <= maxAgeMs;
 }

@@ -1,6 +1,6 @@
 const APP_CONFIG = {
   APP_NAME: 'Keboon Directory',
-  API_BASE_URL: 'https://script.google.com/macros/s/AKfycbyS5VpQ8hDmg0pWWxNcrSR1EB-NLtUgTkBgcdPWQ9njKLZQDF3a9XuiArNun4wEU0Z4EA/exec',
+  API_BASE_URL: 'https://script.google.com/macros/s/AKfycbz4vOm5l-jz1fcuWvNHTinNubFOiwMmyiXnIxhSa_wNlTc4CqtVRo897RrVowruKZJVOA/exec',
 
   DEFAULT_MAP: {
     LAT: 4.2105,
