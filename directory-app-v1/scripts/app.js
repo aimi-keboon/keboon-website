@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initDashboardPage();
   initEditProfilePage();
   initManageProducePage();
+  initPreviewProfilePage();
 });
 
 let profileMap = null;
@@ -1241,4 +1242,137 @@ async function refreshGrowerAppDataQuietly(sessionToken, onSuccess) {
     handleInvalidSession();
     return null;
   }
+}
+async function initPreviewProfilePage() {
+  const previewContent = document.getElementById("profilePreviewContent");
+
+  if (!previewContent) {
+    return;
+  }
+
+  const auth = await requireValidSession();
+
+  if (!auth) {
+    return;
+  }
+
+  if (auth.grower) {
+    renderProfilePreview(auth.grower, auth.products || []);
+  } else {
+    showGlobalLoading("Loading your profile preview...");
+
+    try {
+      const appData = await refreshGrowerAppData(auth.session.token);
+      renderProfilePreview(appData.grower, appData.products || []);
+    } catch (error) {
+      handleInvalidSession();
+      return;
+    } finally {
+      hideGlobalLoading();
+    }
+  }
+
+  if (!isGrowerCacheFresh()) {
+    refreshGrowerAppDataQuietly(auth.session.token, (appData) => {
+      renderProfilePreview(appData.grower, appData.products || []);
+    });
+  }
+}
+
+function renderProfilePreview(grower, products) {
+  const previewContent = document.getElementById("profilePreviewContent");
+
+  if (!previewContent || !grower) {
+    return;
+  }
+
+  const publicStatusText = getProfilePublicStatusText(grower);
+  const visibleProducts = (products || []).filter((product) => {
+    return (
+      String(product.is_public).toLowerCase() === "true" &&
+      product.availability_status !== "hidden"
+    );
+  });
+
+  previewContent.innerHTML = `
+    <article class="profile-preview">
+      <div class="profile-preview-header">
+        <div>
+          <p class="eyebrow">Public profile preview</p>
+          <h2>${escapeHtml(grower.grower_name || "Unnamed grower")}</h2>
+          <p class="muted">${escapeHtml(grower.location_label || "Location not listed")}</p>
+        </div>
+
+        <span class="status-pill">${escapeHtml(publicStatusText)}</span>
+      </div>
+
+      <div class="grower-meta">
+        <span class="meta-pill">${escapeHtml(grower.categories || "Grower")}</span>
+        <span class="meta-pill">${visibleProducts.length} public produce listed</span>
+      </div>
+
+      <section class="drawer-section">
+        <h2>About</h2>
+        <p class="muted">
+          ${escapeHtml(grower.description || "No description added yet.")}
+        </p>
+      </section>
+
+      <section class="drawer-section">
+        <h2>Available produce</h2>
+        ${renderPreviewProducts(visibleProducts)}
+      </section>
+    </article>
+  `;
+}
+
+function renderPreviewProducts(products) {
+  if (!products.length) {
+    return '<p class="muted">No public produce listed yet.</p>';
+  }
+
+  return `
+    <div class="drawer-product-list">
+      ${products
+        .map(
+          (product) => `
+        <article class="drawer-product-card">
+          <h3>${escapeHtml(product.product_name)}</h3>
+          <p>${escapeHtml(product.description || "")}</p>
+          <div class="grower-meta">
+            <span class="meta-pill">${escapeHtml(product.category || "Produce")}</span>
+            <span class="meta-pill">${escapeHtml(product.availability_status || "available")}</span>
+          </div>
+          ${product.price_text ? `<p><strong>Price:</strong> ${escapeHtml(product.price_text)}</p>` : ""}
+          ${product.harvest_timing ? `<p><strong>Timing:</strong> ${escapeHtml(product.harvest_timing)}</p>` : ""}
+          ${product.pickup_options ? `<p><strong>Pickup:</strong> ${escapeHtml(product.pickup_options)}</p>` : ""}
+        </article>
+      `,
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function getProfilePublicStatusText(grower) {
+  const isPublic = String(grower.is_public).toLowerCase() === "true";
+
+  if (
+    grower.account_status === "active" &&
+    grower.email_verification_status === "verified" &&
+    grower.approval_status === "approved" &&
+    isPublic
+  ) {
+    return "Visible publicly";
+  }
+
+  if (!isPublic) {
+    return "Hidden";
+  }
+
+  if (grower.approval_status !== "approved") {
+    return "Pending approval";
+  }
+
+  return "Not publicly visible";
 }
