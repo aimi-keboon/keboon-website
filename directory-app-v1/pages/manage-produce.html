@@ -50,120 +50,139 @@
         </p>
       </section>
 
-      <section class="content-card produce-layout">
-        <form id="produceForm" class="form-stack">
-          <input type="hidden" name="product_id" />
+      <section class="produce-app-layout">
+  <div class="produce-toolbar">
+    <div>
+      <h2>Your produce</h2>
+      <p class="muted">
+        Add, edit, or hide produce from your public profile.
+      </p>
+    </div>
 
+    <button id="addProduceButton" type="button" class="primary-button">
+      Add produce
+    </button>
+  </div>
+
+  <div id="produceList" class="produce-crud-list">
+    <p class="muted">Loading produce...</p>
+  </div>
+
+  <section id="produceEditorPanel" class="produce-editor-panel" aria-hidden="true">
+    <div class="produce-editor-card">
+      <div class="produce-editor-header">
+        <div>
+          <p class="eyebrow">Produce editor</p>
           <h2 id="produceFormTitle">Add produce</h2>
-
-          <label>
-            Produce Name
-            <input
-              type="text"
-              name="product_name"
-              placeholder="Example: Fresh mint"
-              required
-            />
-          </label>
-
-          <label>
-            Category
-            <select name="category" required>
-              <option value="">Select category</option>
-              <option value="Vegetables">Vegetables</option>
-              <option value="Herbs">Herbs</option>
-              <option value="Fruits">Fruits</option>
-              <option value="Eggs">Eggs</option>
-              <option value="Honey">Honey</option>
-              <option value="Plants">Plants</option>
-              <option value="Other">Other</option>
-            </select>
-          </label>
-
-          <label>
-            Description
-            <textarea
-              name="description"
-              rows="4"
-              placeholder="Describe the produce, freshness, growing method, or pickup notes"
-            ></textarea>
-          </label>
-
-          <label>
-            Price Text
-            <input
-              type="text"
-              name="price_text"
-              placeholder="Example: RM5 per bundle, price varies, free sharing"
-            />
-          </label>
-
-          <label>
-            Availability
-            <select name="availability_status" required>
-              <option value="available">Available</option>
-              <option value="seasonal">Seasonal</option>
-              <option value="currently_unavailable">Currently unavailable</option>
-              <option value="hidden">Hidden</option>
-            </select>
-          </label>
-
-          <label>
-            Harvest Timing
-            <input
-              type="text"
-              name="harvest_timing"
-              placeholder="Example: Available this weekend"
-            />
-          </label>
-
-          <label>
-            Pickup Options
-            <textarea
-              name="pickup_options"
-              rows="3"
-              placeholder="Example: Self pickup only, pickup by appointment"
-            ></textarea>
-          </label>
-
-          <label>
-            Photo URL
-            <input
-              type="url"
-              name="photo_url"
-              placeholder="We will add upload later. For now, paste image URL if available."
-            />
-          </label>
-
-          <label class="checkbox-label">
-            <input type="checkbox" name="is_public" checked />
-            Show this produce publicly
-          </label>
-
-          <div class="form-actions">
-            <button type="submit" class="primary-button">
-              Save produce
-            </button>
-
-            <button id="clearProduceFormButton" type="button" class="secondary-button">
-              Clear form
-            </button>
-          </div>
-
-          <p id="produceMessage" class="form-message"></p>
-        </form>
-
-        <div class="produce-list-panel">
-          <h2>Your produce</h2>
-          <p class="muted">
-            Select an item to edit it.
-          </p>
-
-          <div id="produceList" class="produce-list">
-            <p class="muted">Loading produce...</p>
-          </div>
         </div>
-      </section>
+
+        <button id="closeProduceEditorButton" type="button" class="secondary-button">
+          Close
+        </button>
+      </div>
+
+      <form id="produceForm" class="form-stack">
+        <input type="hidden" name="product_id" />
+
+        <label>
+          Produce Name
+          <input
+            type="text"
+            name="product_name"
+            placeholder="Example: Fresh mint"
+            required
+          />
+        </label>
+
+        <label>
+          Category
+          <select name="category" required>
+            <option value="">Select category</option>
+            <option value="Vegetables">Vegetables</option>
+            <option value="Herbs">Herbs</option>
+            <option value="Fruits">Fruits</option>
+            <option value="Eggs">Eggs</option>
+            <option value="Honey">Honey</option>
+            <option value="Plants">Plants</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
+
+        <label>
+          Description
+          <textarea
+            name="description"
+            rows="4"
+            placeholder="Describe the produce, freshness, growing method, or pickup notes"
+          ></textarea>
+        </label>
+
+        <label>
+          Price Text
+          <input
+            type="text"
+            name="price_text"
+            placeholder="Example: RM5 per bundle, price varies, free sharing"
+          />
+        </label>
+
+        <label>
+          Availability
+          <select name="availability_status" required>
+            <option value="available">Available</option>
+            <option value="seasonal">Seasonal</option>
+            <option value="currently_unavailable">Currently unavailable</option>
+            <option value="hidden">Hidden</option>
+          </select>
+        </label>
+
+        <label>
+          Harvest Timing
+          <input
+            type="text"
+            name="harvest_timing"
+            placeholder="Example: Available this weekend"
+          />
+        </label>
+
+        <label>
+          Pickup Options
+          <textarea
+            name="pickup_options"
+            rows="3"
+            placeholder="Example: Self pickup only, pickup by appointment"
+          ></textarea>
+        </label>
+
+        <label>
+          Photo URL
+          <input
+            type="url"
+            name="photo_url"
+            placeholder="We will add upload later. For now, paste image URL if available."
+          />
+        </label>
+
+        <label class="checkbox-label">
+          <input type="checkbox" name="is_public" checked />
+          Show this produce publicly
+        </label>
+
+        <div class="form-actions">
+          <button type="submit" class="primary-button">
+            Save produce
+          </button>
+
+          <button id="clearProduceFormButton" type="button" class="secondary-button">
+            Clear form
+          </button>
+        </div>
+
+        <p id="produceMessage" class="form-message"></p>
+      </form>
+    </div>
+  </section>
+</section>
     </main>
 
     <nav class="app-bottom-nav" aria-label="Grower app navigation">

@@ -201,7 +201,9 @@ async function initManageProducePage() {
   const messageEl = document.getElementById("produceMessage");
   const submitButton = form.querySelector('button[type="submit"]');
   const clearButton = document.getElementById("clearProduceFormButton");
-
+  const addButton = document.getElementById("addProduceButton");
+  const closeEditorButton = document.getElementById("closeProduceEditorButton");
+  const editorPanel = document.getElementById("produceEditorPanel");
   const auth = await requireValidSession();
 
   if (!auth) {
@@ -271,6 +273,7 @@ async function initManageProducePage() {
 
       messageEl.textContent = result.message || "Produce saved.";
       messageEl.classList.add("success");
+      closeProduceEditor();
     } catch (error) {
       messageEl.textContent = error.message;
       messageEl.classList.add("error");
@@ -286,6 +289,28 @@ async function initManageProducePage() {
       clearProduceForm(form);
       messageEl.textContent = "";
       messageEl.className = "form-message";
+    });
+  }
+  if (addButton) {
+    addButton.addEventListener("click", () => {
+      clearProduceForm(form);
+      messageEl.textContent = "";
+      messageEl.className = "form-message";
+      openProduceEditor();
+    });
+  }
+
+  if (closeEditorButton) {
+    closeEditorButton.addEventListener("click", () => {
+      closeProduceEditor();
+    });
+  }
+
+  if (editorPanel) {
+    editorPanel.addEventListener("click", (event) => {
+      if (event.target === editorPanel) {
+        closeProduceEditor();
+      }
     });
   }
 }
@@ -319,23 +344,43 @@ function renderProduceList(products) {
   }
 
   if (!products.length) {
-    produceList.innerHTML = '<p class="muted">No produce added yet.</p>';
+    produceList.innerHTML = `
+      <div class="content-card">
+        <p class="muted">No produce added yet. Use the Add produce button to create your first listing.</p>
+      </div>
+    `;
     return;
   }
 
   produceList.innerHTML = products
     .map((product) => {
+      const isVisible =
+        String(product.is_public).toLowerCase() === "true" &&
+        product.availability_status !== "hidden";
+
       return `
-      <button class="produce-item" type="button" data-product-id="${escapeHtml(product.product_id)}">
-        <h3>${escapeHtml(product.product_name)}</h3>
-        <p>${escapeHtml(product.category || "Uncategorized")}</p>
-        <span class="status-pill">${escapeHtml(product.availability_status || "available")}</span>
+      <button class="produce-crud-card" type="button" data-product-id="${escapeHtml(product.product_id)}">
+        <div class="produce-crud-card-header">
+          <div>
+            <h3>${escapeHtml(product.product_name)}</h3>
+            <p>${escapeHtml(product.category || "Uncategorized")}</p>
+          </div>
+
+          <span class="status-pill">
+            ${isVisible ? "Public" : "Hidden"}
+          </span>
+        </div>
+
+        <div class="grower-meta">
+          <span class="meta-pill">${escapeHtml(product.availability_status || "available")}</span>
+          ${product.price_text ? `<span class="meta-pill">${escapeHtml(product.price_text)}</span>` : ""}
+        </div>
       </button>
     `;
     })
     .join("");
 
-  produceList.querySelectorAll(".produce-item").forEach((button) => {
+  produceList.querySelectorAll(".produce-crud-card").forEach((button) => {
     button.addEventListener("click", () => {
       const productId = button.getAttribute("data-product-id");
       const product = currentProducts.find(
@@ -344,6 +389,7 @@ function renderProduceList(products) {
 
       if (product) {
         fillProduceForm(product);
+        openProduceEditor();
       }
     });
   });
@@ -1450,4 +1496,25 @@ function getGreenMapMarkerIcon() {
     iconAnchor: [16, 42],
     popupAnchor: [0, -40],
   });
+}
+function openProduceEditor() {
+  const panel = document.getElementById("produceEditorPanel");
+
+  if (!panel) {
+    return;
+  }
+
+  panel.classList.add("is-open");
+  panel.setAttribute("aria-hidden", "false");
+}
+
+function closeProduceEditor() {
+  const panel = document.getElementById("produceEditorPanel");
+
+  if (!panel) {
+    return;
+  }
+
+  panel.classList.remove("is-open");
+  panel.setAttribute("aria-hidden", "true");
 }

@@ -1651,3 +1651,127 @@ select:focus {
   border-top: 1px solid var(--border);
   background: var(--cream);
 }
+.produce-app-layout {
+  display: grid;
+  gap: 16px;
+}
+
+.produce-toolbar {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  box-shadow: 0 8px 24px rgba(31, 41, 51, 0.04);
+}
+
+.produce-toolbar h2 {
+  margin: 0 0 6px;
+  font-size: 22px;
+}
+
+.produce-toolbar p {
+  margin: 0;
+}
+
+.produce-crud-list {
+  display: grid;
+  gap: 12px;
+}
+
+.produce-crud-card {
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 16px;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(31, 41, 51, 0.04);
+}
+
+.produce-crud-card:hover {
+  border-color: var(--green);
+}
+
+.produce-crud-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.produce-crud-card h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.produce-crud-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.produce-editor-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 2100;
+  background: rgba(31, 41, 51, 0.42);
+  display: none;
+  justify-content: flex-end;
+}
+
+.produce-editor-panel.is-open {
+  display: flex;
+}
+
+.produce-editor-card {
+  width: min(100%, 560px);
+  height: 100%;
+  overflow: auto;
+  background: var(--white);
+  padding: 22px;
+  box-shadow: -12px 0 40px rgba(31, 41, 51, 0.16);
+}
+
+.produce-editor-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.produce-editor-header h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+@media (max-width: 640px) {
+  .produce-toolbar {
+    display: grid;
+  }
+
+  .produce-toolbar .primary-button {
+    width: 100%;
+  }
+
+  .produce-editor-panel {
+    justify-content: center;
+  }
+
+  .produce-editor-card {
+    width: 100%;
+  }
+
+  .produce-editor-header {
+    display: grid;
+  }
+
+  .produce-editor-header .secondary-button {
+    width: 100%;
+  }
+}
