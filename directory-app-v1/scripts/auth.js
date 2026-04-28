@@ -1,21 +1,25 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const signupForm = document.getElementById('signupForm');
-  const signinForm = document.getElementById('signinForm');
-  const whatsappCheckbox = document.getElementById('whatsappSameAsPhone');
-  const whatsappFields = document.getElementById('whatsappFields');
+document.addEventListener("DOMContentLoaded", () => {
+  const signupForm = document.getElementById("signupForm");
+  const signinForm = document.getElementById("signinForm");
+  const forgotPasswordForm = document.getElementById("forgotPasswordForm");
+  const whatsappCheckbox = document.getElementById("whatsappSameAsPhone");
+  const whatsappFields = document.getElementById("whatsappFields");
 
   if (whatsappCheckbox && whatsappFields) {
-    whatsappCheckbox.addEventListener('change', () => {
-      whatsappFields.classList.toggle('hidden', whatsappCheckbox.checked);
+    whatsappCheckbox.addEventListener("change", () => {
+      whatsappFields.classList.toggle("hidden", whatsappCheckbox.checked);
     });
   }
 
   if (signupForm) {
-    signupForm.addEventListener('submit', handleSignupSubmit);
+    signupForm.addEventListener("submit", handleSignupSubmit);
   }
 
   if (signinForm) {
-    signinForm.addEventListener('submit', handleSigninSubmit);
+    signinForm.addEventListener("submit", handleSigninSubmit);
+  }
+  if (forgotPasswordForm) {
+    forgotPasswordForm.addEventListener("submit", handleForgotPasswordSubmit);
   }
 });
 
@@ -23,63 +27,67 @@ async function handleSignupSubmit(event) {
   event.preventDefault();
 
   const form = event.target;
-  const messageEl = document.getElementById('signupMessage');
+  const messageEl = document.getElementById("signupMessage");
   const submitButton = form.querySelector('button[type="submit"]');
 
-  messageEl.textContent = '';
-  messageEl.className = 'form-message';
+  messageEl.textContent = "";
+  messageEl.className = "form-message";
 
   submitButton.disabled = true;
-  submitButton.textContent = 'Creating account...';
+  submitButton.textContent = "Creating account...";
 
   try {
     const formData = new FormData(form);
 
-    const phoneCountryCode = formData.get('phone_country_code');
-    const phone = formData.get('phone');
-    const whatsappSameAsPhone = formData.get('whatsapp_same_as_phone') === 'on';
+    const phoneCountryCode = formData.get("phone_country_code");
+    const phone = formData.get("phone");
+    const whatsappSameAsPhone = formData.get("whatsapp_same_as_phone") === "on";
 
     const whatsappCountryCode = whatsappSameAsPhone
       ? phoneCountryCode
-      : formData.get('whatsapp_country_code');
+      : formData.get("whatsapp_country_code");
 
     const whatsappNumber = whatsappSameAsPhone
       ? phone
-      : formData.get('whatsapp');
+      : formData.get("whatsapp");
 
     const payload = {
-      grower_name: formData.get('grower_name'),
-      contact_name: formData.get('contact_name'),
-      email: formData.get('email'),
-      password: formData.get('password'),
+      grower_name: formData.get("grower_name"),
+      contact_name: formData.get("contact_name"),
+      email: formData.get("email"),
+      password: formData.get("password"),
       phone_country_code: phoneCountryCode,
       phone,
       whatsapp_country_code: whatsappCountryCode,
       whatsapp: whatsappNumber,
     };
 
-    const result = await apiPost('signup_grower', payload);
+    const result = await apiPost("signup_grower", payload);
 
-    messageEl.textContent = result.message || 'Account created successfully.';
-    messageEl.classList.add('success');
+    messageEl.textContent = result.message || "Account created successfully.";
+    messageEl.classList.add("success");
 
     form.reset();
 
-    const mobileCountrySelect = form.querySelector('[name="phone_country_code"]');
-    const whatsappCountrySelect = form.querySelector('[name="whatsapp_country_code"]');
+    const mobileCountrySelect = form.querySelector(
+      '[name="phone_country_code"]',
+    );
+    const whatsappCountrySelect = form.querySelector(
+      '[name="whatsapp_country_code"]',
+    );
     const checkbox = form.querySelector('[name="whatsapp_same_as_phone"]');
-    const whatsappFieldsEl = document.getElementById('whatsappFields');
+    const whatsappFieldsEl = document.getElementById("whatsappFields");
 
-    if (mobileCountrySelect) mobileCountrySelect.value = '+60';
-    if (whatsappCountrySelect) whatsappCountrySelect.value = '+60';
+    if (mobileCountrySelect) mobileCountrySelect.value = "+60";
+    if (whatsappCountrySelect) whatsappCountrySelect.value = "+60";
     if (checkbox) checkbox.checked = true;
-    if (whatsappFieldsEl) whatsappFieldsEl.classList.add('hidden');
+    if (whatsappFieldsEl) whatsappFieldsEl.classList.add("hidden");
   } catch (error) {
     messageEl.textContent = error.message;
-    messageEl.classList.add('error');
+    messageEl.classList.add("error");
   } finally {
     submitButton.disabled = false;
-    submitButton.textContent = 'Create grower account';
+    submitButton.textContent = "Create grower account";
   }
 }
 
@@ -87,53 +95,89 @@ async function handleSigninSubmit(event) {
   event.preventDefault();
 
   const form = event.target;
-  const messageEl = document.getElementById('signinMessage');
+  const messageEl = document.getElementById("signinMessage");
+  const submitButton = form.querySelector('button[type="submit"]');
+
+  messageEl.textContent = "";
+  messageEl.className = "form-message";
+
+  submitButton.disabled = true;
+  submitButton.textContent = "Signing in...";
+
+  try {
+    const formData = new FormData(form);
+
+    const result = await apiPost("signin_grower", {
+      email: formData.get("email"),
+      password: formData.get("password"),
+    });
+
+    localStorage.setItem("keboon_session_token", result.session_token);
+    localStorage.setItem(
+      "keboon_session_expires_at",
+      result.session_expires_at,
+    );
+    localStorage.setItem("keboon_grower_id", result.grower_id);
+    localStorage.setItem("keboon_grower_name", result.grower_name || "");
+
+    messageEl.textContent = "Signed in successfully. Redirecting...";
+    messageEl.classList.add("success");
+
+    window.location.href = "./dashboard.html";
+  } catch (error) {
+    messageEl.textContent = error.message;
+    messageEl.classList.add("error");
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = "Sign in";
+  }
+}
+
+function getStoredSession() {
+  return {
+    token: localStorage.getItem("keboon_session_token"),
+    expires_at: localStorage.getItem("keboon_session_expires_at"),
+    grower_id: localStorage.getItem("keboon_grower_id"),
+    grower_name: localStorage.getItem("keboon_grower_name"),
+  };
+}
+
+function clearStoredSession() {
+  localStorage.removeItem("keboon_session_token");
+  localStorage.removeItem("keboon_session_expires_at");
+  localStorage.removeItem("keboon_grower_id");
+  localStorage.removeItem("keboon_grower_name");
+}
+
+async function handleForgotPasswordSubmit(event) {
+  event.preventDefault();
+
+  const form = event.target;
+  const messageEl = document.getElementById('forgotPasswordMessage');
   const submitButton = form.querySelector('button[type="submit"]');
 
   messageEl.textContent = '';
   messageEl.className = 'form-message';
 
   submitButton.disabled = true;
-  submitButton.textContent = 'Signing in...';
+  submitButton.textContent = 'Sending reset link...';
 
   try {
     const formData = new FormData(form);
 
-    const result = await apiPost('signin_grower', {
+    const result = await apiPost('request_password_reset', {
       email: formData.get('email'),
-      password: formData.get('password'),
     });
 
-    localStorage.setItem('keboon_session_token', result.session_token);
-    localStorage.setItem('keboon_session_expires_at', result.session_expires_at);
-    localStorage.setItem('keboon_grower_id', result.grower_id);
-    localStorage.setItem('keboon_grower_name', result.grower_name || '');
-
-    messageEl.textContent = 'Signed in successfully. Redirecting...';
+    messageEl.textContent = result.message || 'If an account exists for this email, a password reset link has been sent.';
     messageEl.classList.add('success');
 
-    window.location.href = './dashboard.html';
+    form.reset();
   } catch (error) {
     messageEl.textContent = error.message;
     messageEl.classList.add('error');
   } finally {
     submitButton.disabled = false;
-    submitButton.textContent = 'Sign in';
+    submitButton.textContent = 'Send reset link';
   }
-}
-
-function getStoredSession() {
-  return {
-    token: localStorage.getItem('keboon_session_token'),
-    expires_at: localStorage.getItem('keboon_session_expires_at'),
-    grower_id: localStorage.getItem('keboon_grower_id'),
-    grower_name: localStorage.getItem('keboon_grower_name'),
-  };
-}
-
-function clearStoredSession() {
-  localStorage.removeItem('keboon_session_token');
-  localStorage.removeItem('keboon_session_expires_at');
-  localStorage.removeItem('keboon_grower_id');
-  localStorage.removeItem('keboon_grower_name');
 }
