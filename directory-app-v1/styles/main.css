@@ -1349,16 +1349,16 @@ select:focus {
   }
 
   .public-hero-actions {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
 
-.public-hero-actions .primary-button,
-.public-hero-actions .secondary-button {
-  width: 100%;
-}
+  .public-hero-actions .primary-button,
+  .public-hero-actions .secondary-button {
+    width: 100%;
+  }
 
   .public-directory-shell {
     padding: 12px;
@@ -1428,4 +1428,226 @@ select:focus {
   .public-hero-compact h1 {
     font-size: 23px;
   }
+}
+.map-popup {
+  min-width: 190px;
+  max-width: 240px;
+}
+
+.map-popup h3 {
+  margin: 0 0 4px;
+  font-size: 16px;
+  color: var(--text);
+}
+
+.map-popup-location {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.map-popup-section {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.map-popup-section strong {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.map-popup-produce-list {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.map-popup-muted {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.map-popup-button {
+  width: 100%;
+  border: 0;
+  border-radius: 999px;
+  padding: 9px 12px;
+  background: var(--green);
+  color: var(--white);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.map-popup-button:hover {
+  background: var(--green-dark);
+}
+
+.leaflet-popup-content {
+  margin: 12px;
+}
+.keboon-map-marker {
+  background: transparent;
+  border: 0;
+}
+
+.keboon-map-marker svg {
+  display: block;
+  filter: drop-shadow(0 4px 8px rgba(31, 41, 51, 0.25));
+}
+.map-popup-compact {
+  min-width: 170px;
+  max-width: 220px;
+}
+
+.map-popup-compact h3 {
+  margin: 0 0 3px;
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.map-popup-compact .map-popup-location {
+  margin: 0 0 7px;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.map-popup-produce-text {
+  margin: 0 0 9px;
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.map-popup-compact .map-popup-button {
+  padding: 8px 10px;
+  font-size: 12px;
+}
+
+.leaflet-popup-content {
+  margin: 10px;
+}
+.collapsible-product-list {
+  display: grid;
+  gap: 10px;
+}
+
+.collapsible-product-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--cream);
+  overflow: hidden;
+}
+
+.collapsible-product-card summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 13px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.collapsible-product-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.collapsible-product-card summary::after {
+  content: "+";
+  color: var(--green);
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.collapsible-product-card[open] summary::after {
+  content: "−";
+}
+
+.collapsible-product-body {
+  border-top: 1px solid var(--border);
+  padding: 13px 14px 14px;
+  display: grid;
+  gap: 9px;
+}
+
+.collapsible-product-body p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+@media (max-width: 640px) {
+  .collapsible-product-card summary {
+    align-items: flex-start;
+  }
+}
+.drawer-section-separated {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+
+.drawer-enquiry-panel {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--white);
+  overflow: hidden;
+}
+
+.drawer-enquiry-panel summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 15px 16px;
+  display: grid;
+  gap: 4px;
+  position: relative;
+  padding-right: 44px;
+}
+
+.drawer-enquiry-panel summary::-webkit-details-marker {
+  display: none;
+}
+
+.drawer-enquiry-panel summary span:first-child {
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--text);
+}
+
+.drawer-enquiry-panel summary::after {
+  content: "+";
+  position: absolute;
+  right: 16px;
+  top: 17px;
+  color: var(--green);
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.drawer-enquiry-panel[open] summary::after {
+  content: "−";
+}
+
+.summary-helper {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.enquiry-form {
+  padding: 16px;
+  border-top: 1px solid var(--border);
+  background: var(--cream);
 }

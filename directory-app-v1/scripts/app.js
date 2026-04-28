@@ -758,16 +758,11 @@ function renderDirectoryMarkers(growers) {
       return;
     }
 
-    const marker = L.marker([lat, lng]).addTo(directoryMap);
+    const marker = L.marker([lat, lng], {
+      icon: getGreenMapMarkerIcon(),
+    }).addTo(directoryMap);
 
-    marker.bindPopup(`
-      <strong>${escapeHtml(grower.grower_name)}</strong><br>
-      ${escapeHtml(grower.location_label || "")}
-    `);
-
-    marker.on("click", () => {
-      openGrowerDrawer(grower);
-    });
+    marker.bindPopup(renderMarkerPopup(grower));
 
     directoryMarkers.push(marker);
   });
@@ -890,59 +885,65 @@ function openGrowerDrawer(grower) {
       ${renderDrawerProducts(products)}
     </section>
 
-    <section class="drawer-section">
-      <h2>Send enquiry</h2>
-      <form id="publicEnquiryForm" class="form-stack">
-        <input type="hidden" name="grower_id" value="${escapeHtml(grower.grower_id)}" />
+    <section class="drawer-section drawer-section-separated">
+  <details class="drawer-enquiry-panel">
+    <summary>
+      <span>Send enquiry</span>
+      <span class="summary-helper">Contact this grower through Keboon</span>
+    </summary>
 
-        <label>
-          Interested Produce
-          <select name="product_id">
-            <option value="">General enquiry</option>
-            ${products
-              .map(
-                (product) => `
-              <option value="${escapeHtml(product.product_id)}">
-                ${escapeHtml(product.product_name)}
-              </option>
-            `,
-              )
-              .join("")}
-          </select>
-        </label>
+    <form id="publicEnquiryForm" class="form-stack enquiry-form">
+      <input type="hidden" name="grower_id" value="${escapeHtml(grower.grower_id)}" />
 
-        <label>
-          Your Name
-          <input type="text" name="sender_name" required />
-        </label>
+      <label>
+        Interested Produce
+        <select name="product_id">
+          <option value="">General enquiry</option>
+          ${products
+            .map(
+              (product) => `
+            <option value="${escapeHtml(product.product_id)}">
+              ${escapeHtml(product.product_name)}
+            </option>
+          `,
+            )
+            .join("")}
+        </select>
+      </label>
 
-        <label>
-          Your Email
-          <input type="email" name="sender_email" required />
-        </label>
+      <label>
+        Your Name
+        <input type="text" name="sender_name" required />
+      </label>
 
-        <label>
-          Your Phone
-          <input type="tel" name="sender_phone" />
-        </label>
+      <label>
+        Your Email
+        <input type="email" name="sender_email" required />
+      </label>
 
-        <label>
-          Message
-          <textarea
-            name="message"
-            rows="4"
-            placeholder="Ask about availability, pickup, or anything you need to know"
-            required
-          ></textarea>
-        </label>
+      <label>
+        Your Phone
+        <input type="tel" name="sender_phone" />
+      </label>
 
-        <button type="submit" class="primary-button">
-          Send enquiry
-        </button>
+      <label>
+        Message
+        <textarea
+          name="message"
+          rows="4"
+          placeholder="Ask about availability, pickup, or anything you need to know"
+          required
+        ></textarea>
+      </label>
 
-        <p id="publicEnquiryMessage" class="form-message"></p>
-      </form>
-    </section>
+      <button type="submit" class="primary-button">
+        Send enquiry
+      </button>
+
+      <p id="publicEnquiryMessage" class="form-message"></p>
+    </form>
+  </details>
+</section>
   `;
 
   drawer.classList.add("is-open");
@@ -967,21 +968,26 @@ function renderDrawerProducts(products) {
   }
 
   return `
-    <div class="drawer-product-list">
+    <div class="drawer-product-list collapsible-product-list">
       ${products
         .map(
           (product) => `
-        <article class="drawer-product-card">
-          <h3>${escapeHtml(product.product_name)}</h3>
-          <p>${escapeHtml(product.description || "")}</p>
-          <div class="grower-meta">
-            <span class="meta-pill">${escapeHtml(product.category || "Produce")}</span>
+        <details class="collapsible-product-card">
+          <summary>
+            <span>${escapeHtml(product.product_name)}</span>
             <span class="meta-pill">${escapeHtml(product.availability_status || "available")}</span>
+          </summary>
+
+          <div class="collapsible-product-body">
+            ${product.description ? `<p>${escapeHtml(product.description)}</p>` : ""}
+            <div class="grower-meta">
+              <span class="meta-pill">${escapeHtml(product.category || "Produce")}</span>
+            </div>
+            ${product.price_text ? `<p><strong>Price:</strong> ${escapeHtml(product.price_text)}</p>` : ""}
+            ${product.harvest_timing ? `<p><strong>Timing:</strong> ${escapeHtml(product.harvest_timing)}</p>` : ""}
+            ${product.pickup_options ? `<p><strong>Pickup:</strong> ${escapeHtml(product.pickup_options)}</p>` : ""}
           </div>
-          ${product.price_text ? `<p><strong>Price:</strong> ${escapeHtml(product.price_text)}</p>` : ""}
-          ${product.harvest_timing ? `<p><strong>Timing:</strong> ${escapeHtml(product.harvest_timing)}</p>` : ""}
-          ${product.pickup_options ? `<p><strong>Pickup:</strong> ${escapeHtml(product.pickup_options)}</p>` : ""}
-        </article>
+        </details>
       `,
         )
         .join("")}
@@ -1332,21 +1338,26 @@ function renderPreviewProducts(products) {
   }
 
   return `
-    <div class="drawer-product-list">
+    <div class="drawer-product-list collapsible-product-list">
       ${products
         .map(
           (product) => `
-        <article class="drawer-product-card">
-          <h3>${escapeHtml(product.product_name)}</h3>
-          <p>${escapeHtml(product.description || "")}</p>
-          <div class="grower-meta">
-            <span class="meta-pill">${escapeHtml(product.category || "Produce")}</span>
+        <details class="collapsible-product-card">
+          <summary>
+            <span>${escapeHtml(product.product_name)}</span>
             <span class="meta-pill">${escapeHtml(product.availability_status || "available")}</span>
+          </summary>
+
+          <div class="collapsible-product-body">
+            ${product.description ? `<p>${escapeHtml(product.description)}</p>` : ""}
+            <div class="grower-meta">
+              <span class="meta-pill">${escapeHtml(product.category || "Produce")}</span>
+            </div>
+            ${product.price_text ? `<p><strong>Price:</strong> ${escapeHtml(product.price_text)}</p>` : ""}
+            ${product.harvest_timing ? `<p><strong>Timing:</strong> ${escapeHtml(product.harvest_timing)}</p>` : ""}
+            ${product.pickup_options ? `<p><strong>Pickup:</strong> ${escapeHtml(product.pickup_options)}</p>` : ""}
           </div>
-          ${product.price_text ? `<p><strong>Price:</strong> ${escapeHtml(product.price_text)}</p>` : ""}
-          ${product.harvest_timing ? `<p><strong>Timing:</strong> ${escapeHtml(product.harvest_timing)}</p>` : ""}
-          ${product.pickup_options ? `<p><strong>Pickup:</strong> ${escapeHtml(product.pickup_options)}</p>` : ""}
-        </article>
+        </details>
       `,
         )
         .join("")}
@@ -1375,4 +1386,68 @@ function getProfilePublicStatusText(grower) {
   }
 
   return "Not publicly visible";
+}
+function renderMarkerPopup(grower) {
+  const products = grower.products || [];
+  const firstProducts = products.slice(0, 5);
+  const remainingCount = Math.max(products.length - firstProducts.length, 0);
+
+  const produceText = firstProducts.length
+    ? firstProducts
+        .map((product) => escapeHtml(product.product_name))
+        .join(", ")
+    : "No produce listed yet";
+
+  const moreText = remainingCount > 0 ? ` +${remainingCount} more` : "";
+
+  return `
+    <div class="map-popup map-popup-compact">
+      <h3>${escapeHtml(grower.grower_name || "Grower")}</h3>
+      <p class="map-popup-location">${escapeHtml(grower.location_label || "Location not listed")}</p>
+
+      <p class="map-popup-produce-text">
+        ${produceText}${escapeHtml(moreText)}
+      </p>
+
+      <button
+        type="button"
+        class="map-popup-button"
+        onclick="openGrowerFromPopup('${escapeHtml(grower.grower_id)}')"
+      >
+        View profile
+      </button>
+    </div>
+  `;
+}
+
+function openGrowerFromPopup(growerId) {
+  const grower = publicDirectoryGrowers.find(
+    (item) => item.grower_id === growerId,
+  );
+
+  if (!grower) {
+    return;
+  }
+
+  openGrowerDrawer(grower);
+  focusDirectoryGrower(grower);
+}
+function getGreenMapMarkerIcon() {
+  return L.divIcon({
+    className: "keboon-map-marker",
+    html: `
+      <svg viewBox="0 0 32 42" width="32" height="42" aria-hidden="true">
+        <path
+          d="M16 1C8.3 1 2 7.3 2 15c0 10.5 14 26 14 26s14-15.5 14-26C30 7.3 23.7 1 16 1Z"
+          fill="#2f6b3f"
+          stroke="#214d2d"
+          stroke-width="2"
+        />
+        <circle cx="16" cy="15" r="6" fill="#ffffff" />
+      </svg>
+    `,
+    iconSize: [32, 42],
+    iconAnchor: [16, 42],
+    popupAnchor: [0, -40],
+  });
 }
