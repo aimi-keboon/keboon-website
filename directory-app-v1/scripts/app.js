@@ -822,8 +822,8 @@ function renderDirectoryList(growers, page = 1) {
       );
 
       if (grower) {
-        openGrowerDrawer(grower);
         focusDirectoryGrower(grower);
+        openDirectoryMarkerPopup(grower.grower_id);
       }
     });
   });
@@ -847,6 +847,7 @@ function renderDirectoryMarkers(growers) {
 
     const marker = L.marker([lat, lng], {
       icon: getGreenMapMarkerIcon(),
+      growerId: grower.grower_id,
     }).addTo(directoryMap);
 
     marker.bindPopup(renderMarkerPopup(grower));
@@ -1580,4 +1581,14 @@ async function refreshCurrentGrowerProducts(sessionToken) {
   localStorage.setItem("keboon_cached_at", new Date().toISOString());
 
   return products;
+}
+
+function openDirectoryMarkerPopup(growerId) {
+  const marker = directoryMarkers.find((item) => {
+    return item.options && item.options.growerId === growerId;
+  });
+
+  if (marker) {
+    marker.openPopup();
+  }
 }
