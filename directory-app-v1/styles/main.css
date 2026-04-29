@@ -1775,3 +1775,17 @@ select:focus {
     width: 100%;
   }
 }
+
+.app-nav-icon-img {
+  width: 22px;
+  height: 22px;
+  display: block;
+  object-fit: contain;
+}
+
+@media (min-width: 960px) {
+  .app-nav-icon-img {
+    width: 20px;
+    height: 20px;
+  }
+}
