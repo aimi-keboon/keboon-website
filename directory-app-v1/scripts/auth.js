@@ -122,18 +122,20 @@ async function handleSigninSubmit(event) {
     localStorage.setItem("keboon_grower_id", result.grower_id);
     localStorage.setItem("keboon_grower_name", result.grower_name || "");
 
-    showGlobalLoading("Loading your grower data...");
+    showGlobalLoading("Loading your profile...");
 
-    const appData = await apiPost("get_current_grower_app_data", {
+    const grower = await apiPost("get_current_grower", {
       session_token: result.session_token,
     });
 
-    storeGrowerAppData(appData);
+    localStorage.setItem(
+      "keboon_current_grower",
+      JSON.stringify(grower || null),
+    );
+    localStorage.setItem("keboon_cached_at", new Date().toISOString());
 
-    showGlobalLoading("Loading directory map...");
-
-    const directoryData = await apiGet("public_directory");
-    storePublicDirectoryData(directoryData);
+    refreshGrowerAppDataQuietlyAfterSignin(result.session_token);
+    refreshPublicDirectoryCacheQuietly();
 
     messageEl.textContent = "Signed in successfully. Redirecting...";
     messageEl.classList.add("success");
@@ -336,4 +338,24 @@ function isPublicDirectoryCacheFresh(maxAgeMs = 10 * 60 * 1000) {
 function clearPublicDirectoryCache() {
   localStorage.removeItem("keboon_public_directory");
   localStorage.removeItem("keboon_public_directory_cached_at");
+}
+
+async function refreshPublicDirectoryCacheQuietly() {
+  try {
+    const directoryData = await apiGet("public_directory");
+    storePublicDirectoryData(directoryData);
+  } catch (error) {
+    // Do not block signin if public directory refresh fails.
+  }
+}
+async function refreshGrowerAppDataQuietlyAfterSignin(sessionToken) {
+  try {
+    const appData = await apiPost("get_current_grower_app_data", {
+      session_token: sessionToken,
+    });
+
+    storeGrowerAppData(appData);
+  } catch (error) {
+    // Do not block signin if full grower data refresh fails.
+  }
 }

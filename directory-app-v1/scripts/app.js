@@ -213,6 +213,19 @@ async function initManageProducePage() {
   currentProducts = auth.products || [];
   renderProduceList(currentProducts);
 
+  if (!currentProducts.length) {
+    try {
+      showGlobalLoading("Loading your produce...");
+      currentProducts = await refreshCurrentGrowerProducts(auth.session.token);
+      renderProduceList(currentProducts);
+    } catch (error) {
+      messageEl.textContent = error.message;
+      messageEl.classList.add("error");
+    } finally {
+      hideGlobalLoading();
+    }
+  }
+
   if (!hasGrowerAppCache()) {
     showGlobalLoading("Loading your produce...");
 
@@ -1338,6 +1351,15 @@ async function initPreviewProfilePage() {
 
   if (auth.grower) {
     renderProfilePreview(auth.grower, auth.products || []);
+
+    if (!auth.products || !auth.products.length) {
+      try {
+        const products = await refreshCurrentGrowerProducts(auth.session.token);
+        renderProfilePreview(auth.grower, products);
+      } catch (error) {
+        renderProfilePreview(auth.grower, []);
+      }
+    }
   } else {
     showGlobalLoading("Loading your profile preview...");
 
@@ -1545,4 +1567,17 @@ function closeProduceEditor() {
 
   panel.classList.remove("is-open");
   panel.setAttribute("aria-hidden", "true");
+}
+
+async function refreshCurrentGrowerProducts(sessionToken) {
+  const result = await apiPost("get_current_grower_products", {
+    session_token: sessionToken,
+  });
+
+  const products = result.products || [];
+
+  localStorage.setItem("keboon_current_products", JSON.stringify(products));
+  localStorage.setItem("keboon_cached_at", new Date().toISOString());
+
+  return products;
 }
