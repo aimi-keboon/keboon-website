@@ -647,21 +647,49 @@ async function initPublicDirectoryPage() {
 
   initDirectoryMap();
 
+  const cachedDirectory = getStoredPublicDirectoryData();
+
+  if (cachedDirectory && Array.isArray(cachedDirectory.growers)) {
+    publicDirectoryGrowers = cachedDirectory.growers || [];
+    currentDirectoryResults = publicDirectoryGrowers;
+
+    trySetDirectoryLocationFromBrowser(false);
+    applyDirectoryFilters(1);
+
+    setDirectoryStatus(
+      `Showing cached directory data from ${formatDisplayDateTime(cachedDirectory.generated_at)}.`,
+    );
+  }
+
   try {
+    const shouldShowLoadingState = !cachedDirectory;
+
+    if (shouldShowLoadingState) {
+      setDirectoryStatus("Loading directory...");
+    }
+
     const result = await apiGet("public_directory");
+
+    storePublicDirectoryData(result);
 
     publicDirectoryGrowers = result.growers || [];
     currentDirectoryResults = publicDirectoryGrowers;
 
     trySetDirectoryLocationFromBrowser(false);
-
     applyDirectoryFilters(1);
+
     setDirectoryStatus(
       `Directory updated at ${formatDisplayDateTime(result.generated_at)}.`,
     );
   } catch (error) {
-    setDirectoryStatus(error.message || "Unable to load directory.");
-    listEl.innerHTML = `<p class="form-message error">${escapeHtml(error.message)}</p>`;
+    if (!cachedDirectory) {
+      setDirectoryStatus(error.message || "Unable to load directory.");
+      listEl.innerHTML = `<p class="form-message error">${escapeHtml(error.message)}</p>`;
+    } else {
+      setDirectoryStatus(
+        "Showing cached directory data. Fresh update is unavailable right now.",
+      );
+    }
   }
 
   if (searchInput) {

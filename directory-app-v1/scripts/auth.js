@@ -130,6 +130,11 @@ async function handleSigninSubmit(event) {
 
     storeGrowerAppData(appData);
 
+    showGlobalLoading("Loading directory map...");
+
+    const directoryData = await apiGet("public_directory");
+    storePublicDirectoryData(directoryData);
+
     messageEl.textContent = "Signed in successfully. Redirecting...";
     messageEl.classList.add("success");
 
@@ -281,4 +286,54 @@ function hasGrowerAppCache() {
 
 function isGrowerCacheFresh(maxAgeMs = 5 * 60 * 1000) {
   return hasGrowerAppCache() && getGrowerCacheAgeMs() <= maxAgeMs;
+}
+
+function storePublicDirectoryData(data) {
+  localStorage.setItem("keboon_public_directory", JSON.stringify(data || null));
+  localStorage.setItem(
+    "keboon_public_directory_cached_at",
+    new Date().toISOString(),
+  );
+}
+
+function getStoredPublicDirectoryData() {
+  try {
+    return JSON.parse(
+      localStorage.getItem("keboon_public_directory") || "null",
+    );
+  } catch (error) {
+    return null;
+  }
+}
+
+function getPublicDirectoryCacheAgeMs() {
+  const cachedAt = localStorage.getItem("keboon_public_directory_cached_at");
+
+  if (!cachedAt) {
+    return Infinity;
+  }
+
+  const cachedDate = new Date(cachedAt);
+
+  if (Number.isNaN(cachedDate.getTime())) {
+    return Infinity;
+  }
+
+  return Date.now() - cachedDate.getTime();
+}
+
+function hasPublicDirectoryCache() {
+  const data = getStoredPublicDirectoryData();
+  return Boolean(data && Array.isArray(data.growers));
+}
+
+function isPublicDirectoryCacheFresh(maxAgeMs = 10 * 60 * 1000) {
+  return (
+    hasPublicDirectoryCache() && getPublicDirectoryCacheAgeMs() <= maxAgeMs
+  );
+}
+
+function clearPublicDirectoryCache() {
+  localStorage.removeItem("keboon_public_directory");
+  localStorage.removeItem("keboon_public_directory_cached_at");
 }
