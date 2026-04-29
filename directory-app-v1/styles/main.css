@@ -1789,3 +1789,65 @@ select:focus {
     height: 20px;
   }
 }
+
+.directory-list-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.directory-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.directory-list .directory-pagination {
+  position: sticky;
+  bottom: 0;
+  background: var(--white);
+  padding-top: 10px;
+}
+
+@media (min-width: 900px) {
+  .directory-layout,
+  .dashboard-directory-layout,
+  .public-directory-shell .directory-layout {
+    overflow: hidden;
+  }
+
+  .directory-map,
+  .directory-list-panel {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .directory-list-panel {
+    max-height: 520px;
+  }
+
+  .directory-list {
+    max-height: 420px;
+  }
+}
+
+@media (max-width: 420px) {
+  .directory-pagination {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .directory-pagination .pagination-text {
+    grid-column: 1 / -1;
+    order: -1;
+    text-align: center;
+  }
+
+  .directory-pagination button {
+    width: 100%;
+  }
+}
