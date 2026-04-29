@@ -1882,3 +1882,86 @@ select:focus {
     white-space: nowrap;
   }
 }
+
+.profile-links-section {
+  display: grid;
+  gap: 14px;
+  border-top: 1px solid var(--border);
+  padding-top: 18px;
+}
+
+.profile-links-section h2 {
+  margin: 0 0 6px;
+  font-size: 20px;
+}
+
+.profile-links-section p {
+  margin: 0;
+}
+
+.grower-links-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.grower-link-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--white);
+}
+
+.grower-link-card iframe {
+  width: 100%;
+  height: 180px;
+  border: 0;
+  background: var(--cream);
+}
+
+.grower-link-card-footer {
+  border-top: 1px solid var(--border);
+  padding: 12px;
+  display: grid;
+  gap: 4px;
+}
+
+.grower-link-card-footer a {
+  color: var(--green);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.grower-link-card-footer p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.grower-links-list {
+  display: grid;
+  gap: 10px;
+}
+
+.grower-link-button {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--white);
+  padding: 13px 14px;
+  color: var(--text);
+  text-decoration: none;
+  display: grid;
+  gap: 3px;
+}
+
+.grower-link-button:hover {
+  border-color: var(--green);
+}
+
+.grower-link-button span {
+  font-weight: 900;
+}
+
+.grower-link-button small {
+  color: var(--muted);
+  font-size: 12px;
+}

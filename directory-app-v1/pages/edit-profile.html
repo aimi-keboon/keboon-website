@@ -1,214 +1,286 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Edit Grower Profile | Keboon Directory</title>
+    <title>Edit Grower Profile | Keboon Directory</title>
 
-  <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
 
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
 
-  <link rel="stylesheet" href="../styles/main.css" />
-</head>
-<body>
-  <div id="globalLoadingOverlay" class="global-loading-overlay" aria-hidden="true">
-    <div class="loading-card">
-      <div class="loading-spinner" aria-hidden="true"></div>
-      <p id="globalLoadingText">Loading...</p>
-    </div>
-  </div>
-
-  <div class="app-shell">
-    <header class="app-topbar">
-      <div class="app-topbar-inner">
-        <div class="app-topbar-left">
-          <a href="./dashboard.html">
-            <img
-              src="../assets/images/logo-writing.png"
-              alt="Keboon"
-              class="app-topbar-logo"
-            />
-          </a>
-
-          <div class="app-topbar-title">
-            <p class="app-screen-label">Grower app</p>
-            <p class="app-screen-title">Edit profile</p>
-          </div>
-        </div>
-
-        <a class="secondary-button text-button-link" href="./dashboard.html">
-          Dashboard
-        </a>
+    <link rel="stylesheet" href="../styles/main.css" />
+  </head>
+  <body>
+    <div
+      id="globalLoadingOverlay"
+      class="global-loading-overlay"
+      aria-hidden="true"
+    >
+      <div class="loading-card">
+        <div class="loading-spinner" aria-hidden="true"></div>
+        <p id="globalLoadingText">Loading...</p>
       </div>
-    </header>
+    </div>
 
-    <main class="app-main">
-      <section class="app-page-header">
-        <p class="eyebrow">Grower profile</p>
-        <h1>Edit your profile</h1>
-        <p class="muted">
-          Complete your public grower information. Your profile must be approved before it appears on the map.
-        </p>
-      </section>
+    <div class="app-shell">
+      <header class="app-topbar">
+        <div class="app-topbar-inner">
+          <div class="app-topbar-left">
+            <a href="./dashboard.html">
+              <img
+                src="../assets/images/logo-writing.png"
+                alt="Keboon"
+                class="app-topbar-logo"
+              />
+            </a>
 
-      <section class="content-card">
-        <form id="editProfileForm" class="form-stack">
-          <label>
-            Grower / Garden Name
-            <input type="text" name="grower_name" required />
-          </label>
+            <div class="app-topbar-title">
+              <p class="app-screen-label">Grower app</p>
+              <p class="app-screen-title">Edit profile</p>
+            </div>
+          </div>
 
-          <label>
-            Contact Person Name
-            <input type="text" name="contact_name" required />
-          </label>
+          <a class="secondary-button text-button-link" href="./dashboard.html">
+            Dashboard
+          </a>
+        </div>
+      </header>
 
-          <label>
-            Location Label
-            <input
-              type="text"
-              name="location_label"
-              placeholder="Example: Alor Setar, Kedah"
-              required
-            />
-          </label>
+      <main class="app-main">
+        <section class="app-page-header">
+          <p class="eyebrow">Grower profile</p>
+          <h1>Edit your profile</h1>
+          <p class="muted">
+            Complete your public grower information. Your profile must be
+            approved before it appears on the map.
+          </p>
+        </section>
 
-          <label>
-            Address Text
-            <textarea
-              name="address_text"
-              rows="3"
-              placeholder="General area or pickup location details"
-            ></textarea>
-          </label>
+        <section class="content-card">
+          <form id="editProfileForm" class="form-stack">
+            <label>
+              Grower / Garden Name
+              <input type="text" name="grower_name" required />
+            </label>
 
-          <div class="location-picker">
-            <div class="location-picker-header">
+            <label>
+              Contact Person Name
+              <input type="text" name="contact_name" required />
+            </label>
+
+            <label>
+              Location Label
+              <input
+                type="text"
+                name="location_label"
+                placeholder="Example: Alor Setar, Kedah"
+                required
+              />
+            </label>
+
+            <label>
+              Address Text
+              <textarea
+                name="address_text"
+                rows="3"
+                placeholder="General area or pickup location details"
+              ></textarea>
+            </label>
+
+            <div class="location-picker">
+              <div class="location-picker-header">
+                <div>
+                  <h2>Pin your grower location</h2>
+                  <p class="muted">
+                    Use your current location or move the pin on the map.
+                  </p>
+                </div>
+
+                <button
+                  id="useCurrentLocationButton"
+                  class="secondary-button"
+                  type="button"
+                >
+                  Use current location
+                </button>
+              </div>
+
+              <div id="profileLocationMap" class="profile-location-map"></div>
+
+              <p id="locationMessage" class="small-text"></p>
+            </div>
+
+            <div class="form-row">
+              <label>
+                Latitude
+                <input
+                  type="number"
+                  name="latitude"
+                  step="any"
+                  placeholder="Example: 6.1248"
+                  required
+                />
+              </label>
+
+              <label>
+                Longitude
+                <input
+                  type="number"
+                  name="longitude"
+                  step="any"
+                  placeholder="Example: 100.3678"
+                  required
+                />
+              </label>
+            </div>
+
+            <label>
+              Description
+              <textarea
+                name="description"
+                rows="5"
+                placeholder="Tell people what you grow and what makes your garden special"
+              ></textarea>
+            </label>
+
+            <label>
+              Categories
+              <input
+                type="text"
+                name="categories"
+                placeholder="Example: Vegetables, Herbs, Fruits"
+              />
+            </label>
+            <div class="profile-links-section">
               <div>
-                <h2>Pin your grower location</h2>
+                <h2>Links</h2>
                 <p class="muted">
-                  Use your current location or move the pin on the map.
+                  Add up to 2 links such as your website, Instagram, Facebook,
+                  TikTok, or shop page.
                 </p>
               </div>
 
-              <button
-                id="useCurrentLocationButton"
-                class="secondary-button"
-                type="button"
-              >
-                Use current location
-              </button>
+              <div class="form-row">
+                <label>
+                  Link 1 Text
+                  <input
+                    type="text"
+                    name="link_1_text"
+                    placeholder="Example: Instagram"
+                    maxlength="80"
+                  />
+                </label>
+
+                <label>
+                  Link 1 URL
+                  <input
+                    type="url"
+                    name="link_1_url"
+                    placeholder="https://example.com"
+                  />
+                </label>
+              </div>
+
+              <div class="form-row">
+                <label>
+                  Link 2 Text
+                  <input
+                    type="text"
+                    name="link_2_text"
+                    placeholder="Example: Website"
+                    maxlength="80"
+                  />
+                </label>
+
+                <label>
+                  Link 2 URL
+                  <input
+                    type="url"
+                    name="link_2_url"
+                    placeholder="https://example.com"
+                  />
+                </label>
+              </div>
             </div>
 
-            <div id="profileLocationMap" class="profile-location-map"></div>
-
-            <p id="locationMessage" class="small-text"></p>
-          </div>
-
-          <div class="form-row">
-            <label>
-              Latitude
-              <input
-                type="number"
-                name="latitude"
-                step="any"
-                placeholder="Example: 6.1248"
-                required
-              />
+            <label class="checkbox-label">
+              <input type="checkbox" name="is_public" />
+              Make my profile public after approval
             </label>
 
-            <label>
-              Longitude
-              <input
-                type="number"
-                name="longitude"
-                step="any"
-                placeholder="Example: 100.3678"
-                required
+            <button type="submit" class="primary-button">Save profile</button>
+
+            <p id="editProfileMessage" class="form-message"></p>
+          </form>
+        </section>
+      </main>
+
+      <nav class="app-bottom-nav" aria-label="Grower app navigation">
+        <div class="app-bottom-nav-inner">
+          <a class="app-bottom-link" href="./dashboard.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z"
+                stroke="currentColor"
+                stroke-linejoin="round"
               />
-            </label>
-          </div>
+            </svg>
+            <span>Home</span>
+          </a>
 
-          <label>
-            Description
-            <textarea
-              name="description"
-              rows="5"
-              placeholder="Tell people what you grow and what makes your garden special"
-            ></textarea>
-          </label>
+          <a class="app-bottom-link is-active" href="./edit-profile.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"
+                stroke="currentColor"
+              />
+              <path
+                d="M4 21a8 8 0 0 1 16 0"
+                stroke="currentColor"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span>Profile</span>
+          </a>
 
-          <label>
-            Categories
-            <input
-              type="text"
-              name="categories"
-              placeholder="Example: Vegetables, Herbs, Fruits"
+          <a class="app-bottom-link" href="./manage-produce.html">
+            <img
+              src="../assets/icons/produce.svg"
+              alt=""
+              class="app-nav-icon-img"
+              aria-hidden="true"
             />
-          </label>
+            <span>Produce</span>
+          </a>
 
-          <label class="checkbox-label">
-            <input type="checkbox" name="is_public" />
-            Make my profile public after approval
-          </label>
+          <a class="app-bottom-link" href="./preview-profile.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
+                stroke="currentColor"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                stroke="currentColor"
+              />
+            </svg>
+            <span>Preview</span>
+          </a>
+        </div>
+      </nav>
+    </div>
 
-          <button type="submit" class="primary-button">
-            Save profile
-          </button>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-          <p id="editProfileMessage" class="form-message"></p>
-        </form>
-      </section>
-    </main>
-
-    <nav class="app-bottom-nav" aria-label="Grower app navigation">
-      <div class="app-bottom-nav-inner">
-        <a class="app-bottom-link" href="./dashboard.html">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z" stroke="currentColor" stroke-linejoin="round"/>
-          </svg>
-          <span>Home</span>
-        </a>
-
-        <a class="app-bottom-link is-active" href="./edit-profile.html">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor"/>
-            <path d="M4 21a8 8 0 0 1 16 0" stroke="currentColor" stroke-linecap="round"/>
-          </svg>
-          <span>Profile</span>
-        </a>
-
-        <a class="app-bottom-link" href="./manage-produce.html">
-  <img
-    src="../assets/icons/produce.svg"
-    alt=""
-    class="app-nav-icon-img"
-    aria-hidden="true"
-  />
-  <span>Produce</span>
-</a>
-
-        <a class="app-bottom-link" href="./preview-profile.html">
-  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" stroke="currentColor" stroke-linejoin="round"/>
-    <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor"/>
-  </svg>
-  <span>Preview</span>
-</a>
-      </div>
-    </nav>
-  </div>
-
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-  <script src="../scripts/config.js"></script>
-  <script src="../scripts/api.js"></script>
-  <script src="../scripts/auth.js"></script>
-  <script src="../scripts/app.js"></script>
-</body>
+    <script src="../scripts/config.js"></script>
+    <script src="../scripts/api.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/app.js"></script>
+  </body>
 </html>

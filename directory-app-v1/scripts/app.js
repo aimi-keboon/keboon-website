@@ -168,6 +168,10 @@ async function initEditProfilePage() {
         longitude: formData.get("longitude"),
         description: formData.get("description"),
         categories: formData.get("categories"),
+        link_1_url: formData.get("link_1_url"),
+        link_1_text: formData.get("link_1_text"),
+        link_2_url: formData.get("link_2_url"),
+        link_2_text: formData.get("link_2_text"),
         is_public: formData.get("is_public") === "on",
       });
 
@@ -461,6 +465,10 @@ function fillEditProfileForm(form, grower) {
   form.elements.longitude.value = grower.longitude || "";
   form.elements.description.value = grower.description || "";
   form.elements.categories.value = grower.categories || "";
+  form.elements.link_1_url.value = grower.link_1_url || "";
+  form.elements.link_1_text.value = grower.link_1_text || "";
+  form.elements.link_2_url.value = grower.link_2_url || "";
+  form.elements.link_2_text.value = grower.link_2_text || "";
   form.elements.is_public.checked =
     String(grower.is_public).toLowerCase() === "true";
 }
@@ -969,9 +977,14 @@ function openGrowerDrawer(grower) {
     </section>
 
         <section class="drawer-section">
-      <h2>Available produce</h2>
-      ${renderDrawerProducts(products)}
-    </section>
+  <h2>Links</h2>
+  ${renderGrowerLinks(grower)}
+</section>
+
+<section class="drawer-section">
+  <h2>Available produce</h2>
+  ${renderDrawerProducts(products)}
+</section>
 
     <section class="drawer-section drawer-section-separated">
   <details class="drawer-enquiry-panel">
@@ -1422,9 +1435,14 @@ function renderProfilePreview(grower, products) {
       </section>
 
       <section class="drawer-section">
-        <h2>Available produce</h2>
-        ${renderPreviewProducts(visibleProducts)}
-      </section>
+  <h2>Links</h2>
+  ${renderGrowerLinks(grower)}
+</section>
+
+<section class="drawer-section">
+  <h2>Available produce</h2>
+  ${renderDrawerProducts(products)}
+</section>
     </article>
   `;
 }
@@ -1529,6 +1547,7 @@ function openGrowerFromPopup(growerId) {
   openGrowerDrawer(grower);
   focusDirectoryGrower(grower);
 }
+window.openGrowerFromPopup = openGrowerFromPopup;
 function getGreenMapMarkerIcon() {
   return L.divIcon({
     className: "keboon-map-marker",
@@ -1590,5 +1609,87 @@ function openDirectoryMarkerPopup(growerId) {
 
   if (marker) {
     marker.openPopup();
+  }
+}
+
+function renderGrowerLinks(grower) {
+  const links = [
+    {
+      url: grower.link_1_url,
+      text: grower.link_1_text,
+    },
+    {
+      url: grower.link_2_url,
+      text: grower.link_2_text,
+    },
+  ]
+    .map((link) => {
+      const url = normalizeDisplayUrl(link.url);
+
+      if (!url) {
+        return null;
+      }
+
+      return {
+        url,
+        text: cleanLinkText(link.text, url),
+      };
+    })
+    .filter(Boolean);
+
+  if (!links.length) {
+    return '<p class="muted">No links added yet.</p>';
+  }
+
+  return `
+    <div class="grower-links-list">
+      ${links
+        .map(
+          (link) => `
+        <a
+          class="grower-link-button"
+          href="${escapeHtml(link.url)}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>${escapeHtml(link.text)}</span>
+          <small>${escapeHtml(getUrlHost(link.url))}</small>
+        </a>
+      `,
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function cleanLinkText(value, fallbackUrl) {
+  const text = String(value || "").trim();
+
+  if (text) {
+    return text;
+  }
+
+  return getUrlHost(fallbackUrl);
+}
+
+function normalizeDisplayUrl(value) {
+  const rawValue = String(value || "").trim();
+
+  if (!rawValue) {
+    return "";
+  }
+
+  if (rawValue.startsWith("http://") || rawValue.startsWith("https://")) {
+    return rawValue;
+  }
+
+  return `https://${rawValue}`;
+}
+
+function getUrlHost(value) {
+  try {
+    return new URL(value).hostname.replace(/^www\./, "");
+  } catch (error) {
+    return value;
   }
 }
