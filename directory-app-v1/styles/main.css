@@ -1851,3 +1851,34 @@ select:focus {
     width: 100%;
   }
 }
+
+@media (max-width: 640px) {
+  .public-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 14px;
+  }
+
+  .public-logo {
+    width: 104px;
+  }
+
+  .public-nav {
+    width: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .public-nav .primary-button,
+  .public-nav .secondary-button {
+    width: auto;
+    min-width: 0;
+    padding: 8px 10px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+}
