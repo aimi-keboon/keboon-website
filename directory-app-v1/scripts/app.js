@@ -183,6 +183,9 @@ async function initEditProfilePage() {
         fillEditProfileForm(form, appData.grower);
       }
 
+      clearPublicDirectoryCache();
+      refreshPublicDirectoryCacheQuietly();
+
       messageEl.textContent = result.message || "Profile saved.";
       messageEl.classList.add("success");
     } catch (error) {
@@ -289,6 +292,9 @@ async function initManageProducePage() {
 
       currentProducts = appData.products || [];
       renderProduceList(currentProducts);
+
+      clearPublicDirectoryCache();
+      refreshPublicDirectoryCacheQuietly();
 
       messageEl.textContent = result.message || "Produce saved.";
       messageEl.classList.add("success");
