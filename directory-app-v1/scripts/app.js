@@ -1724,6 +1724,23 @@ function applySavedDirectoryLocationPreference() {
     lat: Number(savedLocation.lat),
     lng: Number(savedLocation.lng),
   };
+
+  if (directoryMap) {
+    directoryMap.setView(
+      [currentUserLocation.lat, currentUserLocation.lng],
+      14,
+    );
+
+    L.circleMarker([currentUserLocation.lat, currentUserLocation.lng], {
+      radius: 7,
+    })
+      .addTo(directoryMap)
+      .bindPopup("Your location");
+  }
+
+  setDirectoryStatus(
+    `Showing growers within ${DIRECTORY_RADIUS_KM} km of your location.`,
+  );
 }
 document.addEventListener("click", (event) => {
   const closeButton = event.target.closest("#closeGrowerDrawerButton");
