@@ -359,3 +359,24 @@ async function refreshGrowerAppDataQuietlyAfterSignin(sessionToken) {
     // Do not block signin if full grower data refresh fails.
   }
 }
+
+function storeDirectoryLocationPreference(location) {
+  localStorage.setItem('keboon_directory_location_preference', 'nearby');
+  localStorage.setItem('keboon_directory_user_location', JSON.stringify(location));
+}
+
+function storeDirectoryShowAllPreference() {
+  localStorage.setItem('keboon_directory_location_preference', 'all');
+}
+
+function getDirectoryLocationPreference() {
+  return localStorage.getItem('keboon_directory_location_preference') || 'all';
+}
+
+function getStoredDirectoryUserLocation() {
+  try {
+    return JSON.parse(localStorage.getItem('keboon_directory_user_location') || 'null');
+  } catch (error) {
+    return null;
+  }
+}

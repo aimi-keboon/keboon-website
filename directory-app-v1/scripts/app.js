@@ -674,12 +674,16 @@ async function initPublicDirectoryPage() {
     publicDirectoryGrowers = cachedDirectory.growers || [];
     currentDirectoryResults = publicDirectoryGrowers;
 
-    trySetDirectoryLocationFromBrowser(false);
+    applySavedDirectoryLocationPreference();
     applyDirectoryFilters(1);
 
     setDirectoryStatus(
       `Showing cached directory data from ${formatDisplayDateTime(cachedDirectory.generated_at)}.`,
     );
+  }
+
+  if (cachedDirectory && isPublicDirectoryCacheFresh()) {
+    return;
   }
 
   try {
@@ -696,7 +700,7 @@ async function initPublicDirectoryPage() {
     publicDirectoryGrowers = result.growers || [];
     currentDirectoryResults = publicDirectoryGrowers;
 
-    trySetDirectoryLocationFromBrowser(false);
+    indexapplySavedDirectoryLocationPreference();
     applyDirectoryFilters(1);
 
     setDirectoryStatus(
@@ -727,6 +731,7 @@ async function initPublicDirectoryPage() {
   if (showAllButton) {
     showAllButton.addEventListener("click", () => {
       currentUserLocation = null;
+      storeDirectoryShowAllPreference();
       applyDirectoryFilters(1);
       setDirectoryStatus("Showing all public growers.");
 
@@ -1162,6 +1167,8 @@ function trySetDirectoryLocationFromBrowser(showMessage) {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       };
+
+      storeDirectoryLocationPreference(currentUserLocation);
 
       applyDirectoryFilters(1);
 
@@ -1692,4 +1699,29 @@ function getUrlHost(value) {
   } catch (error) {
     return value;
   }
+}
+
+function applySavedDirectoryLocationPreference() {
+  const preference = getDirectoryLocationPreference();
+
+  if (preference !== "nearby") {
+    currentUserLocation = null;
+    return;
+  }
+
+  const savedLocation = getStoredDirectoryUserLocation();
+
+  if (
+    !savedLocation ||
+    !Number.isFinite(Number(savedLocation.lat)) ||
+    !Number.isFinite(Number(savedLocation.lng))
+  ) {
+    currentUserLocation = null;
+    return;
+  }
+
+  currentUserLocation = {
+    lat: Number(savedLocation.lat),
+    lng: Number(savedLocation.lng),
+  };
 }
