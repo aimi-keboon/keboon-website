@@ -1112,7 +1112,7 @@ select:focus {
 }
 
 .collapsible-product-card[open] summary::after {
-  content: "âˆ’";
+  content: "-";
 }
 
 .collapsible-product-body {
@@ -1174,7 +1174,7 @@ select:focus {
 }
 
 .drawer-enquiry-panel[open] summary::after {
-  content: "âˆ’";
+  content: "−";
 }
 
 .summary-helper {
