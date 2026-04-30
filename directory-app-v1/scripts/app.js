@@ -914,7 +914,7 @@ function filterDirectoryGrowers(query) {
     .toLowerCase();
 
   if (!searchTerm) {
-    return publicDirectoryGrowers;
+    return [...publicDirectoryGrowers];
   }
 
   return publicDirectoryGrowers.filter((grower) => {
@@ -1339,8 +1339,10 @@ function applyDirectoryFilters(page = 1) {
 
   currentDirectoryResults = filterDirectoryGrowers(query);
 
-  if (currentUserLocation) {
-    sortDirectoryByDistance(1);
+  const preference = getDirectoryLocationPreference();
+
+  if (preference === "nearby" && currentUserLocation) {
+    sortDirectoryByDistance();
   }
 
   renderDirectory(currentDirectoryResults, page);
@@ -1744,6 +1746,7 @@ function applySavedDirectoryLocationPreference() {
   setDirectoryStatus(
     `Showing growers within ${DIRECTORY_RADIUS_KM} km of your location.`,
   );
+  zoomToCurrentUserLocation();
 }
 document.addEventListener("click", (event) => {
   const closeButton = event.target.closest("#closeGrowerDrawerButton");
