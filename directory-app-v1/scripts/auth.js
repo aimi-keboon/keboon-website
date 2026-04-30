@@ -122,19 +122,14 @@ async function handleSigninSubmit(event) {
     localStorage.setItem("keboon_grower_id", result.grower_id);
     localStorage.setItem("keboon_grower_name", result.grower_name || "");
 
-    showGlobalLoading("Loading your profile...");
+    showGlobalLoading("Loading your profile and produce...");
 
-    const grower = await apiPost("get_current_grower", {
+    const appData = await apiPost("get_current_grower_app_data", {
       session_token: result.session_token,
     });
 
-    localStorage.setItem(
-      "keboon_current_grower",
-      JSON.stringify(grower || null),
-    );
-    localStorage.setItem("keboon_cached_at", new Date().toISOString());
+    storeGrowerAppData(appData);
 
-    refreshGrowerAppDataQuietlyAfterSignin(result.session_token);
     refreshPublicDirectoryCacheQuietly();
 
     messageEl.textContent = "Signed in successfully. Redirecting...";
@@ -361,21 +356,26 @@ async function refreshGrowerAppDataQuietlyAfterSignin(sessionToken) {
 }
 
 function storeDirectoryLocationPreference(location) {
-  localStorage.setItem('keboon_directory_location_preference', 'nearby');
-  localStorage.setItem('keboon_directory_user_location', JSON.stringify(location));
+  localStorage.setItem("keboon_directory_location_preference", "nearby");
+  localStorage.setItem(
+    "keboon_directory_user_location",
+    JSON.stringify(location),
+  );
 }
 
 function storeDirectoryShowAllPreference() {
-  localStorage.setItem('keboon_directory_location_preference', 'all');
+  localStorage.setItem("keboon_directory_location_preference", "all");
 }
 
 function getDirectoryLocationPreference() {
-  return localStorage.getItem('keboon_directory_location_preference') || 'all';
+  return localStorage.getItem("keboon_directory_location_preference") || "all";
 }
 
 function getStoredDirectoryUserLocation() {
   try {
-    return JSON.parse(localStorage.getItem('keboon_directory_user_location') || 'null');
+    return JSON.parse(
+      localStorage.getItem("keboon_directory_user_location") || "null",
+    );
   } catch (error) {
     return null;
   }
