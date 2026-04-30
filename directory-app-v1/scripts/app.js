@@ -658,6 +658,7 @@ async function initPublicDirectoryPage() {
 
   const statusEl = document.getElementById("directoryStatus");
   const searchInput = document.getElementById("directorySearchInput");
+  const searchButton = document.getElementById("directorySearchButton");
   const useLocationButton = document.getElementById(
     "directoryUseLocationButton",
   );
@@ -680,10 +681,6 @@ async function initPublicDirectoryPage() {
     setDirectoryStatus(
       `Showing cached directory data from ${formatDisplayDateTime(cachedDirectory.generated_at)}.`,
     );
-  }
-
-  if (cachedDirectory && isPublicDirectoryCacheFresh()) {
-    return;
   }
 
   try {
@@ -717,30 +714,49 @@ async function initPublicDirectoryPage() {
     }
   }
 
-  if (searchInput) {
-    searchInput.addEventListener("input", () => {
+  if (searchButton) {
+    searchButton.onclick = () => {
       applyDirectoryFilters(1);
-    });
+    };
+  }
+
+  if (searchInput) {
+    searchInput.onkeydown = (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        applyDirectoryFilters(1);
+      }
+    };
   }
 
   if (useLocationButton) {
-    useLocationButton.addEventListener("click", () => {
+    useLocationButton.onclick = () => {
       trySetDirectoryLocationFromBrowser(true);
-    });
+    };
   }
+
   if (showAllButton) {
-    showAllButton.addEventListener("click", () => {
+    showAllButton.onclick = () => {
       currentUserLocation = null;
       storeDirectoryShowAllPreference();
-      applyDirectoryFilters(1);
+
+      currentDirectoryResults = filterDirectoryGrowers(
+        searchInput ? searchInput.value : "",
+      );
+
+      renderDirectory(currentDirectoryResults, 1);
       setDirectoryStatus("Showing all public growers.");
 
       if (directoryMap && directoryMarkers.length) {
         const group = L.featureGroup(directoryMarkers);
         directoryMap.fitBounds(group.getBounds().pad(0.18));
       }
-    });
+    };
   }
+
+  if (cachedDirectory && isPublicDirectoryCacheFresh()) {
+  return;
+}
 
   if (closeDrawerButton) {
     closeDrawerButton.addEventListener("click", closeGrowerDrawer);
@@ -918,24 +934,18 @@ function filterDirectoryGrowers(query) {
   }
 
   return publicDirectoryGrowers.filter((grower) => {
-    const productText = (grower.products || [])
-      .map((product) =>
-        [
-          product.product_name,
-          product.category,
-          product.description,
-          product.availability_status,
-        ].join(" "),
-      )
-      .join(" ");
+    const products = grower.products || [];
 
     const searchableText = [
       grower.grower_name,
       grower.location_label,
       grower.description,
       grower.categories,
-      productText,
+      ...products.map((product) => product.product_name),
+      ...products.map((product) => product.category),
+      ...products.map((product) => product.description),
     ]
+      .filter(Boolean)
       .join(" ")
       .toLowerCase();
 

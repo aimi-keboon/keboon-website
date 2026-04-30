@@ -1,178 +1,220 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Grower Dashboard | Keboon Directory</title>
+    <title>Grower Dashboard | Keboon Directory</title>
 
-  <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
 
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
 
-  <link rel="stylesheet" href="../styles/main.css" />
-</head>
-<body>
-  <div id="globalLoadingOverlay" class="global-loading-overlay" aria-hidden="true">
-    <div class="loading-card">
-      <div class="loading-spinner" aria-hidden="true"></div>
-      <p id="globalLoadingText">Loading...</p>
+    <link rel="stylesheet" href="../styles/main.css" />
+  </head>
+  <body>
+    <div
+      id="globalLoadingOverlay"
+      class="global-loading-overlay"
+      aria-hidden="true"
+    >
+      <div class="loading-card">
+        <div class="loading-spinner" aria-hidden="true"></div>
+        <p id="globalLoadingText">Loading...</p>
+      </div>
     </div>
-  </div>
 
-  <div class="app-shell">
-    <header class="app-topbar">
-      <div class="app-topbar-inner">
-        <div class="app-topbar-left">
-          <a href="./dashboard.html">
-            <img
-              src="../assets/images/logo-writing.png"
-              alt="Keboon"
-              class="app-topbar-logo"
-            />
+    <div class="app-shell">
+      <header class="app-topbar">
+        <div class="app-topbar-inner">
+          <div class="app-topbar-left">
+            <a href="./dashboard.html">
+              <img
+                src="../assets/images/logo-writing.png"
+                alt="Keboon"
+                class="app-topbar-logo"
+              />
+            </a>
+
+            <div class="app-topbar-title">
+              <p class="app-screen-label">Grower app</p>
+              <p class="app-screen-title">Dashboard</p>
+            </div>
+          </div>
+
+          <button id="signoutButton" class="secondary-button" type="button">
+            Sign out
+          </button>
+        </div>
+      </header>
+
+      <main class="app-main">
+        <section class="app-page-header">
+          <p class="eyebrow">Dashboard</p>
+          <h1 id="dashboardTitle">Welcome</h1>
+          <p class="muted">
+            Manage your grower profile, produce listings, and preview the public
+            directory.
+          </p>
+        </section>
+
+        <section class="app-section">
+          <h2 class="app-section-title">Directory map</h2>
+
+          <section class="public-search-panel dashboard-public-search">
+            <div class="public-search-controls">
+              <div class="directory-search-box">
+                <label>
+                  Search
+                  <div class="directory-search-input-wrap">
+                    <input
+                      id="directorySearchInput"
+                      type="search"
+                      placeholder="Search growers, produce, categories, locations"
+                    />
+
+                    <button
+                      id="directorySearchButton"
+                      class="directory-search-icon-button"
+                      type="button"
+                      aria-label="Search"
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path
+                          d="M10.8 18.1a7.3 7.3 0 1 1 0-14.6 7.3 7.3 0 0 1 0 14.6Z"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        />
+                        <path
+                          d="m16.2 16.2 4.3 4.3"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </label>
+              </div>
+
+              <div class="directory-location-actions">
+                <button
+                  id="directoryUseLocationButton"
+                  class="secondary-button"
+                  type="button"
+                >
+                  Use my location
+                </button>
+
+                <button
+                  id="directoryShowAllButton"
+                  class="secondary-button"
+                  type="button"
+                >
+                  Show all growers
+                </button>
+              </div>
+            </div>
+
+            <p id="directoryStatus" class="small-text">Loading directory...</p>
+          </section>
+
+          <section class="directory-layout dashboard-directory-layout">
+            <div id="directoryMap" class="directory-map"></div>
+
+            <aside class="directory-list-panel">
+              <div class="directory-list-header">
+                <h2>Growers</h2>
+                <p id="directoryCount" class="muted">Loading...</p>
+              </div>
+
+              <div id="directoryList" class="directory-list">
+                <p class="muted">Loading growers...</p>
+              </div>
+            </aside>
+          </section>
+        </section>
+      </main>
+
+      <nav class="app-bottom-nav" aria-label="Grower app navigation">
+        <div class="app-bottom-nav-inner">
+          <a class="app-bottom-link is-active" href="./dashboard.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z"
+                stroke="currentColor"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span>Home</span>
           </a>
 
-          <div class="app-topbar-title">
-            <p class="app-screen-label">Grower app</p>
-            <p class="app-screen-title">Dashboard</p>
-          </div>
-        </div>
-
-        <button id="signoutButton" class="secondary-button" type="button">
-          Sign out
-        </button>
-      </div>
-    </header>
-
-    <main class="app-main">
-      <section class="app-page-header">
-        <p class="eyebrow">Dashboard</p>
-        <h1 id="dashboardTitle">Welcome</h1>
-        <p class="muted">
-          Manage your grower profile, produce listings, and preview the public directory.
-        </p>
-      </section>
-
-      <section class="app-section">
-        <h2 class="app-section-title">Directory map</h2>
-
-        <section class="public-search-panel dashboard-public-search">
-          
-
-          <div class="public-search-controls">
-            <label>
-              Search
-              <input
-                id="directorySearchInput"
-                type="search"
-                placeholder="Search growers, produce, categories, locations"
+          <a class="app-bottom-link" href="./edit-profile.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"
+                stroke="currentColor"
               />
-            </label>
+              <path
+                d="M4 21a8 8 0 0 1 16 0"
+                stroke="currentColor"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span>Profile</span>
+          </a>
 
-            <div class="directory-location-actions">
-              <button
-                id="directoryUseLocationButton"
-                class="secondary-button"
-                type="button"
-              >
-                Use my location
-              </button>
+          <a class="app-bottom-link" href="./manage-produce.html">
+            <img
+              src="../assets/icons/produce.svg"
+              alt=""
+              class="app-nav-icon-img"
+              aria-hidden="true"
+            />
+            <span>Produce</span>
+          </a>
 
-              <button
-                id="directoryShowAllButton"
-                class="secondary-button"
-                type="button"
-              >
-                Show all growers
-              </button>
-            </div>
-          </div>
-
-          <p id="directoryStatus" class="small-text">Loading directory...</p>
-        </section>
-
-        <section class="directory-layout dashboard-directory-layout">
-          <div id="directoryMap" class="directory-map"></div>
-
-          <aside class="directory-list-panel">
-            <div class="directory-list-header">
-              <h2>Growers</h2>
-              <p id="directoryCount" class="muted">Loading...</p>
-            </div>
-
-            <div id="directoryList" class="directory-list">
-              <p class="muted">Loading growers...</p>
-            </div>
-          </aside>
-        </section>
-      </section>
-    </main>
-
-    <nav class="app-bottom-nav" aria-label="Grower app navigation">
-      <div class="app-bottom-nav-inner">
-        <a class="app-bottom-link is-active" href="./dashboard.html">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z" stroke="currentColor" stroke-linejoin="round"/>
-          </svg>
-          <span>Home</span>
-        </a>
-
-        <a class="app-bottom-link" href="./edit-profile.html">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor"/>
-            <path d="M4 21a8 8 0 0 1 16 0" stroke="currentColor" stroke-linecap="round"/>
-          </svg>
-          <span>Profile</span>
-        </a>
-
-        <a class="app-bottom-link" href="./manage-produce.html">
-  <img
-    src="../assets/icons/produce.svg"
-    alt=""
-    class="app-nav-icon-img"
-    aria-hidden="true"
-  />
-  <span>Produce</span>
-</a>
-
-        <a class="app-bottom-link" href="./preview-profile.html">
-  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" stroke="currentColor" stroke-linejoin="round"/>
-    <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor"/>
-  </svg>
-  <span>Preview</span>
-</a>
-      </div>
-    </nav>
-  </div>
-
-  <section
-    id="growerDrawer"
-    class="grower-drawer"
-    aria-hidden="true"
-  >
-    <div class="grower-drawer-card">
-      <button
-        id="closeGrowerDrawerButton"
-        class="drawer-close-button"
-        type="button"
-        aria-label="Close grower profile"
-      >
-        Close
-      </button>
-
-      <div id="growerDrawerContent"></div>
+          <a class="app-bottom-link" href="./preview-profile.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
+                stroke="currentColor"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                stroke="currentColor"
+              />
+            </svg>
+            <span>Preview</span>
+          </a>
+        </div>
+      </nav>
     </div>
-  </section>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <section id="growerDrawer" class="grower-drawer" aria-hidden="true">
+      <div class="grower-drawer-card">
+        <button
+          id="closeGrowerDrawerButton"
+          class="drawer-close-button"
+          type="button"
+          aria-label="Close grower profile"
+        >
+          Close
+        </button>
 
-  <script src="../scripts/config.js"></script>
-  <script src="../scripts/api.js"></script>
-  <script src="../scripts/auth.js"></script>
-  <script src="../scripts/app.js"></script>
-</body>
+        <div id="growerDrawerContent"></div>
+      </div>
+    </section>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script src="../scripts/config.js"></script>
+    <script src="../scripts/api.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/app.js"></script>
+  </body>
 </html>
