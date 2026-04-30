@@ -15,7 +15,9 @@ let publicDirectoryGrowers = [];
 let currentDirectoryResults = [];
 let currentUserLocation = null;
 let directoryCurrentPage = 1;
-const DIRECTORY_PAGE_SIZE = 10;
+const DIRECTORY_PAGE_SIZE = 5;
+const PROFILE_PRODUCE_PAGE_SIZE = 4;
+const profileProducePages = {};
 const DIRECTORY_RADIUS_KM = 20;
 
 async function requireValidSession() {
@@ -755,8 +757,8 @@ async function initPublicDirectoryPage() {
   }
 
   if (cachedDirectory && isPublicDirectoryCacheFresh()) {
-  return;
-}
+    return;
+  }
 
   if (closeDrawerButton) {
     closeDrawerButton.addEventListener("click", closeGrowerDrawer);
@@ -1001,7 +1003,7 @@ function openGrowerDrawer(grower) {
 
 <section class="drawer-section">
   <h2>Available produce</h2>
-  ${renderDrawerProducts(products)}
+  ${renderDrawerProducts(products, `drawer-${grower.grower_id}`)}
 </section>
 
     <section class="drawer-section drawer-section-separated">
@@ -1081,37 +1083,12 @@ function closeGrowerDrawer() {
   drawer.setAttribute("aria-hidden", "true");
 }
 
-function renderDrawerProducts(products) {
-  if (!products.length) {
-    return '<p class="muted">No produce listed yet.</p>';
-  }
-
-  return `
-    <div class="drawer-product-list collapsible-product-list">
-      ${products
-        .map(
-          (product) => `
-        <details class="collapsible-product-card">
-          <summary>
-            <span>${escapeHtml(product.product_name)}</span>
-            <span class="meta-pill">${escapeHtml(product.availability_status || "available")}</span>
-          </summary>
-
-          <div class="collapsible-product-body">
-            ${product.description ? `<p>${escapeHtml(product.description)}</p>` : ""}
-            <div class="grower-meta">
-              <span class="meta-pill">${escapeHtml(product.category || "Produce")}</span>
-            </div>
-            ${product.price_text ? `<p><strong>Price:</strong> ${escapeHtml(product.price_text)}</p>` : ""}
-            ${product.harvest_timing ? `<p><strong>Timing:</strong> ${escapeHtml(product.harvest_timing)}</p>` : ""}
-            ${product.pickup_options ? `<p><strong>Pickup:</strong> ${escapeHtml(product.pickup_options)}</p>` : ""}
-          </div>
-        </details>
-      `,
-        )
-        .join("")}
-    </div>
-  `;
+function renderDrawerProducts(products, contextId = "drawer") {
+  return renderPaginatedProfileProducts(
+    products,
+    contextId,
+    "No produce listed yet.",
+  );
 }
 
 function initPublicEnquiryForm() {
@@ -1463,43 +1440,21 @@ function renderProfilePreview(grower, products) {
 
 <section class="drawer-section">
   <h2>Available produce</h2>
-  ${renderDrawerProducts(products)}
+  ${renderPreviewProducts(
+    visibleProducts,
+    `preview-${grower.grower_id || "current"}`,
+  )}
 </section>
     </article>
   `;
 }
 
-function renderPreviewProducts(products) {
-  if (!products.length) {
-    return '<p class="muted">No public produce listed yet.</p>';
-  }
-
-  return `
-    <div class="drawer-product-list collapsible-product-list">
-      ${products
-        .map(
-          (product) => `
-        <details class="collapsible-product-card">
-          <summary>
-            <span>${escapeHtml(product.product_name)}</span>
-            <span class="meta-pill">${escapeHtml(product.availability_status || "available")}</span>
-          </summary>
-
-          <div class="collapsible-product-body">
-            ${product.description ? `<p>${escapeHtml(product.description)}</p>` : ""}
-            <div class="grower-meta">
-              <span class="meta-pill">${escapeHtml(product.category || "Produce")}</span>
-            </div>
-            ${product.price_text ? `<p><strong>Price:</strong> ${escapeHtml(product.price_text)}</p>` : ""}
-            ${product.harvest_timing ? `<p><strong>Timing:</strong> ${escapeHtml(product.harvest_timing)}</p>` : ""}
-            ${product.pickup_options ? `<p><strong>Pickup:</strong> ${escapeHtml(product.pickup_options)}</p>` : ""}
-          </div>
-        </details>
-      `,
-        )
-        .join("")}
-    </div>
-  `;
+function renderPreviewProducts(products, contextId = "preview") {
+  return renderPaginatedProfileProducts(
+    products,
+    contextId,
+    "No public produce listed yet.",
+  );
 }
 
 function getProfilePublicStatusText(grower) {
@@ -1766,6 +1721,54 @@ document.addEventListener("click", (event) => {
     closeGrowerDrawer();
   }
 });
+document.addEventListener("click", (event) => {
+  const button = event.target.closest(".profile-produce-page-button");
+
+  if (!button) {
+    return;
+  }
+
+  event.preventDefault();
+
+  const contextId = button.getAttribute("data-profile-produce-context");
+  const action = button.getAttribute("data-profile-produce-action");
+
+  if (!contextId || !action) {
+    return;
+  }
+
+  const currentPage = profileProducePages[contextId] || 1;
+
+  if (action === "prev") {
+    profileProducePages[contextId] = Math.max(1, currentPage - 1);
+  }
+
+  if (action === "next") {
+    profileProducePages[contextId] = currentPage + 1;
+  }
+
+  if (contextId.startsWith("drawer-")) {
+    const growerId = contextId.replace("drawer-", "");
+    const grower = publicDirectoryGrowers.find(
+      (item) => item.grower_id === growerId,
+    );
+
+    if (grower) {
+      openGrowerDrawer(grower);
+    }
+
+    return;
+  }
+
+  if (contextId.startsWith("preview-")) {
+    const grower = getStoredGrower();
+    const products = getStoredProducts();
+
+    if (grower) {
+      renderProfilePreview(grower, products);
+    }
+  }
+});
 function zoomToCurrentUserLocation() {
   if (!directoryMap || !currentUserLocation) {
     return;
@@ -1787,4 +1790,95 @@ function zoomToCurrentUserLocation() {
       directoryMap.setView(latLng, 14);
     }
   }, 600);
+}
+
+function renderPaginatedProfileProducts(products, contextId, emptyMessage) {
+  if (!products.length) {
+    return `<p class="muted">${escapeHtml(emptyMessage)}</p>`;
+  }
+
+  const safeContextId = String(contextId || "profile").replace(
+    /[^a-zA-Z0-9_-]/g,
+    "",
+  );
+  const totalPages = Math.max(
+    1,
+    Math.ceil(products.length / PROFILE_PRODUCE_PAGE_SIZE),
+  );
+  const currentPage = Math.min(
+    Math.max(profileProducePages[safeContextId] || 1, 1),
+    totalPages,
+  );
+
+  profileProducePages[safeContextId] = currentPage;
+
+  const startIndex = (currentPage - 1) * PROFILE_PRODUCE_PAGE_SIZE;
+  const pageProducts = products.slice(
+    startIndex,
+    startIndex + PROFILE_PRODUCE_PAGE_SIZE,
+  );
+
+  return `
+    <div
+      class="profile-produce-pagination-wrap"
+      data-profile-produce-context="${escapeHtml(safeContextId)}"
+    >
+      <div class="drawer-product-list collapsible-product-list">
+        ${pageProducts
+          .map(
+            (product) => `
+          <details class="collapsible-product-card">
+            <summary>
+              <span>${escapeHtml(product.product_name)}</span>
+              <span class="meta-pill">${escapeHtml(product.availability_status || "available")}</span>
+            </summary>
+
+            <div class="collapsible-product-body">
+              ${product.description ? `<p>${escapeHtml(product.description)}</p>` : ""}
+              <div class="grower-meta">
+                <span class="meta-pill">${escapeHtml(product.category || "Produce")}</span>
+              </div>
+              ${product.price_text ? `<p><strong>Price:</strong> ${escapeHtml(product.price_text)}</p>` : ""}
+              ${product.harvest_timing ? `<p><strong>Timing:</strong> ${escapeHtml(product.harvest_timing)}</p>` : ""}
+              ${product.pickup_options ? `<p><strong>Pickup:</strong> ${escapeHtml(product.pickup_options)}</p>` : ""}
+            </div>
+          </details>
+        `,
+          )
+          .join("")}
+      </div>
+
+      ${
+        totalPages > 1
+          ? `
+        <div class="profile-produce-pagination">
+          <button
+            type="button"
+            class="secondary-button profile-produce-page-button"
+            data-profile-produce-action="prev"
+            data-profile-produce-context="${escapeHtml(safeContextId)}"
+            ${currentPage === 1 ? "disabled" : ""}
+          >
+            Previous
+          </button>
+
+          <span class="pagination-text">
+            Page ${currentPage} of ${totalPages}
+          </span>
+
+          <button
+            type="button"
+            class="secondary-button profile-produce-page-button"
+            data-profile-produce-action="next"
+            data-profile-produce-context="${escapeHtml(safeContextId)}"
+            ${currentPage === totalPages ? "disabled" : ""}
+          >
+            Next
+          </button>
+        </div>
+      `
+          : ""
+      }
+    </div>
+  `;
 }

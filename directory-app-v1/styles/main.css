@@ -2046,3 +2046,626 @@ select:focus {
     text-align: center;
   }
 }
+
+/* Compact mobile directory search */
+
+@media (max-width: 640px) {
+  .public-search-panel {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .public-search-panel h2 {
+    margin: 0 0 4px;
+    font-size: 18px;
+    line-height: 1.2;
+  }
+
+  .public-search-panel .eyebrow {
+    margin-bottom: 4px;
+    font-size: 10px;
+  }
+
+  .public-search-panel .muted {
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .public-search-controls {
+    gap: 10px;
+  }
+
+  .directory-search-box {
+    gap: 6px;
+  }
+
+  .directory-search-box label {
+    gap: 5px;
+    font-size: 13px;
+  }
+
+  .directory-search-input-wrap {
+    grid-template-columns: minmax(0, 1fr) 40px;
+  }
+
+  .directory-search-input-wrap input {
+    min-height: 40px;
+    padding: 9px 10px;
+    font-size: 14px;
+  }
+
+  .directory-search-icon-button {
+    min-height: 40px;
+  }
+
+  .directory-search-icon-button svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .directory-location-actions {
+    gap: 8px;
+  }
+
+  .directory-location-actions .secondary-button {
+    min-height: 38px;
+    padding: 8px 8px;
+    font-size: 12px;
+  }
+
+  #directoryStatus {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.3;
+  }
+}
+
+/* Compact mobile map height */
+
+@media (max-width: 640px) {
+  .directory-map {
+    min-height: 280px;
+    height: 280px;
+  }
+
+  .dashboard-directory-layout .directory-map,
+  .public-directory-shell .directory-map {
+    min-height: 280px;
+    height: 280px;
+  }
+
+  .directory-layout {
+    gap: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .directory-map {
+    min-height: 240px;
+    height: 240px;
+  }
+
+  .dashboard-directory-layout .directory-map,
+  .public-directory-shell .directory-map {
+    min-height: 240px;
+    height: 240px;
+  }
+}
+
+/* Compact produce list cards */
+
+.produce-crud-list {
+  gap: 8px;
+}
+
+.produce-crud-card {
+  padding: 12px 13px;
+  border-radius: 15px;
+}
+
+.produce-crud-card-header {
+  align-items: center;
+  gap: 10px;
+}
+
+.produce-crud-card h3 {
+  margin: 0 0 3px;
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.produce-crud-card p {
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.produce-crud-card .grower-meta {
+  margin-top: 8px;
+  gap: 6px;
+}
+
+.produce-crud-card .meta-pill,
+.produce-crud-card .status-pill {
+  font-size: 11px;
+  padding: 5px 8px;
+  line-height: 1.2;
+}
+
+@media (max-width: 640px) {
+  .produce-toolbar {
+    padding: 14px;
+    border-radius: 18px;
+    gap: 10px;
+  }
+
+  .produce-toolbar h2 {
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+
+  .produce-toolbar .muted {
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .produce-crud-card {
+    padding: 11px 12px;
+  }
+
+  .produce-crud-card-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .produce-crud-card h3 {
+    font-size: 14px;
+  }
+}
+
+/* Extra compact screen intros */
+
+.app-page-header {
+  padding: 13px 15px;
+  margin-bottom: 12px;
+  border-radius: 16px;
+}
+
+.app-page-header .eyebrow {
+  margin-bottom: 3px;
+  font-size: 10px;
+  letter-spacing: 0.07em;
+}
+
+.app-page-header h1 {
+  margin-bottom: 4px;
+  font-size: 21px;
+  line-height: 1.15;
+}
+
+.app-page-header .muted {
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.app-section-title {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+@media (min-width: 960px) {
+  .app-page-header {
+    padding: 14px 18px;
+    margin-bottom: 14px;
+  }
+
+  .app-page-header h1 {
+    font-size: 22px;
+  }
+
+  .app-page-header .muted {
+    font-size: 13px;
+    max-width: 640px;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-main {
+    padding-top: 10px;
+  }
+
+  .app-page-header {
+    padding: 12px 13px;
+    margin-bottom: 10px;
+  }
+
+  .app-page-header h1 {
+    font-size: 19px;
+  }
+
+  .app-page-header .muted {
+    font-size: 12px;
+  }
+}
+
+/* Compact app screen content */
+
+.app-main {
+  padding-top: 12px;
+  padding-bottom: 16px;
+}
+
+.content-card {
+  padding: 16px;
+  border-radius: 18px;
+}
+
+.form-stack {
+  gap: 12px;
+}
+
+.form-stack label {
+  gap: 6px;
+  font-size: 13px;
+}
+
+.form-stack input,
+.form-stack select,
+.form-stack textarea {
+  padding: 10px 12px;
+  border-radius: 11px;
+  font-size: 14px;
+}
+
+.form-row {
+  gap: 10px;
+}
+
+.primary-button,
+.secondary-button {
+  min-height: 38px;
+  padding: 9px 14px;
+  font-size: 13px;
+}
+
+.location-picker {
+  gap: 10px;
+  padding: 13px;
+  border-radius: 16px;
+}
+
+.location-picker-header {
+  gap: 10px;
+}
+
+.location-picker-header h2 {
+  margin-bottom: 4px;
+  font-size: 17px;
+}
+
+.location-picker-header .muted {
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.profile-location-map {
+  min-height: 260px;
+  height: 260px;
+  border-radius: 14px;
+}
+
+.profile-links-section {
+  gap: 11px;
+  padding-top: 14px;
+}
+
+.profile-links-section h2 {
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+
+.profile-links-section .muted {
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+/* Compact preview profile */
+
+.profile-preview {
+  gap: 13px;
+}
+
+.profile-preview-header {
+  gap: 10px;
+}
+
+.profile-preview-header h2 {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+
+.drawer-section {
+  margin-top: 14px;
+}
+
+.drawer-section h2 {
+  margin-bottom: 8px;
+  font-size: 17px;
+}
+
+.drawer-section .muted {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.collapsible-product-list {
+  gap: 8px;
+}
+
+.collapsible-product-card {
+  border-radius: 14px;
+}
+
+.collapsible-product-card summary {
+  padding: 10px 12px;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.collapsible-product-card summary::after {
+  font-size: 16px;
+}
+
+.collapsible-product-body {
+  padding: 10px 12px 12px;
+  gap: 7px;
+}
+
+.collapsible-product-body p {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.grower-links-list {
+  gap: 8px;
+}
+
+.grower-link-button {
+  padding: 10px 12px;
+  border-radius: 14px;
+}
+
+.grower-link-button span {
+  font-size: 13px;
+}
+
+.grower-link-button small {
+  font-size: 11px;
+}
+
+/* Mobile compact overrides */
+
+@media (max-width: 640px) {
+  .app-main {
+    padding: 10px 10px 84px;
+  }
+
+  .content-card {
+    padding: 13px;
+    border-radius: 16px;
+  }
+
+  .form-stack {
+    gap: 10px;
+  }
+
+  .form-stack input,
+  .form-stack select,
+  .form-stack textarea {
+    padding: 9px 10px;
+    font-size: 13px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .profile-location-map {
+    min-height: 220px;
+    height: 220px;
+  }
+
+  .location-picker {
+    padding: 12px;
+  }
+
+  .location-picker-header {
+    display: grid;
+  }
+
+  .location-picker-header .secondary-button {
+    width: 100%;
+  }
+
+  .profile-preview-header h2 {
+    font-size: 20px;
+  }
+
+  .drawer-section {
+    margin-top: 12px;
+  }
+}
+
+.profile-produce-pagination {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.profile-produce-pagination .pagination-text {
+  justify-self: center;
+  text-align: center;
+}
+
+.profile-produce-pagination button:first-child {
+  justify-self: start;
+}
+
+.profile-produce-pagination button:last-child {
+  justify-self: end;
+}
+
+@media (max-width: 420px) {
+  .profile-produce-pagination {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .profile-produce-pagination .pagination-text {
+    grid-column: 1 / -1;
+    order: -1;
+    justify-self: center;
+    text-align: center;
+  }
+
+  .profile-produce-pagination button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .profile-produce-pagination-wrap {
+    gap: 16px;
+  }
+
+  .profile-produce-pagination {
+    margin-top: 8px;
+    padding-top: 14px;
+  }
+}
+/* Compact pagination layout */
+
+.directory-pagination,
+.profile-produce-pagination {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.directory-pagination .pagination-text,
+.profile-produce-pagination .pagination-text {
+  justify-self: center;
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.directory-pagination button,
+.profile-produce-pagination button {
+  min-height: 34px;
+  padding: 7px 10px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.directory-pagination button:first-child,
+.profile-produce-pagination button:first-child {
+  justify-self: start;
+}
+
+.directory-pagination button:last-child,
+.profile-produce-pagination button:last-child {
+  justify-self: end;
+}
+
+@media (max-width: 420px) {
+  .directory-pagination,
+  .profile-produce-pagination {
+    grid-template-columns: auto 1fr auto;
+    gap: 6px;
+  }
+
+  .directory-pagination .pagination-text,
+  .profile-produce-pagination .pagination-text {
+    grid-column: auto;
+    order: initial;
+    font-size: 11px;
+  }
+
+  .directory-pagination button,
+  .profile-produce-pagination button {
+    width: auto;
+    min-height: 32px;
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+}
+
+/* Tighter pagination spacing */
+
+.directory-pagination,
+.profile-produce-pagination {
+  grid-template-columns: auto auto auto;
+  justify-content: center;
+  gap: 6px;
+}
+
+.directory-pagination .pagination-text,
+.profile-produce-pagination .pagination-text {
+  justify-self: center;
+  min-width: auto;
+}
+
+.directory-pagination button,
+.profile-produce-pagination button {
+  justify-self: center;
+}
+
+@media (max-width: 420px) {
+  .directory-pagination,
+  .profile-produce-pagination {
+    gap: 5px;
+  }
+
+  .directory-pagination button,
+  .profile-produce-pagination button {
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+}
+/* Text-only pagination buttons */
+
+.directory-pagination button,
+.profile-produce-pagination button {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--green);
+  padding: 4px 6px;
+  min-height: auto;
+  font-weight: 800;
+}
+
+.directory-pagination button:hover,
+.profile-produce-pagination button:hover {
+  background: transparent;
+  color: var(--green-dark);
+  text-decoration: underline;
+}
+
+.directory-pagination button:disabled,
+.profile-produce-pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+.directory-pagination .pagination-text,
+.profile-produce-pagination .pagination-text {
+  color: var(--muted);
+}
