@@ -674,7 +674,7 @@ async function initPublicDirectoryPage() {
     publicDirectoryGrowers = cachedDirectory.growers || [];
     currentDirectoryResults = publicDirectoryGrowers;
 
-    applySavedDirectoryLocationPreference();
+    trySetDirectoryLocationFromBrowser(true);
     applyDirectoryFilters(1);
 
     setDirectoryStatus(
@@ -700,7 +700,7 @@ async function initPublicDirectoryPage() {
     publicDirectoryGrowers = result.growers || [];
     currentDirectoryResults = publicDirectoryGrowers;
 
-    applySavedDirectoryLocationPreference();
+    trySetDirectoryLocationFromBrowser(true);
     applyDirectoryFilters(1);
 
     setDirectoryStatus(
@@ -1175,7 +1175,7 @@ function trySetDirectoryLocationFromBrowser(showMessage) {
       if (directoryMap) {
         directoryMap.setView(
           [currentUserLocation.lat, currentUserLocation.lng],
-          16,
+          14,
         );
 
         L.circleMarker([currentUserLocation.lat, currentUserLocation.lng], {
@@ -1337,7 +1337,7 @@ function applyDirectoryFilters(page = 1) {
   currentDirectoryResults = filterDirectoryGrowers(query);
 
   if (currentUserLocation) {
-    sortDirectoryByDistance();
+    sortDirectoryByDistance(1);
   }
 
   renderDirectory(currentDirectoryResults, page);
