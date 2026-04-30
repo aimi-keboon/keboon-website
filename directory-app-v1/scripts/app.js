@@ -1725,3 +1725,11 @@ function applySavedDirectoryLocationPreference() {
     lng: Number(savedLocation.lng),
   };
 }
+document.addEventListener("click", (event) => {
+  const closeButton = event.target.closest("#closeGrowerDrawerButton");
+
+  if (closeButton) {
+    event.preventDefault();
+    closeGrowerDrawer();
+  }
+});
