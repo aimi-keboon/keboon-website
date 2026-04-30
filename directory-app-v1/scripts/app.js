@@ -700,7 +700,7 @@ async function initPublicDirectoryPage() {
     publicDirectoryGrowers = result.growers || [];
     currentDirectoryResults = publicDirectoryGrowers;
 
-    indexapplySavedDirectoryLocationPreference();
+    applySavedDirectoryLocationPreference();
     applyDirectoryFilters(1);
 
     setDirectoryStatus(
