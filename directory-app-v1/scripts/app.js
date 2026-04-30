@@ -786,6 +786,7 @@ function renderDirectory(growers, page = 1) {
   renderDirectoryMarkers(growers);
   updateDirectoryCount(growers.length);
   renderDirectoryPagination(growers);
+  zoomToCurrentUserLocation();
 }
 
 function renderDirectoryList(growers, page = 1) {
@@ -868,7 +869,9 @@ function renderDirectoryMarkers(growers) {
     directoryMarkers.push(marker);
   });
 
-  if (directoryMarkers.length) {
+  const isNearbyMode = getDirectoryLocationPreference() === "nearby";
+
+  if (directoryMarkers.length && !currentUserLocation && !isNearbyMode) {
     const group = L.featureGroup(directoryMarkers);
     directoryMap.fitBounds(group.getBounds().pad(0.18));
   }
@@ -1750,3 +1753,25 @@ document.addEventListener("click", (event) => {
     closeGrowerDrawer();
   }
 });
+function zoomToCurrentUserLocation() {
+  if (!directoryMap || !currentUserLocation) {
+    return;
+  }
+
+  const latLng = [currentUserLocation.lat, currentUserLocation.lng];
+
+  directoryMap.setView(latLng, 14);
+
+  setTimeout(() => {
+    if (directoryMap && currentUserLocation) {
+      directoryMap.invalidateSize();
+      directoryMap.setView(latLng, 14);
+    }
+  }, 250);
+
+  setTimeout(() => {
+    if (directoryMap && currentUserLocation) {
+      directoryMap.setView(latLng, 14);
+    }
+  }, 600);
+}
