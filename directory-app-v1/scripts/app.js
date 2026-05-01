@@ -282,7 +282,6 @@ async function initManageProducePage() {
         availability_status: formData.get("availability_status"),
         harvest_timing: formData.get("harvest_timing"),
         pickup_options: formData.get("pickup_options"),
-        photo_url: formData.get("photo_url"),
         is_public: formData.get("is_public") === "on",
       });
 
@@ -437,7 +436,6 @@ function fillProduceForm(product) {
     product.availability_status || "available";
   form.elements.harvest_timing.value = product.harvest_timing || "";
   form.elements.pickup_options.value = product.pickup_options || "";
-  form.elements.photo_url.value = product.photo_url || "";
   form.elements.is_public.checked =
     String(product.is_public).toLowerCase() === "true";
 
