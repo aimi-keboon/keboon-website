@@ -1,9 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
+  initPrivateTopbarActions();
   initPublicDirectoryPage();
   initDashboardPage();
   initEditProfilePage();
   initManageProducePage();
   initPreviewProfilePage();
+  initInboxPage();
 });
 
 let profileMap = null;
@@ -78,13 +80,6 @@ async function initDashboardPage() {
 
   if (dashboardTitle) {
     dashboardTitle.textContent = `Welcome, ${auth.grower?.grower_name || auth.session.grower_name || "Grower"}`;
-  }
-
-  if (signoutButton) {
-    signoutButton.addEventListener("click", () => {
-      clearStoredSession();
-      window.location.href = "./signin.html";
-    });
   }
 
   if (!isGrowerCacheFresh()) {
@@ -1773,6 +1768,20 @@ document.addEventListener("click", (event) => {
     }
   }
 });
+document.addEventListener("click", (event) => {
+  const closeButton = event.target.closest("#closeMailboxThreadButton");
+
+  if (closeButton) {
+    event.preventDefault();
+    closeMailboxThreadDrawer();
+  }
+
+  const drawer = document.getElementById("mailboxThreadDrawer");
+
+  if (drawer && event.target === drawer) {
+    closeMailboxThreadDrawer();
+  }
+});
 function zoomToCurrentUserLocation() {
   if (!directoryMap || !currentUserLocation) {
     return;
@@ -1885,4 +1894,719 @@ function renderPaginatedProfileProducts(products, contextId, emptyMessage) {
       }
     </div>
   `;
+}
+
+function initPrivateTopbarActions() {
+  const signoutButton = document.getElementById("signoutButton");
+
+  if (!signoutButton) {
+    return;
+  }
+
+  signoutButton.onclick = () => {
+    clearStoredSession();
+    clearStoredInboxData();
+    clearAllStoredInboxThreadData();
+    window.location.href = "./signin.html";
+  };
+  refreshInboxUnreadCountQuietly();
+}
+let currentInboxEnquiries = [];
+
+async function initInboxPage() {
+  const mailboxList = document.getElementById("mailboxList");
+
+  if (!mailboxList) {
+    return;
+  }
+
+  console.log("Inbox init started");
+
+  const auth = await requireValidSession();
+
+  if (!auth) {
+    return;
+  }
+
+  const filterSelect = document.getElementById("mailboxFilter");
+  const sortSelect = document.getElementById("mailboxSort");
+  const searchInput = document.getElementById("mailboxSearchInput");
+  const refreshButton = document.getElementById("mailboxRefreshButton");
+  const markReadButton = document.getElementById("mailboxMarkReadButton");
+  const markUnreadButton = document.getElementById("mailboxMarkUnreadButton");
+  const deleteButton = document.getElementById("mailboxDeleteButton");
+
+  async function loadInbox(showOverlay = true) {
+    try {
+      if (showOverlay) {
+        showGlobalLoading("Loading inbox...");
+      }
+
+      const result = await apiPost("get_current_grower_inbox_data", {
+        session_token: auth.session.token,
+      });
+
+      console.log("Inbox data loaded", result);
+
+      currentInboxEnquiries = result.enquiries || [];
+      storeInboxData(result);
+
+      renderInbox();
+      updateInboxUnreadDots(result.unread_count || 0);
+      preloadInboxThreadsQuietly(auth.session.token, currentInboxEnquiries);
+    } catch (error) {
+      console.error("Inbox load failed", error);
+
+      mailboxList.innerHTML = `
+        <p class="form-message error">
+          ${escapeHtml(error.message || "Unable to load inbox.")}
+        </p>
+      `;
+    } finally {
+      hideGlobalLoading();
+    }
+  }
+
+  if (filterSelect) {
+    filterSelect.onchange = renderInbox;
+  }
+
+  if (sortSelect) {
+    sortSelect.onchange = renderInbox;
+  }
+
+  if (searchInput) {
+    searchInput.oninput = renderInbox;
+  }
+
+  if (refreshButton) {
+    refreshButton.onclick = async () => {
+      await refreshInboxWithInboundCheck(auth.session.token);
+    };
+  }
+
+  if (markReadButton) {
+    markReadButton.onclick = () => {
+      updateSelectedInboxEnquiries(auth.session.token, "mark_read");
+    };
+  }
+
+  if (markUnreadButton) {
+    markUnreadButton.onclick = () => {
+      updateSelectedInboxEnquiries(auth.session.token, "mark_unread");
+    };
+  }
+
+  if (deleteButton) {
+    deleteButton.onclick = () => {
+      updateSelectedInboxEnquiries(auth.session.token, "delete");
+    };
+  }
+
+  const cachedInbox = getStoredInboxData();
+
+  if (cachedInbox && Array.isArray(cachedInbox.enquiries)) {
+    currentInboxEnquiries = cachedInbox.enquiries || [];
+    renderInbox();
+    updateInboxUnreadDots(cachedInbox.unread_count || 0);
+
+    return;
+  }
+
+  await loadInbox(true);
+}
+function getFilteredInboxEnquiries() {
+  const filterSelect = document.getElementById("mailboxFilter");
+  const sortSelect = document.getElementById("mailboxSort");
+  const searchInput = document.getElementById("mailboxSearchInput");
+
+  const filterValue = filterSelect ? filterSelect.value : "all";
+  const sortValue = sortSelect ? sortSelect.value : "newest";
+  const searchTerm = searchInput ? searchInput.value.trim().toLowerCase() : "";
+
+  let enquiries = [...currentInboxEnquiries];
+
+  if (filterValue === "unread") {
+    enquiries = enquiries.filter((enquiry) => {
+      return String(enquiry.read_status || "unread").toLowerCase() !== "read";
+    });
+  }
+
+  if (filterValue === "read") {
+    enquiries = enquiries.filter((enquiry) => {
+      return String(enquiry.read_status || "unread").toLowerCase() === "read";
+    });
+  }
+
+  if (searchTerm) {
+    enquiries = enquiries.filter((enquiry) => {
+      const searchableText = [
+        enquiry.sender_name,
+        enquiry.sender_email,
+        enquiry.sender_phone,
+        enquiry.enquiry_subject,
+        enquiry.product_name,
+        enquiry.message,
+        enquiry.status,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+      return searchableText.includes(searchTerm);
+    });
+  }
+
+  enquiries.sort((a, b) => {
+    const aDate = String(a.last_message_at || a.created_at || "");
+    const bDate = String(b.last_message_at || b.created_at || "");
+
+    if (sortValue === "oldest") {
+      return aDate.localeCompare(bDate);
+    }
+
+    return bDate.localeCompare(aDate);
+  });
+
+  return enquiries;
+}
+
+function renderInbox() {
+  const mailboxList = document.getElementById("mailboxList");
+  const mailboxCount = document.getElementById("mailboxCount");
+
+  if (!mailboxList) {
+    return;
+  }
+
+  const enquiries = getFilteredInboxEnquiries();
+
+  if (mailboxCount) {
+    mailboxCount.textContent = `${enquiries.length} message thread${enquiries.length === 1 ? "" : "s"}`;
+  }
+
+  if (!enquiries.length) {
+    mailboxList.innerHTML = `
+      <div class="mailbox-empty-state">
+        <p class="muted">No messages found.</p>
+      </div>
+    `;
+    const selectAll = document.getElementById("mailboxSelectAll");
+
+    if (selectAll) {
+      selectAll.checked = false;
+    }
+    return;
+  }
+
+  mailboxList.innerHTML = `
+    <div class="mailbox-table">
+      <div class="mailbox-table-head">
+        <label class="mailbox-row-check mailbox-head-check">
+          <input
+            id="mailboxSelectAll"
+            type="checkbox"
+            aria-label="Select all messages"
+          />
+        </label>
+        <div>Sender</div>
+        <div>Message</div>
+        <div>Status</div>
+        <div>Date</div>
+      </div>
+
+      <div class="mailbox-table-body">
+        ${enquiries
+          .map((enquiry) => {
+            const isUnread =
+              String(enquiry.read_status || "unread").toLowerCase() !== "read";
+
+            return `
+              <article class="mailbox-row ${isUnread ? "is-unread" : ""}">
+                <label class="mailbox-row-check">
+                  <input
+                    class="mailbox-checkbox"
+                    type="checkbox"
+                    value="${escapeHtml(enquiry.enquiry_id)}"
+                    aria-label="Select message from ${escapeHtml(enquiry.sender_name || "sender")}"
+                  />
+                </label>
+
+                <button
+                  class="mailbox-row-main"
+                  type="button"
+                  data-enquiry-id="${escapeHtml(enquiry.enquiry_id)}"
+                >
+                  <span class="mailbox-row-sender">
+                    ${escapeHtml(enquiry.sender_name || "Unknown sender")}
+                  </span>
+
+                  <span class="mailbox-row-message">
+                    <strong>
+                      ${escapeHtml(enquiry.enquiry_subject || "General enquiry")}
+                    </strong>
+                    <span>
+                      ${escapeHtml(enquiry.sender_email || "")}
+                      ${enquiry.sender_phone ? ` · ${escapeHtml(enquiry.sender_phone)}` : ""}
+                      — ${escapeHtml(enquiry.message || "No message")}
+                    </span>
+                  </span>
+
+                  <span class="mailbox-row-status">
+                    ${isUnread ? "Unread" : "Read"}
+                  </span>
+
+                  <span class="mailbox-row-date">
+                    ${escapeHtml(formatDisplayDateTime(enquiry.last_message_at || enquiry.created_at))}
+                  </span>
+                </button>
+              </article>
+            `;
+          })
+          .join("")}
+      </div>
+    </div>
+  `;
+
+  mailboxList.querySelectorAll(".mailbox-row-main").forEach((button) => {
+    button.onclick = () => {
+      const enquiryId = button.getAttribute("data-enquiry-id");
+      const enquiry = currentInboxEnquiries.find(
+        (item) => item.enquiry_id === enquiryId,
+      );
+
+      if (enquiry) {
+        openInboxThread(enquiry);
+      }
+    };
+  });
+}
+
+function getSelectedInboxEnquiryIds() {
+  return Array.from(document.querySelectorAll(".mailbox-checkbox:checked"))
+    .map((checkbox) => checkbox.value)
+    .filter(Boolean);
+}
+
+async function updateSelectedInboxEnquiries(sessionToken, action) {
+  const messageEl = document.getElementById("mailboxMessage");
+  const selectedIds = getSelectedInboxEnquiryIds();
+
+  if (messageEl) {
+    messageEl.textContent = "";
+    messageEl.className = "form-message";
+  }
+
+  if (!selectedIds.length) {
+    if (messageEl) {
+      messageEl.textContent = "Please select at least one message.";
+      messageEl.classList.add("error");
+    }
+    return;
+  }
+
+  try {
+    showGlobalLoading("Updating inbox...");
+
+    const result = await apiPost("update_current_grower_enquiries", {
+      session_token: sessionToken,
+      enquiry_ids: selectedIds,
+      mailbox_action: action,
+    });
+
+    if (messageEl) {
+      messageEl.textContent = result.message || "Inbox updated.";
+      messageEl.classList.add("success");
+    }
+
+    const inboxResult = await apiPost("get_current_grower_inbox_data", {
+      session_token: sessionToken,
+    });
+
+    currentInboxEnquiries = inboxResult.enquiries || [];
+    storeInboxData(inboxResult);
+    clearAllStoredInboxThreadData();
+
+    renderInbox();
+    updateInboxUnreadDots(inboxResult.unread_count || 0);
+  } catch (error) {
+    if (messageEl) {
+      messageEl.textContent = error.message;
+      messageEl.classList.add("error");
+    }
+  } finally {
+    hideGlobalLoading();
+  }
+}
+
+function updateInboxUnreadDots(unreadCount) {
+  document.querySelectorAll(".inbox-unread-dot").forEach((dot) => {
+    dot.classList.toggle("is-visible", Number(unreadCount) > 0);
+  });
+}
+
+async function openInboxThread(enquiry) {
+  const auth = await requireValidSession();
+
+  if (!auth || !enquiry || !enquiry.enquiry_id) {
+    return;
+  }
+
+  const drawer = document.getElementById("mailboxThreadDrawer");
+  const titleEl = document.getElementById("mailboxThreadTitle");
+  const metaEl = document.getElementById("mailboxThreadMeta");
+  const messagesEl = document.getElementById("mailboxThreadMessages");
+  const replyForm = document.getElementById("mailboxReplyForm");
+  const replyMessageEl = document.getElementById("mailboxReplyMessage");
+
+  if (!drawer || !messagesEl) {
+    return;
+  }
+
+  drawer.classList.add("is-open");
+  drawer.setAttribute("aria-hidden", "false");
+  drawer.removeAttribute("inert");
+
+  if (titleEl) {
+    titleEl.textContent = enquiry.sender_name || "Enquiry";
+  }
+
+  if (metaEl) {
+    const senderPhone = cleanPhoneDisplay(enquiry.sender_phone);
+    const phoneText = senderPhone ? ` · ${senderPhone}` : "";
+
+    metaEl.textContent = `${enquiry.enquiry_subject || "General enquiry"} · ${
+      enquiry.sender_email || ""
+    }${phoneText} · ${formatDisplayDateTime(enquiry.created_at)}`;
+  }
+
+  messagesEl.innerHTML = '<p class="muted">Loading thread...</p>';
+
+  if (replyMessageEl) {
+    replyMessageEl.textContent = "";
+    replyMessageEl.className = "form-message";
+  }
+
+  const cachedThread = getStoredInboxThreadData(enquiry.enquiry_id);
+  const shouldFetchFreshThread =
+    String(enquiry.read_status || "unread").toLowerCase() !== "read";
+
+  if (
+    cachedThread &&
+    Array.isArray(cachedThread.messages) &&
+    !shouldFetchFreshThread
+  ) {
+    renderInboxThreadMessages(cachedThread.messages || []);
+  } else {
+    try {
+      const result = await apiPost("get_current_grower_enquiry_thread", {
+        session_token: auth.session.token,
+        enquiry_id: enquiry.enquiry_id,
+        mark_read: true,
+      });
+
+      storeInboxThreadData(enquiry.enquiry_id, result);
+      renderInboxThreadMessages(result.messages || []);
+    } catch (error) {
+      messagesEl.innerHTML = `<p class="form-message error">${escapeHtml(
+        error.message || "Unable to load thread.",
+      )}</p>`;
+      return;
+    }
+  }
+
+  currentInboxEnquiries = currentInboxEnquiries.map((item) => {
+    if (item.enquiry_id !== enquiry.enquiry_id) {
+      return item;
+    }
+
+    return {
+      ...item,
+      read_status: "read",
+      read_at: new Date().toISOString(),
+    };
+  });
+
+  const updatedUnreadCount = currentInboxEnquiries.filter((item) => {
+    return String(item.read_status || "unread").toLowerCase() !== "read";
+  }).length;
+
+  const cachedInbox = getStoredInboxData();
+
+  if (cachedInbox && Array.isArray(cachedInbox.enquiries)) {
+    storeInboxData({
+      ...cachedInbox,
+      enquiries: currentInboxEnquiries,
+      unread_count: updatedUnreadCount,
+    });
+  }
+
+  updateInboxUnreadDots(updatedUnreadCount);
+
+  if (replyForm) {
+    replyForm.onsubmit = async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(replyForm);
+      const replyMessage = String(formData.get("reply_message") || "").trim();
+
+      if (replyMessageEl) {
+        replyMessageEl.textContent = "";
+        replyMessageEl.className = "form-message";
+      }
+
+      if (!replyMessage) {
+        if (replyMessageEl) {
+          replyMessageEl.textContent = "Reply message is required.";
+          replyMessageEl.classList.add("error");
+        }
+
+        return;
+      }
+
+      try {
+        showGlobalLoading("Sending reply...");
+
+        const replyResult = await apiPost("reply_current_grower_enquiry", {
+          session_token: auth.session.token,
+          enquiry_id: enquiry.enquiry_id,
+          message: replyMessage,
+        });
+
+        if (replyMessageEl) {
+          replyMessageEl.textContent = replyResult.message || "Reply sent.";
+          replyMessageEl.className = "form-message success";
+        }
+
+        replyForm.reset();
+
+        const refreshedThread = await apiPost(
+          "get_current_grower_enquiry_thread",
+          {
+            session_token: auth.session.token,
+            enquiry_id: enquiry.enquiry_id,
+          },
+        );
+
+        storeInboxThreadData(enquiry.enquiry_id, refreshedThread);
+        renderInboxThreadMessages(refreshedThread.messages || []);
+
+        const inboxResult = await apiPost("get_current_grower_inbox_data", {
+          session_token: auth.session.token,
+        });
+
+        currentInboxEnquiries = inboxResult.enquiries || [];
+        storeInboxData(inboxResult);
+        updateInboxUnreadDots(inboxResult.unread_count || 0);
+
+        drawer.classList.add("is-open");
+        drawer.setAttribute("aria-hidden", "false");
+        drawer.removeAttribute("inert");
+      } catch (error) {
+        if (replyMessageEl) {
+          replyMessageEl.textContent = error.message || "Unable to send reply.";
+          replyMessageEl.className = "form-message error";
+        }
+      } finally {
+        hideGlobalLoading();
+      }
+    };
+  }
+}
+function renderInboxThreadMessages(messages) {
+  const messagesEl = document.getElementById("mailboxThreadMessages");
+
+  if (!messagesEl) {
+    return;
+  }
+
+  if (!messages.length) {
+    messagesEl.innerHTML =
+      '<p class="muted">No messages found for this thread.</p>';
+    return;
+  }
+
+  messagesEl.innerHTML = messages
+    .map((message) => {
+      const senderType = String(message.sender_type || "").toLowerCase();
+      const isGrower = senderType === "grower";
+
+      return `
+        <article class="mailbox-thread-message ${isGrower ? "is-grower" : "is-public-user"}">
+          <div class="mailbox-thread-message-header">
+            <strong>${escapeHtml(message.sender_name || (isGrower ? "Grower" : "Sender"))}</strong>
+            <span>${escapeHtml(formatDisplayDateTime(message.created_at))}</span>
+          </div>
+
+          <p>${escapeHtml(message.message || "").replace(/\n/g, "<br>")}</p>
+
+          ${
+            message.email_delivery_status
+              ? `<small>Email status: ${escapeHtml(message.email_delivery_status)}</small>`
+              : ""
+          }
+        </article>
+      `;
+    })
+    .join("");
+}
+
+function closeMailboxThreadDrawer() {
+  const drawer = document.getElementById("mailboxThreadDrawer");
+
+  if (!drawer) {
+    return;
+  }
+
+  const activeElement = document.activeElement;
+
+  if (activeElement && drawer.contains(activeElement)) {
+    activeElement.blur();
+  }
+
+  drawer.classList.remove("is-open");
+  drawer.setAttribute("aria-hidden", "true");
+  drawer.setAttribute("inert", "");
+  renderInbox();
+}
+async function refreshInboxUnreadCountQuietly() {
+  const inboxDot = document.querySelector(".inbox-unread-dot");
+
+  if (!inboxDot) {
+    return;
+  }
+
+  const cachedInbox = getStoredInboxData();
+
+  if (!cachedInbox || !Array.isArray(cachedInbox.enquiries)) {
+    updateInboxUnreadDots(0);
+    return;
+  }
+
+  const unreadCount = cachedInbox.enquiries.filter((enquiry) => {
+    return String(enquiry.read_status || "unread").toLowerCase() !== "read";
+  }).length;
+
+  updateInboxUnreadDots(unreadCount);
+}
+function cleanPhoneDisplay(value) {
+  return String(value || "").replace(/^'/, "");
+}
+document.addEventListener("change", (event) => {
+  const selectAll = event.target.closest("#mailboxSelectAll");
+
+  if (!selectAll) {
+    return;
+  }
+
+  const mailboxList = document.getElementById("mailboxList");
+
+  if (!mailboxList) {
+    return;
+  }
+
+  mailboxList.querySelectorAll(".mailbox-checkbox").forEach((checkbox) => {
+    checkbox.checked = selectAll.checked;
+  });
+});
+
+document.addEventListener("change", (event) => {
+  const checkbox = event.target.closest(".mailbox-checkbox");
+
+  if (!checkbox) {
+    return;
+  }
+
+  const mailboxList = document.getElementById("mailboxList");
+  const selectAll = document.getElementById("mailboxSelectAll");
+
+  if (!mailboxList || !selectAll) {
+    return;
+  }
+
+  const checkboxes = Array.from(
+    mailboxList.querySelectorAll(".mailbox-checkbox"),
+  );
+
+  selectAll.checked =
+    checkboxes.length > 0 && checkboxes.every((item) => item.checked);
+});
+async function preloadInboxThreadsQuietly(sessionToken, enquiries, limit = 10) {
+  if (!sessionToken || !Array.isArray(enquiries) || !enquiries.length) {
+    return;
+  }
+
+  const recentEnquiries = [...enquiries]
+    .sort((a, b) => {
+      return String(b.last_message_at || b.created_at || "").localeCompare(
+        String(a.last_message_at || a.created_at || ""),
+      );
+    })
+    .slice(0, limit);
+
+  for (const enquiry of recentEnquiries) {
+    if (!enquiry.enquiry_id) {
+      continue;
+    }
+
+    try {
+      const threadData = await apiPost("get_current_grower_enquiry_thread", {
+        session_token: sessionToken,
+        enquiry_id: enquiry.enquiry_id,
+        mark_read: false,
+      });
+
+      storeInboxThreadData(enquiry.enquiry_id, threadData);
+    } catch (error) {
+      // Do not block inbox loading if a thread preload fails.
+    }
+  }
+}
+async function refreshInboxWithInboundCheck(sessionToken) {
+  const mailboxList = document.getElementById("mailboxList");
+  const messageEl = document.getElementById("mailboxMessage");
+
+  if (messageEl) {
+    messageEl.textContent = "";
+    messageEl.className = "form-message";
+  }
+
+  try {
+    showGlobalLoading("Checking latest messages...");
+
+    await apiPost("check_inbound_enquiry_replies", {
+      session_token: sessionToken,
+    });
+
+    const inboxResult = await apiPost("get_current_grower_inbox_data", {
+      session_token: sessionToken,
+    });
+
+    currentInboxEnquiries = inboxResult.enquiries || [];
+    storeInboxData(inboxResult);
+    clearAllStoredInboxThreadData();
+
+    renderInbox();
+    updateInboxUnreadDots(inboxResult.unread_count || 0);
+
+    if (messageEl) {
+      messageEl.textContent = "Inbox refreshed.";
+      messageEl.classList.add("success");
+    }
+  } catch (error) {
+    if (messageEl) {
+      messageEl.textContent = error.message || "Unable to refresh inbox.";
+      messageEl.classList.add("error");
+    }
+
+    if (mailboxList && !currentInboxEnquiries.length) {
+      mailboxList.innerHTML = `
+        <p class="form-message error">
+          ${escapeHtml(error.message || "Unable to refresh inbox.")}
+        </p>
+      `;
+    }
+  } finally {
+    hideGlobalLoading();
+  }
 }

@@ -130,6 +130,10 @@ async function handleSigninSubmit(event) {
 
     storeGrowerAppData(appData);
 
+    showGlobalLoading("Loading your inbox...");
+
+    await preloadFullInboxData(result.session_token);
+
     refreshPublicDirectoryCacheQuietly();
 
     messageEl.textContent = "Signed in successfully. Redirecting...";
@@ -379,4 +383,115 @@ function getStoredDirectoryUserLocation() {
   } catch (error) {
     return null;
   }
+}
+function storeInboxData(data) {
+  localStorage.setItem("keboon_current_inbox", JSON.stringify(data || null));
+  localStorage.setItem(
+    "keboon_current_inbox_cached_at",
+    new Date().toISOString(),
+  );
+}
+
+function getStoredInboxData() {
+  try {
+    return JSON.parse(localStorage.getItem("keboon_current_inbox") || "null");
+  } catch (error) {
+    return null;
+  }
+}
+
+function clearStoredInboxData() {
+  localStorage.removeItem("keboon_current_inbox");
+  localStorage.removeItem("keboon_current_inbox_cached_at");
+}
+async function refreshInboxDataQuietly(sessionToken) {
+  try {
+    const inboxData = await apiPost("get_current_grower_inbox_data", {
+      session_token: sessionToken,
+    });
+
+    storeInboxData(inboxData);
+  } catch (error) {
+    // Do not block signin if inbox preload fails.
+  }
+}
+function storeInboxThreadData(enquiryId, data) {
+  if (!enquiryId) {
+    return;
+  }
+
+  localStorage.setItem(
+    `keboon_inbox_thread_${enquiryId}`,
+    JSON.stringify(data || null),
+  );
+
+  localStorage.setItem(
+    `keboon_inbox_thread_${enquiryId}_cached_at`,
+    new Date().toISOString(),
+  );
+}
+
+function getStoredInboxThreadData(enquiryId) {
+  if (!enquiryId) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(
+      localStorage.getItem(`keboon_inbox_thread_${enquiryId}`) || "null",
+    );
+  } catch (error) {
+    return null;
+  }
+}
+
+function clearStoredInboxThreadData(enquiryId) {
+  if (!enquiryId) {
+    return;
+  }
+
+  localStorage.removeItem(`keboon_inbox_thread_${enquiryId}`);
+  localStorage.removeItem(`keboon_inbox_thread_${enquiryId}_cached_at`);
+}
+
+function clearAllStoredInboxThreadData() {
+  Object.keys(localStorage).forEach((key) => {
+    if (key.startsWith("keboon_inbox_thread_")) {
+      localStorage.removeItem(key);
+    }
+  });
+}
+async function preloadFullInboxData(sessionToken) {
+  const inboxData = await apiPost("get_current_grower_inbox_data", {
+    session_token: sessionToken,
+  });
+
+  storeInboxData(inboxData);
+
+  const enquiries = inboxData.enquiries || [];
+  const threadResults = [];
+
+  for (const enquiry of enquiries) {
+    if (!enquiry.enquiry_id) {
+      continue;
+    }
+
+    try {
+      const threadData = await apiPost("get_current_grower_enquiry_thread", {
+        session_token: sessionToken,
+        enquiry_id: enquiry.enquiry_id,
+        mark_read: false,
+      });
+
+      storeInboxThreadData(enquiry.enquiry_id, threadData);
+      threadResults.push(threadData);
+    } catch (error) {
+      // Continue loading the rest of the inbox even if one thread fails.
+    }
+  }
+
+  return {
+    inbox: inboxData,
+    threads: threadResults,
+  };
 }

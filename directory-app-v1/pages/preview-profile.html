@@ -1,101 +1,174 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Preview Public Profile | Keboon Directory</title>
+    <title>Preview Public Profile | Keboon Directory</title>
 
-  <link rel="icon" type="image/png" href="../assets/images/logo.png" />
-  <link rel="stylesheet" href="../styles/main.css" />
-</head>
-<body>
-  <div id="globalLoadingOverlay" class="global-loading-overlay" aria-hidden="true">
-    <div class="loading-card">
-      <div class="loading-spinner" aria-hidden="true"></div>
-      <p id="globalLoadingText">Loading...</p>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <link rel="stylesheet" href="../styles/main.css" />
+  </head>
+  <body>
+    <div
+      id="globalLoadingOverlay"
+      class="global-loading-overlay"
+      aria-hidden="true"
+    >
+      <div class="loading-card">
+        <div class="loading-spinner" aria-hidden="true"></div>
+        <p id="globalLoadingText">Loading...</p>
+      </div>
     </div>
-  </div>
 
-  <div class="app-shell">
-    <header class="app-topbar">
-      <div class="app-topbar-inner">
-        <div class="app-topbar-left">
-          <a href="./dashboard.html">
-            <img
-              src="../assets/images/logo-writing.png"
-              alt="Keboon"
-              class="app-topbar-logo"
-            />
-          </a>
+    <div class="app-shell">
+      <header class="app-topbar">
+        <div class="app-topbar-inner">
+          <div class="app-topbar-left">
+            <a href="./dashboard.html">
+              <img
+                src="../assets/images/logo-writing.png"
+                alt="Keboon"
+                class="app-topbar-logo"
+              />
+            </a>
 
-          <div class="app-topbar-title">
-            <p class="app-screen-label">Grower app</p>
-            <p class="app-screen-title">Profile preview</p>
+            <div class="app-topbar-title">
+              <p class="app-screen-label">Grower app</p>
+              <p class="app-screen-title">Profile preview</p>
+            </div>
+          </div>
+
+          <div class="app-topbar-actions">
+            <a
+              class="app-icon-button inbox-icon-link"
+              href="./inbox.html"
+              aria-label="Inbox"
+              title="Inbox"
+            >
+              <span class="inbox-unread-dot" aria-hidden="true"></span>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M4 5h16v14H4V5Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M4 13h4l2 3h4l2-3h4"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+
+            <button
+              id="signoutButton"
+              class="app-icon-button"
+              type="button"
+              aria-label="Log out"
+              title="Log out"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M10 6H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h4"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M15 8l4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M19 12H9"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </button>
           </div>
         </div>
+      </header>
 
-        <a class="secondary-button text-button-link" href="./dashboard.html">
-          Dashboard
-        </a>
-      </div>
-    </header>
+      <main class="app-main">
+        <section class="app-page-header">
+          <p class="eyebrow">Preview</p>
+          <h1>How others view your profile</h1>
+          <p class="muted">
+            This preview uses your current profile and produce data.
+          </p>
+        </section>
 
-    <main class="app-main">
-      <section class="app-page-header">
-        <p class="eyebrow">Preview</p>
-        <h1>How others view your profile</h1>
-        <p class="muted">
-          This preview uses your current profile and produce data.
-        </p>
-      </section>
+        <section id="profilePreviewContent" class="content-card">
+          <p class="muted">Loading preview...</p>
+        </section>
+      </main>
 
-      <section id="profilePreviewContent" class="content-card">
-        <p class="muted">Loading preview...</p>
-      </section>
-    </main>
+      <nav class="app-bottom-nav" aria-label="Grower app navigation">
+        <div class="app-bottom-nav-inner">
+          <a class="app-bottom-link" href="./dashboard.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z"
+                stroke="currentColor"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span>Home</span>
+          </a>
 
-    <nav class="app-bottom-nav" aria-label="Grower app navigation">
-      <div class="app-bottom-nav-inner">
-        <a class="app-bottom-link" href="./dashboard.html">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z" stroke="currentColor" stroke-linejoin="round"/>
-          </svg>
-          <span>Home</span>
-        </a>
+          <a class="app-bottom-link" href="./edit-profile.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"
+                stroke="currentColor"
+              />
+              <path
+                d="M4 21a8 8 0 0 1 16 0"
+                stroke="currentColor"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span>Profile</span>
+          </a>
 
-        <a class="app-bottom-link" href="./edit-profile.html">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor"/>
-            <path d="M4 21a8 8 0 0 1 16 0" stroke="currentColor" stroke-linecap="round"/>
-          </svg>
-          <span>Profile</span>
-        </a>
+          <a class="app-bottom-link" href="./manage-produce.html">
+            <img
+              src="../assets/icons/produce.svg"
+              alt=""
+              class="app-nav-icon-img"
+              aria-hidden="true"
+            />
+            <span>Produce</span>
+          </a>
 
-        <a class="app-bottom-link" href="./manage-produce.html">
-  <img
-    src="../assets/icons/produce.svg"
-    alt=""
-    class="app-nav-icon-img"
-    aria-hidden="true"
-  />
-  <span>Produce</span>
-</a>
+          <a class="app-bottom-link is-active" href="./preview-profile.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
+                stroke="currentColor"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                stroke="currentColor"
+              />
+            </svg>
+            <span>Preview</span>
+          </a>
+        </div>
+      </nav>
+    </div>
 
-        <a class="app-bottom-link is-active" href="./preview-profile.html">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" stroke="currentColor" stroke-linejoin="round"/>
-            <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor"/>
-          </svg>
-          <span>Preview</span>
-        </a>
-      </div>
-    </nav>
-  </div>
-
-  <script src="../scripts/config.js"></script>
-  <script src="../scripts/api.js"></script>
-  <script src="../scripts/auth.js"></script>
-  <script src="../scripts/app.js"></script>
-</body>
+    <script src="../scripts/config.js"></script>
+    <script src="../scripts/api.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/app.js"></script>
+  </body>
 </html>

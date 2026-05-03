@@ -1,222 +1,310 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Manage Produce | Keboon Directory</title>
+    <title>Manage Produce | Keboon Directory</title>
 
-  <link rel="icon" type="image/png" href="../assets/images/logo.png" />
-  <link rel="stylesheet" href="../styles/main.css" />
-</head>
-<body>
-  <div id="globalLoadingOverlay" class="global-loading-overlay" aria-hidden="true">
-    <div class="loading-card">
-      <div class="loading-spinner" aria-hidden="true"></div>
-      <p id="globalLoadingText">Loading...</p>
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <link rel="stylesheet" href="../styles/main.css" />
+  </head>
+  <body>
+    <div
+      id="globalLoadingOverlay"
+      class="global-loading-overlay"
+      aria-hidden="true"
+    >
+      <div class="loading-card">
+        <div class="loading-spinner" aria-hidden="true"></div>
+        <p id="globalLoadingText">Loading...</p>
+      </div>
     </div>
-  </div>
 
-  <div class="app-shell">
-    <header class="app-topbar">
-      <div class="app-topbar-inner">
-        <div class="app-topbar-left">
-          <a href="./dashboard.html">
-            <img
-              src="../assets/images/logo-writing.png"
-              alt="Keboon"
-              class="app-topbar-logo"
-            />
-          </a>
+    <div class="app-shell">
+      <header class="app-topbar">
+        <div class="app-topbar-inner">
+          <div class="app-topbar-left">
+            <a href="./dashboard.html">
+              <img
+                src="../assets/images/logo-writing.png"
+                alt="Keboon"
+                class="app-topbar-logo"
+              />
+            </a>
 
-          <div class="app-topbar-title">
-            <p class="app-screen-label">Grower app</p>
-            <p class="app-screen-title">Manage produce</p>
+            <div class="app-topbar-title">
+              <p class="app-screen-label">Grower app</p>
+              <p class="app-screen-title">Manage produce</p>
+            </div>
+          </div>
+
+          <div class="app-topbar-actions">
+            <a
+              class="app-icon-button inbox-icon-link"
+              href="./inbox.html"
+              aria-label="Inbox"
+              title="Inbox"
+            >
+              <span class="inbox-unread-dot" aria-hidden="true"></span>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M4 5h16v14H4V5Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M4 13h4l2 3h4l2-3h4"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+
+            <button
+              id="signoutButton"
+              class="app-icon-button"
+              type="button"
+              aria-label="Log out"
+              title="Log out"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M10 6H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h4"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M15 8l4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M19 12H9"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </button>
           </div>
         </div>
+      </header>
 
-        <a class="secondary-button text-button-link" href="./dashboard.html">
-          Dashboard
-        </a>
-      </div>
-    </header>
+      <main class="app-main">
+        <section class="app-page-header">
+          <p class="eyebrow">Produce listings</p>
+          <h1>Manage produce</h1>
+          <p class="muted">
+            Add and update the produce currently available from your grower
+            profile.
+          </p>
+        </section>
 
-    <main class="app-main">
-      <section class="app-page-header">
-        <p class="eyebrow">Produce listings</p>
-        <h1>Manage produce</h1>
-        <p class="muted">
-          Add and update the produce currently available from your grower profile.
-        </p>
-      </section>
+        <section class="produce-app-layout">
+          <div class="produce-toolbar">
+            <div>
+              <h2>Your produce</h2>
+              <p class="muted">
+                Add, edit, or hide produce from your public profile.
+              </p>
+            </div>
 
-      <section class="produce-app-layout">
-  <div class="produce-toolbar">
-    <div>
-      <h2>Your produce</h2>
-      <p class="muted">
-        Add, edit, or hide produce from your public profile.
-      </p>
+            <button id="addProduceButton" type="button" class="primary-button">
+              Add produce
+            </button>
+          </div>
+
+          <div id="produceList" class="produce-crud-list">
+            <p class="muted">Loading produce...</p>
+          </div>
+
+          <section
+            id="produceEditorPanel"
+            class="produce-editor-panel"
+            aria-hidden="true"
+          >
+            <div class="produce-editor-card">
+              <div class="produce-editor-header">
+                <div>
+                  <p class="eyebrow">Produce editor</p>
+                  <h2 id="produceFormTitle">Add produce</h2>
+                </div>
+
+                <button
+                  id="closeProduceEditorButton"
+                  type="button"
+                  class="secondary-button"
+                >
+                  Close
+                </button>
+              </div>
+
+              <form id="produceForm" class="form-stack">
+                <input type="hidden" name="product_id" />
+
+                <label>
+                  Produce Name
+                  <input
+                    type="text"
+                    name="product_name"
+                    placeholder="Example: Fresh mint"
+                    required
+                  />
+                </label>
+
+                <label>
+                  Category
+                  <select name="category" required>
+                    <option value="">Select category</option>
+                    <option value="Vegetables">Vegetables</option>
+                    <option value="Herbs">Herbs</option>
+                    <option value="Fruits">Fruits</option>
+                    <option value="Eggs">Eggs</option>
+                    <option value="Honey">Honey</option>
+                    <option value="Plants">Plants</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </label>
+
+                <label>
+                  Description
+                  <textarea
+                    name="description"
+                    rows="4"
+                    placeholder="Describe the produce, freshness, growing method, or pickup notes"
+                  ></textarea>
+                </label>
+
+                <label>
+                  Price Text
+                  <input
+                    type="text"
+                    name="price_text"
+                    placeholder="Example: RM5 per bundle, price varies, free sharing"
+                  />
+                </label>
+
+                <label>
+                  Availability
+                  <select name="availability_status" required>
+                    <option value="available">Available</option>
+                    <option value="seasonal">Seasonal</option>
+                    <option value="currently_unavailable">
+                      Currently unavailable
+                    </option>
+                    <option value="hidden">Hidden</option>
+                  </select>
+                </label>
+
+                <label>
+                  Harvest Timing
+                  <input
+                    type="text"
+                    name="harvest_timing"
+                    placeholder="Example: Available this weekend"
+                  />
+                </label>
+
+                <label>
+                  Pickup Options
+                  <textarea
+                    name="pickup_options"
+                    rows="3"
+                    placeholder="Example: Self pickup only, pickup by appointment"
+                  ></textarea>
+                </label>
+
+                <label class="checkbox-label">
+                  <input type="checkbox" name="is_public" checked />
+                  Show this produce publicly
+                </label>
+
+                <div class="form-actions">
+                  <button type="submit" class="primary-button">
+                    Save produce
+                  </button>
+
+                  <button
+                    id="clearProduceFormButton"
+                    type="button"
+                    class="secondary-button"
+                  >
+                    Clear form
+                  </button>
+                </div>
+
+                <p id="produceMessage" class="form-message"></p>
+              </form>
+            </div>
+          </section>
+        </section>
+      </main>
+
+      <nav class="app-bottom-nav" aria-label="Grower app navigation">
+        <div class="app-bottom-nav-inner">
+          <a class="app-bottom-link" href="./dashboard.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z"
+                stroke="currentColor"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span>Home</span>
+          </a>
+
+          <a class="app-bottom-link" href="./edit-profile.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"
+                stroke="currentColor"
+              />
+              <path
+                d="M4 21a8 8 0 0 1 16 0"
+                stroke="currentColor"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span>Profile</span>
+          </a>
+
+          <a class="app-bottom-link" href="./manage-produce.html">
+            <img
+              src="../assets/icons/produce.svg"
+              alt=""
+              class="app-nav-icon-img"
+              aria-hidden="true"
+            />
+            <span>Produce</span>
+          </a>
+
+          <a class="app-bottom-link" href="./preview-profile.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
+                stroke="currentColor"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                stroke="currentColor"
+              />
+            </svg>
+            <span>Preview</span>
+          </a>
+        </div>
+      </nav>
     </div>
 
-    <button id="addProduceButton" type="button" class="primary-button">
-      Add produce
-    </button>
-  </div>
-
-  <div id="produceList" class="produce-crud-list">
-    <p class="muted">Loading produce...</p>
-  </div>
-
-  <section id="produceEditorPanel" class="produce-editor-panel" aria-hidden="true">
-    <div class="produce-editor-card">
-      <div class="produce-editor-header">
-        <div>
-          <p class="eyebrow">Produce editor</p>
-          <h2 id="produceFormTitle">Add produce</h2>
-        </div>
-
-        <button id="closeProduceEditorButton" type="button" class="secondary-button">
-          Close
-        </button>
-      </div>
-
-      <form id="produceForm" class="form-stack">
-        <input type="hidden" name="product_id" />
-
-        <label>
-          Produce Name
-          <input
-            type="text"
-            name="product_name"
-            placeholder="Example: Fresh mint"
-            required
-          />
-        </label>
-
-        <label>
-          Category
-          <select name="category" required>
-            <option value="">Select category</option>
-            <option value="Vegetables">Vegetables</option>
-            <option value="Herbs">Herbs</option>
-            <option value="Fruits">Fruits</option>
-            <option value="Eggs">Eggs</option>
-            <option value="Honey">Honey</option>
-            <option value="Plants">Plants</option>
-            <option value="Other">Other</option>
-          </select>
-        </label>
-
-        <label>
-          Description
-          <textarea
-            name="description"
-            rows="4"
-            placeholder="Describe the produce, freshness, growing method, or pickup notes"
-          ></textarea>
-        </label>
-
-        <label>
-          Price Text
-          <input
-            type="text"
-            name="price_text"
-            placeholder="Example: RM5 per bundle, price varies, free sharing"
-          />
-        </label>
-
-        <label>
-          Availability
-          <select name="availability_status" required>
-            <option value="available">Available</option>
-            <option value="seasonal">Seasonal</option>
-            <option value="currently_unavailable">Currently unavailable</option>
-            <option value="hidden">Hidden</option>
-          </select>
-        </label>
-
-        <label>
-          Harvest Timing
-          <input
-            type="text"
-            name="harvest_timing"
-            placeholder="Example: Available this weekend"
-          />
-        </label>
-
-        <label>
-          Pickup Options
-          <textarea
-            name="pickup_options"
-            rows="3"
-            placeholder="Example: Self pickup only, pickup by appointment"
-          ></textarea>
-        </label>
-
-        <label class="checkbox-label">
-          <input type="checkbox" name="is_public" checked />
-          Show this produce publicly
-        </label>
-
-        <div class="form-actions">
-          <button type="submit" class="primary-button">
-            Save produce
-          </button>
-
-          <button id="clearProduceFormButton" type="button" class="secondary-button">
-            Clear form
-          </button>
-        </div>
-
-        <p id="produceMessage" class="form-message"></p>
-      </form>
-    </div>
-  </section>
-</section>
-    </main>
-
-    <nav class="app-bottom-nav" aria-label="Grower app navigation">
-      <div class="app-bottom-nav-inner">
-        <a class="app-bottom-link" href="./dashboard.html">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z" stroke="currentColor" stroke-linejoin="round"/>
-          </svg>
-          <span>Home</span>
-        </a>
-
-        <a class="app-bottom-link" href="./edit-profile.html">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor"/>
-            <path d="M4 21a8 8 0 0 1 16 0" stroke="currentColor" stroke-linecap="round"/>
-          </svg>
-          <span>Profile</span>
-        </a>
-
-        <a class="app-bottom-link" href="./manage-produce.html">
-  <img
-    src="../assets/icons/produce.svg"
-    alt=""
-    class="app-nav-icon-img"
-    aria-hidden="true"
-  />
-  <span>Produce</span>
-</a>
-
-        <a class="app-bottom-link" href="./preview-profile.html">
-  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" stroke="currentColor" stroke-linejoin="round"/>
-    <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" stroke="currentColor"/>
-  </svg>
-  <span>Preview</span>
-</a>
-      </div>
-    </nav>
-  </div>
-
-  <script src="../scripts/config.js"></script>
-  <script src="../scripts/api.js"></script>
-  <script src="../scripts/auth.js"></script>
-  <script src="../scripts/app.js"></script>
-</body>
+    <script src="../scripts/config.js"></script>
+    <script src="../scripts/api.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/app.js"></script>
+  </body>
 </html>
