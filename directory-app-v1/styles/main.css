@@ -3113,16 +3113,6 @@ body:has(#mailboxList) .mailbox-list {
   font-weight: 950;
 }
 
-.mailbox-row.is-unread::before {
-  content: "";
-  width: 4px;
-  background: var(--green);
-  display: block;
-  grid-row: 1;
-  grid-column: 1;
-  justify-self: start;
-  align-self: stretch;
-}
 /* Cleaner unread inbox highlight without breaking layout */
 
 .mailbox-row.is-unread {
@@ -3165,5 +3155,58 @@ body:has(#mailboxList) .mailbox-list {
     height: 11px;
     top: 4px;
     right: 4px;
+  }
+}
+/* Safer inbox checkbox alignment fix */
+
+.mailbox-table-head {
+  align-items: center;
+}
+
+.mailbox-row {
+  align-items: stretch;
+}
+
+.mailbox-row-check,
+.mailbox-head-check {
+  width: 42px;
+  min-width: 42px;
+  max-width: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.mailbox-row-check input,
+.mailbox-head-check input,
+.mailbox-checkbox,
+#mailboxSelectAll {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  flex: 0 0 auto;
+  position: relative;
+  top: 0;
+  left: 0;
+  transform: none;
+}
+
+@media (max-width: 900px) {
+  .mailbox-table-head {
+    grid-template-columns: 42px minmax(0, 1fr);
+  }
+
+  .mailbox-row {
+    grid-template-columns: 42px minmax(0, 1fr);
+  }
+
+  .mailbox-row-check,
+  .mailbox-head-check {
+    width: 42px;
+    min-width: 42px;
+    max-width: 42px;
   }
 }
