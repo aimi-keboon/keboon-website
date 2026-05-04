@@ -3184,8 +3184,8 @@ body:has(#mailboxList) .mailbox-list {
 .mailbox-head-check input,
 .mailbox-checkbox,
 #mailboxSelectAll {
-  width: 22px;
-  height: 22px;
+  width: 10px;
+  height: 10px;
   margin: 0;
   flex: 0 0 auto;
   position: relative;
