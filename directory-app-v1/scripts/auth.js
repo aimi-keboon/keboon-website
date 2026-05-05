@@ -122,6 +122,16 @@ async function handleSigninSubmit(event) {
     localStorage.setItem("keboon_grower_id", result.grower_id);
     localStorage.setItem("keboon_grower_name", result.grower_name || "");
 
+    try {
+      const inboxData = await apiPost("get_current_grower_inbox_data", {
+        session_token: result.session_token,
+      });
+
+      storeInboxData(inboxData);
+    } catch (error) {
+      // Do not block signin if unread count preload fails.
+    }
+
     messageEl.textContent = "Signed in successfully. Redirecting...";
 
     window.location.href = "./dashboard.html";

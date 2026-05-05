@@ -2623,6 +2623,7 @@ async function initDashboardPage() {
   if (!auth) {
     return;
   }
+  refreshInboxUnreadCountQuietly();
 
   if (dashboardTitle) {
     dashboardTitle.textContent = `Welcome, ${auth.grower?.grower_name || auth.session.grower_name || "Grower"}`;
