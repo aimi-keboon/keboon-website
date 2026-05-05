@@ -2311,6 +2311,11 @@ async function openInboxThread(enquiry) {
   if (!auth || !enquiry || !enquiry.enquiry_id) {
     return;
   }
+  const currentGrowerEmail =
+    auth.grower?.email ||
+    getStoredGrower()?.email ||
+    getStoredSession()?.email ||
+    "";
 
   const drawer = document.getElementById("mailboxThreadDrawer");
   const titleEl = document.getElementById("mailboxThreadTitle");
@@ -2370,7 +2375,7 @@ async function openInboxThread(enquiry) {
     Array.isArray(cachedThread.messages) &&
     !shouldFetchFreshThread
   ) {
-    renderInboxThreadMessages(cachedThread.messages || []);
+    renderInboxThreadMessages(cachedThread.messages || [], currentGrowerEmail);
   } else {
     try {
       const result = await apiPost("get_current_grower_enquiry_thread", {
@@ -2380,7 +2385,7 @@ async function openInboxThread(enquiry) {
       });
 
       storeInboxThreadData(enquiry.enquiry_id, result);
-      renderInboxThreadMessages(result.messages || []);
+      renderInboxThreadMessages(result.messages || [], currentGrowerEmail);
     } catch (error) {
       messagesEl.innerHTML = `<p class="form-message error">${escapeHtml(
         error.message || "Unable to load thread.",
@@ -2438,9 +2443,47 @@ async function openInboxThread(enquiry) {
         return;
       }
 
-      try {
-        showGlobalLoading("Sending reply...");
+      const optimisticMessage = {
+        message_id: `temp_${Date.now()}`,
+        enquiry_id: enquiry.enquiry_id,
+        sender_type: "grower",
+        sender_name:
+          auth.grower?.grower_name ||
+          auth.session?.grower_name ||
+          getStoredSession()?.grower_name ||
+          "You",
+        sender_email: currentGrowerEmail,
+        message: replyMessage,
+        created_at: new Date().toISOString(),
+        email_delivery_status: "sending",
+        is_optimistic: true,
+      };
 
+      const cachedThread = getStoredInboxThreadData(enquiry.enquiry_id);
+      const existingMessages =
+        cachedThread && Array.isArray(cachedThread.messages)
+          ? cachedThread.messages
+          : [];
+
+      const optimisticThread = {
+        ...(cachedThread || {}),
+        messages: [...existingMessages, optimisticMessage],
+      };
+
+      storeInboxThreadData(enquiry.enquiry_id, optimisticThread);
+      renderInboxThreadMessages(
+        optimisticThread.messages || [],
+        currentGrowerEmail,
+      );
+
+      replyForm.reset();
+
+      if (replyMessageEl) {
+        replyMessageEl.textContent = "Sending...";
+        replyMessageEl.className = "form-message muted";
+      }
+
+      try {
         const replyResult = await apiPost("reply_current_grower_enquiry", {
           session_token: auth.session.token,
           enquiry_id: enquiry.enquiry_id,
@@ -2452,8 +2495,6 @@ async function openInboxThread(enquiry) {
           replyMessageEl.className = "form-message success";
         }
 
-        replyForm.reset();
-
         const refreshedThread = await apiPost(
           "get_current_grower_enquiry_thread",
           {
@@ -2464,7 +2505,10 @@ async function openInboxThread(enquiry) {
         );
 
         storeInboxThreadData(enquiry.enquiry_id, refreshedThread);
-        renderInboxThreadMessages(refreshedThread.messages || []);
+        renderInboxThreadMessages(
+          refreshedThread.messages || [],
+          currentGrowerEmail,
+        );
 
         const inboxResult = await apiPost("get_current_grower_inbox_data", {
           session_token: auth.session.token,
@@ -2478,17 +2522,37 @@ async function openInboxThread(enquiry) {
         drawer.setAttribute("aria-hidden", "false");
         drawer.removeAttribute("inert");
       } catch (error) {
+        const failedThread = getStoredInboxThreadData(enquiry.enquiry_id);
+
+        if (failedThread && Array.isArray(failedThread.messages)) {
+          failedThread.messages = failedThread.messages.map((message) => {
+            if (message.message_id !== optimisticMessage.message_id) {
+              return message;
+            }
+
+            return {
+              ...message,
+              email_delivery_status: "failed",
+              send_error: error.message || "Unable to send reply.",
+            };
+          });
+
+          storeInboxThreadData(enquiry.enquiry_id, failedThread);
+          renderInboxThreadMessages(
+            failedThread.messages || [],
+            currentGrowerEmail,
+          );
+        }
+
         if (replyMessageEl) {
           replyMessageEl.textContent = error.message || "Unable to send reply.";
           replyMessageEl.className = "form-message error";
         }
-      } finally {
-        hideGlobalLoading();
       }
     };
   }
 }
-function renderInboxThreadMessages(messages) {
+function renderInboxThreadMessages(messages, currentUserEmail = "") {
   const messagesEl = document.getElementById("mailboxThreadMessages");
 
   if (!messagesEl) {
@@ -2501,23 +2565,54 @@ function renderInboxThreadMessages(messages) {
     return;
   }
 
+  const cleanCurrentUserEmail = String(currentUserEmail || "")
+    .trim()
+    .toLowerCase();
+
   messagesEl.innerHTML = messages
     .map((message) => {
       const senderType = String(message.sender_type || "").toLowerCase();
-      const isGrower = senderType === "grower";
+      const senderEmail = String(message.sender_email || "")
+        .trim()
+        .toLowerCase();
+
+      const isMyMessage =
+        cleanCurrentUserEmail && senderEmail === cleanCurrentUserEmail;
+
+      const bubbleClass = isMyMessage
+        ? "is-my-message"
+        : senderType === "grower"
+          ? "is-other-grower"
+          : "is-public-user";
 
       return `
-        <article class="mailbox-thread-message ${isGrower ? "is-grower" : "is-public-user"}">
+        <article class="mailbox-thread-message ${bubbleClass}">
           <div class="mailbox-thread-message-header">
-            <strong>${escapeHtml(message.sender_name || (isGrower ? "Grower" : "Sender"))}</strong>
+            <strong>${escapeHtml(
+              message.sender_name ||
+                (isMyMessage
+                  ? "You"
+                  : senderType === "grower"
+                    ? "Grower"
+                    : "Sender"),
+            )}</strong>
             <span>${escapeHtml(formatDisplayDateTime(message.created_at))}</span>
           </div>
 
           <p>${escapeHtml(message.message || "").replace(/\n/g, "<br>")}</p>
 
           ${
-            message.email_delivery_status
-              ? `<small>Email status: ${escapeHtml(message.email_delivery_status)}</small>`
+            message.email_delivery_status &&
+            message.email_delivery_status !== "not_sent"
+              ? `<small class="${message.email_delivery_status === "failed" ? "message-send-failed" : ""}">
+        ${
+          message.email_delivery_status === "sending"
+            ? "Sending..."
+            : message.email_delivery_status === "failed"
+              ? `Failed to send${message.send_error ? `: ${escapeHtml(message.send_error)}` : ""}`
+              : `Email status: ${escapeHtml(message.email_delivery_status)}`
+        }
+      </small>`
               : ""
           }
         </article>

@@ -3260,3 +3260,44 @@ body:has(#mailboxList) .mailbox-list {
     padding-right: 14px;
   }
 }
+/* Inbox thread bubble alignment */
+
+.mailbox-thread-message {
+  max-width: 78%;
+  margin-bottom: 12px;
+}
+
+.mailbox-thread-message.is-my-message {
+  margin-left: auto;
+  margin-right: 0;
+  background: #e6efe2;
+  border-color: #b9d7b4;
+}
+
+.mailbox-thread-message.is-other-grower,
+.mailbox-thread-message.is-public-user {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.mailbox-thread-message.is-other-grower {
+  background: #ffffff;
+}
+
+.mailbox-thread-message.is-public-user {
+  background: #fffaf0;
+}
+
+.mailbox-thread-message.is-my-message .mailbox-thread-message-header {
+  text-align: right;
+}
+
+@media (max-width: 640px) {
+  .mailbox-thread-message {
+    max-width: 88%;
+  }
+}
+.message-send-failed {
+  color: #d92d20;
+  font-weight: 700;
+}

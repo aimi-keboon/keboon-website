@@ -121,6 +121,7 @@ async function handleSigninSubmit(event) {
     );
     localStorage.setItem("keboon_grower_id", result.grower_id);
     localStorage.setItem("keboon_grower_name", result.grower_name || "");
+    localStorage.setItem("keboon_grower_email", result.email || "");
 
     try {
       const inboxData = await apiPost("get_current_grower_inbox_data", {
@@ -150,6 +151,7 @@ function getStoredSession() {
     expires_at: localStorage.getItem("keboon_session_expires_at"),
     grower_id: localStorage.getItem("keboon_grower_id"),
     grower_name: localStorage.getItem("keboon_grower_name"),
+    email: localStorage.getItem("keboon_grower_email"),
   };
 }
 
@@ -158,6 +160,7 @@ function clearStoredSession() {
   localStorage.removeItem("keboon_session_expires_at");
   localStorage.removeItem("keboon_grower_id");
   localStorage.removeItem("keboon_grower_name");
+  localStorage.removeItem("keboon_grower_email");
   clearStoredGrowerAppData();
 }
 
