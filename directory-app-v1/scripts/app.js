@@ -1031,20 +1031,38 @@ function openGrowerDrawer(grower) {
         </select>
       </label>
 
-      <label>
-        Your Name
-        <input type="text" name="sender_name" required />
-      </label>
+      ${(() => {
+        const session =
+          typeof getStoredSession === "function" ? getStoredSession() : null;
 
-      <label>
-        Your Email
-        <input type="email" name="sender_email" required />
-      </label>
+        const isLoggedInGrower = Boolean(session && session.token);
 
-      <label>
-        Your Phone
-        <input type="tel" name="sender_phone" />
-      </label>
+        if (isLoggedInGrower) {
+          return `
+      <div class="enquiry-signed-in-note">
+        <strong>Sending as ${escapeHtml(session.grower_name || "your grower account")}</strong>
+        <span>Your grower account details will be used for this enquiry.</span>
+      </div>
+    `;
+        }
+
+        return `
+    <label>
+      Your Name
+      <input type="text" name="sender_name" required />
+    </label>
+
+    <label>
+      Your Email
+      <input type="email" name="sender_email" required />
+    </label>
+
+    <label>
+      Your Phone
+      <input type="tel" name="sender_phone" />
+    </label>
+  `;
+      })()}
 
       <label>
         Message
@@ -1111,16 +1129,25 @@ function initPublicEnquiryForm() {
 
     try {
       const formData = new FormData(form);
+      const session =
+        typeof getStoredSession === "function" ? getStoredSession() : null;
 
-      const result = await apiPost("submit_public_enquiry", {
+      const payload = {
         grower_id: formData.get("grower_id"),
         product_id: formData.get("product_id"),
-        sender_name: formData.get("sender_name"),
-        sender_email: formData.get("sender_email"),
-        sender_phone: formData.get("sender_phone"),
         message: formData.get("message"),
         source_page: "public_directory",
-      });
+      };
+
+      if (session && session.token) {
+        payload.session_token = session.token;
+      } else {
+        payload.sender_name = formData.get("sender_name");
+        payload.sender_email = formData.get("sender_email");
+        payload.sender_phone = formData.get("sender_phone");
+      }
+
+      const result = await apiPost("submit_public_enquiry", payload);
 
       messageEl.textContent = result.message || "Your enquiry has been sent.";
       messageEl.classList.add("success");
@@ -2091,11 +2118,13 @@ function renderInbox() {
         <p class="muted">No messages found.</p>
       </div>
     `;
+
     const selectAll = document.getElementById("mailboxSelectAll");
 
     if (selectAll) {
       selectAll.checked = false;
     }
+
     return;
   }
 
@@ -2121,6 +2150,32 @@ function renderInbox() {
             const isUnread =
               String(enquiry.read_status || "unread").toLowerCase() !== "read";
 
+            const isSentThread = enquiry.inbox_direction === "sent";
+
+            const partyLabel = isSentThread ? "To" : "From";
+
+            const partyName = isSentThread
+              ? enquiry.grower_name || enquiry.recipient_grower_name || "Grower"
+              : enquiry.sender_name || "Unknown sender";
+
+            const partyEmail = isSentThread
+              ? enquiry.grower_email || enquiry.recipient_grower_email || ""
+              : enquiry.sender_email || "";
+
+            const previewParts = [];
+
+            if (partyEmail) {
+              previewParts.push(partyEmail);
+            }
+
+            if (!isSentThread && enquiry.sender_phone) {
+              previewParts.push(enquiry.sender_phone);
+            }
+
+            const previewMeta = previewParts.length
+              ? `${previewParts.map((part) => escapeHtml(part)).join(" · ")} — `
+              : "";
+
             return `
               <article class="mailbox-row ${isUnread ? "is-unread" : ""}">
                 <label class="mailbox-row-check">
@@ -2128,7 +2183,7 @@ function renderInbox() {
                     class="mailbox-checkbox"
                     type="checkbox"
                     value="${escapeHtml(enquiry.enquiry_id)}"
-                    aria-label="Select message from ${escapeHtml(enquiry.sender_name || "sender")}"
+                    aria-label="Select message from ${escapeHtml(partyName)}"
                   />
                 </label>
 
@@ -2138,7 +2193,8 @@ function renderInbox() {
                   data-enquiry-id="${escapeHtml(enquiry.enquiry_id)}"
                 >
                   <span class="mailbox-row-sender">
-                    ${escapeHtml(enquiry.sender_name || "Unknown sender")}
+                    <span class="mailbox-direction-label">${partyLabel}</span>
+                    ${escapeHtml(partyName)}
                   </span>
 
                   <span class="mailbox-row-message">
@@ -2146,9 +2202,7 @@ function renderInbox() {
                       ${escapeHtml(enquiry.enquiry_subject || "General enquiry")}
                     </strong>
                     <span>
-                      ${escapeHtml(enquiry.sender_email || "")}
-                      ${enquiry.sender_phone ? ` · ${escapeHtml(enquiry.sender_phone)}` : ""}
-                      — ${escapeHtml(enquiry.message || "No message")}
+                      ${previewMeta}${escapeHtml(enquiry.message || "No message")}
                     </span>
                   </span>
 
@@ -2167,6 +2221,12 @@ function renderInbox() {
       </div>
     </div>
   `;
+
+  const selectAll = document.getElementById("mailboxSelectAll");
+
+  if (selectAll) {
+    selectAll.checked = false;
+  }
 
   mailboxList.querySelectorAll(".mailbox-row-main").forEach((button) => {
     button.onclick = () => {
@@ -2263,21 +2323,35 @@ async function openInboxThread(enquiry) {
     return;
   }
 
+  const isSentThread = enquiry.inbox_direction === "sent";
+
+  const threadPartyName = isSentThread
+    ? enquiry.recipient_grower_name || "Grower"
+    : enquiry.sender_name || "Enquiry";
+
+  const threadPartyEmail = isSentThread
+    ? enquiry.recipient_grower_email || ""
+    : enquiry.sender_email || "";
+
   drawer.classList.add("is-open");
   drawer.setAttribute("aria-hidden", "false");
   drawer.removeAttribute("inert");
 
   if (titleEl) {
-    titleEl.textContent = enquiry.sender_name || "Enquiry";
+    titleEl.textContent = `${isSentThread ? "To" : "From"} ${threadPartyName}`;
   }
 
   if (metaEl) {
-    const senderPhone = cleanPhoneDisplay(enquiry.sender_phone);
-    const phoneText = senderPhone ? ` · ${senderPhone}` : "";
+    const senderPhone = !isSentThread
+      ? cleanPhoneDisplay(enquiry.sender_phone)
+      : "";
 
-    metaEl.textContent = `${enquiry.enquiry_subject || "General enquiry"} · ${
-      enquiry.sender_email || ""
-    }${phoneText} · ${formatDisplayDateTime(enquiry.created_at)}`;
+    const phoneText = senderPhone ? ` · ${senderPhone}` : "";
+    const emailText = threadPartyEmail ? ` · ${threadPartyEmail}` : "";
+
+    metaEl.textContent = `${enquiry.enquiry_subject || "General enquiry"}${emailText}${phoneText} · ${formatDisplayDateTime(
+      enquiry.created_at,
+    )}`;
   }
 
   messagesEl.innerHTML = '<p class="muted">Loading thread...</p>';
@@ -2385,6 +2459,7 @@ async function openInboxThread(enquiry) {
           {
             session_token: auth.session.token,
             enquiry_id: enquiry.enquiry_id,
+            mark_read: true,
           },
         );
 
