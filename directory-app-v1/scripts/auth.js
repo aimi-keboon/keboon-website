@@ -122,28 +122,12 @@ async function handleSigninSubmit(event) {
     localStorage.setItem("keboon_grower_id", result.grower_id);
     localStorage.setItem("keboon_grower_name", result.grower_name || "");
 
-    showGlobalLoading("Loading your profile and produce...");
-
-    const appData = await apiPost("get_current_grower_app_data", {
-      session_token: result.session_token,
-    });
-
-    storeGrowerAppData(appData);
-
-    showGlobalLoading("Loading your inbox...");
-
-    await preloadFullInboxData(result.session_token);
-
-    refreshPublicDirectoryCacheQuietly();
-
     messageEl.textContent = "Signed in successfully. Redirecting...";
-    messageEl.classList.add("success");
 
     window.location.href = "./dashboard.html";
   } catch (error) {
     messageEl.textContent = error.message;
     messageEl.classList.add("error");
-  } finally {
     hideGlobalLoading();
     submitButton.disabled = false;
     submitButton.textContent = "Sign in";

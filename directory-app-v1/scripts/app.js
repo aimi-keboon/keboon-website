@@ -2610,3 +2610,29 @@ async function refreshInboxWithInboundCheck(sessionToken) {
     hideGlobalLoading();
   }
 }
+async function initDashboardPage() {
+  const dashboardTitle = document.getElementById("dashboardTitle");
+  const signoutButton = document.getElementById("signoutButton");
+
+  if (!dashboardTitle && !signoutButton) {
+    return;
+  }
+
+  const auth = await requireValidSession();
+
+  if (!auth) {
+    return;
+  }
+
+  if (dashboardTitle) {
+    dashboardTitle.textContent = `Welcome, ${auth.grower?.grower_name || auth.session.grower_name || "Grower"}`;
+  }
+
+  if (!isGrowerCacheFresh()) {
+    refreshGrowerAppDataQuietly(auth.session.token, (appData) => {
+      if (dashboardTitle) {
+        dashboardTitle.textContent = `Welcome, ${appData.grower?.grower_name || "Grower"}`;
+      }
+    });
+  }
+}
