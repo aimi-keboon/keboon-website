@@ -25,14 +25,20 @@ const DIRECTORY_RADIUS_KM = 20;
 async function requireValidSession() {
   const session = getStoredSession();
 
-  if (
-    !session.token ||
-    !session.expires_at ||
-    new Date(session.expires_at) <= new Date()
-  ) {
+  if (!session || !session.token) {
     clearStoredSession();
     window.location.href = "./signin.html";
     return null;
+  }
+
+  if (session.expires_at) {
+    const expiresAt = new Date(session.expires_at);
+
+    if (!Number.isNaN(expiresAt.getTime()) && expiresAt <= new Date()) {
+      clearStoredSession();
+      window.location.href = "./signin.html";
+      return null;
+    }
   }
 
   return {
