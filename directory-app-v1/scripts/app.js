@@ -2382,6 +2382,7 @@ async function openInboxThread(enquiry) {
     !shouldFetchFreshThread
   ) {
     renderInboxThreadMessages(cachedThread.messages || [], currentGrowerEmail);
+    scrollInboxThreadToBottom();
   } else {
     try {
       const result = await apiPost("get_current_grower_enquiry_thread", {
@@ -2392,6 +2393,7 @@ async function openInboxThread(enquiry) {
 
       storeInboxThreadData(enquiry.enquiry_id, result);
       renderInboxThreadMessages(result.messages || [], currentGrowerEmail);
+      scrollInboxThreadToBottom();
     } catch (error) {
       messagesEl.innerHTML = `<p class="form-message error">${escapeHtml(
         error.message || "Unable to load thread.",
@@ -2481,13 +2483,9 @@ async function openInboxThread(enquiry) {
         optimisticThread.messages || [],
         currentGrowerEmail,
       );
+      scrollInboxThreadToBottom();
 
       replyForm.reset();
-
-      if (replyMessageEl) {
-        replyMessageEl.textContent = "Sending...";
-        replyMessageEl.className = "form-message muted";
-      }
 
       try {
         const replyResult = await apiPost("reply_current_grower_enquiry", {
@@ -2495,11 +2493,6 @@ async function openInboxThread(enquiry) {
           enquiry_id: enquiry.enquiry_id,
           message: replyMessage,
         });
-
-        if (replyMessageEl) {
-          replyMessageEl.textContent = replyResult.message || "Reply sent.";
-          replyMessageEl.className = "form-message success";
-        }
 
         const refreshedThread = await apiPost(
           "get_current_grower_enquiry_thread",
@@ -2515,6 +2508,7 @@ async function openInboxThread(enquiry) {
           refreshedThread.messages || [],
           currentGrowerEmail,
         );
+        scrollInboxThreadToBottom();
 
         const inboxResult = await apiPost("get_current_grower_inbox_data", {
           session_token: auth.session.token,
@@ -2548,6 +2542,7 @@ async function openInboxThread(enquiry) {
             failedThread.messages || [],
             currentGrowerEmail,
           );
+          scrollInboxThreadToBottom();
         }
 
         if (replyMessageEl) {
@@ -2627,6 +2622,17 @@ function renderInboxThreadMessages(messages, currentUserEmail = "") {
     .join("");
 }
 
+function scrollInboxThreadToBottom() {
+  const messagesEl = document.getElementById("mailboxThreadMessages");
+
+  if (!messagesEl) {
+    return;
+  }
+
+  requestAnimationFrame(() => {
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  });
+}
 function closeMailboxThreadDrawer() {
   const drawer = document.getElementById("mailboxThreadDrawer");
 
