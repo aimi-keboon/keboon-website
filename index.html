@@ -61,7 +61,7 @@
     <link rel="icon" type="image/x-icon" href="/assets/img/ICN-LOGO-1.png" />
     <link rel="shortcut icon" href="/assets/img/ICN-LOGO-1.png" />
     <link rel="apple-touch-icon" href="/assets/img/ICN-LOGO-1.png" />
-    <style>
+        <style>
       :root {
         --green: #2e7d32;
         --green-dark: #1b5e20;
@@ -2002,6 +2002,1466 @@
           text-align: left;
         }
       }
+      /* =========================
+   Keboon Assistant Section
+   ========================= */
+
+      .assistant-section {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .assistant-section::before {
+        content: "";
+        position: absolute;
+        top: 12%;
+        right: -120px;
+        width: 320px;
+        height: 320px;
+        border-radius: 50%;
+        background: rgba(200, 230, 201, 0.52);
+        filter: blur(10px);
+        pointer-events: none;
+      }
+
+      .assistant-card {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 28px;
+        align-items: center;
+        padding: clamp(28px, 5vw, 48px);
+        border: 1px solid rgba(46, 125, 50, 0.14);
+        border-radius: 34px;
+        background:
+          linear-gradient(
+            135deg,
+            rgba(232, 245, 233, 0.9),
+            rgba(255, 253, 243, 0.84)
+          ),
+          rgba(255, 255, 255, 0.82);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .assistant-card::after {
+        content: "";
+        position: absolute;
+        left: -70px;
+        bottom: -80px;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: rgba(46, 125, 50, 0.08);
+        pointer-events: none;
+      }
+
+      .assistant-copy,
+      .assistant-points {
+        position: relative;
+        z-index: 1;
+      }
+
+      .assistant-copy .section-lead {
+        max-width: 680px;
+      }
+
+      .assistant-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .assistant-points {
+        display: grid;
+        gap: 14px;
+      }
+
+      .assistant-point {
+        display: grid;
+        grid-template-columns: 52px 1fr;
+        gap: 14px;
+        align-items: start;
+        padding: 18px;
+        border: 1px solid rgba(46, 125, 50, 0.12);
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.78);
+        box-shadow: 0 10px 28px rgba(31, 42, 36, 0.06);
+      }
+
+      .assistant-point > .icon {
+        width: 52px;
+        height: 52px;
+        padding: 12px;
+        border-radius: 18px;
+        background: var(--green-soft);
+        color: var(--green-dark);
+      }
+
+      .assistant-point strong {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--green-dark);
+        font-size: 1rem;
+      }
+
+      .assistant-point span {
+        display: block;
+        color: var(--muted);
+        line-height: 1.5;
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 960px) {
+        .assistant-card {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .assistant-card {
+          padding: 26px 20px;
+          border-radius: 28px;
+          text-align: center;
+        }
+
+        .assistant-actions {
+          display: grid;
+        }
+
+        .assistant-actions .btn {
+          justify-content: center;
+        }
+
+        .assistant-point {
+          grid-template-columns: 1fr;
+          justify-items: center;
+          text-align: center;
+        }
+      }
+      .assistant-nav-link {
+        background: var(--green-soft);
+        color: var(--green-dark) !important;
+        font-weight: 800;
+      }
+
+
+      /* =========================================================
+         MOBILE COMPACT / MINI DESKTOP OVERRIDE
+         Added for shorter mobile scroll: side-by-side cards,
+         compact flowcharts, compact impact graph, and reduced spacing.
+         ========================================================= */
+
+      @media (max-width: 760px) {
+        section {
+          padding: 48px 14px;
+          contain-intrinsic-size: auto;
+        }
+
+        .container,
+        .footer-inner,
+        .footer-bottom {
+          width: calc(100% - 18px);
+        }
+
+        .section-head {
+          margin-bottom: 22px;
+        }
+
+        h2 {
+          font-size: clamp(1.75rem, 8vw, 2.5rem);
+        }
+
+        .section-lead {
+          font-size: 0.92rem;
+          line-height: 1.55;
+        }
+
+        .hero {
+          padding: 104px 14px 42px;
+        }
+
+        .hero-grid {
+          grid-template-columns: 1fr 0.78fr !important;
+          gap: 14px;
+          text-align: left;
+          justify-items: stretch;
+          align-items: center;
+        }
+
+        .hero-copy {
+          max-width: none;
+        }
+
+        h1 {
+          font-size: clamp(2.15rem, 10vw, 3.6rem);
+          line-height: 0.96;
+        }
+
+        .hero-subtitle {
+          font-size: 0.84rem;
+          line-height: 1.5;
+          margin-bottom: 18px;
+        }
+
+        .eyebrow {
+          font-size: 0.68rem;
+          padding: 6px 9px;
+          margin-bottom: 12px;
+        }
+
+        .hero-actions {
+          display: flex;
+          gap: 8px;
+          justify-content: flex-start;
+          margin-bottom: 18px;
+        }
+
+        .hero-actions .btn {
+          width: auto;
+          min-height: 38px;
+          padding: 9px 11px;
+          font-size: 0.7rem;
+          white-space: nowrap;
+        }
+
+        .quick-stats {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 7px;
+          margin: 0;
+        }
+
+        .stat-pill {
+          padding: 9px;
+          border-radius: 14px;
+        }
+
+        .stat-pill strong {
+          font-size: 0.86rem;
+        }
+
+        .stat-pill span {
+          font-size: 0.58rem;
+          line-height: 1.25;
+        }
+
+        .phone-wrap {
+          transform: scale(0.62);
+          transform-origin: center;
+          margin: 0;
+          min-height: 360px;
+          display: grid;
+          place-items: center;
+        }
+
+        .orbit {
+          width: 300px;
+          height: 300px;
+        }
+
+        .phone {
+          width: 285px;
+          padding: 10px;
+          border-radius: 32px;
+          transform: rotate(1.5deg);
+          order: initial;
+        }
+
+        .phone-screen {
+          min-height: 475px;
+          border-radius: 24px;
+        }
+
+        .floating-card {
+          position: absolute;
+          width: max-content;
+          max-width: 180px;
+          margin: 0;
+          padding: 8px 10px;
+          font-size: 0.68rem;
+          border-radius: 14px;
+          animation: floaty 4s ease-in-out infinite;
+        }
+
+        .floating-card.right {
+          right: -16px;
+          top: 48px;
+          order: initial;
+        }
+
+        .floating-card.left {
+          left: -18px;
+          bottom: 58px;
+          order: initial;
+        }
+
+        .problem-grid {
+          grid-template-columns: repeat(3, 1fr) !important;
+          gap: 8px;
+        }
+
+        .card {
+          padding: 13px;
+          border-radius: 18px;
+        }
+
+        .card-icon {
+          width: 34px;
+          height: 34px;
+          border-radius: 12px;
+          margin-bottom: 10px;
+        }
+
+        .card-icon .icon {
+          width: 19px;
+          height: 19px;
+        }
+
+        .card h3 {
+          font-size: 0.78rem;
+          line-height: 1.15;
+          margin-bottom: 6px;
+        }
+
+        .card p {
+          font-size: 0.58rem;
+          line-height: 1.35;
+        }
+
+        .tabs {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 6px;
+        }
+
+        .tab {
+          padding: 8px 5px;
+          font-size: 0.66rem;
+          text-align: center;
+          white-space: normal;
+          border-radius: 14px;
+        }
+
+        .tab-panel.active {
+          display: grid;
+          grid-template-columns: 0.9fr 1.1fr !important;
+          gap: 10px;
+        }
+
+        .journey {
+          gap: 7px;
+        }
+
+        .journey-step {
+          padding: 9px;
+          gap: 8px;
+          border-radius: 14px;
+        }
+
+        .step-num {
+          width: 24px;
+          height: 24px;
+          font-size: 0.68rem;
+        }
+
+        .journey-step strong {
+          font-size: 0.72rem;
+        }
+
+        .journey-step p {
+          font-size: 0.58rem;
+          line-height: 1.3;
+        }
+
+        .market-grid {
+          grid-template-columns: 1fr 1fr !important;
+          gap: 10px;
+        }
+
+        .meter-card {
+          gap: 10px;
+        }
+
+        .meter-label {
+          font-size: 0.68rem;
+        }
+
+        .meter {
+          height: 9px;
+        }
+
+        .assistant-card {
+          grid-template-columns: 0.95fr 1.05fr !important;
+          gap: 12px;
+          padding: 18px;
+          border-radius: 24px;
+          text-align: left;
+        }
+
+        .assistant-copy .section-lead {
+          font-size: 0.72rem;
+          line-height: 1.45;
+        }
+
+        .assistant-actions {
+          display: flex;
+          margin-top: 14px;
+        }
+
+        .assistant-actions .btn {
+          width: auto;
+          padding: 10px 12px;
+          font-size: 0.72rem;
+        }
+
+        .assistant-points {
+          gap: 8px;
+        }
+
+        .assistant-point {
+          grid-template-columns: 34px 1fr;
+          gap: 8px;
+          padding: 10px;
+          border-radius: 16px;
+          text-align: left;
+          justify-items: stretch;
+        }
+
+        .assistant-point > .icon {
+          width: 34px;
+          height: 34px;
+          padding: 8px;
+          border-radius: 12px;
+        }
+
+        .assistant-point strong {
+          font-size: 0.72rem;
+        }
+
+        .assistant-point span {
+          font-size: 0.58rem;
+          line-height: 1.3;
+        }
+
+        .flow-card {
+          padding: 14px;
+          border-radius: 20px;
+        }
+
+        .flow-title {
+          font-size: 0.85rem;
+          margin-bottom: 12px;
+        }
+
+        .simple-flow {
+          gap: 10px;
+        }
+
+        .flow-row {
+          display: grid !important;
+          grid-template-columns: 1fr 22px 1fr 22px 1fr;
+          gap: 6px;
+          align-items: stretch;
+        }
+
+        .flow-node {
+          width: auto;
+          min-width: 0;
+          max-width: none;
+          padding: 10px 7px;
+          border-radius: 14px;
+        }
+
+        .flow-node strong {
+          font-size: 0.66rem;
+          margin-bottom: 4px;
+        }
+
+        .flow-node span {
+          font-size: 0.52rem;
+          line-height: 1.25;
+        }
+
+        .flow-arrow {
+          color: var(--green);
+          min-width: 0;
+          min-height: 0;
+          font-size: 0.9rem;
+          transform: none !important;
+          display: grid;
+          place-items: center;
+        }
+
+        .flow-arrow::before {
+          content: none !important;
+        }
+
+        .flow-support {
+          grid-template-columns: repeat(3, 1fr) !important;
+          gap: 6px;
+        }
+
+        .flow-caption {
+          font-size: 0.68rem;
+          line-height: 1.35;
+          text-align: center;
+        }
+
+        .impact-panel {
+          grid-template-columns: 0.92fr 1.08fr !important;
+          gap: 12px;
+        }
+
+        .impact-graph {
+          position: relative;
+          min-height: 360px;
+          display: block;
+          padding: 0;
+          border-radius: 22px;
+        }
+
+        .impact-orbit,
+        .impact-arrow {
+          display: block !important;
+        }
+
+        .impact-orbit {
+          width: 220px;
+          height: 220px;
+        }
+
+        .impact-orbit.outer {
+          width: 300px;
+          height: 300px;
+        }
+
+        .impact-center {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: 92px;
+          height: 92px;
+          transform: translate(-50%, -50%);
+          border-radius: 50%;
+          padding: 8px;
+          font-size: 0.7rem;
+        }
+
+        .impact-center span {
+          font-size: 0.52rem;
+        }
+
+        .impact-node {
+          position: absolute;
+          width: 104px;
+          padding: 8px;
+          border-radius: 15px;
+        }
+
+        .impact-node::before {
+          width: 24px;
+          height: 24px;
+          border-radius: 9px;
+          margin-bottom: 5px;
+        }
+
+        .impact-node strong {
+          font-size: 0.62rem;
+          margin-bottom: 3px;
+        }
+
+        .impact-node span {
+          font-size: 0.48rem;
+          line-height: 1.2;
+        }
+
+        .impact-node.i1 {
+          left: 50%;
+          top: 12px;
+          transform: translateX(-50%);
+        }
+
+        .impact-node.i2 {
+          right: 12px;
+          top: 98px;
+        }
+
+        .impact-node.i3 {
+          right: 38px;
+          bottom: 18px;
+        }
+
+        .impact-node.i4 {
+          left: 38px;
+          bottom: 18px;
+        }
+
+        .impact-node.i5 {
+          left: 12px;
+          top: 98px;
+        }
+
+        .impact-arrow {
+          height: 108px;
+        }
+
+        .impact-flow {
+          gap: 7px;
+        }
+
+        .impact-stage {
+          padding: 10px 12px;
+          gap: 8px;
+          border-radius: 14px;
+        }
+
+        .impact-stage-number {
+          width: 28px;
+          height: 28px;
+          flex-basis: 28px;
+          font-size: 0.7rem;
+        }
+
+        .impact-stage-content strong {
+          font-size: 0.68rem;
+        }
+
+        .impact-stage-content span {
+          font-size: 0.54rem;
+          line-height: 1.28;
+        }
+
+        .impact-down {
+          font-size: 0.95rem;
+        }
+
+        .live-demo-grid {
+          grid-template-columns: 1fr 0.9fr !important;
+          gap: 12px;
+        }
+
+        .directory-frame-card,
+        .contact-form-card {
+          padding: 14px;
+          border-radius: 20px;
+        }
+
+        .directory-iframe-wrap {
+          height: 360px;
+          border-radius: 16px;
+        }
+
+        .frame-toolbar {
+          flex-direction: row;
+          align-items: center;
+        }
+
+        .frame-toolbar strong {
+          font-size: 0.64rem;
+          word-break: break-all;
+        }
+
+        .contact-form-card h3 {
+          font-size: 1.15rem;
+        }
+
+        .contact-form-card p {
+          font-size: 0.72rem;
+          line-height: 1.4;
+          margin-bottom: 14px;
+        }
+
+        .form-row {
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+        }
+
+        .contact-form {
+          gap: 8px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+          padding: 10px;
+          border-radius: 12px;
+          font-size: 0.72rem;
+        }
+
+        .contact-form textarea {
+          min-height: 90px;
+        }
+
+        .contact-note {
+          font-size: 0.64rem;
+        }
+
+        .cta-section {
+          padding-bottom: 58px;
+        }
+
+        .cta-box {
+          padding: 24px 18px;
+          border-radius: 24px;
+          text-align: left;
+        }
+
+        .cta-box p {
+          font-size: 0.82rem;
+          line-height: 1.45;
+        }
+
+        .cta-actions {
+          display: flex;
+        }
+
+        .cta-actions .btn {
+          width: auto;
+          padding: 10px 13px;
+          font-size: 0.72rem;
+        }
+      }
+
+      @media (max-width: 430px) {
+        section {
+          padding: 42px 10px;
+        }
+
+        .container,
+        .footer-inner,
+        .footer-bottom {
+          width: calc(100% - 12px);
+        }
+
+        .nav {
+          width: calc(100% - 12px);
+        }
+
+        .hero-grid {
+          grid-template-columns: 1fr 0.7fr !important;
+          gap: 8px;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .hero-subtitle {
+          font-size: 0.72rem;
+        }
+
+        .hero-actions .btn {
+          padding: 8px 9px;
+          font-size: 0.62rem;
+        }
+
+        .phone-wrap {
+          transform: scale(0.52);
+          min-height: 310px;
+        }
+
+        .quick-stats {
+          gap: 5px;
+        }
+
+        .stat-pill {
+          padding: 7px;
+        }
+
+        .stat-pill strong {
+          font-size: 0.72rem;
+        }
+
+        .stat-pill span {
+          font-size: 0.5rem;
+        }
+
+        .problem-grid {
+          gap: 6px;
+        }
+
+        .card {
+          padding: 10px;
+          border-radius: 15px;
+        }
+
+        .card h3 {
+          font-size: 0.66rem;
+        }
+
+        .card p {
+          font-size: 0.5rem;
+        }
+
+        .tab-panel.active {
+          grid-template-columns: 0.82fr 1.18fr !important;
+          gap: 7px;
+        }
+
+        .assistant-card {
+          grid-template-columns: 0.82fr 1.18fr !important;
+          gap: 8px;
+          padding: 14px;
+        }
+
+        .assistant-point {
+          grid-template-columns: 28px 1fr;
+          padding: 8px;
+        }
+
+        .assistant-point > .icon {
+          width: 28px;
+          height: 28px;
+          padding: 6px;
+        }
+
+        .flow-row {
+          grid-template-columns: 1fr 16px 1fr 16px 1fr;
+          gap: 4px;
+        }
+
+        .flow-node {
+          padding: 8px 5px;
+        }
+
+        .flow-node strong {
+          font-size: 0.56rem;
+        }
+
+        .flow-node span {
+          font-size: 0.44rem;
+        }
+
+        .flow-support {
+          gap: 4px;
+        }
+
+        .impact-panel {
+          grid-template-columns: 1fr !important;
+        }
+
+        .impact-graph {
+          min-height: 330px;
+        }
+
+        .live-demo-grid {
+          grid-template-columns: 1fr !important;
+        }
+
+        .directory-iframe-wrap {
+          height: 320px;
+        }
+      }
+      /* =========================================================
+   FIX: phone demo overflowing mobile width
+   ========================================================= */
+
+.phone-wrap {
+  max-width: 100%;
+  overflow: visible;
+}
+
+.hero-grid {
+  overflow: hidden;
+}
+
+/* Desktop: keep floating cards but reduce side overflow */
+.floating-card.left {
+  left: -20px;
+}
+
+.floating-card.right {
+  right: -20px;
+}
+
+/* Tablet/mobile: keep everything inside the screen */
+@media (max-width: 960px) {
+  .phone-wrap {
+    width: 100%;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: visible;
+  }
+
+  .phone {
+    width: min(300px, 100%);
+  }
+
+  .orbit {
+    width: 340px;
+    height: 340px;
+    max-width: 100%;
+  }
+
+  .floating-card {
+    max-width: 150px;
+    padding: 8px 10px;
+    font-size: 0.68rem;
+    border-radius: 14px;
+  }
+
+  .floating-card.left {
+    left: 0;
+    bottom: 72px;
+  }
+
+  .floating-card.right {
+    right: 0;
+    top: 72px;
+  }
+}
+
+/* Small mobile: remove side-floating layout completely */
+@media (max-width: 640px) {
+  .hero-grid {
+    overflow: visible;
+  }
+
+  .phone-wrap {
+    max-width: 310px;
+    overflow: visible;
+  }
+
+  .phone {
+    width: 260px;
+    padding: 10px;
+    border-radius: 30px;
+  }
+
+  .phone-screen {
+    min-height: 430px;
+  }
+
+  .orbit {
+    width: 270px;
+    height: 270px;
+  }
+
+  .floating-card {
+    position: absolute;
+    max-width: 126px;
+    padding: 7px 8px;
+    font-size: 0.58rem;
+    line-height: 1.2;
+  }
+
+  .floating-card.right {
+    right: -4px;
+    top: 42px;
+  }
+
+  .floating-card.left {
+    left: -4px;
+    bottom: 48px;
+  }
+}
+
+/* Extra small phones: hide the floating text to prevent horizontal stretch */
+@media (max-width: 420px) {
+  .floating-card {
+    display: none;
+  }
+
+  .phone-wrap {
+    max-width: 270px;
+  }
+
+  .phone {
+    width: 245px;
+  }
+
+  .phone-screen {
+    min-height: 410px;
+  }
+
+  .orbit {
+    width: 250px;
+    height: 250px;
+  }
+}
+/* =========================================================
+   FIX: make phone demo smaller with proper dimensions
+   ========================================================= */
+
+@media (max-width: 960px) {
+  .phone-wrap {
+    width: 100%;
+    max-width: 300px;
+    min-height: 430px;
+    margin: 0 auto;
+    transform: none !important;
+  }
+
+  .orbit {
+    width: 300px;
+    height: 300px;
+  }
+
+  .phone {
+    width: 240px;
+    padding: 9px;
+    border-radius: 30px;
+    transform: rotate(1deg);
+  }
+
+  .phone-screen {
+    min-height: 400px;
+    border-radius: 23px;
+  }
+
+  .app-top {
+    padding: 13px 12px 8px;
+  }
+
+  .app-title strong {
+    font-size: 0.92rem;
+  }
+
+  .app-title span {
+    font-size: 0.62rem;
+  }
+
+  .avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 0.72rem;
+  }
+
+  .searchbar {
+    margin: 0 12px 8px;
+    padding: 8px 10px;
+    font-size: 0.64rem;
+  }
+
+  .map-card {
+    margin: 10px 12px;
+    height: 128px;
+    border-radius: 18px;
+    background-size: 24px 24px;
+  }
+
+  .pin {
+    width: 24px;
+    height: 24px;
+  }
+
+  .pin .icon {
+    width: 13px;
+    height: 13px;
+  }
+
+  .pin.one {
+    top: 28px;
+    left: 30px;
+  }
+
+  .pin.two {
+    top: 70px;
+    left: 112px;
+  }
+
+  .pin.three {
+    top: 34px;
+    right: 32px;
+  }
+
+  .listing {
+    margin: 8px 12px;
+    padding: 9px;
+    grid-template-columns: 36px 1fr auto;
+    gap: 8px;
+    border-radius: 14px;
+  }
+
+  .produce-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+  }
+
+  .produce-icon .icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .listing h4 {
+    font-size: 0.7rem;
+    margin-bottom: 2px;
+  }
+
+  .listing p {
+    font-size: 0.56rem;
+  }
+
+  .distance {
+    font-size: 0.58rem;
+  }
+
+  .floating-card {
+    max-width: 120px;
+    padding: 7px 8px;
+    font-size: 0.58rem;
+    line-height: 1.2;
+    border-radius: 13px;
+  }
+
+  .floating-card.right {
+    right: -6px;
+    top: 48px;
+  }
+
+  .floating-card.left {
+    left: -6px;
+    bottom: 60px;
+  }
+}
+
+@media (max-width: 640px) {
+  .phone-wrap {
+    max-width: 270px;
+    min-height: 390px;
+  }
+
+  .orbit {
+    width: 260px;
+    height: 260px;
+  }
+
+  .phone {
+    width: 220px;
+    padding: 8px;
+    border-radius: 28px;
+  }
+
+  .phone-screen {
+    min-height: 365px;
+    border-radius: 22px;
+  }
+
+  .map-card {
+    height: 112px;
+  }
+
+  .listing {
+    grid-template-columns: 32px 1fr auto;
+    gap: 7px;
+  }
+
+  .produce-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .produce-icon .icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .floating-card {
+    max-width: 110px;
+    font-size: 0.52rem;
+  }
+
+  .floating-card.right {
+    right: -2px;
+    top: 38px;
+  }
+
+  .floating-card.left {
+    left: -2px;
+    bottom: 50px;
+  }
+}
+
+@media (max-width: 420px) {
+  .phone-wrap {
+    max-width: 235px;
+    min-height: 345px;
+  }
+
+  .orbit {
+    width: 230px;
+    height: 230px;
+  }
+
+  .phone {
+    width: 200px;
+    padding: 7px;
+    border-radius: 25px;
+  }
+
+  .phone-screen {
+    min-height: 330px;
+    border-radius: 20px;
+  }
+
+  .app-top {
+    padding: 11px 10px 7px;
+  }
+
+  .searchbar {
+    margin: 0 10px 7px;
+    padding: 7px 9px;
+    font-size: 0.56rem;
+  }
+
+  .map-card {
+    margin: 8px 10px;
+    height: 96px;
+    border-radius: 15px;
+  }
+
+  .pin {
+    width: 20px;
+    height: 20px;
+  }
+
+  .pin.one {
+    top: 22px;
+    left: 24px;
+  }
+
+  .pin.two {
+    top: 54px;
+    left: 90px;
+  }
+
+  .pin.three {
+    top: 26px;
+    right: 24px;
+  }
+
+  .listing {
+    margin: 7px 10px;
+    padding: 7px;
+    grid-template-columns: 28px 1fr auto;
+    gap: 6px;
+    border-radius: 12px;
+  }
+
+  .produce-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 10px;
+  }
+
+  .listing h4 {
+    font-size: 0.6rem;
+  }
+
+  .listing p,
+  .distance {
+    font-size: 0.48rem;
+  }
+
+  .floating-card {
+    display: none;
+  }
+}
+/* =========================================================
+   MAKE HERO PHONE DEMO SMALLER
+   Put this at the VERY END of the CSS
+   ========================================================= */
+
+@media (max-width: 960px) {
+  .phone-wrap {
+    max-width: 240px !important;
+    min-height: 320px !important;
+    transform: none !important;
+    margin: 0 auto !important;
+  }
+
+  .orbit {
+    width: 220px !important;
+    height: 220px !important;
+  }
+
+  .phone {
+    width: 180px !important;
+    padding: 6px !important;
+    border-radius: 24px !important;
+  }
+
+  .phone-screen {
+    min-height: 300px !important;
+    border-radius: 18px !important;
+  }
+
+  .app-top {
+    padding: 9px 8px 5px !important;
+  }
+
+  .app-title strong {
+    font-size: 0.72rem !important;
+  }
+
+  .app-title span {
+    font-size: 0.46rem !important;
+  }
+
+  .avatar {
+    width: 22px !important;
+    height: 22px !important;
+    font-size: 0.56rem !important;
+  }
+
+  .searchbar {
+    margin: 0 8px 6px !important;
+    padding: 6px 7px !important;
+    font-size: 0.46rem !important;
+  }
+
+  .map-card {
+    margin: 7px 8px !important;
+    height: 82px !important;
+    border-radius: 12px !important;
+    background-size: 18px 18px !important;
+  }
+
+  .pin {
+    width: 17px !important;
+    height: 17px !important;
+  }
+
+  .pin .icon {
+    width: 9px !important;
+    height: 9px !important;
+  }
+
+  .pin.one {
+    top: 19px !important;
+    left: 20px !important;
+  }
+
+  .pin.two {
+    top: 47px !important;
+    left: 75px !important;
+  }
+
+  .pin.three {
+    top: 21px !important;
+    right: 20px !important;
+  }
+
+  .listing {
+    margin: 6px 8px !important;
+    padding: 6px !important;
+    grid-template-columns: 24px 1fr auto !important;
+    gap: 5px !important;
+    border-radius: 10px !important;
+  }
+
+  .produce-icon {
+    width: 24px !important;
+    height: 24px !important;
+    border-radius: 8px !important;
+  }
+
+  .produce-icon .icon {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .listing h4 {
+    font-size: 0.48rem !important;
+    margin-bottom: 1px !important;
+  }
+
+  .listing p,
+  .distance {
+    font-size: 0.38rem !important;
+  }
+
+  .floating-card {
+    max-width: 96px !important;
+    padding: 5px 6px !important;
+    font-size: 0.44rem !important;
+    line-height: 1.15 !important;
+    border-radius: 10px !important;
+  }
+
+  .floating-card.right {
+    right: -2px !important;
+    top: 34px !important;
+  }
+
+  .floating-card.left {
+    left: -2px !important;
+    bottom: 42px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .phone-wrap {
+    max-width: 210px !important;
+    min-height: 285px !important;
+  }
+
+  .orbit {
+    width: 200px !important;
+    height: 200px !important;
+  }
+
+  .phone {
+    width: 165px !important;
+  }
+
+  .phone-screen {
+    min-height: 275px !important;
+  }
+
+  .floating-card {
+    display: none !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .phone-wrap {
+    max-width: 180px !important;
+    min-height: 250px !important;
+  }
+
+  .orbit {
+    width: 170px !important;
+    height: 170px !important;
+  }
+
+  .phone {
+    width: 145px !important;
+    padding: 5px !important;
+    border-radius: 20px !important;
+  }
+
+  .phone-screen {
+    min-height: 240px !important;
+    border-radius: 15px !important;
+  }
+
+  .map-card {
+    height: 64px !important;
+  }
+
+  .listing {
+    grid-template-columns: 20px 1fr auto !important;
+  }
+
+  .produce-icon {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .listing h4 {
+    font-size: 0.42rem !important;
+  }
+
+  .listing p,
+  .distance {
+    font-size: 0.32rem !important;
+  }
+}
+
     </style>
   </head>
 
@@ -2158,6 +3618,7 @@
       <div class="nav-links" id="navLinks">
         <a href="#problem">Problem</a>
         <a href="#solution">Solution</a>
+        <a href="#assistant" class="assistant-nav-link">Keboon Assistant</a>
         <a href="#ecosystem">Vision</a>
         <a href="#impact">Impact</a>
         <a href="#collaborate">Collaborate</a>
@@ -2189,20 +3650,14 @@
                 Visit Keboon Directory →
               </a>
 
-              <a href="#contact" class="btn btn-secondary"> Contact Us </a>
+              <a href="#assistant" class="btn btn-secondary">
+                You do not have a garden?
+              </a>
+
+              
             </div>
 
-            <div class="quick-stats">
-              <div class="stat-pill">
-                <strong>2-sided</strong><span>Growers + consumers</span>
-              </div>
-              <div class="stat-pill">
-                <strong>Local</strong><span>Built around proximity</span>
-              </div>
-              <div class="stat-pill">
-                <strong>Future</strong><span>Marketplace to ecosystem</span>
-              </div>
-            </div>
+            
           </div>
 
           <div class="phone-wrap reveal">
@@ -2306,7 +3761,73 @@
           </div>
         </div>
       </header>
+      <section id="assistant" class="assistant-section">
+        <div class="container">
+          <div class="assistant-card reveal">
+            <div class="assistant-copy">
+              <div class="section-kicker">Keboon Assistant</div>
 
+              <h2>You do not have a garden yet?</h2>
+
+              <p class="section-lead">
+                Keboon Assistant helps homes turn balconies, backyards, patios,
+                and unused corners into small edible gardens. It is a physical
+                garden setup service that supports Keboon’s mission by helping
+                create more local growers.
+              </p>
+
+              <div class="assistant-actions">
+                <a href="./keboon-assist/index.html" class="btn btn-primary">
+                  Explore →
+                </a>
+              </div>
+            </div>
+
+            <div
+              class="assistant-points"
+              aria-label="Keboon Assistant highlights"
+            >
+              <div class="assistant-point">
+                <svg class="icon" aria-hidden="true">
+                  <use href="#icon-sprout"></use>
+                </svg>
+                <div>
+                  <strong>Small home gardens</strong>
+                  <span
+                    >For balconies, backyards, patios, and unused corners.</span
+                  >
+                </div>
+              </div>
+
+              <div class="assistant-point">
+                <svg class="icon" aria-hidden="true">
+                  <use href="#icon-basket"></use>
+                </svg>
+                <div>
+                  <strong>Setup included</strong>
+                  <span
+                    >Materials, installation, and initial setup are
+                    included.</span
+                  >
+                </div>
+              </div>
+
+              <div class="assistant-point">
+                <svg class="icon" aria-hidden="true">
+                  <use href="#icon-leaf"></use>
+                </svg>
+                <div>
+                  <strong>Normal or hydroponic</strong>
+                  <span
+                    >Choose a setup based on space, budget, and material
+                    needs.</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <section id="problem">
         <div class="container">
           <div class="section-head reveal">
@@ -2755,47 +4276,7 @@
       </section>
     </main>
 
-    <section id="demo">
-      <div class="container">
-        <div class="section-head reveal">
-          <div class="section-kicker">Live directory</div>
-          <h2>Explore the Keboon Directory experience.</h2>
-          <p class="section-lead">
-            The Keboon Directory is the first validation layer of the platform,
-            helping users discover local growers and food sources before the
-            full marketplace rollout.
-          </p>
-        </div>
-
-        <div class="live-demo-grid">
-          <div class="directory-frame-card reveal">
-            <div class="frame-toolbar">
-              <div class="frame-dots">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div>
-              <strong>
-                <a
-                  href="https://keboon.net/directory-app-v1/index"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  https://keboon.net/directory-app-v1/index
-                </a>
-              </strong>
-            </div>
-
-            <div class="directory-iframe-wrap">
-              <iframe
-                src="https://keboon.net/directory-app-v1/index"
-                title="Keboon Directory Live Demo"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-              >
-              </iframe>
-            </div>
-          </div>
+    <section class="container">
 
           <div class="contact-form-card reveal" id="contact">
             <h3>Get In Touch</h3>
@@ -2872,7 +4353,7 @@
         </div>
 
         <div class="footer-column">
-          <h4>Explore</h4>
+          <h4>Our Developer</h4>
           <a href="/services/index">Keboon Technology Solution</a>
         </div>
 
@@ -2883,6 +4364,12 @@
             target="_blank"
             rel="noopener"
             >Keboon Directory</a
+          >
+                    <a
+            href="https://keboon.net/keboon-assist/index"
+            target="_blank"
+            rel="noopener"
+            >Keboon Assistant</a
           >
         </div>
 
