@@ -1,0 +1,1382 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keboon Assist Quote Calculator</title>
+
+  <style>
+    :root {
+      --bg: #f6f1e7;
+      --card: #fffaf0;
+      --green: #163020;
+      --green-2: #355e3b;
+      --accent: #d8a94f;
+      --soft: #e8ddc7;
+      --muted: #6f6a5f;
+      --danger: #a64b3c;
+      --white: #ffffff;
+      --shadow: 0 16px 40px rgba(22, 48, 32, 0.12);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      background: radial-gradient(circle at top left, #fff6dd 0, #f6f1e7 36%, #efe4cf 100%);
+      color: var(--green);
+      line-height: 1.45;
+      overflow-x: hidden;
+    }
+
+    .viewport-scale {
+      width: 1180px;
+      margin: 0 auto;
+      transform-origin: top left;
+    }
+
+    .page {
+      width: 1180px;
+      margin: 0 auto;
+      padding: 36px 0 56px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+
+    .hero-card,
+    .summary-card,
+    .section {
+      background: rgba(255, 250, 240, 0.9);
+      border: 1px solid rgba(22, 48, 32, 0.12);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      padding: 34px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 999px;
+      background: rgba(216, 169, 79, 0.2);
+      right: -80px;
+      top: -80px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 0.98;
+      letter-spacing: -1.5px;
+    }
+
+    .lead {
+      max-width: 760px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .summary-card {
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .quote-label {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .quote-number {
+      font-size: clamp(40px, 5vw, 62px);
+      line-height: 1;
+      letter-spacing: -2px;
+      font-weight: 900;
+      color: var(--green);
+    }
+
+    .quote-note {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: -8px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .mini {
+      border: 1px solid rgba(22, 48, 32, 0.1);
+      background: rgba(255, 255, 255, 0.45);
+      border-radius: 16px;
+      padding: 12px;
+    }
+
+    .mini span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .mini strong {
+      font-size: 18px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: auto;
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 16px;
+      font-weight: 800;
+      cursor: pointer;
+      color: var(--green);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(22, 48, 32, 0.12);
+    }
+
+    button:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn-loading {
+      position: relative;
+      pointer-events: none;
+    }
+
+    .btn-loading::before {
+      content: "";
+      width: 13px;
+      height: 13px;
+      border-radius: 999px;
+      border: 2px solid rgba(22, 48, 32, 0.25);
+      border-top-color: var(--green);
+      display: inline-block;
+      margin-right: 8px;
+      vertical-align: -2px;
+      animation: spin 0.75s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .primary-btn {
+      background: var(--accent);
+    }
+
+    .secondary-btn {
+      background: rgba(22, 48, 32, 0.08);
+    }
+
+    .sections {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .section {
+      padding: 24px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: -0.5px;
+    }
+
+    .section-header p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    label {
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .rationale {
+      color: var(--muted);
+      font-size: 12.5px;
+      min-height: 36px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid rgba(22, 48, 32, 0.18);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.76);
+      padding: 12px 12px;
+      font: inherit;
+      color: var(--green);
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--green-2);
+      box-shadow: 0 0 0 4px rgba(53, 94, 59, 0.12);
+    }
+
+    .followup-section {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .followup-main {
+      min-width: 0;
+    }
+
+    .sticky-summary {
+      position: sticky;
+      top: 18px;
+      box-shadow: none;
+      background: rgba(255, 255, 255, 0.48);
+    }
+
+    .sticky-summary .quote-number {
+      font-size: 44px;
+    }
+
+    .sticky-summary .summary-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .warning {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(166, 75, 60, 0.09);
+      color: var(--danger);
+      font-size: 14px;
+      display: none;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .client-list {
+      margin-top: 18px;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 18px;
+      display: block;
+    }
+
+    .client-list::-webkit-scrollbar {
+      height: 10px;
+    }
+
+    .client-list::-webkit-scrollbar-track {
+      background: rgba(22, 48, 32, 0.08);
+      border-radius: 999px;
+    }
+
+    .client-list::-webkit-scrollbar-thumb {
+      background: rgba(22, 48, 32, 0.28);
+      border-radius: 999px;
+    }
+
+    table {
+      width: 1700px;
+      max-width: none;
+      min-width: 1700px;
+      border-collapse: collapse;
+      table-layout: auto;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    th,
+    td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid rgba(22, 48, 32, 0.1);
+      font-size: 13px;
+      vertical-align: top;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    th {
+      background: rgba(22, 48, 32, 0.08);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .pill {
+      display: inline-flex;
+      border-radius: 999px;
+      padding: 5px 9px;
+      font-size: 12px;
+      font-weight: 800;
+      background: rgba(216, 169, 79, 0.22);
+      white-space: nowrap;
+    }
+
+    .status-select {
+      width: 180px;
+      min-width: 180px;
+    }
+
+    #clientRows button {
+      white-space: nowrap;
+    }
+
+    #quoteListSection {
+      overflow: hidden;
+    }
+
+    @media (max-width: 1180px) {
+      .viewport-scale {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      body {
+        width: 100vw;
+        max-width: 100vw;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="viewport-scale" id="viewportScale">
+    <main class="page">
+      <section class="hero">
+        <div class="hero-card">
+          <h1>Quote Calculator</h1>
+          <p class="lead">
+            Anyone can use this calculator to estimate a Keboon Assist quotation. Sales partners must enter their agent ID to submit quotes, view their own quotation list, and update quote status.
+          </p>
+        </div>
+      </section>
+
+      <section class="sections">
+        <div class="section">
+          <div class="section-header">
+            <div>
+              <h2>Agent Access</h2>
+              <p>Required only for submitting quotes, viewing your list, and updating quote status.</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="agentId">Agent ID / partner number</label>
+              <input id="agentId" placeholder="e.g. KB-AGT-001" />
+            </div>
+
+            <div class="field">
+              <label for="agentNameDisplay">Agent name</label>
+              <input id="agentNameDisplay" placeholder="Loaded after access check" disabled />
+            </div>
+
+            <div class="field">
+              <label>&nbsp;</label>
+              <div class="actions">
+                <button class="primary-btn" id="accessQuotesBtn" onclick="verifyAgentAndLoadQuotes(this)">Access my quotations</button>
+                <button class="secondary-btn" onclick="clearAgentAccess()">Clear access</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-header">
+            <div>
+              <h2>Client Details</h2>
+              <p>Basic details for sales tracking.</p>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="clientName">Client name</label>
+              <input id="clientName" placeholder="e.g. Sarah / Green Residence" />
+            </div>
+
+            <div class="field">
+              <label for="clientContact">Contact</label>
+              <input id="clientContact" placeholder="Phone / email" />
+            </div>
+
+            <div class="field">
+              <label for="clientLocation">Location</label>
+              <input id="clientLocation" placeholder="e.g. TTDI, Shah Alam" />
+            </div>
+
+            <div class="field">
+              <label for="quotationStatus">Quote status</label>
+              <select id="quotationStatus">
+                <option value="Draft" selected>Draft</option>
+                <option value="Sent to client">Sent to client</option>
+                <option value="Client reviewing">Client reviewing</option>
+                <option value="Won">Won</option>
+                <option value="Lost">Lost</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="section followup-section">
+          <div class="followup-main">
+            <div class="section-header">
+              <div>
+                <h2>Follow-up Questions</h2>
+                <p>Select the answer after asking the client. Each answer affects the suggested quote.</p>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="actualSize">Confirmed growing area</label>
+                <select id="actualSize" onchange="updateDependentPricingLabels(); calculateQuote()">
+                  <option value="compact">Compact / up to around 3 m² (+RM0)</option>
+                  <option value="standard" selected>Standard / around 3–8 m² (+RM500)</option>
+                  <option value="custom">Custom / larger than standard (+RM1,500)</option>
+                  <option value="notSure">Not sure yet — use standard estimate (+RM500)</option>
+                </select>
+                <div class="rationale">Reason: actual size affects the amount of materials, plants, and installation time needed.</div>
+              </div>
+
+              <div class="field">
+                <label for="setupType">Preferred setup type</label>
+                <select id="setupType" onchange="updateDependentPricingLabels(); calculateQuote()">
+                  <option value="normal" selected>Normal setup (+RM0)</option>
+                  <option value="hydroponic">Hydroponic setup (+RM800)</option>
+                </select>
+                <div class="rationale">Reason: different setup types require different materials and preparation.</div>
+              </div>
+
+              <div class="field">
+                <label for="surfaceType">Surface / flooring</label>
+                <select id="surfaceType" onchange="calculateQuote()">
+                  <option value="easy" selected>Easy: flat cement/tile (+RM0 adjustment)</option>
+                  <option value="medium">Medium: grass/soil/uneven (+RM150 adjustment)</option>
+                  <option value="hard">Hard: slope/limited drainage/fragile surface (+RM300 adjustment)</option>
+                </select>
+                <div class="rationale">Reason: surface condition affects setup stability, preparation, and protection needed.</div>
+              </div>
+
+              <div class="field">
+                <label for="accessDifficulty">Delivery/access difficulty</label>
+                <select id="accessDifficulty" onchange="calculateQuote()">
+                  <option value="easy" selected>Easy: parking/lift nearby (+RM0 adjustment)</option>
+                  <option value="medium">Medium: some carrying/walking (+RM150 adjustment)</option>
+                  <option value="hard">Hard: stairs/no lift/far loading (+RM300 adjustment)</option>
+                </select>
+                <div class="rationale">Reason: delivery access affects scheduling, manpower, and installation planning.</div>
+              </div>
+
+              <div class="field">
+                <label for="sunlight">Sunlight condition</label>
+                <select id="sunlight" onchange="calculateQuote()">
+                  <option value="good" selected>Good: 4+ hours sunlight (+RM0 adjustment)</option>
+                  <option value="medium">Medium: 2–4 hours sunlight (+RM80 adjustment)</option>
+                  <option value="low">Low: below 2 hours / shaded (+RM150 adjustment)</option>
+                </select>
+                <div class="rationale">Reason: sunlight affects plant recommendations and whether extra planning is needed.</div>
+              </div>
+
+              <div class="field">
+                <label for="waterSource">Water source and drainage</label>
+                <select id="waterSource" onchange="calculateQuote()">
+                  <option value="easy" selected>Easy: water + drainage nearby (+RM0 adjustment)</option>
+                  <option value="medium">Medium: water nearby, drainage limited (+RM120 adjustment)</option>
+                  <option value="hard">Hard: no nearby water/drainage issue (+RM250 adjustment)</option>
+                </select>
+                <div class="rationale">Reason: water and drainage affect practicality, watering flow, and mess prevention.</div>
+              </div>
+
+              <div class="field">
+                <label for="plantGoal">Client’s main goal</label>
+                <select id="plantGoal" onchange="calculateQuote()">
+                  <option value="basic" selected>Basic herbs/leafy greens (+RM0 adjustment)</option>
+                  <option value="variety">More variety: herbs, greens, chillies (+RM150 adjustment)</option>
+                  <option value="aesthetic">Aesthetic edible corner (+RM300 adjustment)</option>
+                  <option value="community">Community/demo/workshop-ready (+RM500 adjustment)</option>
+                </select>
+                <div class="rationale">Reason: different goals require different layout, plant choices, and preparation.</div>
+              </div>
+
+              <div class="field">
+                <label for="careLevel">Who will care for it?</label>
+                <select id="careLevel" onchange="calculateQuote()">
+                  <option value="client" selected>Client will maintain (+RM0 adjustment)</option>
+                  <option value="needsGuidance">Client needs guidance (+RM100 adjustment)</option>
+                  <option value="lowTime">Client has little time (+RM200 adjustment)</option>
+                </select>
+                <div class="rationale">Reason: this helps us recommend the right setup and whether maintenance support is suitable.</div>
+              </div>
+
+              <div class="field">
+                <label for="maintenance">Maintenance add-on</label>
+                <select id="maintenance" onchange="calculateQuote()">
+                  <option value="none" selected>Setup only (+RM0)</option>
+                  <option value="maintenance1">1 month maintenance support (+RM250 / RM250 per month)</option>
+                  <option value="maintenance3">3 months maintenance support (+RM690 / RM230 per month)</option>
+                  <option value="maintenance6">6 months maintenance support (+RM1,320 / RM220 per month)</option>
+                  <option value="maintenance12">12 months maintenance support (+RM2,400 / RM200 per month)</option>
+                </select>
+                <div class="rationale">Reason: longer maintenance support helps the garden survive better after setup and gives clients better monthly value.</div>
+              </div>
+
+              <div class="field">
+                <label for="movableSetup">Movable / rental-friendly?</label>
+                <select id="movableSetup" onchange="calculateQuote()">
+                  <option value="no" selected>No special requirement (+RM0 adjustment)</option>
+                  <option value="yes">Yes, must be movable (+RM200 adjustment)</option>
+                </select>
+                <div class="rationale">Reason: renters or condo clients may need a non-permanent, movable setup.</div>
+              </div>
+
+              <div class="field">
+                <label for="timeline">Installation timeline</label>
+                <select id="timeline" onchange="calculateQuote()">
+                  <option value="flexible" selected>Flexible (+RM0 adjustment)</option>
+                  <option value="normal">Within 2 weeks (+RM0 adjustment)</option>
+                  <option value="urgent">Urgent: within 7 days (+RM250 adjustment)</option>
+                </select>
+                <div class="rationale">Reason: timeline helps us check installation availability and supplier readiness.</div>
+              </div>
+
+              <div class="field">
+                <label for="salesChannel">Sales channel</label>
+                <select id="salesChannel" onchange="calculateQuote()">
+                  <option value="direct" selected>Direct client</option>
+                  <option value="partner">Partner / referral client</option>
+                </select>
+                <div class="rationale">Reason: this helps internal tracking of where the client came from.</div>
+              </div>
+            </div>
+
+            <div class="warning" id="warningBox"></div>
+          </div>
+
+          <aside class="summary-card sticky-summary">
+            <div>
+              <div class="quote-label">Suggested client quote</div>
+              <div class="quote-number" id="recommendedQuote">RM0</div>
+              <div class="quote-note" id="quoteNote">Complete the fields to estimate the client quote.</div>
+            </div>
+
+            <div class="summary-grid">
+              <div class="mini">
+                <span>Suggested deposit</span>
+                <strong id="depositAmount">RM0</strong>
+              </div>
+
+              <div class="mini">
+                <span>Balance payment</span>
+                <strong id="balanceAmount">RM0</strong>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="primary-btn" id="submitQuoteBtn" onclick="submitToGoogleSheet(this)">Submit quotation</button>
+              <button class="secondary-btn" onclick="copyQuoteSummary()">Copy quote summary</button>
+              <button class="secondary-btn" onclick="resetForm()">Reset</button>
+            </div>
+          </aside>
+        </div>
+
+        <div class="section hidden" id="quoteListSection">
+          <div class="section-header">
+            <div>
+              <h2>My Quotation List</h2>
+              <p>Only shown after Agent ID is verified. Status changes update the Google Sheet.</p>
+            </div>
+
+            <div class="actions">
+              <button class="secondary-btn" id="refreshQuotesBtn" onclick="loadMyQuotes(true, this)">Refresh list</button>
+              <button class="secondary-btn" onclick="exportCSV()">Export CSV</button>
+            </div>
+          </div>
+
+          <div class="form-grid" style="margin-bottom: 14px;">
+            <div class="field">
+              <label for="quoteSearch">Search quotation list</label>
+              <input id="quoteSearch" placeholder="Search quote ID, client, contact, location, status..." oninput="currentQuotePage = 1; renderQuotes()" />
+              <div class="rationale">Search only filters the quotation list already loaded for the current agent.</div>
+            </div>
+          </div>
+
+          <div class="client-list">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Quote ID</th>
+                  <th>Client</th>
+                  <th>Location</th>
+                  <th>Size</th>
+                  <th>Setup</th>
+                  <th>Maintenance</th>
+                  <th>Channel</th>
+                  <th>Suggested Quote</th>
+                  <th>Deposit</th>
+                  <th>Status</th>
+                  <th>Update</th>
+                </tr>
+              </thead>
+              <tbody id="clientRows"></tbody>
+            </table>
+          </div>
+
+          <div class="actions" style="justify-content: space-between; align-items: center; margin-top: 14px;">
+            <button class="secondary-btn" onclick="changeQuotePage(-1)" id="prevPageBtn">Previous</button>
+            <div class="quote-note" id="paginationInfo">Page 1 of 1</div>
+            <button class="secondary-btn" onclick="changeQuotePage(1)" id="nextPageBtn">Next</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyIuqRdlzcy0Irax1qJzFU-b2ZSrPbv2RSvRqhI04qEGFRL-hUpF3dIJUB2qA063gXZXQ/exec";
+
+    const money = (value) => `RM${Math.round(value).toLocaleString("en-MY")}`;
+
+    let currentAgent = null;
+    let currentQuotes = [];
+    let currentQuotePage = 1;
+
+    const quotesPerPage = 10;
+
+    const labels = {
+      actualSize: {
+        compact: "Compact / up to around 3 m² (+RM0)",
+        standard: "Standard / around 3–8 m² (+RM500)",
+        custom: "Custom / larger than standard (+RM1,500)",
+        notSure: "Not sure yet — use standard estimate (+RM500)"
+      },
+      setupType: {
+        normal: "Normal setup (+RM0)",
+        hydroponic: "Hydroponic setup (+RM800)"
+      },
+      accessDifficulty: {
+        easy: "Easy: parking/lift nearby (+RM0 adjustment)",
+        medium: "Medium: some carrying/walking (+RM150 adjustment)",
+        hard: "Hard: stairs/no lift/far loading (+RM300 adjustment)"
+      },
+      maintenance: {
+        none: "Setup only (+RM0)",
+        maintenance1: "1 month maintenance support (+RM250 / RM250 per month)",
+        maintenance3: "3 months maintenance support (+RM690 / RM230 per month)",
+        maintenance6: "6 months maintenance support (+RM1,320 / RM220 per month)",
+        maintenance12: "12 months maintenance support (+RM2,400 / RM200 per month)"
+      },
+      salesChannel: {
+        direct: "Direct client",
+        partner: "Partner / referral client"
+      }
+    };
+
+    const clientPricing = {
+      depositPercent: 0.5,
+      rounding: 10,
+      setupType: {
+        normal: 0,
+        hydroponic: 0
+      },
+      setupBasePrice: {
+        normal: {
+          compact: 500,
+          standard: 1000,
+          custom: 2000,
+          notSure: 1000
+        },
+        hydroponic: {
+          compact: 900,
+          standard: 1800,
+          custom: 3600,
+          notSure: 1800
+        }
+      },
+      surfaceType: {
+        easy: 0,
+        medium: 150,
+        hard: 300
+      },
+      accessDifficulty: {
+        easy: 0,
+        medium: 150,
+        hard: 300
+      },
+      sunlight: {
+        good: 0,
+        medium: 80,
+        low: 150
+      },
+      waterSource: {
+        easy: 0,
+        medium: 120,
+        hard: 250
+      },
+      plantGoal: {
+        basic: 0,
+        variety: 150,
+        aesthetic: 300,
+        community: 500
+      },
+      careLevel: {
+        client: 0,
+        needsGuidance: 100,
+        lowTime: 200
+      },
+      maintenance: {
+        none: 0,
+        maintenance1: 250,
+        maintenance3: 690,
+        maintenance6: 1320,
+        maintenance12: 2400
+      },
+      movableSetup: {
+        no: 0,
+        yes: 200
+      },
+      timeline: {
+        flexible: 0,
+        normal: 0,
+        urgent: 250
+      },
+      channel: {
+        direct: 0,
+        partner: 0
+      }
+    };
+
+    const getValue = (id) => document.getElementById(id).value;
+    const getSelectedText = (id) => document.querySelector(`#${id} option:checked`).textContent;
+
+    function fitDesktopView() {
+      const wrapper = document.getElementById("viewportScale");
+      if (!wrapper) return;
+
+      const designWidth = 1180;
+      const viewportWidth = document.documentElement.clientWidth || window.innerWidth;
+      const scale = Math.min(1, viewportWidth / designWidth);
+
+      wrapper.style.width = `${designWidth}px`;
+      wrapper.style.height = "auto";
+
+      if (viewportWidth >= designWidth) {
+        wrapper.style.transform = "none";
+        wrapper.style.marginLeft = "auto";
+        wrapper.style.marginRight = "auto";
+      } else {
+        wrapper.style.transform = `scale(${scale})`;
+        wrapper.style.marginLeft = "0";
+        wrapper.style.marginRight = "0";
+      }
+
+      requestAnimationFrame(() => {
+        wrapper.style.height = `${wrapper.scrollHeight * scale}px`;
+        document.documentElement.style.width = "100%";
+        document.body.style.width = "100%";
+        document.body.style.maxWidth = "100vw";
+      });
+    }
+
+    function updateDependentPricingLabels() {
+      const actualSize = getValue("actualSize");
+      const setupType = getValue("setupType");
+
+      const selectedSetupCompact = clientPricing.setupBasePrice[setupType].compact;
+      const normalSameSizeBase = clientPricing.setupBasePrice.normal[actualSize];
+
+      const areaOptions = {
+        compact: "Compact / up to around 3 m²",
+        standard: "Standard / around 3–8 m²",
+        custom: "Custom / larger than standard",
+        notSure: "Not sure yet — use standard estimate"
+      };
+
+      Object.entries(areaOptions).forEach(([value, label]) => {
+        const option = document.querySelector(`#actualSize option[value="${value}"]`);
+        if (!option) return;
+
+        const amount = clientPricing.setupBasePrice[setupType][value] - selectedSetupCompact;
+        option.textContent = `${label} (+RM${amount.toLocaleString("en-MY")})`;
+        labels.actualSize[value] = option.textContent;
+      });
+
+      const setupOptions = {
+        normal: "Normal setup",
+        hydroponic: "Hydroponic setup"
+      };
+
+      Object.entries(setupOptions).forEach(([value, label]) => {
+        const option = document.querySelector(`#setupType option[value="${value}"]`);
+        if (!option) return;
+
+        const amount = clientPricing.setupBasePrice[value][actualSize] - normalSameSizeBase;
+        option.textContent = `${label} (+RM${amount.toLocaleString("en-MY")})`;
+        labels.setupType[value] = option.textContent;
+      });
+    }
+
+    function calculateQuote() {
+      const actualSize = getValue("actualSize");
+      const setupType = getValue("setupType");
+
+      updateDependentPricingLabels();
+
+      const basePrice = clientPricing.setupBasePrice[setupType][actualSize];
+
+      const addonTotal =
+        clientPricing.setupType[setupType] +
+        clientPricing.surfaceType[getValue("surfaceType")] +
+        clientPricing.accessDifficulty[getValue("accessDifficulty")] +
+        clientPricing.sunlight[getValue("sunlight")] +
+        clientPricing.waterSource[getValue("waterSource")] +
+        clientPricing.plantGoal[getValue("plantGoal")] +
+        clientPricing.careLevel[getValue("careLevel")] +
+        clientPricing.maintenance[getValue("maintenance")] +
+        clientPricing.movableSetup[getValue("movableSetup")] +
+        clientPricing.timeline[getValue("timeline")] +
+        clientPricing.channel[getValue("salesChannel")];
+
+      let suggestedQuote = basePrice + addonTotal;
+      suggestedQuote = Math.ceil(suggestedQuote / clientPricing.rounding) * clientPricing.rounding;
+
+      const depositAmount = suggestedQuote * clientPricing.depositPercent;
+      const balanceAmount = suggestedQuote - depositAmount;
+
+      document.getElementById("recommendedQuote").textContent = money(suggestedQuote);
+      document.getElementById("quoteNote").textContent = `${labels.actualSize[actualSize]} • ${labels.setupType[setupType]}`;
+      document.getElementById("depositAmount").textContent = money(depositAmount);
+      document.getElementById("balanceAmount").textContent = money(balanceAmount);
+
+      return {
+        actualSize,
+        setupType,
+        suggestedQuote,
+        depositAmount,
+        balanceAmount
+      };
+    }
+
+    function setAgentNotice(message) {
+      const notice = document.getElementById("agentNotice");
+      if (notice) notice.textContent = message;
+    }
+
+    function setButtonLoading(button, isLoading, loadingText = "Loading...") {
+      if (!button) return;
+
+      if (isLoading) {
+        button.dataset.originalText = button.textContent;
+        button.textContent = loadingText;
+        button.classList.add("btn-loading");
+        button.disabled = true;
+      } else {
+        button.textContent = button.dataset.originalText || button.textContent;
+        button.classList.remove("btn-loading");
+        button.disabled = false;
+      }
+    }
+
+    function setPageBusy(isBusy) {
+      document.querySelectorAll("button").forEach(button => {
+        if (button.classList.contains("btn-loading")) return;
+        button.disabled = isBusy;
+      });
+    }
+
+    function apiReady() {
+      if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes("PASTE_YOUR")) {
+        alert("Please paste your Google Apps Script Web App URL into APPS_SCRIPT_URL first.");
+        return false;
+      }
+
+      return true;
+    }
+
+    async function apiPost(payload) {
+      const response = await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      return response.json();
+    }
+
+    function buildClientRow() {
+      const quote = calculateQuote();
+      const agentId = getValue("agentId").trim();
+
+      return {
+        timestamp: new Date().toISOString(),
+        date: new Date().toLocaleDateString("en-MY"),
+        agentId,
+        agentName: currentAgent?.agentName || "",
+        clientName: document.getElementById("clientName").value || "Unnamed client",
+        contact: document.getElementById("clientContact").value || "",
+        location: document.getElementById("clientLocation").value || "",
+        quotationStatus: document.getElementById("quotationStatus").value || "Draft",
+        actualSize: getSelectedText("actualSize"),
+        setupType: getSelectedText("setupType"),
+        surfaceType: getSelectedText("surfaceType"),
+        access: getSelectedText("accessDifficulty"),
+        sunlight: getSelectedText("sunlight"),
+        waterSource: getSelectedText("waterSource"),
+        plantGoal: getSelectedText("plantGoal"),
+        careLevel: getSelectedText("careLevel"),
+        maintenance: getSelectedText("maintenance"),
+        movableSetup: getSelectedText("movableSetup"),
+        timeline: getSelectedText("timeline"),
+        channel: getSelectedText("salesChannel"),
+        suggestedQuote: Math.round(quote.suggestedQuote),
+        deposit: Math.round(quote.depositAmount),
+        balance: Math.round(quote.balanceAmount)
+      };
+    }
+
+    async function verifyAgentAndLoadQuotes(button) {
+      if (!apiReady()) return;
+
+      setButtonLoading(button, true, "Checking...");
+      setPageBusy(true);
+
+      const agentId = getValue("agentId").trim();
+
+      if (!agentId) {
+        alert("Please enter your agent ID / partner number.");
+        setButtonLoading(button, false);
+        setPageBusy(false);
+        return;
+      }
+
+      try {
+        const result = await apiPost({
+          action: "verifyAgent",
+          agentId
+        });
+
+        if (!result.success) {
+          currentAgent = null;
+          document.getElementById("agentNameDisplay").value = "";
+          document.getElementById("quoteListSection").classList.add("hidden");
+          setAgentNotice(result.message || "Agent ID not found or inactive.");
+          alert(result.message || "Agent ID not found or inactive.");
+          return;
+        }
+
+        currentAgent = result.agent;
+        document.getElementById("agentNameDisplay").value = currentAgent.agentName || "Verified agent";
+        document.getElementById("quoteListSection").classList.remove("hidden");
+        setAgentNotice(`Access granted for ${currentAgent.agentName || agentId}.`);
+
+        await loadMyQuotes(false);
+        fitDesktopView();
+
+      } catch (error) {
+        console.error(error);
+        alert("Could not verify agent ID. Please check the Apps Script URL and deployment access.");
+      } finally {
+        setButtonLoading(button, false);
+        setPageBusy(false);
+      }
+    }
+
+    async function submitToGoogleSheet(button) {
+      if (!apiReady()) return;
+
+      setButtonLoading(button, true, "Submitting...");
+      setPageBusy(true);
+
+      const row = buildClientRow();
+
+      if (!row.agentId) {
+        alert("Agent ID is required to submit a quotation. Public users can calculate only.");
+        setButtonLoading(button, false);
+        setPageBusy(false);
+        return;
+      }
+
+      try {
+        if (!currentAgent || currentAgent.agentId !== row.agentId) {
+          const verify = await apiPost({
+            action: "verifyAgent",
+            agentId: row.agentId
+          });
+
+          if (!verify.success) {
+            alert(verify.message || "Agent ID not found or inactive.");
+            return;
+          }
+
+          currentAgent = verify.agent;
+          document.getElementById("agentNameDisplay").value = currentAgent.agentName || "Verified agent";
+        }
+
+        row.agentName = currentAgent.agentName || "";
+
+        const result = await apiPost({
+          action: "submitQuote",
+          quote: row
+        });
+
+        if (!result.success) {
+          alert(result.message || "Could not submit quotation.");
+          return;
+        }
+
+        alert("Quotation submitted successfully.");
+        document.getElementById("quoteListSection").classList.remove("hidden");
+        await loadMyQuotes(false);
+        fitDesktopView();
+
+      } catch (error) {
+        console.error(error);
+        alert("Could not submit to Google Sheet. Please check the Apps Script URL and deployment access.");
+      } finally {
+        setButtonLoading(button, false);
+        setPageBusy(false);
+      }
+    }
+
+    async function loadMyQuotes(showAlert = true, button) {
+      if (!apiReady()) return;
+
+      setButtonLoading(button, true, "Loading...");
+      setPageBusy(true);
+
+      const agentId = getValue("agentId").trim();
+
+      if (!agentId) {
+        alert("Please enter your agent ID / partner number first.");
+        setButtonLoading(button, false);
+        setPageBusy(false);
+        return;
+      }
+
+      try {
+        const result = await apiPost({
+          action: "getQuotesByAgent",
+          agentId
+        });
+
+        if (!result.success) {
+          currentQuotes = [];
+          currentQuotePage = 1;
+          renderQuotes();
+
+          if (showAlert) alert(result.message || "Could not load quotations.");
+          return;
+        }
+
+        currentQuotes = result.quotes || [];
+        currentQuotePage = 1;
+        renderQuotes();
+
+        if (showAlert) alert("Quotation list refreshed.");
+        fitDesktopView();
+
+      } catch (error) {
+        console.error(error);
+        alert("Could not load quotation list.");
+      } finally {
+        setButtonLoading(button, false);
+        setPageBusy(false);
+      }
+    }
+
+    async function updateQuoteStatus(quoteId, selectEl, button) {
+      if (!apiReady()) return;
+
+      setButtonLoading(button, true, "Updating...");
+      setPageBusy(true);
+
+      const agentId = getValue("agentId").trim();
+      const newStatus = selectEl.value;
+
+      if (!agentId) {
+        alert("Please enter your agent ID first.");
+        setButtonLoading(button, false);
+        setPageBusy(false);
+        return;
+      }
+
+      try {
+        const result = await apiPost({
+          action: "updateQuoteStatus",
+          agentId,
+          quoteId,
+          quotationStatus: newStatus
+        });
+
+        if (!result.success) {
+          alert(result.message || "Could not update quote status.");
+          return;
+        }
+
+        alert("Quote status updated.");
+        await loadMyQuotes(false);
+
+      } catch (error) {
+        console.error(error);
+        alert("Could not update quote status.");
+      } finally {
+        setButtonLoading(button, false);
+        setPageBusy(false);
+      }
+    }
+
+    function getFilteredQuotes() {
+      const searchTerm = (document.getElementById("quoteSearch")?.value || "").trim().toLowerCase();
+
+      if (!searchTerm) return currentQuotes;
+
+      return currentQuotes.filter(client => {
+        const searchableText = [
+          client.quoteId,
+          client.date,
+          client.clientName,
+          client.contact,
+          client.location,
+          client.quotationStatus,
+          client.actualSize,
+          client.setupType,
+          client.maintenance,
+          client.channel,
+          client.suggestedQuote,
+          client.deposit
+        ].join(" ").toLowerCase();
+
+        return searchableText.includes(searchTerm);
+      });
+    }
+
+    function renderQuotes() {
+      const tbody = document.getElementById("clientRows");
+      const statuses = ["Draft", "Sent to client", "Client reviewing", "Won", "Lost"];
+      const filteredQuotes = getFilteredQuotes();
+      const totalPages = Math.max(1, Math.ceil(filteredQuotes.length / quotesPerPage));
+
+      if (currentQuotePage > totalPages) currentQuotePage = totalPages;
+      if (currentQuotePage < 1) currentQuotePage = 1;
+
+      const startIndex = (currentQuotePage - 1) * quotesPerPage;
+      const paginatedQuotes = filteredQuotes.slice(startIndex, startIndex + quotesPerPage);
+
+      tbody.innerHTML = paginatedQuotes.length
+        ? paginatedQuotes.map(client => `
+          <tr>
+            <td>${client.date || "-"}</td>
+            <td>${client.quoteId || "-"}</td>
+            <td><strong>${client.clientName || "-"}</strong><br><span>${client.contact || ""}</span></td>
+            <td>${client.location || "-"}</td>
+            <td>${client.actualSize || "-"}</td>
+            <td>${client.setupType || "-"}</td>
+            <td>${client.maintenance || "-"}</td>
+            <td><span class="pill">${client.channel || "-"}</span></td>
+            <td><strong>${money(Number(client.suggestedQuote || 0))}</strong></td>
+            <td>${money(Number(client.deposit || 0))}</td>
+            <td>
+              <select class="status-select" id="status-${client.quoteId}">
+                ${statuses.map(status => `<option value="${status}" ${status === client.quotationStatus ? "selected" : ""}>${status}</option>`).join("")}
+              </select>
+            </td>
+            <td>
+              <button class="secondary-btn" onclick="updateQuoteStatus('${client.quoteId}', document.getElementById('status-${client.quoteId}'), this)">Update</button>
+            </td>
+          </tr>
+        `).join("")
+        : `<tr><td colspan="12">${currentQuotes.length ? "No quotations match your search." : "No quotations found."}</td></tr>`;
+
+      updatePaginationControls(filteredQuotes.length, totalPages, startIndex, paginatedQuotes.length);
+    }
+
+    function updatePaginationControls(totalRows, totalPages, startIndex, visibleRows) {
+      const paginationInfo = document.getElementById("paginationInfo");
+      const prevBtn = document.getElementById("prevPageBtn");
+      const nextBtn = document.getElementById("nextPageBtn");
+
+      if (!paginationInfo || !prevBtn || !nextBtn) return;
+
+      const from = totalRows ? startIndex + 1 : 0;
+      const to = totalRows ? startIndex + visibleRows : 0;
+
+      paginationInfo.textContent = `${from}-${to} of ${totalRows} • Page ${currentQuotePage} of ${totalPages}`;
+      prevBtn.disabled = currentQuotePage <= 1;
+      nextBtn.disabled = currentQuotePage >= totalPages;
+    }
+
+    function changeQuotePage(direction) {
+      const filteredQuotes = getFilteredQuotes();
+      const totalPages = Math.max(1, Math.ceil(filteredQuotes.length / quotesPerPage));
+
+      currentQuotePage = Math.min(totalPages, Math.max(1, currentQuotePage + direction));
+      renderQuotes();
+    }
+
+    function clearAgentAccess() {
+      currentAgent = null;
+      currentQuotes = [];
+      currentQuotePage = 1;
+
+      document.getElementById("quoteListSection").classList.add("hidden");
+      document.getElementById("agentId").value = "";
+      document.getElementById("agentNameDisplay").value = "";
+
+      const quoteSearch = document.getElementById("quoteSearch");
+      if (quoteSearch) quoteSearch.value = "";
+
+      setAgentNotice("Public calculator mode.");
+      renderQuotes();
+      fitDesktopView();
+    }
+
+    function copyQuoteSummary() {
+      const quote = calculateQuote();
+
+      const summary = `Keboon Assist Quote Summary
+
+Client: ${document.getElementById("clientName").value || "-"}
+Location: ${document.getElementById("clientLocation").value || "-"}
+Setup: ${getSelectedText("setupType")}
+Area: ${getSelectedText("actualSize")}
+Maintenance: ${getSelectedText("maintenance")}
+
+Suggested Quote: ${money(quote.suggestedQuote)}
+Deposit: ${money(quote.depositAmount)}
+Balance: ${money(quote.balanceAmount)}
+
+Note: Final price may change after site photo/site visit confirmation.`;
+
+      navigator.clipboard.writeText(summary).then(() => alert("Quote summary copied."));
+    }
+
+    function resetForm() {
+      document.querySelectorAll("input").forEach(input => {
+        if (["agentId", "agentNameDisplay"].includes(input.id)) return;
+        input.value = "";
+      });
+
+      document.querySelectorAll("select").forEach(select => {
+        select.selectedIndex = [...select.options].findIndex(option => option.defaultSelected);
+        if (select.selectedIndex < 0) select.selectedIndex = 0;
+      });
+
+      updateDependentPricingLabels();
+      calculateQuote();
+    }
+
+    function exportCSV() {
+      if (!currentQuotes.length) {
+        alert("No quotation list to export. Access your quotations first.");
+        return;
+      }
+
+      const headers = Object.keys(currentQuotes[0]);
+
+      const rows = currentQuotes.map(client =>
+        headers.map(header => `"${String(client[header] ?? "").replaceAll('"', '""')}"`).join(",")
+      );
+
+      const csv = [headers.join(","), ...rows].join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = "keboon-assist-my-quotes.csv";
+      link.click();
+
+      URL.revokeObjectURL(url);
+    }
+
+    window.addEventListener("load", fitDesktopView);
+    window.addEventListener("resize", fitDesktopView);
+
+    updateDependentPricingLabels();
+    calculateQuote();
+    renderQuotes();
+    document.getElementById("quoteListSection").classList.add("hidden");
+    fitDesktopView();
+  </script>
+</body>
+</html>
