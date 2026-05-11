@@ -173,9 +173,17 @@ faqButtons.forEach((button) => {
 });
 
 const leadForm = document.querySelector("#leadForm");
-const formNote = document.querySelector("#formNote");
 
-if (leadForm && formNote) {
+if (leadForm) {
+  let formNote = document.querySelector("#formNote");
+
+  if (!formNote) {
+    formNote = document.createElement("p");
+    formNote.id = "formNote";
+    formNote.className = "form-note";
+    leadForm.appendChild(formNote);
+  }
+
   leadForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
@@ -198,8 +206,9 @@ if (leadForm && formNote) {
       leadForm.reset();
       formNote.textContent = "Thank you. Your quote request has been received.";
     } catch (error) {
+      console.error("Form submission error:", error);
       formNote.textContent =
-        "Sorry, something went wrong. Please try again or contact Keboon directly.";
+        "Sorry, something went wrong. Please try again or email keboon@keboon.net.";
     } finally {
       submitButton.disabled = false;
       submitButton.textContent = originalButtonText;

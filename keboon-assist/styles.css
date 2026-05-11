@@ -35,10 +35,21 @@ html {
 
 body {
   margin: 0;
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   color: var(--ink);
-  background: radial-gradient(circle at 8% 6%, rgba(47, 139, 99, 0.16), transparent 28%),
-    radial-gradient(circle at 92% 4%, rgba(240, 186, 89, 0.18), transparent 25%),
+  background:
+    radial-gradient(circle at 8% 6%, rgba(47, 139, 99, 0.16), transparent 28%),
+    radial-gradient(
+      circle at 92% 4%,
+      rgba(240, 186, 89, 0.18),
+      transparent 25%
+    ),
     var(--cream);
   overflow-x: hidden;
   line-height: 1.55;
@@ -124,7 +135,9 @@ select {
 
 .nav-menu a:not(.nav-cta) {
   opacity: 0.76;
-  transition: opacity 180ms ease, color 180ms ease;
+  transition:
+    opacity 180ms ease,
+    color 180ms ease;
 }
 
 .nav-menu a:not(.nav-cta):hover {
@@ -242,7 +255,10 @@ p {
   border: 0;
   font-weight: 900;
   cursor: pointer;
-  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
 }
 
 .btn:hover,
@@ -431,7 +447,12 @@ p {
 }
 
 .service-section {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.1)),
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.36),
+      rgba(255, 255, 255, 0.1)
+    ),
     var(--cream-2);
 }
 
@@ -814,7 +835,12 @@ p {
 
 .quote-section {
   padding: 92px 0;
-  background: radial-gradient(circle at 20% 10%, rgba(240, 186, 89, 0.18), transparent 28%),
+  background:
+    radial-gradient(
+      circle at 20% 10%,
+      rgba(240, 186, 89, 0.18),
+      transparent 28%
+    ),
     linear-gradient(145deg, var(--green-900), var(--green-950));
 }
 
@@ -900,7 +926,9 @@ select:focus {
 .reveal {
   opacity: 0;
   transform: translateY(18px);
-  transition: opacity 650ms ease, transform 650ms ease;
+  transition:
+    opacity 650ms ease,
+    transform 650ms ease;
 }
 
 .reveal.visible {
@@ -1688,4 +1716,10 @@ select:focus {
 
 .back-link::before {
   content: "← ";
+}
+.form-note {
+  grid-column: 1 / -1;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1b5e20;
 }
