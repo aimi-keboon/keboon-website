@@ -342,9 +342,9 @@
     }
 
     table {
-  width: 3000px;
-  max-width: none;
-  min-width: 3000px;
+      width: 3000px;
+      max-width: none;
+      min-width: 3000px;
       border-collapse: collapse;
       table-layout: auto;
       background: rgba(255, 255, 255, 0.5);
@@ -362,6 +362,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      max-width: 220px;
     }
 
     th {
@@ -369,6 +370,8 @@
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.06em;
+      cursor: pointer;
+      user-select: none;
     }
 
     tr:last-child td {
@@ -391,6 +394,60 @@
 
     #quoteListSection {
       overflow: hidden;
+    }
+
+    .filter-panel {
+      margin-bottom: 16px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(22, 48, 32, 0.1);
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .filter-box {
+      border: 1px solid rgba(22, 48, 32, 0.1);
+      border-radius: 14px;
+      background: rgba(255, 250, 240, 0.7);
+      padding: 10px;
+    }
+
+    .filter-box summary {
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .filter-options {
+      margin-top: 8px;
+      max-height: 150px;
+      overflow-y: auto;
+      display: grid;
+      gap: 6px;
+    }
+
+    .filter-option {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12.5px;
+      color: var(--green);
+    }
+
+    .filter-option input {
+      width: auto;
+    }
+
+    .filter-active {
+      color: var(--danger);
+      font-size: 12px;
+      font-weight: 800;
+      margin-left: 4px;
     }
 
     @media (max-width: 1180px) {
@@ -678,7 +735,7 @@
           <div class="section-header">
             <div>
               <h2>My Quotation List</h2>
-              <p>Only shown after Agent ID is verified. Click Edit to load a quotation into the form.</p>
+              <p>Click table headers to sort, filter by status/area/setup type, or click Edit to load a quote into the form.</p>
             </div>
 
             <div class="actions">
@@ -695,36 +752,50 @@
             </div>
           </div>
 
+          <div class="filter-panel">
+            <div class="section-header" style="margin-bottom: 12px;">
+              <div>
+                <h2 style="font-size: 18px;">Filters</h2>
+                <p>Tick one or more values. Leave blank to show all.</p>
+              </div>
+              <div class="actions">
+                <button class="secondary-btn" onclick="clearColumnFilters()">Clear filters</button>
+              </div>
+            </div>
+
+            <div class="filter-grid" id="columnFilters"></div>
+          </div>
+
           <div class="client-list">
             <table>
               <thead>
-  <tr>
-    <th>Date</th>
-    <th>Quote ID</th>
-    <th>Client Name</th>
-    <th>Phone</th>
-    <th>Email</th>
-    <th>Setup Address</th>
-    <th>Status</th>
-    <th>Admin Action</th>
-    <th>Area</th>
-    <th>Setup Type</th>
-    <th>Surface</th>
-    <th>Access</th>
-    <th>Sunlight</th>
-    <th>Water / Drainage</th>
-    <th>Goal</th>
-    <th>Care Level</th>
-    <th>Maintenance</th>
-    <th>Movable</th>
-    <th>Timeline</th>
-    <th>Channel</th>
-    <th>Suggested Quote</th>
-    <th>Deposit</th>
-    <th>Balance</th>
-    <th>Action</th>
-  </tr>
-</thead>
+                <tr>
+                  <th>Date</th>
+                  <th data-sort="quoteId" data-label="Quote ID" onclick="setQuoteSort('quoteId')">Quote ID</th>
+                  <th data-sort="clientName" data-label="Client Name" onclick="setQuoteSort('clientName')">Client Name</th>
+                  <th data-sort="contact" data-label="Phone" onclick="setQuoteSort('contact')">Phone</th>
+                  <th data-sort="clientEmail" data-label="Email" onclick="setQuoteSort('clientEmail')">Email</th>
+                  <th data-sort="setupAddress" data-label="Setup Address" onclick="setQuoteSort('setupAddress')">Setup Address</th>
+                  <th data-sort="quotationStatus" data-label="Status" onclick="setQuoteSort('quotationStatus')">Status</th>
+                  <th data-sort="adminAction" data-label="Admin Action" onclick="setQuoteSort('adminAction')">Admin Action</th>
+                  <th data-sort="actualSize" data-label="Area" onclick="setQuoteSort('actualSize')">Area</th>
+                  <th data-sort="setupType" data-label="Setup Type" onclick="setQuoteSort('setupType')">Setup Type</th>
+                  <th data-sort="surfaceType" data-label="Surface" onclick="setQuoteSort('surfaceType')">Surface</th>
+                  <th data-sort="access" data-label="Access" onclick="setQuoteSort('access')">Access</th>
+                  <th data-sort="sunlight" data-label="Sunlight" onclick="setQuoteSort('sunlight')">Sunlight</th>
+                  <th data-sort="waterSource" data-label="Water / Drainage" onclick="setQuoteSort('waterSource')">Water / Drainage</th>
+                  <th data-sort="plantGoal" data-label="Goal" onclick="setQuoteSort('plantGoal')">Goal</th>
+                  <th data-sort="careLevel" data-label="Care Level" onclick="setQuoteSort('careLevel')">Care Level</th>
+                  <th data-sort="maintenance" data-label="Maintenance" onclick="setQuoteSort('maintenance')">Maintenance</th>
+                  <th data-sort="movableSetup" data-label="Movable" onclick="setQuoteSort('movableSetup')">Movable</th>
+                  <th data-sort="timeline" data-label="Timeline" onclick="setQuoteSort('timeline')">Timeline</th>
+                  <th data-sort="channel" data-label="Channel" onclick="setQuoteSort('channel')">Channel</th>
+                  <th data-sort="suggestedQuote" data-label="Suggested Quote" onclick="setQuoteSort('suggestedQuote')">Suggested Quote</th>
+                  <th data-sort="deposit" data-label="Deposit" onclick="setQuoteSort('deposit')">Deposit</th>
+                  <th data-sort="balance" data-label="Balance" onclick="setQuoteSort('balance')">Balance</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
               <tbody id="clientRows"></tbody>
             </table>
           </div>
@@ -748,8 +819,17 @@
     let currentQuotes = [];
     let currentQuotePage = 1;
     let editingQuoteId = null;
+    let currentSortField = "timestampMs";
+let currentSortDirection = "desc";
+    let columnFilters = {};
 
     const quotesPerPage = 10;
+
+    const filterableColumns = [
+      { field: "quotationStatus", label: "Status" },
+      { field: "actualSize", label: "Area" },
+      { field: "setupType", label: "Setup Type" }
+    ];
 
     const labels = {
       actualSize: {
@@ -761,22 +841,6 @@
       setupType: {
         normal: "Normal setup (+RM0)",
         hydroponic: "Hydroponic setup (+RM800)"
-      },
-      accessDifficulty: {
-        easy: "Easy: parking/lift nearby (+RM0 adjustment)",
-        medium: "Medium: some carrying/walking (+RM150 adjustment)",
-        hard: "Hard: stairs/no lift/far loading (+RM300 adjustment)"
-      },
-      maintenance: {
-        none: "Setup only (+RM0)",
-        maintenance1: "1 month maintenance support (+RM250 / RM250 per month)",
-        maintenance3: "3 months maintenance support (+RM690 / RM230 per month)",
-        maintenance6: "6 months maintenance support (+RM1,320 / RM220 per month)",
-        maintenance12: "12 months maintenance support (+RM2,400 / RM200 per month)"
-      },
-      salesChannel: {
-        direct: "Direct client",
-        partner: "Partner / referral client"
       }
     };
 
@@ -1179,6 +1243,7 @@
         if (!result.success) {
           currentQuotes = [];
           currentQuotePage = 1;
+          renderColumnFilters();
           renderQuotes();
 
           if (showAlert) alert(result.message || "Could not load quotations.");
@@ -1187,6 +1252,7 @@
 
         currentQuotes = result.quotes || [];
         currentQuotePage = 1;
+        renderColumnFilters();
         renderQuotes();
 
         if (showAlert) alert("Quotation list refreshed.");
@@ -1381,88 +1447,242 @@
       if (submitBtn) submitBtn.textContent = "Submit quotation";
     }
 
-    function getFilteredQuotes() {
-  const searchTerm = (document.getElementById("quoteSearch")?.value || "").trim().toLowerCase();
+    function displayValue(value) {
+      if (value === null || value === undefined || value === "") return "Please select";
+      return String(value);
+    }
 
-  if (!searchTerm) return currentQuotes;
+    function safeFilterId(field, value) {
+      return `${field}-${String(value).replace(/[^a-zA-Z0-9]/g, "_")}`;
+    }
 
-  return currentQuotes.filter(client => {
-    const searchableText = [
-      client.quoteId,
-      client.date,
-      client.clientName,
-      client.contact,
-      client.clientEmail,
-      client.setupAddress,
-      client.quotationStatus,
-      client.adminAction,
-      client.actualSize,
-      client.setupType,
-      client.surfaceType,
-      client.access,
-      client.sunlight,
-      client.waterSource,
-      client.plantGoal,
-      client.careLevel,
-      client.maintenance,
-      client.movableSetup,
-      client.timeline,
-      client.channel,
-      client.suggestedQuote,
-      client.deposit,
-      client.balance
-    ].join(" ").toLowerCase();
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
 
-    return searchableText.includes(searchTerm);
+    function getUniqueColumnValues(field) {
+      const values = currentQuotes.map(quote => displayValue(quote[field]));
+      return [...new Set(values)].sort((a, b) => a.localeCompare(b));
+    }
+
+    function renderColumnFilters() {
+      const container = document.getElementById("columnFilters");
+      if (!container) return;
+
+      container.innerHTML = filterableColumns.map(column => {
+        const selectedValues = columnFilters[column.field] || [];
+        const activeLabel = selectedValues.length ? `<span class="filter-active">(${selectedValues.length})</span>` : "";
+
+        const options = getUniqueColumnValues(column.field).map(value => {
+          const id = safeFilterId(column.field, value);
+          const checked = selectedValues.includes(value) ? "checked" : "";
+
+          return `
+            <label class="filter-option" for="${id}">
+              <input
+                type="checkbox"
+                id="${id}"
+                value="${escapeHtml(value)}"
+                ${checked}
+                onchange="toggleColumnFilter('${column.field}', this.value, this.checked)"
+              />
+              <span>${escapeHtml(value)}</span>
+            </label>
+          `;
+        }).join("");
+
+        return `
+          <details class="filter-box">
+            <summary>${column.label} ${activeLabel}</summary>
+            <div class="filter-options">
+              ${options || `<div class="quote-note">No values yet</div>`}
+            </div>
+          </details>
+        `;
+      }).join("");
+    }
+
+    function toggleColumnFilter(field, value, checked) {
+      if (!columnFilters[field]) {
+        columnFilters[field] = [];
+      }
+
+      if (checked) {
+        if (!columnFilters[field].includes(value)) {
+          columnFilters[field].push(value);
+        }
+      } else {
+        columnFilters[field] = columnFilters[field].filter(item => item !== value);
+
+        if (!columnFilters[field].length) {
+          delete columnFilters[field];
+        }
+      }
+
+      currentQuotePage = 1;
+      renderColumnFilters();
+      renderQuotes();
+    }
+
+    function clearColumnFilters() {
+      columnFilters = {};
+      currentQuotePage = 1;
+      renderColumnFilters();
+      renderQuotes();
+    }
+
+    function quoteMatchesColumnFilters(client) {
+      return Object.entries(columnFilters).every(([field, selectedValues]) => {
+        if (!selectedValues.length) return true;
+
+        const clientValue = displayValue(client[field]);
+        return selectedValues.includes(clientValue);
+      });
+    }
+
+    function sortQuotes(quotes) {
+  if (!currentSortField) return quotes;
+
+  const sorted = [...quotes];
+
+  sorted.sort((a, b) => {
+    let valueA = a[currentSortField] ?? "";
+    let valueB = b[currentSortField] ?? "";
+
+    const numericFields = ["suggestedQuote", "deposit", "balance"];
+
+    if (numericFields.includes(currentSortField)) {
+      valueA = Number(valueA || 0);
+      valueB = Number(valueB || 0);
+    } else {
+      valueA = String(valueA).toLowerCase();
+      valueB = String(valueB).toLowerCase();
+    }
+
+    if (valueA < valueB) return currentSortDirection === "asc" ? -1 : 1;
+    if (valueA > valueB) return currentSortDirection === "asc" ? 1 : -1;
+    return 0;
   });
+
+  return sorted;
 }
+
+    function setQuoteSort(field) {
+      if (currentSortField === field) {
+        currentSortDirection = currentSortDirection === "asc" ? "desc" : "asc";
+      } else {
+        currentSortField = field;
+        currentSortDirection = "asc";
+      }
+
+      currentQuotePage = 1;
+      renderQuotes();
+    }
+
+    function sortLabel(field, label) {
+      if (currentSortField !== field) return label;
+
+      return `${label} ${currentSortDirection === "asc" ? "↑" : "↓"}`;
+    }
+
+    function getFilteredQuotes() {
+      const searchTerm = (document.getElementById("quoteSearch")?.value || "").trim().toLowerCase();
+
+      const filtered = currentQuotes.filter(client => {
+        const searchableText = [
+          client.quoteId,
+          client.timestamp,
+          client.date,
+          client.clientName,
+          client.contact,
+          client.clientEmail,
+          client.setupAddress,
+          client.quotationStatus,
+          client.adminAction,
+          client.actualSize,
+          client.setupType,
+          client.surfaceType,
+          client.access,
+          client.sunlight,
+          client.waterSource,
+          client.plantGoal,
+          client.careLevel,
+          client.maintenance,
+          client.movableSetup,
+          client.timeline,
+          client.channel,
+          client.suggestedQuote,
+          client.deposit,
+          client.balance
+        ].join(" ").toLowerCase();
+
+        const matchesSearch = !searchTerm || searchableText.includes(searchTerm);
+        const matchesFilters = quoteMatchesColumnFilters(client);
+
+        return matchesSearch && matchesFilters;
+      });
+
+      return sortQuotes(filtered);
+    }
 
     function renderQuotes() {
-  const tbody = document.getElementById("clientRows");
-  const filteredQuotes = getFilteredQuotes();
-  const totalPages = Math.max(1, Math.ceil(filteredQuotes.length / quotesPerPage));
+      const tbody = document.getElementById("clientRows");
 
-  if (currentQuotePage > totalPages) currentQuotePage = totalPages;
-  if (currentQuotePage < 1) currentQuotePage = 1;
+      document.querySelectorAll("th[data-sort]").forEach(th => {
+        const field = th.dataset.sort;
+        const baseLabel = th.dataset.label;
+        th.textContent = sortLabel(field, baseLabel);
+      });
 
-  const startIndex = (currentQuotePage - 1) * quotesPerPage;
-  const paginatedQuotes = filteredQuotes.slice(startIndex, startIndex + quotesPerPage);
+      const filteredQuotes = getFilteredQuotes();
+      const totalPages = Math.max(1, Math.ceil(filteredQuotes.length / quotesPerPage));
 
-  tbody.innerHTML = paginatedQuotes.length
-    ? paginatedQuotes.map(client => `
-      <tr>
-        <td>${client.date || "-"}</td>
-        <td>${client.quoteId || "-"}</td>
-        <td>${client.clientName || "-"}</td>
-        <td>${client.contact || "-"}</td>
-        <td>${client.clientEmail || "-"}</td>
-        <td>${client.setupAddress || client.location || "-"}</td>
-        <td><span class="pill">${client.quotationStatus || "-"}</span></td>
-        <td><span class="pill">${client.adminAction || "No action"}</span></td>
-        <td>${client.actualSize || "Please select"}</td>
-        <td>${client.setupType || "Please select"}</td>
-        <td>${client.surfaceType || "Please select"}</td>
-        <td>${client.access || "Please select"}</td>
-        <td>${client.sunlight || "Please select"}</td>
-        <td>${client.waterSource || "Please select"}</td>
-        <td>${client.plantGoal || "Please select"}</td>
-        <td>${client.careLevel || "Please select"}</td>
-        <td>${client.maintenance || "Please select"}</td>
-        <td>${client.movableSetup || "Please select"}</td>
-        <td>${client.timeline || "Please select"}</td>
-        <td>${client.channel || "Please select"}</td>
-        <td><strong>${money(Number(client.suggestedQuote || 0))}</strong></td>
-        <td>${money(Number(client.deposit || 0))}</td>
-        <td>${money(Number(client.balance || 0))}</td>
-        <td>
-          <button class="primary-btn" onclick="editQuote('${client.quoteId}')">Edit</button>
-        </td>
-      </tr>
-    `).join("")
-    : `<tr><td colspan="24">${currentQuotes.length ? "No quotations match your search." : "No quotations found."}</td></tr>`;
+      if (currentQuotePage > totalPages) currentQuotePage = totalPages;
+      if (currentQuotePage < 1) currentQuotePage = 1;
 
-  updatePaginationControls(filteredQuotes.length, totalPages, startIndex, paginatedQuotes.length);
-}
+      const startIndex = (currentQuotePage - 1) * quotesPerPage;
+      const paginatedQuotes = filteredQuotes.slice(startIndex, startIndex + quotesPerPage);
+
+      tbody.innerHTML = paginatedQuotes.length
+        ? paginatedQuotes.map(client => `
+          <tr>
+            <td>${formatDateOnly(client.timestamp || client.date)}</td>
+            <td>${client.quoteId || "-"}</td>
+            <td>${client.clientName || "-"}</td>
+            <td>${client.contact || "-"}</td>
+            <td>${client.clientEmail || "-"}</td>
+            <td>${client.setupAddress || client.location || "-"}</td>
+            <td><span class="pill">${client.quotationStatus || "-"}</span></td>
+            <td><span class="pill">${client.adminAction || "No action"}</span></td>
+            <td>${client.actualSize || "Please select"}</td>
+            <td>${client.setupType || "Please select"}</td>
+            <td>${client.surfaceType || "Please select"}</td>
+            <td>${client.access || "Please select"}</td>
+            <td>${client.sunlight || "Please select"}</td>
+            <td>${client.waterSource || "Please select"}</td>
+            <td>${client.plantGoal || "Please select"}</td>
+            <td>${client.careLevel || "Please select"}</td>
+            <td>${client.maintenance || "Please select"}</td>
+            <td>${client.movableSetup || "Please select"}</td>
+            <td>${client.timeline || "Please select"}</td>
+            <td>${client.channel || "Please select"}</td>
+            <td><strong>${money(Number(client.suggestedQuote || 0))}</strong></td>
+            <td>${money(Number(client.deposit || 0))}</td>
+            <td>${money(Number(client.balance || 0))}</td>
+            <td>
+              <button class="primary-btn" onclick="editQuote('${client.quoteId}')">Edit</button>
+            </td>
+          </tr>
+        `).join("")
+        : `<tr><td colspan="24">${currentQuotes.length ? "No quotations match your search or filters." : "No quotations found."}</td></tr>`;
+
+      updatePaginationControls(filteredQuotes.length, totalPages, startIndex, paginatedQuotes.length);
+    }
 
     function updatePaginationControls(totalRows, totalPages, startIndex, visibleRows) {
       const paginationInfo = document.getElementById("paginationInfo");
@@ -1492,6 +1712,7 @@
       currentQuotes = [];
       currentQuotePage = 1;
       editingQuoteId = null;
+      columnFilters = {};
 
       document.getElementById("quoteListSection").classList.add("hidden");
       document.getElementById("agentId").value = "";
@@ -1501,6 +1722,7 @@
       if (quoteSearch) quoteSearch.value = "";
 
       exitEditMode();
+      renderColumnFilters();
       renderQuotes();
       fitDesktopView();
     }
@@ -1546,14 +1768,16 @@ Note: Final price may change after site photo/site visit confirmation.`;
     }
 
     function exportCSV() {
-      if (!currentQuotes.length) {
-        alert("No quotation list to export. Access your quotations first.");
+      const filteredQuotes = getFilteredQuotes();
+
+      if (!filteredQuotes.length) {
+        alert("No quotation list to export.");
         return;
       }
 
-      const headers = Object.keys(currentQuotes[0]);
+      const headers = Object.keys(filteredQuotes[0]);
 
-      const rows = currentQuotes.map(client =>
+      const rows = filteredQuotes.map(client =>
         headers.map(header => `"${String(client[header] ?? "").replaceAll('"', '""')}"`).join(",")
       );
 
@@ -1574,9 +1798,26 @@ Note: Final price may change after site photo/site visit confirmation.`;
 
     updateDependentPricingLabels();
     calculateQuote();
+    renderColumnFilters();
     renderQuotes();
     document.getElementById("quoteListSection").classList.add("hidden");
     fitDesktopView();
+
+    function formatDateOnly(value) {
+  if (!value) return "-";
+
+  const date = new Date(value);
+
+  if (isNaN(date.getTime())) {
+    return String(value).split(" ")[0] || "-";
+  }
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
   </script>
 </body>
 </html>
