@@ -302,10 +302,6 @@
       font-size: 44px;
     }
 
-    .sticky-summary .summary-grid {
-      grid-template-columns: 1fr;
-    }
-
     .warning {
       margin-top: 12px;
       padding: 12px 14px;
@@ -346,9 +342,9 @@
     }
 
     table {
-      width: 1700px;
-      max-width: none;
-      min-width: 1700px;
+  width: 3000px;
+  max-width: none;
+  min-width: 3000px;
       border-collapse: collapse;
       table-layout: auto;
       background: rgba(255, 255, 255, 0.5);
@@ -389,11 +385,6 @@
       white-space: nowrap;
     }
 
-    .status-select {
-      width: 180px;
-      min-width: 180px;
-    }
-
     #clientRows button {
       white-space: nowrap;
     }
@@ -423,7 +414,7 @@
         <div class="hero-card">
           <h1>Quote Calculator</h1>
           <p class="lead">
-            Anyone can use this calculator to estimate a Keboon Assist quotation. Sales partners must enter their agent ID to submit quotes, view their own quotation list, and update quote status.
+            Anyone can use this calculator to estimate a Keboon Assist quotation. Sales partners must enter their agent ID to submit quotes, view their own quotation list, and edit submitted quotations.
           </p>
         </div>
       </section>
@@ -433,7 +424,7 @@
           <div class="section-header">
             <div>
               <h2>Agent Access</h2>
-              <p>Required only for submitting quotes, viewing your list, and updating quote status.</p>
+              <p>Required only for submitting quotes, viewing your list, and editing submitted quotations.</p>
             </div>
           </div>
 
@@ -473,13 +464,18 @@
             </div>
 
             <div class="field">
-              <label for="clientContact">Contact</label>
-              <input id="clientContact" placeholder="Phone / email" />
+              <label for="clientContact">Client phone number</label>
+              <input id="clientContact" placeholder="e.g. 0123456789" />
             </div>
 
             <div class="field">
-              <label for="clientLocation">Location</label>
-              <input id="clientLocation" placeholder="e.g. TTDI, Shah Alam" />
+              <label for="clientEmail">Client email address</label>
+              <input id="clientEmail" type="email" placeholder="e.g. client@email.com" />
+            </div>
+
+            <div class="field">
+              <label for="setupAddress">Setup address</label>
+              <input id="setupAddress" placeholder="Full setup address / area" />
             </div>
 
             <div class="field">
@@ -490,6 +486,17 @@
                 <option value="Client reviewing">Client reviewing</option>
                 <option value="Won">Won</option>
                 <option value="Lost">Lost</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="adminAction">Admin action needed?</label>
+              <select id="adminAction">
+                <option value="No action" selected>No action</option>
+                <option value="Need support">Need support</option>
+                <option value="Keboon to close">Keboon to close</option>
+                <option value="Partner to close">Partner to close</option>
+                <option value="Review quote">Review quote</option>
               </select>
             </div>
           </div>
@@ -528,7 +535,8 @@
               <div class="field">
                 <label for="surfaceType">Surface / flooring</label>
                 <select id="surfaceType" onchange="calculateQuote()">
-                  <option value="easy" selected>Easy: flat cement/tile (+RM0 adjustment)</option>
+                  <option value="" selected>Please select</option>
+                  <option value="easy">Easy: flat cement/tile (+RM0 adjustment)</option>
                   <option value="medium">Medium: grass/soil/uneven (+RM150 adjustment)</option>
                   <option value="hard">Hard: slope/limited drainage/fragile surface (+RM300 adjustment)</option>
                 </select>
@@ -538,7 +546,8 @@
               <div class="field">
                 <label for="accessDifficulty">Delivery/access difficulty</label>
                 <select id="accessDifficulty" onchange="calculateQuote()">
-                  <option value="easy" selected>Easy: parking/lift nearby (+RM0 adjustment)</option>
+                  <option value="" selected>Please select</option>
+                  <option value="easy">Easy: parking/lift nearby (+RM0 adjustment)</option>
                   <option value="medium">Medium: some carrying/walking (+RM150 adjustment)</option>
                   <option value="hard">Hard: stairs/no lift/far loading (+RM300 adjustment)</option>
                 </select>
@@ -548,7 +557,8 @@
               <div class="field">
                 <label for="sunlight">Sunlight condition</label>
                 <select id="sunlight" onchange="calculateQuote()">
-                  <option value="good" selected>Good: 4+ hours sunlight (+RM0 adjustment)</option>
+                  <option value="" selected>Please select</option>
+                  <option value="good">Good: 4+ hours sunlight (+RM0 adjustment)</option>
                   <option value="medium">Medium: 2–4 hours sunlight (+RM80 adjustment)</option>
                   <option value="low">Low: below 2 hours / shaded (+RM150 adjustment)</option>
                 </select>
@@ -558,7 +568,8 @@
               <div class="field">
                 <label for="waterSource">Water source and drainage</label>
                 <select id="waterSource" onchange="calculateQuote()">
-                  <option value="easy" selected>Easy: water + drainage nearby (+RM0 adjustment)</option>
+                  <option value="" selected>Please select</option>
+                  <option value="easy">Easy: water + drainage nearby (+RM0 adjustment)</option>
                   <option value="medium">Medium: water nearby, drainage limited (+RM120 adjustment)</option>
                   <option value="hard">Hard: no nearby water/drainage issue (+RM250 adjustment)</option>
                 </select>
@@ -568,7 +579,8 @@
               <div class="field">
                 <label for="plantGoal">Client’s main goal</label>
                 <select id="plantGoal" onchange="calculateQuote()">
-                  <option value="basic" selected>Basic herbs/leafy greens (+RM0 adjustment)</option>
+                  <option value="" selected>Please select</option>
+                  <option value="basic">Basic herbs/leafy greens (+RM0 adjustment)</option>
                   <option value="variety">More variety: herbs, greens, chillies (+RM150 adjustment)</option>
                   <option value="aesthetic">Aesthetic edible corner (+RM300 adjustment)</option>
                   <option value="community">Community/demo/workshop-ready (+RM500 adjustment)</option>
@@ -579,7 +591,8 @@
               <div class="field">
                 <label for="careLevel">Who will care for it?</label>
                 <select id="careLevel" onchange="calculateQuote()">
-                  <option value="client" selected>Client will maintain (+RM0 adjustment)</option>
+                  <option value="" selected>Please select</option>
+                  <option value="client">Client will maintain (+RM0 adjustment)</option>
                   <option value="needsGuidance">Client needs guidance (+RM100 adjustment)</option>
                   <option value="lowTime">Client has little time (+RM200 adjustment)</option>
                 </select>
@@ -589,7 +602,8 @@
               <div class="field">
                 <label for="maintenance">Maintenance add-on</label>
                 <select id="maintenance" onchange="calculateQuote()">
-                  <option value="none" selected>Setup only (+RM0)</option>
+                  <option value="" selected>Please select</option>
+                  <option value="none">Setup only (+RM0)</option>
                   <option value="maintenance1">1 month maintenance support (+RM250 / RM250 per month)</option>
                   <option value="maintenance3">3 months maintenance support (+RM690 / RM230 per month)</option>
                   <option value="maintenance6">6 months maintenance support (+RM1,320 / RM220 per month)</option>
@@ -601,7 +615,8 @@
               <div class="field">
                 <label for="movableSetup">Movable / rental-friendly?</label>
                 <select id="movableSetup" onchange="calculateQuote()">
-                  <option value="no" selected>No special requirement (+RM0 adjustment)</option>
+                  <option value="" selected>Please select</option>
+                  <option value="no">No special requirement (+RM0 adjustment)</option>
                   <option value="yes">Yes, must be movable (+RM200 adjustment)</option>
                 </select>
                 <div class="rationale">Reason: renters or condo clients may need a non-permanent, movable setup.</div>
@@ -610,7 +625,8 @@
               <div class="field">
                 <label for="timeline">Installation timeline</label>
                 <select id="timeline" onchange="calculateQuote()">
-                  <option value="flexible" selected>Flexible (+RM0 adjustment)</option>
+                  <option value="" selected>Please select</option>
+                  <option value="flexible">Flexible (+RM0 adjustment)</option>
                   <option value="normal">Within 2 weeks (+RM0 adjustment)</option>
                   <option value="urgent">Urgent: within 7 days (+RM250 adjustment)</option>
                 </select>
@@ -620,7 +636,8 @@
               <div class="field">
                 <label for="salesChannel">Sales channel</label>
                 <select id="salesChannel" onchange="calculateQuote()">
-                  <option value="direct" selected>Direct client</option>
+                  <option value="" selected>Please select</option>
+                  <option value="direct">Direct client</option>
                   <option value="partner">Partner / referral client</option>
                 </select>
                 <div class="rationale">Reason: this helps internal tracking of where the client came from.</div>
@@ -661,7 +678,7 @@
           <div class="section-header">
             <div>
               <h2>My Quotation List</h2>
-              <p>Only shown after Agent ID is verified. Status changes update the Google Sheet.</p>
+              <p>Only shown after Agent ID is verified. Click Edit to load a quotation into the form.</p>
             </div>
 
             <div class="actions">
@@ -673,7 +690,7 @@
           <div class="form-grid" style="margin-bottom: 14px;">
             <div class="field">
               <label for="quoteSearch">Search quotation list</label>
-              <input id="quoteSearch" placeholder="Search quote ID, client, contact, location, status..." oninput="currentQuotePage = 1; renderQuotes()" />
+              <input id="quoteSearch" placeholder="Search quote ID, client, phone, email, address, status, admin action..." oninput="currentQuotePage = 1; renderQuotes()" />
               <div class="rationale">Search only filters the quotation list already loaded for the current agent.</div>
             </div>
           </div>
@@ -681,21 +698,33 @@
           <div class="client-list">
             <table>
               <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Quote ID</th>
-                  <th>Client</th>
-                  <th>Location</th>
-                  <th>Size</th>
-                  <th>Setup</th>
-                  <th>Maintenance</th>
-                  <th>Channel</th>
-                  <th>Suggested Quote</th>
-                  <th>Deposit</th>
-                  <th>Status</th>
-                  <th>Update</th>
-                </tr>
-              </thead>
+  <tr>
+    <th>Date</th>
+    <th>Quote ID</th>
+    <th>Client Name</th>
+    <th>Phone</th>
+    <th>Email</th>
+    <th>Setup Address</th>
+    <th>Status</th>
+    <th>Admin Action</th>
+    <th>Area</th>
+    <th>Setup Type</th>
+    <th>Surface</th>
+    <th>Access</th>
+    <th>Sunlight</th>
+    <th>Water / Drainage</th>
+    <th>Goal</th>
+    <th>Care Level</th>
+    <th>Maintenance</th>
+    <th>Movable</th>
+    <th>Timeline</th>
+    <th>Channel</th>
+    <th>Suggested Quote</th>
+    <th>Deposit</th>
+    <th>Balance</th>
+    <th>Action</th>
+  </tr>
+</thead>
               <tbody id="clientRows"></tbody>
             </table>
           </div>
@@ -711,13 +740,14 @@
   </div>
 
   <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyIuqRdlzcy0Irax1qJzFU-b2ZSrPbv2RSvRqhI04qEGFRL-hUpF3dIJUB2qA063gXZXQ/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCxHU33GjEkEz5TfWBse0FRMOqECJ_ce--4PX_lYla6361AfWcsq_8N_x3k7hehjnVVg/exec";
 
     const money = (value) => `RM${Math.round(value).toLocaleString("en-MY")}`;
 
     let currentAgent = null;
     let currentQuotes = [];
     let currentQuotePage = 1;
+    let editingQuoteId = null;
 
     const quotesPerPage = 10;
 
@@ -825,7 +855,17 @@
     };
 
     const getValue = (id) => document.getElementById(id).value;
-    const getSelectedText = (id) => document.querySelector(`#${id} option:checked`).textContent;
+
+    const getSelectedText = (id) => {
+      const selected = document.querySelector(`#${id} option:checked`);
+      if (!selected || selected.value === "") return "";
+      return selected.textContent;
+    };
+
+    function priceOf(group, key) {
+      if (!key) return 0;
+      return clientPricing[group]?.[key] || 0;
+    }
 
     function fitDesktopView() {
       const wrapper = document.getElementById("viewportScale");
@@ -903,17 +943,17 @@
       const basePrice = clientPricing.setupBasePrice[setupType][actualSize];
 
       const addonTotal =
-        clientPricing.setupType[setupType] +
-        clientPricing.surfaceType[getValue("surfaceType")] +
-        clientPricing.accessDifficulty[getValue("accessDifficulty")] +
-        clientPricing.sunlight[getValue("sunlight")] +
-        clientPricing.waterSource[getValue("waterSource")] +
-        clientPricing.plantGoal[getValue("plantGoal")] +
-        clientPricing.careLevel[getValue("careLevel")] +
-        clientPricing.maintenance[getValue("maintenance")] +
-        clientPricing.movableSetup[getValue("movableSetup")] +
-        clientPricing.timeline[getValue("timeline")] +
-        clientPricing.channel[getValue("salesChannel")];
+        priceOf("setupType", setupType) +
+        priceOf("surfaceType", getValue("surfaceType")) +
+        priceOf("accessDifficulty", getValue("accessDifficulty")) +
+        priceOf("sunlight", getValue("sunlight")) +
+        priceOf("waterSource", getValue("waterSource")) +
+        priceOf("plantGoal", getValue("plantGoal")) +
+        priceOf("careLevel", getValue("careLevel")) +
+        priceOf("maintenance", getValue("maintenance")) +
+        priceOf("movableSetup", getValue("movableSetup")) +
+        priceOf("timeline", getValue("timeline")) +
+        priceOf("channel", getValue("salesChannel"));
 
       let suggestedQuote = basePrice + addonTotal;
       suggestedQuote = Math.ceil(suggestedQuote / clientPricing.rounding) * clientPricing.rounding;
@@ -933,11 +973,6 @@
         depositAmount,
         balanceAmount
       };
-    }
-
-    function setAgentNotice(message) {
-      const notice = document.getElementById("agentNotice");
-      if (notice) notice.textContent = message;
     }
 
     function setButtonLoading(button, isLoading, loadingText = "Loading...") {
@@ -988,14 +1023,17 @@
       const agentId = getValue("agentId").trim();
 
       return {
+        quoteId: editingQuoteId || "",
         timestamp: new Date().toISOString(),
         date: new Date().toLocaleDateString("en-MY"),
         agentId,
         agentName: currentAgent?.agentName || "",
         clientName: document.getElementById("clientName").value || "Unnamed client",
         contact: document.getElementById("clientContact").value || "",
-        location: document.getElementById("clientLocation").value || "",
+        clientEmail: document.getElementById("clientEmail").value || "",
+        setupAddress: document.getElementById("setupAddress").value || "",
         quotationStatus: document.getElementById("quotationStatus").value || "Draft",
+        adminAction: document.getElementById("adminAction").value || "No action",
         actualSize: getSelectedText("actualSize"),
         setupType: getSelectedText("setupType"),
         surfaceType: getSelectedText("surfaceType"),
@@ -1039,7 +1077,6 @@
           currentAgent = null;
           document.getElementById("agentNameDisplay").value = "";
           document.getElementById("quoteListSection").classList.add("hidden");
-          setAgentNotice(result.message || "Agent ID not found or inactive.");
           alert(result.message || "Agent ID not found or inactive.");
           return;
         }
@@ -1047,7 +1084,6 @@
         currentAgent = result.agent;
         document.getElementById("agentNameDisplay").value = currentAgent.agentName || "Verified agent";
         document.getElementById("quoteListSection").classList.remove("hidden");
-        setAgentNotice(`Access granted for ${currentAgent.agentName || agentId}.`);
 
         await loadMyQuotes(false);
         fitDesktopView();
@@ -1064,7 +1100,7 @@
     async function submitToGoogleSheet(button) {
       if (!apiReady()) return;
 
-      setButtonLoading(button, true, "Submitting...");
+      setButtonLoading(button, true, editingQuoteId ? "Updating..." : "Submitting...");
       setPageBusy(true);
 
       const row = buildClientRow();
@@ -1095,23 +1131,24 @@
         row.agentName = currentAgent.agentName || "";
 
         const result = await apiPost({
-          action: "submitQuote",
+          action: editingQuoteId ? "updateQuote" : "submitQuote",
           quote: row
         });
 
         if (!result.success) {
-          alert(result.message || "Could not submit quotation.");
+          alert(result.message || "Could not save quotation.");
           return;
         }
 
-        alert("Quotation submitted successfully.");
+        alert(editingQuoteId ? "Quotation updated successfully." : "Quotation submitted successfully.");
+        exitEditMode();
         document.getElementById("quoteListSection").classList.remove("hidden");
         await loadMyQuotes(false);
         fitDesktopView();
 
       } catch (error) {
         console.error(error);
-        alert("Could not submit to Google Sheet. Please check the Apps Script URL and deployment access.");
+        alert("Could not save quotation. Please check the Apps Script URL and deployment access.");
       } finally {
         setButtonLoading(button, false);
         setPageBusy(false);
@@ -1164,111 +1201,268 @@
       }
     }
 
-    async function updateQuoteStatus(quoteId, selectEl, button) {
-      if (!apiReady()) return;
+    function normalizeSavedText(text) {
+      return String(text || "")
+        .toLowerCase()
+        .replace(/\s+/g, " ")
+        .trim();
+    }
 
-      setButtonLoading(button, true, "Updating...");
-      setPageBusy(true);
+    function inferSelectValue(selectId, savedText) {
+      const text = normalizeSavedText(savedText);
 
-      const agentId = getValue("agentId").trim();
-      const newStatus = selectEl.value;
+      if (!text || text === "please select") return "";
 
-      if (!agentId) {
-        alert("Please enter your agent ID first.");
-        setButtonLoading(button, false);
-        setPageBusy(false);
+      const rules = {
+        actualSize: [
+          ["notSure", ["not sure"]],
+          ["custom", ["custom", "larger than standard"]],
+          ["compact", ["compact"]],
+          ["standard", ["standard"]]
+        ],
+        setupType: [
+          ["hydroponic", ["hydroponic"]],
+          ["normal", ["normal"]]
+        ],
+        surfaceType: [
+          ["medium", ["medium"]],
+          ["hard", ["hard"]],
+          ["easy", ["easy"]]
+        ],
+        accessDifficulty: [
+          ["medium", ["medium"]],
+          ["hard", ["hard"]],
+          ["easy", ["easy"]]
+        ],
+        sunlight: [
+          ["medium", ["medium", "2–4 hours", "2-4 hours"]],
+          ["low", ["low", "below 2 hours", "shaded"]],
+          ["good", ["good", "4+ hours"]]
+        ],
+        waterSource: [
+          ["medium", ["medium"]],
+          ["hard", ["hard"]],
+          ["easy", ["easy"]]
+        ],
+        plantGoal: [
+          ["community", ["community", "demo", "workshop"]],
+          ["aesthetic", ["aesthetic"]],
+          ["variety", ["variety"]],
+          ["basic", ["basic"]]
+        ],
+        careLevel: [
+          ["needsGuidance", ["needs guidance"]],
+          ["lowTime", ["little time", "low time"]],
+          ["client", ["client will maintain"]]
+        ],
+        maintenance: [
+          ["maintenance12", ["12 months"]],
+          ["maintenance6", ["6 months"]],
+          ["maintenance3", ["3 months"]],
+          ["maintenance1", ["1 month"]],
+          ["none", ["setup only", "none"]]
+        ],
+        movableSetup: [
+          ["yes", ["yes, must be movable", "must be movable"]],
+          ["no", ["no special"]]
+        ],
+        timeline: [
+          ["urgent", ["urgent", "within 7 days"]],
+          ["normal", ["within 2 weeks"]],
+          ["flexible", ["flexible"]]
+        ],
+        salesChannel: [
+          ["partner", ["partner", "referral"]],
+          ["direct", ["direct"]]
+        ]
+      };
+
+      const fieldRules = rules[selectId] || [];
+
+      for (const [value, keywords] of fieldRules) {
+        if (keywords.some(keyword => text.includes(keyword))) {
+          return value;
+        }
+      }
+
+      return "";
+    }
+
+    function setSelectByOptionText(selectId, savedText) {
+      const select = document.getElementById(selectId);
+      if (!select) return;
+
+      if (!savedText) {
+        select.value = "";
         return;
       }
 
-      try {
-        const result = await apiPost({
-          action: "updateQuoteStatus",
-          agentId,
-          quoteId,
-          quotationStatus: newStatus
-        });
+      const inferredValue = inferSelectValue(selectId, savedText);
 
-        if (!result.success) {
-          alert(result.message || "Could not update quote status.");
-          return;
-        }
+      if (inferredValue && [...select.options].some(option => option.value === inferredValue)) {
+        select.value = inferredValue;
+        return;
+      }
 
-        alert("Quote status updated.");
-        await loadMyQuotes(false);
+      const savedClean = normalizeSavedText(savedText)
+        .replace(/\s*\(\+rm[^)]*\)/g, "")
+        .replace(/\s*\(.*?adjustment\)/g, "")
+        .replace(/\s*—.*$/g, "")
+        .trim();
 
-      } catch (error) {
-        console.error(error);
-        alert("Could not update quote status.");
-      } finally {
-        setButtonLoading(button, false);
-        setPageBusy(false);
+      const option = [...select.options].find(opt => {
+        const optionClean = normalizeSavedText(opt.textContent)
+          .replace(/\s*\(\+rm[^)]*\)/g, "")
+          .replace(/\s*\(.*?adjustment\)/g, "")
+          .replace(/\s*—.*$/g, "")
+          .trim();
+
+        return opt.value === savedText || optionClean === savedClean;
+      });
+
+      if (option) {
+        select.value = option.value;
+      } else {
+        select.value = "";
       }
     }
 
-    function getFilteredQuotes() {
-      const searchTerm = (document.getElementById("quoteSearch")?.value || "").trim().toLowerCase();
+    function editQuote(quoteId) {
+      const quote = currentQuotes.find(item => String(item.quoteId) === String(quoteId));
 
-      if (!searchTerm) return currentQuotes;
+      if (!quote) {
+        alert("Quote not found in the current list.");
+        return;
+      }
 
-      return currentQuotes.filter(client => {
-        const searchableText = [
-          client.quoteId,
-          client.date,
-          client.clientName,
-          client.contact,
-          client.location,
-          client.quotationStatus,
-          client.actualSize,
-          client.setupType,
-          client.maintenance,
-          client.channel,
-          client.suggestedQuote,
-          client.deposit
-        ].join(" ").toLowerCase();
+      editingQuoteId = quote.quoteId;
 
-        return searchableText.includes(searchTerm);
+      document.getElementById("clientName").value = quote.clientName || "";
+      document.getElementById("clientContact").value = quote.contact || "";
+      document.getElementById("clientEmail").value = quote.clientEmail || "";
+      document.getElementById("setupAddress").value = quote.setupAddress || "";
+      document.getElementById("quotationStatus").value = quote.quotationStatus || "Draft";
+      document.getElementById("adminAction").value = quote.adminAction || "No action";
+
+      setSelectByOptionText("setupType", quote.setupType);
+      updateDependentPricingLabels();
+
+      setSelectByOptionText("actualSize", quote.actualSize);
+      updateDependentPricingLabels();
+
+      setSelectByOptionText("surfaceType", quote.surfaceType);
+      setSelectByOptionText("accessDifficulty", quote.access);
+      setSelectByOptionText("sunlight", quote.sunlight);
+      setSelectByOptionText("waterSource", quote.waterSource);
+      setSelectByOptionText("plantGoal", quote.plantGoal);
+      setSelectByOptionText("careLevel", quote.careLevel);
+      setSelectByOptionText("maintenance", quote.maintenance);
+      setSelectByOptionText("movableSetup", quote.movableSetup);
+      setSelectByOptionText("timeline", quote.timeline);
+      setSelectByOptionText("salesChannel", quote.channel);
+
+      calculateQuote();
+
+      document.getElementById("submitQuoteBtn").textContent = "Update quotation";
+
+      alert(`Quotation ${quote.quoteId} loaded into the form. Edit the fields, then click Update quotation.`);
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
       });
     }
 
-    function renderQuotes() {
-      const tbody = document.getElementById("clientRows");
-      const statuses = ["Draft", "Sent to client", "Client reviewing", "Won", "Lost"];
-      const filteredQuotes = getFilteredQuotes();
-      const totalPages = Math.max(1, Math.ceil(filteredQuotes.length / quotesPerPage));
+    function exitEditMode() {
+      editingQuoteId = null;
 
-      if (currentQuotePage > totalPages) currentQuotePage = totalPages;
-      if (currentQuotePage < 1) currentQuotePage = 1;
+      const submitBtn = document.getElementById("submitQuoteBtn");
 
-      const startIndex = (currentQuotePage - 1) * quotesPerPage;
-      const paginatedQuotes = filteredQuotes.slice(startIndex, startIndex + quotesPerPage);
-
-      tbody.innerHTML = paginatedQuotes.length
-        ? paginatedQuotes.map(client => `
-          <tr>
-            <td>${client.date || "-"}</td>
-            <td>${client.quoteId || "-"}</td>
-            <td><strong>${client.clientName || "-"}</strong><br><span>${client.contact || ""}</span></td>
-            <td>${client.location || "-"}</td>
-            <td>${client.actualSize || "-"}</td>
-            <td>${client.setupType || "-"}</td>
-            <td>${client.maintenance || "-"}</td>
-            <td><span class="pill">${client.channel || "-"}</span></td>
-            <td><strong>${money(Number(client.suggestedQuote || 0))}</strong></td>
-            <td>${money(Number(client.deposit || 0))}</td>
-            <td>
-              <select class="status-select" id="status-${client.quoteId}">
-                ${statuses.map(status => `<option value="${status}" ${status === client.quotationStatus ? "selected" : ""}>${status}</option>`).join("")}
-              </select>
-            </td>
-            <td>
-              <button class="secondary-btn" onclick="updateQuoteStatus('${client.quoteId}', document.getElementById('status-${client.quoteId}'), this)">Update</button>
-            </td>
-          </tr>
-        `).join("")
-        : `<tr><td colspan="12">${currentQuotes.length ? "No quotations match your search." : "No quotations found."}</td></tr>`;
-
-      updatePaginationControls(filteredQuotes.length, totalPages, startIndex, paginatedQuotes.length);
+      if (submitBtn) submitBtn.textContent = "Submit quotation";
     }
+
+    function getFilteredQuotes() {
+  const searchTerm = (document.getElementById("quoteSearch")?.value || "").trim().toLowerCase();
+
+  if (!searchTerm) return currentQuotes;
+
+  return currentQuotes.filter(client => {
+    const searchableText = [
+      client.quoteId,
+      client.date,
+      client.clientName,
+      client.contact,
+      client.clientEmail,
+      client.setupAddress,
+      client.quotationStatus,
+      client.adminAction,
+      client.actualSize,
+      client.setupType,
+      client.surfaceType,
+      client.access,
+      client.sunlight,
+      client.waterSource,
+      client.plantGoal,
+      client.careLevel,
+      client.maintenance,
+      client.movableSetup,
+      client.timeline,
+      client.channel,
+      client.suggestedQuote,
+      client.deposit,
+      client.balance
+    ].join(" ").toLowerCase();
+
+    return searchableText.includes(searchTerm);
+  });
+}
+
+    function renderQuotes() {
+  const tbody = document.getElementById("clientRows");
+  const filteredQuotes = getFilteredQuotes();
+  const totalPages = Math.max(1, Math.ceil(filteredQuotes.length / quotesPerPage));
+
+  if (currentQuotePage > totalPages) currentQuotePage = totalPages;
+  if (currentQuotePage < 1) currentQuotePage = 1;
+
+  const startIndex = (currentQuotePage - 1) * quotesPerPage;
+  const paginatedQuotes = filteredQuotes.slice(startIndex, startIndex + quotesPerPage);
+
+  tbody.innerHTML = paginatedQuotes.length
+    ? paginatedQuotes.map(client => `
+      <tr>
+        <td>${client.date || "-"}</td>
+        <td>${client.quoteId || "-"}</td>
+        <td>${client.clientName || "-"}</td>
+        <td>${client.contact || "-"}</td>
+        <td>${client.clientEmail || "-"}</td>
+        <td>${client.setupAddress || client.location || "-"}</td>
+        <td><span class="pill">${client.quotationStatus || "-"}</span></td>
+        <td><span class="pill">${client.adminAction || "No action"}</span></td>
+        <td>${client.actualSize || "Please select"}</td>
+        <td>${client.setupType || "Please select"}</td>
+        <td>${client.surfaceType || "Please select"}</td>
+        <td>${client.access || "Please select"}</td>
+        <td>${client.sunlight || "Please select"}</td>
+        <td>${client.waterSource || "Please select"}</td>
+        <td>${client.plantGoal || "Please select"}</td>
+        <td>${client.careLevel || "Please select"}</td>
+        <td>${client.maintenance || "Please select"}</td>
+        <td>${client.movableSetup || "Please select"}</td>
+        <td>${client.timeline || "Please select"}</td>
+        <td>${client.channel || "Please select"}</td>
+        <td><strong>${money(Number(client.suggestedQuote || 0))}</strong></td>
+        <td>${money(Number(client.deposit || 0))}</td>
+        <td>${money(Number(client.balance || 0))}</td>
+        <td>
+          <button class="primary-btn" onclick="editQuote('${client.quoteId}')">Edit</button>
+        </td>
+      </tr>
+    `).join("")
+    : `<tr><td colspan="24">${currentQuotes.length ? "No quotations match your search." : "No quotations found."}</td></tr>`;
+
+  updatePaginationControls(filteredQuotes.length, totalPages, startIndex, paginatedQuotes.length);
+}
 
     function updatePaginationControls(totalRows, totalPages, startIndex, visibleRows) {
       const paginationInfo = document.getElementById("paginationInfo");
@@ -1297,6 +1491,7 @@
       currentAgent = null;
       currentQuotes = [];
       currentQuotePage = 1;
+      editingQuoteId = null;
 
       document.getElementById("quoteListSection").classList.add("hidden");
       document.getElementById("agentId").value = "";
@@ -1305,7 +1500,7 @@
       const quoteSearch = document.getElementById("quoteSearch");
       if (quoteSearch) quoteSearch.value = "";
 
-      setAgentNotice("Public calculator mode.");
+      exitEditMode();
       renderQuotes();
       fitDesktopView();
     }
@@ -1316,10 +1511,12 @@
       const summary = `Keboon Assist Quote Summary
 
 Client: ${document.getElementById("clientName").value || "-"}
-Location: ${document.getElementById("clientLocation").value || "-"}
+Phone: ${document.getElementById("clientContact").value || "-"}
+Email: ${document.getElementById("clientEmail").value || "-"}
+Setup Address: ${document.getElementById("setupAddress").value || "-"}
 Setup: ${getSelectedText("setupType")}
 Area: ${getSelectedText("actualSize")}
-Maintenance: ${getSelectedText("maintenance")}
+Maintenance: ${getSelectedText("maintenance") || "Please select"}
 
 Suggested Quote: ${money(quote.suggestedQuote)}
 Deposit: ${money(quote.depositAmount)}
@@ -1331,6 +1528,9 @@ Note: Final price may change after site photo/site visit confirmation.`;
     }
 
     function resetForm() {
+      editingQuoteId = null;
+      exitEditMode();
+
       document.querySelectorAll("input").forEach(input => {
         if (["agentId", "agentNameDisplay"].includes(input.id)) return;
         input.value = "";
