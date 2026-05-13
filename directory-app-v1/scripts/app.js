@@ -2819,3 +2819,62 @@ async function initDashboardPage() {
     });
   }
 }
+
+/* =========================================================
+   Local Stats Iframe Overlay
+   Opens pages/stats.html inside overlay
+   ========================================================= */
+
+function setupLocalStatsIframeOverlay() {
+  const openButton = document.getElementById("openLocalStatsButton");
+  const overlay = document.getElementById("localStatsIframeOverlay");
+  const iframe = document.getElementById("localStatsIframe");
+
+  if (!openButton || !overlay || !iframe) {
+    return;
+  }
+
+  function openStatsOverlay() {
+    const statsSrc = openButton.getAttribute("data-stats-src");
+
+    if (!statsSrc) {
+      console.error("Missing data-stats-src on stats button.");
+      return;
+    }
+
+    iframe.setAttribute("src", statsSrc);
+
+    overlay.classList.add("is-open");
+    overlay.setAttribute("aria-hidden", "false");
+  }
+
+  function closeStatsOverlay() {
+    overlay.classList.remove("is-open");
+    overlay.setAttribute("aria-hidden", "true");
+
+    /* Optional: clears iframe when closed */
+    iframe.setAttribute("src", "");
+  }
+
+  openButton.addEventListener("click", openStatsOverlay);
+
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay) {
+      closeStatsOverlay();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && overlay.classList.contains("is-open")) {
+      closeStatsOverlay();
+    }
+  });
+
+  window.addEventListener("message", (event) => {
+    if (event.data && event.data.type === "KEBOON_CLOSE_STATS") {
+      closeStatsOverlay();
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", setupLocalStatsIframeOverlay);

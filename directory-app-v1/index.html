@@ -15,10 +15,11 @@
 
     <link rel="stylesheet" href="./styles/main.css" />
   </head>
+
   <body>
     <main class="public-app">
       <header class="public-header">
-        <a href="../index.html" class="public-brand">
+        <a href="./index.html" class="public-brand">
           <img
             src="./assets/images/logo-writing.png"
             alt="Keboon"
@@ -123,6 +124,53 @@
             </div>
           </aside>
         </section>
+      </section>
+
+      <!-- Local Stats Floating Button -->
+      <button
+        id="openLocalStatsButton"
+        class="local-stats-float-button"
+        type="button"
+        aria-label="Open local stats"
+        title="Local stats"
+        data-stats-src="./pages/stats.html"
+      >
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path
+            d="M5 19V10"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <path
+            d="M12 19V5"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <path
+            d="M19 19v-7"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+      </button>
+
+      <!-- Local Stats Iframe Overlay -->
+      <section
+        id="localStatsIframeOverlay"
+        class="local-stats-iframe-overlay"
+        aria-hidden="true"
+      >
+        <div class="local-stats-iframe-card">
+          <iframe
+            id="localStatsIframe"
+            class="local-stats-iframe"
+            title="Local Stats"
+            src=""
+          ></iframe>
+        </div>
       </section>
 
       <section id="growerDrawer" class="grower-drawer" aria-hidden="true">

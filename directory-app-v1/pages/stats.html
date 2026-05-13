@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Local Stats | Keboon Directory</title>
+
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+    <link rel="stylesheet" href="../styles/main.css" />
+  </head>
+
+  <body>
+    <div class="stats-page-shell">
+      <main class="local-stats-screen stats-page-screen">
+        <div class="stats-coming-soon-banner">
+          <strong>Feature coming soon</strong>
+          <span>
+            This is a preview concept. Demand submission and live stats will be
+            available soon.
+          </span>
+        </div>
+
+        <div class="local-stats-handle" aria-hidden="true"></div>
+
+        <header class="local-stats-header">
+          <div class="local-stats-title-wrap">
+            <div class="local-stats-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M5 19V10"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M12 19V5"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M19 19v-7"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </div>
+
+            <div>
+              <h1 id="localStatsTitle">Local Stats</h1>
+              <p>Insights from your community</p>
+            </div>
+          </div>
+
+          <button
+            id="closeStatsPageButton"
+            class="local-stats-close"
+            type="button"
+            aria-label="Close local stats"
+          ></button>
+        </header>
+
+        <div class="local-stats-body">
+          <!-- Request Demand -->
+          <section class="demand-request-card">
+            <div class="demand-request-header">
+              <div>
+                <h2>Request What You Need</h2>
+                <p>Can’t find a produce? Let nearby growers know.</p>
+              </div>
+
+              <span class="demand-request-badge">Community signal</span>
+            </div>
+
+            <form id="demandRequestForm" class="demand-request-form">
+              <div class="demand-request-input-wrap">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M5 19c7-1 11-5 14-14-9 3-13 7-14 14Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M5 19c3-4 6-7 10-9"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+
+                <input
+                  id="demandRequestInput"
+                  type="text"
+                  placeholder="Example: Tomatoes, Kangkung, Mint"
+                  autocomplete="off"
+                />
+              </div>
+
+              <button class="primary-button" type="submit">Send Demand</button>
+            </form>
+
+            <p id="demandRequestMessage" class="demand-request-note">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M10 21h4"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+
+              Growers can see demand and users can be notified when available.
+            </p>
+          </section>
+
+          <section class="local-stats-grid">
+            <!-- Products in Demand -->
+            <article class="local-stat-card">
+              <div class="local-stat-card-header">
+                <div>
+                  <h2>Products in Demand</h2>
+                  <p>Produce people want but cannot find yet</p>
+                </div>
+
+                <a href="#" class="local-stat-link">See all</a>
+              </div>
+
+              <div class="demand-list">
+                <div class="demand-row">
+                  <div class="demand-produce-icon">🍅</div>
+                  <div>
+                    <strong>Tomatoes</strong>
+                    <span>Not listed yet</span>
+                  </div>
+                  <div class="demand-count">
+                    8
+                    <small>requests</small>
+                  </div>
+                </div>
+
+                <div class="demand-row">
+                  <div class="demand-produce-icon">🥬</div>
+                  <div>
+                    <strong>Kangkung</strong>
+                    <span>Not listed yet</span>
+                  </div>
+                  <div class="demand-count">
+                    6
+                    <small>requests</small>
+                  </div>
+                </div>
+
+                <div class="demand-row">
+                  <div class="demand-produce-icon">🌿</div>
+                  <div>
+                    <strong>Mint</strong>
+                    <span>Low supply nearby</span>
+                  </div>
+                  <div class="demand-count">
+                    3
+                    <small>requests</small>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Top Produce -->
+            <article class="local-stat-card">
+              <div class="local-stat-card-header">
+                <div>
+                  <h2>Top Produce Enquiries</h2>
+                  <p>Based on enquiries this month</p>
+                </div>
+
+                <a href="#" class="local-stat-link">Report</a>
+              </div>
+
+              <div class="top-produce-list">
+                <div class="top-produce-row">
+                  <div class="top-produce-rank">1</div>
+                  <div class="top-produce-name">
+                    <strong>Chilli</strong>
+                    <div class="top-produce-bar">
+                      <span style="width: 100%"></span>
+                    </div>
+                  </div>
+                  <div class="top-produce-value">48</div>
+                </div>
+
+                <div class="top-produce-row">
+                  <div class="top-produce-rank">2</div>
+                  <div class="top-produce-name">
+                    <strong>Lettuce</strong>
+                    <div class="top-produce-bar">
+                      <span style="width: 75%"></span>
+                    </div>
+                  </div>
+                  <div class="top-produce-value">36</div>
+                </div>
+
+                <div class="top-produce-row">
+                  <div class="top-produce-rank">3</div>
+                  <div class="top-produce-name">
+                    <strong>Tomatoes</strong>
+                    <div class="top-produce-bar">
+                      <span style="width: 58%"></span>
+                    </div>
+                  </div>
+                  <div class="top-produce-value">28</div>
+                </div>
+
+                <div class="top-produce-row">
+                  <div class="top-produce-rank">4</div>
+                  <div class="top-produce-name">
+                    <strong>Okra</strong>
+                    <div class="top-produce-bar">
+                      <span style="width: 44%"></span>
+                    </div>
+                  </div>
+                  <div class="top-produce-value">21</div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Mini Metrics -->
+            <article class="local-stat-card local-stat-card-wide">
+              <div class="local-mini-metrics">
+                <div class="local-mini-metric">
+                  <div class="local-mini-metric-icon">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path
+                        d="M4 19h16"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M7 19V9h10v10"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M9 9V6h6v3"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <strong>12</strong>
+                  <span>new listings today</span>
+                </div>
+
+                <div class="local-mini-metric">
+                  <div class="local-mini-metric-icon">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path
+                        d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                      />
+                      <path
+                        d="M10 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      />
+                      <path
+                        d="M21 21v-2a4 4 0 0 0-3-3.87"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+                  </div>
+                  <strong>48</strong>
+                  <span>active growers nearby</span>
+                </div>
+
+                <div class="local-mini-metric">
+                  <div class="local-mini-metric-icon">
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path
+                        d="M20 6 9 17l-5-5"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <strong>26</strong>
+                  <span>fulfilled requests</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Trending Nearby -->
+            <article class="local-stat-card">
+              <div class="local-stat-card-header">
+                <div>
+                  <h2>Trending Nearby</h2>
+                  <p>Produce gaining interest this week</p>
+                </div>
+              </div>
+
+              <div class="trend-list">
+                <div class="trend-item">
+                  <span>🥬 Kangkung</span>
+                  <strong class="trend-up">↑</strong>
+                </div>
+
+                <div class="trend-item">
+                  <span>🌿 Herbs</span>
+                  <strong class="trend-up">↑</strong>
+                </div>
+
+                <div class="trend-item">
+                  <span>🍆 Brinjal</span>
+                  <strong class="trend-up">↑</strong>
+                </div>
+              </div>
+            </article>
+
+            <!-- Seasonal Picks -->
+            <article class="local-stat-card">
+              <div class="local-stat-card-header">
+                <div>
+                  <h2>Seasonal Picks</h2>
+                  <p>Good to grow or list now</p>
+                </div>
+              </div>
+
+              <div class="seasonal-list">
+                <div class="seasonal-item">
+                  <span>🌶️ Chilli</span>
+                  <strong class="fulfilled-value">High</strong>
+                </div>
+
+                <div class="seasonal-item">
+                  <span>🍆 Eggplant</span>
+                  <strong class="fulfilled-value">Good</strong>
+                </div>
+
+                <div class="seasonal-item">
+                  <span>🥬 Sawi</span>
+                  <strong class="fulfilled-value">Good</strong>
+                </div>
+              </div>
+            </article>
+
+            <!-- Most Fulfilled -->
+            <article class="local-stat-card">
+              <div class="local-stat-card-header">
+                <div>
+                  <h2>Most Fulfilled</h2>
+                  <p>Requests successfully matched this month</p>
+                </div>
+              </div>
+
+              <div class="fulfilled-list">
+                <div class="fulfilled-item">
+                  <span>🥬 Lettuce</span>
+                  <strong class="fulfilled-value">26 fulfilled</strong>
+                </div>
+
+                <div class="fulfilled-item">
+                  <span>🍅 Tomatoes</span>
+                  <strong class="fulfilled-value">22 fulfilled</strong>
+                </div>
+
+                <div class="fulfilled-item">
+                  <span>🌶️ Chilli</span>
+                  <strong class="fulfilled-value">18 fulfilled</strong>
+                </div>
+              </div>
+            </article>
+
+            <!-- Grower Opportunity -->
+            <article class="local-stat-card">
+              <div class="local-stat-card-header">
+                <div>
+                  <h2>Grower Opportunity</h2>
+                  <p>Useful signals for what to grow next</p>
+                </div>
+              </div>
+
+              <div class="seasonal-list">
+                <div class="seasonal-item">
+                  <span>Highest unmet demand</span>
+                  <strong class="fulfilled-value">Tomatoes</strong>
+                </div>
+
+                <div class="seasonal-item">
+                  <span>Fastest rising interest</span>
+                  <strong class="fulfilled-value">Kangkung</strong>
+                </div>
+
+                <div class="seasonal-item">
+                  <span>Best repeat enquiry</span>
+                  <strong class="fulfilled-value">Chilli</strong>
+                </div>
+              </div>
+            </article>
+          </section>
+
+          <div class="local-stats-tip">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M5 19c7-1 11-5 14-14-9 3-13 7-14 14Z"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linejoin="round"
+              />
+            </svg>
+
+            <p>
+              Tip: Growers can use demand data to decide what to list, grow, or
+              promote next.
+            </p>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      function escapeHtml(value) {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function setupStatsPage() {
+        const closeButton = document.getElementById("closeStatsPageButton");
+        const demandForm = document.getElementById("demandRequestForm");
+        const demandInput = document.getElementById("demandRequestInput");
+        const demandMessage = document.getElementById("demandRequestMessage");
+
+        if (closeButton) {
+          closeButton.addEventListener("click", () => {
+            if (window.parent && window.parent !== window) {
+              window.parent.postMessage(
+                {
+                  type: "KEBOON_CLOSE_STATS",
+                },
+                "*",
+              );
+              return;
+            }
+
+            if (window.history.length > 1) {
+              window.history.back();
+              return;
+            }
+
+            window.location.href = "../index.html";
+          });
+        }
+
+        if (demandForm && demandInput && demandMessage) {
+          demandForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const demandText = demandInput.value.trim();
+
+            if (!demandText) {
+              demandMessage.innerHTML = `
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M12 9v4"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M12 17h.01"
+                    stroke="currentColor"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M10.3 4.4 2.9 18a2 2 0 0 0 1.8 3h14.6a2 2 0 0 0 1.8-3L13.7 4.4a2 2 0 0 0-3.4 0Z"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                Please enter what produce you are looking for.
+              `;
+              demandMessage.style.color = "var(--error)";
+              return;
+            }
+
+            demandMessage.innerHTML = `
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M20 6 9 17l-5-5"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              Demand sent for ${escapeHtml(demandText)}. Nearby growers can see this opportunity.
+            `;
+
+            demandMessage.style.color = "var(--success)";
+            demandInput.value = "";
+          });
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", setupStatsPage);
+    </script>
+  </body>
+</html>
