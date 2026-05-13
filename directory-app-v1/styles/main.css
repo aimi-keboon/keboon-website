@@ -4905,3 +4905,113 @@ body:has(.local-stats-iframe-overlay.is-open) {
     font-size: 11px;
   }
 }
+/* =========================================================
+   Stats Mobile Grid - Keep Graph Cards Side by Side
+   ========================================================= */
+
+@media (max-width: 640px) {
+  .local-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+  }
+
+  .local-stat-card {
+    padding: 9px !important;
+    border-radius: 15px !important;
+  }
+
+  .local-stat-card h2 {
+    font-size: 12px !important;
+  }
+
+  .local-stat-card p {
+    font-size: 10px !important;
+  }
+
+  .local-stat-card-wide {
+    grid-column: 1 / -1 !important;
+  }
+
+  .local-mini-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+  }
+
+  .local-mini-metric {
+    padding: 8px !important;
+  }
+
+  .local-mini-metric strong {
+    font-size: 15px !important;
+  }
+
+  .local-mini-metric span {
+    font-size: 9px !important;
+  }
+
+  .local-mini-metric-icon {
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 10px !important;
+  }
+
+  .local-mini-metric-icon svg {
+    width: 15px !important;
+    height: 15px !important;
+  }
+
+  .demand-row {
+    grid-template-columns: 28px minmax(0, 1fr) auto !important;
+    gap: 6px !important;
+    padding: 6px !important;
+  }
+
+  .demand-produce-icon {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 15px !important;
+  }
+
+  .demand-row strong {
+    font-size: 10.5px !important;
+  }
+
+  .demand-row span {
+    font-size: 9px !important;
+  }
+
+  .demand-count {
+    font-size: 10.5px !important;
+  }
+
+  .demand-count small {
+    font-size: 8px !important;
+  }
+
+  .top-produce-row {
+    grid-template-columns: 19px minmax(0, 1fr) 26px !important;
+    gap: 6px !important;
+  }
+
+  .top-produce-rank {
+    width: 19px !important;
+    height: 19px !important;
+    font-size: 9px !important;
+  }
+
+  .top-produce-name strong {
+    font-size: 10px !important;
+  }
+
+  .top-produce-value {
+    font-size: 10px !important;
+  }
+
+  .trend-item span,
+  .fulfilled-item span,
+  .seasonal-item span,
+  .trend-up,
+  .fulfilled-value {
+    font-size: 10px !important;
+  }
+}
