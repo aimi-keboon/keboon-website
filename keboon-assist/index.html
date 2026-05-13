@@ -1,447 +1,3005 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Keboon Assistant sets up small edible gardens for homes, balconies, backyards, and patios with normal and hydroponic options."
-    />
-    <title>Keboon Assistant | Home Garden Setup Service</title>
-    <link rel="icon" type="image/png" href="../assets/img/ICN-LOGO-1.png" />
-    <link rel="apple-touch-icon" href="../assets/img/ICN-LOGO-1.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <header class="site-header" id="top">
-      <nav class="nav container" aria-label="Primary navigation">
-        <a href="#top" class="brand" aria-label="Keboon Assistant home">
-          <img
-            src="../assets/img/keboon-writing.png"
-            alt="Keboon"
-            class="brand-logo"
-          />
-        </a>
+/* =========================================================
+   Keboon Directory App - Clean Compact Stylesheet
+   Replace entire main.css with this file
+   ========================================================= */
 
-        <button
-          class="nav-toggle"
-          type="button"
-          aria-expanded="false"
-          aria-controls="navMenu"
-          aria-label="Open navigation menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+/* =========================
+   Theme
+   ========================= */
 
-        <div class="nav-menu" id="navMenu">
-          <a href="https://keboon.net/">Home</a>
-          <a href="#service">Service</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#faq">FAQ</a>
-          <a class="nav-cta" href="#contact">Request quote</a>
-        </div>
-      </nav>
-    </header>
+:root {
+  --green: #2f6b3f;
+  --green-dark: #214d2d;
+  --cream: #f8f5ec;
+  --white: #ffffff;
+  --text: #1f2933;
+  --muted: #6b7280;
+  --border: #d9decf;
+  --error: #b42318;
+  --success: #1f7a3f;
 
-    <main>
-      <section class="hero">
-        <div class="container hero-layout">
-          <div class="hero-copy reveal">
-            <p class="eyebrow">Small garden setup service</p>
-            <h1>We set up edible gardens for homes.</h1>
-            <p class="hero-text">
-              Keboon Assistant turns balconies, backyards, patios, and unused
-              corners into practical edible gardens. Materials, installation,
-              and initial setup are included.
-            </p>
+  --radius-sm: 9px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
 
-            <div class="hero-actions">
-              <a class="btn primary" href="#pricing">See pricing</a>
-              <a class="btn secondary" href="#contact">Request quote</a>
-            </div>
+  --shadow-sm: 0 6px 16px rgba(31, 41, 51, 0.04);
+  --shadow-md: 0 8px 24px rgba(31, 41, 51, 0.06);
+  --shadow-lg: 0 12px 34px rgba(31, 41, 51, 0.09);
+}
 
-            <div class="hero-points" aria-label="Service highlights">
-              <div>
-                <strong>Normal or hydroponic</strong>
-                <span
-                  >Choose the setup type that fits your space and budget.</span
-                >
-              </div>
-              <div>
-                <strong>Priced by actual size</strong>
-                <span
-                  >If a balcony is backyard-sized, it follows the larger size
-                  band.</span
-                >
-              </div>
-            </div>
-          </div>
+/* =========================
+   Base
+   ========================= */
 
-          <div class="hero-media reveal delay-1">
-            <figure class="photo-frame hero-photo">
-              <img
-                src="img/hero-home-garden.jpg"
-                alt="Small edible garden setup at home"
-              />
-            </figure>
+* {
+  box-sizing: border-box;
+}
 
-            <div class="price-chip chip-one">
-              <small>Normal setup</small>
-              <strong>From RM500</strong>
-            </div>
+html {
+  scroll-behavior: smooth;
+}
 
-            <div class="price-chip chip-two">
-              <small>Hydroponic setup</small>
-              <strong>From RM900</strong>
-            </div>
-          </div>
-        </div>
-      </section>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.35;
+  background: var(--cream);
+  color: var(--text);
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
 
-      <section class="quick-strip" aria-label="What is included">
-        <div class="container quick-strip-inner">
-          <div>
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4 20h16M7 20V8l5-4 5 4v12M9 20v-6h6v6" />
-            </svg>
-            <span>Home spaces</span>
-          </div>
-          <div>
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4 20h16v-2H4v2ZM7 5h10l2 11H5L7 5Z" />
-            </svg>
-            <span>Materials included</span>
-          </div>
-          <div>
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 3c4 4 6 7 6 11a6 6 0 0 1-12 0c0-4 2-7 6-11Z" />
-            </svg>
-            <span>Setup included</span>
-          </div>
-          <div>
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M7 2v3M17 2v3M4 8h16M5 5h14v16H5z" />
-            </svg>
-            <span>Maintenance optional</span>
-          </div>
-        </div>
-      </section>
+a {
+  color: var(--green);
+}
 
-      <section class="section service-section" id="service">
-        <div class="container service-layout">
-          <div class="section-copy reveal">
-            <p class="eyebrow">The service</p>
-            <h2>
-              A simple service for people who want a garden without figuring out
-              everything alone.
-            </h2>
-            <p>
-              We keep the service focused: check the space, recommend a setup,
-              install it, and offer maintenance later if needed.
-            </p>
-          </div>
+p,
+span,
+a,
+button,
+input,
+select,
+textarea,
+label,
+.muted,
+.small-text {
+  font-size: 12px;
+  line-height: 1.35;
+}
 
-          <div class="timeline reveal delay-1">
-            <article>
-              <span>01</span>
-              <h3>Check the space</h3>
-              <p>
-                We look at size, sunlight, water access, and whether normal or
-                hydroponic setup makes sense.
-              </p>
-            </article>
-            <article>
-              <span>02</span>
-              <h3>Install the garden</h3>
-              <p>
-                We bring the materials, install the growing area, prepare the
-                setup, and start the first planting.
-              </p>
-            </article>
-            <article>
-              <span>03</span>
-              <h3>Support after setup</h3>
-              <p>
-                You can add maintenance for care visits, replanting,
-                troubleshooting, and harvest support.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
 
-      <section class="section pricing-section" id="pricing">
-        <div class="container">
-          <div class="section-head reveal">
-            <p class="eyebrow">Pricing</p>
-            <h2>Pricing follows size and setup type.</h2>
-            <p>
-              All setup prices include materials, installation, and initial
-              setup. Final quote depends on actual size, access, and selected
-              setup type.
-            </p>
-          </div>
+input,
+textarea,
+select {
+  width: 100%;
+  min-height: 30px;
+  padding: 7px 9px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  color: var(--text);
+  font-size: 12px;
+}
 
-          <div
-            class="pricing-toggle reveal"
-            role="group"
-            aria-label="Pricing type toggle"
-          >
-            <button class="toggle-btn active" type="button" data-view="normal">
-              Normal setup
-            </button>
-            <button class="toggle-btn" type="button" data-view="hydro">
-              Hydroponic setup
-            </button>
-          </div>
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid rgba(47, 107, 63, 0.2);
+  border-color: var(--green);
+}
 
-          <div class="pricing-grid" id="pricingGrid"></div>
-        </div>
-      </section>
+textarea {
+  min-height: 78px;
+  resize: vertical;
+}
 
-      <section class="section options-section" id="options">
-        <div class="container options-layout">
-          <div class="option-card normal reveal">
-            <div class="option-icon">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M4 20h16v-2H4v2ZM7 5h10l2 11H5L7 5Z" />
-              </svg>
-            </div>
-            <h2>Normal setup</h2>
-            <p>
-              Best for soil-based pots, planter boxes, and simple raised beds.
-              Lower material cost and easier for most homes.
-            </p>
-          </div>
+label {
+  display: grid;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 700;
+}
 
-          <figure class="photo-frame middle-photo reveal delay-1">
-            <img
-              src="img/installation-visit.jpg"
-              alt="Garden installation materials and seedlings"
-            />
-          </figure>
+h1,
+.public-hero h1,
+.public-search-panel h1,
+.dashboard-hero h1 {
+  font-size: 22px;
+  line-height: 1.15;
+}
 
-          <div class="option-card hydro reveal delay-2">
-            <div class="option-icon">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 3c4 4 6 7 6 11a6 6 0 0 1-12 0c0-4 2-7 6-11Z" />
-                <path d="M12 21v-8" />
-              </svg>
-            </div>
-            <h2>Hydroponic setup</h2>
-            <p>
-              Best for cleaner systems and leafy greens. Higher price because
-              the materials and system parts cost more.
-            </p>
-          </div>
-        </div>
-      </section>
+h2,
+.directory-list-header h2,
+.produce-toolbar h2,
+.produce-list-panel h2,
+#produceFormTitle,
+.app-action-card h2,
+.dashboard-card h2,
+.drawer-section h2 {
+  font-size: 15px;
+  line-height: 1.2;
+}
 
-      
+h3,
+.directory-grower-card h3,
+.produce-crud-card h3,
+.produce-item h3,
+.drawer-product-card h3 {
+  font-size: 13px;
+  line-height: 1.2;
+}
 
-      <section class="section faq-section" id="faq">
-        <div class="container faq-layout">
-          <div class="section-copy reveal">
-            <p class="eyebrow">FAQ</p>
-            <h2>Answers to help you feel ready.</h2>
-          </div>
+.hidden {
+  display: none !important;
+}
 
-          <div class="faq-list reveal delay-1">
-            <button class="faq-item active" type="button">
-              <span>Is this for farms?</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M11 5h2v14h-2V5Zm-6 6h14v2H5v-2Z" />
-              </svg>
-            </button>
-            <div class="faq-panel open">
-              <p>
-                No. Keboon Assistant is for homes, balconies, backyards, patios,
-                and small residential spaces.
-              </p>
-            </div>
+.muted {
+  color: var(--muted);
+}
 
-            <button class="faq-item" type="button">
-              <span>What is included in the setup price?</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M11 5h2v14h-2V5Zm-6 6h14v2H5v-2Z" />
-              </svg>
-            </button>
-            <div class="faq-panel">
-              <p>
-                Materials, installation, and initial setup are included.
-                Maintenance can be quoted separately.
-              </p>
-            </div>
+.small-text {
+  margin-top: 12px;
+  color: var(--muted);
+}
 
-            <button class="faq-item" type="button">
-              <span>How is pricing decided?</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M11 5h2v14h-2V5Zm-6 6h14v2H5v-2Z" />
-              </svg>
-            </button>
-            <div class="faq-panel">
-              <p>
-                Pricing follows the actual growing area and setup type. A large
-                balcony can be quoted under the standard or custom size band.
-              </p>
-            </div>
+.eyebrow,
+.app-page-header .eyebrow {
+  margin: 0 0 3px;
+  color: var(--green);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 
-            <button class="faq-item" type="button">
-              <span>Can you maintain the garden after setup?</span>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M11 5h2v14h-2V5Zm-6 6h14v2H5v-2Z" />
-              </svg>
-            </button>
-            <div class="faq-panel">
-              <p>
-                Yes. Maintenance is optional and can include care visits,
-                replanting, troubleshooting, and harvest support.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+/* =========================
+   Buttons
+   ========================= */
 
-      <section class="quote-section" id="contact">
-        <div class="container quote-layout reveal">
-          <div>
-            <p class="eyebrow">Request a quote</p>
-            <h2>Tell us about your space.</h2>
-            <p>
-              We will quote based on size, setup type, access, and what you want
-              to grow.
-            </p>
-          </div>
+.primary-button,
+.secondary-button {
+  min-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+}
 
-          <form class="lead-form" id="leadForm">
-            <input
-              type="hidden"
-              name="source"
-              value="Keboon Assistant Landing Page"
-            />
-            <label>
-              Name
-              <input type="text" name="name" placeholder="Your name" required />
-            </label>
+.primary-button {
+  border: 0;
+  background: var(--green);
+  color: var(--white);
+}
 
-            <label>
-              Email
-              <input
-                type="email"
-                name="email"
-                placeholder="you@example.com"
-                required
-              />
-            </label>
+.primary-button:hover {
+  background: var(--green-dark);
+}
 
-            <label>
-              Contact number
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Example: 012-345 6789"
-                required
-              />
-            </label>
+.primary-button:disabled,
+.secondary-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
 
-            <label>
-              Area
-              <input
-                type="text"
-                name="area"
-                placeholder="Example: Petaling Jaya"
-                required
-              />
-            </label>
+.secondary-button {
+  border: 1px solid var(--border);
+  background: var(--white);
+  color: var(--text);
+}
 
-            <label>
-              Space type
-              <select name="space" required>
-                <option value="">Select one</option>
-                <option>Balcony</option>
-                <option>Backyard</option>
-                <option>Patio</option>
-                <option>Side yard / corner</option>
-                <option>Other home space</option>
-              </select>
-            </label>
+.secondary-button:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
 
-            <label>
-              Estimated size
-              <select name="size" required>
-                <option value="">Select one</option>
-                <option>Compact / up to around 3 m²</option>
-                <option>Standard / around 3–8 m²</option>
-                <option>Custom / larger than standard</option>
-                <option>Not sure yet</option>
-              </select>
-            </label>
+.text-button-link {
+  text-decoration: none;
+}
 
-            <label>
-              Setup type
-              <select name="setup" required>
-                <option value="">Select one</option>
-                <option>Normal</option>
-                <option>Hydroponic</option>
-                <option>Not sure yet</option>
-              </select>
-            </label>
+/* =========================
+   Forms
+   ========================= */
 
-            <label>
-              Preferred service
-              <select name="service" required>
-                <option value="">Select one</option>
-                <option>Setup only</option>
-                <option>Setup with maintenance</option>
-                <option>Maintenance for existing garden</option>
-                <option>Not sure yet</option>
-              </select>
-            </label>
+.form-stack {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
 
-            <label class="form-full">
-              Message
-              <textarea
-                name="message"
-                placeholder="Tell us about your space, what you want to grow, or any questions you have."
-              ></textarea>
-            </label>
+.form-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 8px;
+}
 
-            <button class="btn primary full" type="submit">
-              Request quote
-            </button>
-          </form>
-        </div>
-      </section>
-    </main>
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 
-    <footer class="footer">
-      <div class="container footer-layout">
-        <a
-          href="#top"
-          class="brand footer-brand"
-          aria-label="Keboon Assistant home"
-        >
-          <img
-            src="../assets/img/keboon-writing.png"
-            alt="Keboon"
-            class="brand-logo"
-          />
-        </a>
-        <p>Small garden setup service for the Keboon ecosystem.</p>
-        <a href="https://keboon.net" target="_blank" rel="noreferrer"
-          >Visit keboon.net</a
-        >
-      </div>
-    </footer>
+.form-message {
+  min-height: 16px;
+  margin: 0;
+  font-weight: 700;
+}
 
-    <script src="script.js"></script>
-  </body>
-</html>
+.form-message.success {
+  color: var(--success);
+}
+
+.form-message.error {
+  color: var(--error);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.checkbox-label input {
+  width: auto;
+}
+
+/* =========================
+   Auth Pages
+   ========================= */
+
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 14px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 460px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-lg);
+}
+
+.auth-card h1 {
+  margin: 0 0 6px;
+  font-size: 23px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.brand-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.brand-logo {
+  max-width: 125px;
+  height: auto;
+  display: block;
+}
+
+/* =========================
+   Public Header / Hero
+   ========================= */
+
+.public-app {
+  min-height: 100vh;
+  margin-bottom: 0;
+  background: var(--cream);
+}
+
+.public-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+
+.public-brand {
+  display: inline-flex;
+  align-items: center;
+}
+
+.public-logo {
+  width: 104px;
+  height: auto;
+  display: block;
+}
+
+.public-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.public-nav .primary-button,
+.public-nav .secondary-button {
+  min-height: 30px;
+  padding: 6px 10px;
+  font-size: 11px;
+}
+
+.public-hero {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+
+.public-hero-content {
+  max-width: 720px;
+}
+
+.public-hero h1 {
+  margin: 0 0 3px;
+  font-size: 22px;
+  line-height: 1.15;
+}
+
+.public-hero p {
+  margin: 0;
+}
+
+.public-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.public-hero-compact {
+  padding: 10px 14px;
+}
+
+.public-hero-compact .public-hero-content {
+  max-width: 900px;
+}
+
+.public-hero-compact h1 {
+  margin-bottom: 3px;
+  font-size: 22px;
+}
+
+.public-hero-compact .muted {
+  font-size: 12px;
+}
+
+/* =========================
+   Public Directory
+   ========================= */
+
+.public-directory-shell {
+  padding: 8px;
+  overflow: visible;
+}
+
+.public-search-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 440px);
+  gap: 8px;
+  align-items: end;
+  padding: 9px;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+
+.public-directory-shell .public-search-panel {
+  margin-bottom: 8px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.public-search-panel h1 {
+  margin: 0 0 3px;
+  font-size: 22px;
+}
+
+.public-search-panel .muted {
+  font-size: 12px;
+}
+
+.public-search-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 7px;
+  align-items: end;
+}
+
+.directory-search-box {
+  display: grid;
+  gap: 4px;
+}
+
+.directory-search-input-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 32px;
+  align-items: stretch;
+}
+
+.directory-search-input-wrap input {
+  min-height: 32px;
+  padding: 7px 9px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  font-size: 12px;
+}
+
+.directory-search-icon-button {
+  min-height: 32px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-left: 0;
+  border-radius: 0 9px 9px 0;
+  background: var(--green);
+  color: var(--white);
+  cursor: pointer;
+}
+
+.directory-search-icon-button:hover {
+  background: var(--green-dark);
+}
+
+.directory-search-icon-button svg {
+  width: 14px;
+  height: 14px;
+}
+
+.directory-search-actions,
+.directory-location-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.directory-search-actions .primary-button,
+.directory-search-actions .secondary-button,
+.directory-location-actions .secondary-button {
+  white-space: nowrap;
+}
+
+#directoryStatus {
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+/* =========================
+   Directory Layout With Pagination Visible
+   ========================= */
+
+.directory-layout,
+.public-directory-shell .directory-layout,
+.dashboard-directory-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  height: calc(100dvh - 185px);
+  min-height: 420px;
+  max-height: calc(100dvh - 185px);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+}
+
+.directory-map,
+.dashboard-directory-layout .directory-map,
+.public-directory-shell .directory-map {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  background: #eef2e6;
+}
+
+.directory-list-panel {
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  padding: 9px;
+  border-left: 1px solid var(--border);
+  background: var(--white);
+}
+
+.directory-list-header h2 {
+  margin: 0 0 3px;
+  font-size: 15px;
+}
+
+.directory-list-header p {
+  margin: 0;
+}
+
+.directory-list {
+  min-height: 0;
+  height: auto;
+  max-height: none;
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  margin-top: 8px;
+  padding-right: 4px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.directory-grower-card {
+  width: 100%;
+  padding: 8px 9px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--white);
+  text-align: left;
+  cursor: pointer;
+}
+
+.directory-grower-card:hover {
+  border-color: var(--green);
+}
+
+.directory-grower-card h3 {
+  margin: 0 0 4px;
+  font-size: 13px;
+}
+
+.directory-grower-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.grower-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 5px;
+}
+
+.meta-pill,
+.status-pill {
+  display: inline-flex;
+  padding: 3px 6px;
+  border-radius: 999px;
+  background: var(--cream);
+  color: var(--green);
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.directory-pagination,
+.profile-produce-pagination {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.directory-pagination .pagination-text,
+.profile-produce-pagination .pagination-text {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.directory-pagination button,
+.profile-produce-pagination button {
+  min-height: auto;
+  padding: 3px 5px;
+  border: 0;
+  background: transparent;
+  color: var(--green);
+  box-shadow: none;
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.directory-pagination button:hover,
+.profile-produce-pagination button:hover {
+  color: var(--green-dark);
+  text-decoration: underline;
+}
+
+.directory-pagination button:disabled,
+.profile-produce-pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+.directory-list .directory-pagination,
+.directory-pagination {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  padding-top: 6px;
+  padding-bottom: 2px;
+  background: var(--white);
+}
+
+/* =========================
+   Leaflet Popups
+   ========================= */
+
+.leaflet-popup-content {
+  margin: 8px;
+}
+
+.keboon-map-marker {
+  border: 0;
+  background: transparent;
+}
+
+.keboon-map-marker svg {
+  display: block;
+  filter: drop-shadow(0 4px 8px rgba(31, 41, 51, 0.25));
+}
+
+.map-popup,
+.map-popup-compact {
+  min-width: 150px;
+  max-width: 190px;
+}
+
+.map-popup h3,
+.map-popup-compact h3 {
+  margin: 0 0 3px;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.map-popup-location,
+.map-popup-compact .map-popup-location {
+  margin: 0 0 7px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.map-popup-section {
+  display: grid;
+  gap: 5px;
+  margin-bottom: 8px;
+}
+
+.map-popup-section strong {
+  color: var(--text);
+  font-size: 11px;
+}
+
+.map-popup-produce-list {
+  margin: 0;
+  padding-left: 16px;
+  color: var(--text);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.map-popup-muted,
+.map-popup-produce-text {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.map-popup-button {
+  width: 100%;
+  min-height: 30px;
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--green);
+  color: var(--white);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.map-popup-button:hover {
+  background: var(--green-dark);
+}
+
+/* =========================
+   Grower Profile Modal Overlay
+   ========================= */
+
+.grower-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(31, 41, 51, 0.42);
+}
+
+.grower-drawer.is-open {
+  display: flex;
+}
+
+.grower-drawer-card {
+  position: relative;
+  width: min(48vw, 500px);
+  max-width: calc(100vw - 36px);
+  height: 50vh;
+  max-height: 50vh;
+  overflow-y: auto;
+  padding: 12px;
+  border-radius: 16px;
+  background: var(--white);
+  box-shadow: 0 20px 60px rgba(31, 41, 51, 0.22);
+}
+
+/* Red X close button, no circle */
+.drawer-close-button {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  width: auto;
+  height: auto;
+  min-height: auto;
+  display: grid;
+  place-items: center;
+  margin-left: auto;
+  margin-bottom: 8px;
+  padding: 0 3px;
+  border: 0;
+  background: transparent;
+  color: #d92d20;
+  cursor: pointer;
+  font-size: 0;
+  line-height: 1;
+  box-shadow: none;
+  transition:
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.drawer-close-button::before {
+  content: "×";
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 0.85;
+}
+
+.drawer-close-button:hover {
+  color: #b42318;
+  transform: scale(1.12);
+}
+
+.drawer-close-button:active {
+  transform: scale(0.96);
+}
+
+.drawer-grower-title {
+  margin: 0 0 4px;
+  font-size: 16px;
+  line-height: 1.15;
+}
+
+.drawer-section {
+  margin-top: 7px;
+}
+
+.drawer-section h2 {
+  margin: 0 0 4px;
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.drawer-section .muted,
+.drawer-section p {
+  font-size: 11px;
+  line-height: 1.32;
+}
+
+.drawer-product-list {
+  min-height: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.drawer-product-card {
+  width: 100%;
+  padding: 7px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--cream);
+}
+
+.drawer-product-card h3 {
+  margin: 0 0 3px;
+  font-size: 12px;
+}
+
+.drawer-product-card p {
+  margin: 0 0 5px;
+  color: var(--muted);
+  font-size: 10.5px;
+  line-height: 1.3;
+}
+
+.drawer-section-separated {
+  margin-top: 9px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.drawer-enquiry-panel {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--white);
+}
+
+.drawer-enquiry-panel summary {
+  position: relative;
+  display: grid;
+  gap: 3px;
+  padding: 7px 30px 7px 9px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.drawer-enquiry-panel summary::-webkit-details-marker {
+  display: none;
+}
+
+.drawer-enquiry-panel summary span:first-child {
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.drawer-enquiry-panel summary::after {
+  content: "+";
+  position: absolute;
+  top: 8px;
+  right: 11px;
+  color: var(--green);
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.drawer-enquiry-panel[open] summary::after {
+  content: "−";
+}
+
+.summary-helper {
+  color: var(--muted);
+  font-size: 10.5px;
+  font-weight: 600;
+}
+
+.enquiry-form {
+  display: grid;
+  gap: 6px;
+  padding: 8px;
+  border-top: 1px solid var(--border);
+  background: var(--cream);
+}
+
+.enquiry-form label {
+  gap: 4px;
+  font-size: 11px;
+}
+
+.enquiry-form input,
+.enquiry-form textarea,
+.enquiry-form select {
+  padding: 8px 9px;
+  border-radius: 9px;
+  font-size: 12px;
+}
+
+.enquiry-form textarea {
+  min-height: 60px;
+}
+
+.enquiry-form .primary-button,
+.enquiry-form .secondary-button {
+  min-height: 30px;
+  padding: 6px 10px;
+  font-size: 11px;
+}
+
+.enquiry-signed-in-note {
+  display: grid;
+  gap: 4px;
+  padding: 9px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: #edf8ea;
+  color: var(--green-dark);
+}
+
+.enquiry-signed-in-note span {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* =========================
+   Dashboard
+   ========================= */
+
+.dashboard-page {
+  min-height: 100vh;
+  padding: 8px;
+  padding-bottom: 8px;
+  background: var(--cream);
+}
+
+.dashboard-header {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 auto 10px;
+}
+
+.dashboard-brand {
+  display: inline-flex;
+  align-items: center;
+}
+
+.dashboard-logo {
+  width: 120px;
+  height: auto;
+  display: block;
+}
+
+.dashboard-hero {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto 10px;
+  padding: 9px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+}
+
+.dashboard-hero h1 {
+  margin: 0 0 4px;
+  font-size: 22px;
+}
+
+.dashboard-grid {
+  width: 100%;
+  max-width: 960px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin: 0 auto;
+}
+
+.dashboard-card {
+  width: 100%;
+  display: block;
+  padding: 9px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--white);
+  color: var(--text);
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.dashboard-card:hover {
+  border-color: var(--green);
+  transform: translateY(-1px);
+}
+
+.dashboard-card h2 {
+  margin: 0 0 5px;
+  font-size: 15px;
+}
+
+.dashboard-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.content-card {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 9px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+}
+
+/* =========================
+   Private App Shell
+   ========================= */
+
+.app-shell {
+  min-height: 100vh;
+  margin-bottom: 0;
+  padding-bottom: 52px;
+  background: var(--cream);
+}
+
+.app-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1200;
+  border-bottom: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+}
+
+.app-topbar-inner {
+  width: 100%;
+  max-width: 1040px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 auto;
+  padding: 8px 12px;
+}
+
+.app-topbar-left {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-topbar-logo {
+  width: 94px;
+  height: auto;
+  display: block;
+}
+
+.app-topbar-title {
+  min-width: 0;
+}
+
+.app-topbar-title p {
+  margin: 0;
+}
+
+.app-screen-label {
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.app-screen-title {
+  overflow: hidden;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.app-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.app-main,
+.app-page,
+.private-page {
+  width: 100%;
+  max-width: 1040px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 8px;
+  padding-bottom: 8px;
+}
+
+.app-page-header {
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+}
+
+.app-page-header h1 {
+  margin: 0 0 3px;
+  font-size: 15px;
+  line-height: 1.15;
+}
+
+.app-page-header p {
+  margin: 0;
+}
+
+.app-page-header .eyebrow {
+  margin-bottom: 3px;
+  font-size: 9px;
+}
+
+.app-page-header .muted {
+  max-width: 640px;
+  font-size: 12px;
+}
+
+.app-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.app-action-card {
+  width: 100%;
+  padding: 9px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--white);
+  color: var(--text);
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+}
+
+.app-action-card:hover {
+  border-color: var(--green);
+}
+
+.app-action-card h2 {
+  margin: 0 0 5px;
+  font-size: 15px;
+}
+
+.app-action-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.app-section {
+  margin-top: 8px;
+}
+
+.app-section-title {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+
+.app-bottom-nav {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1300;
+  border-top: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(8px);
+}
+
+.app-bottom-nav-inner {
+  width: 100%;
+  max-width: 720px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 0 auto;
+}
+
+.app-bottom-link {
+  min-height: 46px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 3px;
+  padding: 6px 4px;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.app-bottom-link svg,
+.app-nav-icon-img {
+  width: 16px;
+  height: 16px;
+}
+
+.app-bottom-link svg {
+  stroke-width: 2.2;
+}
+
+.app-bottom-link.is-active,
+.app-bottom-link:hover {
+  color: var(--green);
+}
+
+/* =========================
+   App Icons / Topbar Buttons
+   ========================= */
+
+.app-icon-button,
+.inbox-icon-link,
+#inboxButton,
+#signoutButton {
+  position: relative;
+  width: auto !important;
+  height: auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  display: grid;
+  place-items: center;
+  padding: 3px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--text);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.app-icon-button::before,
+.app-icon-button::after,
+.inbox-icon-link::before,
+.inbox-icon-link::after,
+#inboxButton::before,
+#inboxButton::after {
+  content: none !important;
+  display: none !important;
+}
+
+.app-icon-button:hover,
+.app-icon-button:focus,
+.inbox-icon-link:hover,
+.inbox-icon-link:focus,
+#inboxButton:hover,
+#inboxButton:focus,
+#signoutButton:hover,
+#signoutButton:focus {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.app-icon-button svg,
+.inbox-icon-link svg,
+#inboxButton svg {
+  width: 20px !important;
+  height: 20px !important;
+  display: block;
+}
+
+#signoutButton {
+  color: #d92d20 !important;
+}
+
+#signoutButton svg,
+#signoutButton svg path,
+#signoutButton svg line,
+#signoutButton svg polyline,
+#signoutButton svg circle {
+  stroke: #d92d20 !important;
+  color: #d92d20 !important;
+  stroke-width: 2.8 !important;
+}
+
+#signoutButton:hover {
+  color: #b42318 !important;
+}
+
+#signoutButton:hover svg,
+#signoutButton:hover svg path,
+#signoutButton:hover svg line,
+#signoutButton:hover svg polyline,
+#signoutButton:hover svg circle {
+  stroke: #b42318 !important;
+}
+
+.inbox-unread-dot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  display: none;
+  border: 2px solid var(--white);
+  border-radius: 999px;
+  background: #d92d20;
+}
+
+.inbox-unread-dot.is-visible {
+  display: block;
+}
+
+/* =========================
+   Profile / Location
+   ========================= */
+
+.location-picker {
+  display: grid;
+  gap: 6px;
+  padding: 9px;
+  border-radius: 12px;
+}
+
+.location-picker-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.location-picker-header h2 {
+  margin: 0 0 3px;
+  font-size: 15px;
+}
+
+.location-picker-header p {
+  margin: 0;
+}
+
+.location-picker-header .muted {
+  font-size: 12px;
+}
+
+.profile-location-map {
+  width: 100%;
+  min-height: 180px;
+  height: 180px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: #eef2e6;
+}
+
+.profile-preview {
+  display: grid;
+  gap: 7px;
+}
+
+.profile-preview-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.profile-preview-header h2 {
+  margin: 0 0 3px;
+  font-size: 15px;
+}
+
+.profile-links-section {
+  display: grid;
+  gap: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.profile-links-section h2 {
+  margin: 0 0 3px;
+  font-size: 15px;
+}
+
+.profile-links-section p {
+  margin: 0;
+}
+
+.profile-links-section .muted {
+  font-size: 12px;
+}
+
+.grower-links-grid,
+.grower-links-list {
+  display: grid;
+  gap: 6px;
+}
+
+.grower-link-card {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--white);
+}
+
+.grower-link-card iframe {
+  width: 100%;
+  height: 120px;
+  border: 0;
+  background: var(--cream);
+}
+
+.grower-link-card-footer {
+  display: grid;
+  gap: 3px;
+  padding: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.grower-link-card-footer a {
+  color: var(--green);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.grower-link-card-footer p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.grower-link-button {
+  width: 100%;
+  display: grid;
+  gap: 3px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.grower-link-button:hover {
+  border-color: var(--green);
+}
+
+.grower-link-button span {
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.grower-link-button small {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+/* =========================
+   Produce
+   ========================= */
+
+.produce-layout {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 14px;
+  align-items: start;
+}
+
+.produce-list-panel {
+  min-height: 0;
+  padding-left: 14px;
+  border-left: 1px solid var(--border);
+}
+
+.produce-list-panel h2,
+#produceFormTitle {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+
+.produce-list {
+  min-height: 0;
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  margin-top: 8px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.produce-item {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--white);
+  text-align: left;
+  cursor: pointer;
+}
+
+.produce-item:hover {
+  border-color: var(--green);
+}
+
+.produce-item h3 {
+  margin: 0 0 3px;
+  font-size: 13px;
+}
+
+.produce-item p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.produce-app-layout {
+  min-height: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.produce-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+}
+
+.produce-toolbar h2 {
+  margin: 0 0 3px;
+  font-size: 15px;
+}
+
+.produce-toolbar p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.produce-crud-list {
+  min-height: 0;
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.produce-crud-card {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--white);
+  text-align: left;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+
+.produce-crud-card:hover {
+  border-color: var(--green);
+}
+
+.produce-crud-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.produce-crud-card h3 {
+  margin: 0 0 3px;
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+.produce-crud-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.produce-crud-card .grower-meta {
+  gap: 5px;
+  margin-top: 6px;
+}
+
+.produce-crud-card .meta-pill,
+.produce-crud-card .status-pill {
+  padding: 3px 6px;
+  font-size: 9px;
+}
+
+.produce-editor-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 2100;
+  display: none;
+  justify-content: flex-end;
+  background: rgba(31, 41, 51, 0.42);
+}
+
+.produce-editor-panel.is-open {
+  display: flex;
+}
+
+.produce-editor-card {
+  width: min(100%, 460px);
+  height: 100%;
+  overflow: auto;
+  padding: 14px;
+  background: var(--white);
+  box-shadow: -12px 0 40px rgba(31, 41, 51, 0.16);
+}
+
+.produce-editor-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.produce-editor-header h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.collapsible-product-list {
+  min-height: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.collapsible-product-card {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--cream);
+}
+
+.collapsible-product-card summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 9px;
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  list-style: none;
+}
+
+.collapsible-product-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.collapsible-product-card summary::after {
+  content: "+";
+  color: var(--green);
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.collapsible-product-card[open] summary::after {
+  content: "-";
+}
+
+.collapsible-product-body {
+  display: grid;
+  gap: 5px;
+  padding: 7px 9px 9px;
+  border-top: 1px solid var(--border);
+}
+
+.collapsible-product-body p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 10.5px;
+  line-height: 1.35;
+}
+
+/* Paginated profile produce section */
+.profile-produce-pagination-wrap {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  max-height: 220px;
+  overflow: hidden;
+}
+
+.profile-produce-pagination-wrap .drawer-product-list,
+.profile-produce-pagination-wrap .collapsible-product-list {
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;
+}
+
+.profile-produce-pagination {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  padding-top: 6px;
+  background: var(--white);
+}
+
+/* Generic paginated content card behavior */
+.produce-list-panel:has(.directory-pagination),
+.produce-list-panel:has(.profile-produce-pagination),
+.content-card:has(.directory-pagination),
+.content-card:has(.profile-produce-pagination) {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  max-height: calc(100dvh - 145px);
+  overflow: hidden;
+}
+
+/* =========================
+   Mailbox / Inbox
+   ========================= */
+
+.inbox-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.inbox-count-text {
+  margin: 4px 0 0;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.mailbox-layout {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 6px;
+}
+
+.mailbox-toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px;
+  align-items: center;
+  padding: 7px;
+  margin-bottom: 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--white);
+}
+
+.mailbox-search-wrap {
+  position: relative;
+  min-width: 0;
+}
+
+.mailbox-search-wrap input {
+  min-height: 32px;
+  padding: 7px 32px 7px 9px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+}
+
+.mailbox-search-wrap svg {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 14px;
+  height: 14px;
+  color: var(--muted);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.mailbox-compact-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mailbox-icon-select {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 7px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--cream);
+}
+
+.mailbox-icon-select svg {
+  width: 14px;
+  height: 14px;
+  color: var(--green);
+}
+
+.mailbox-icon-select select {
+  min-height: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.mailbox-bulk-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.mailbox-bulk-actions .secondary-button {
+  min-height: 28px;
+  padding: 5px 8px;
+  font-size: 10px;
+}
+
+.mailbox-content-card {
+  height: calc(100dvh - 185px);
+  min-height: 260px;
+  max-height: calc(100dvh - 185px);
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--white);
+}
+
+.mailbox-list {
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+
+.mailbox-list-header {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.mailbox-table {
+  width: 100%;
+  min-width: 100%;
+}
+
+.mailbox-table-head {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: 36px 150px minmax(0, 1fr) 70px 110px;
+  align-items: center;
+  gap: 0;
+  padding: 6px 10px 6px 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--cream);
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.mailbox-row {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  align-items: stretch;
+  border-bottom: 1px solid var(--border);
+  background: var(--white);
+}
+
+.mailbox-row:last-child {
+  border-bottom: 0;
+}
+
+.mailbox-row.is-unread {
+  background: #edf8ea;
+  box-shadow: inset 4px 0 0 var(--green);
+}
+
+.mailbox-row.is-unread:hover {
+  background: #e4f3df;
+}
+
+.mailbox-row-check,
+.mailbox-head-check,
+.mailbox-table-head .mailbox-head-check {
+  width: 36px;
+  min-width: 36px;
+  max-width: 36px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+.mailbox-row-check input,
+.mailbox-head-check input,
+.mailbox-checkbox,
+#mailboxSelectAll {
+  width: 10px;
+  height: 10px;
+  margin: 0;
+}
+
+.mailbox-row-main {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr) 70px 110px;
+  align-items: center;
+  gap: 0;
+  padding: 7px 10px 7px 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.mailbox-row-sender {
+  overflow: hidden;
+  padding-right: 10px;
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.mailbox-row.is-unread .mailbox-row-sender {
+  color: var(--green-dark);
+  font-weight: 950;
+}
+
+.mailbox-row-message {
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  padding-right: 10px;
+}
+
+.mailbox-row-message strong {
+  flex: 0 0 auto;
+  max-width: 140px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.mailbox-row-message span {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 11px;
+  line-height: 1.3;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.mailbox-row.is-unread .mailbox-row-message span {
+  color: var(--green-dark);
+  font-weight: 900;
+}
+
+.mailbox-row-status {
+  justify-self: start;
+  color: var(--green);
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.mailbox-row.is-unread .mailbox-row-status {
+  color: var(--green-dark);
+  font-weight: 950;
+}
+
+.mailbox-row-date {
+  justify-self: end;
+  color: var(--muted);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.mailbox-empty-state {
+  padding: 12px;
+}
+
+#mailboxMessage {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  margin: 0;
+  padding: 8px 10px;
+  border-top: 1px solid var(--border);
+  background: var(--white);
+}
+
+.mailbox-direction-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 5px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: var(--cream);
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.message-send-failed {
+  color: #d92d20;
+  font-weight: 700;
+}
+
+/* Mailbox thread drawer */
+
+.mailbox-thread-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 2200;
+  display: none;
+  justify-content: flex-end;
+  overflow: hidden;
+  background: rgba(31, 41, 51, 0.42);
+}
+
+.mailbox-thread-drawer.is-open {
+  display: flex;
+}
+
+.mailbox-thread-card {
+  width: min(100%, 560px);
+  height: 100%;
+  max-height: 100dvh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  overflow: hidden;
+  background: var(--white);
+  box-shadow: -12px 0 40px rgba(31, 41, 51, 0.16);
+}
+
+.mailbox-thread-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px;
+  border-bottom: 1px solid var(--border);
+}
+
+.mailbox-thread-header h2 {
+  margin: 0 0 3px;
+  font-size: 16px;
+}
+
+.mailbox-thread-header .muted {
+  margin: 0;
+  font-size: 11px;
+}
+
+.mailbox-thread-messages {
+  min-height: 0;
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  margin: 7px;
+  padding: 7px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--cream);
+  overscroll-behavior: contain;
+}
+
+.mailbox-thread-message {
+  max-width: 74%;
+  display: grid;
+  gap: 6px;
+  padding: 8px;
+  margin-bottom: 7px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--white);
+}
+
+.mailbox-thread-message.is-my-message {
+  margin-left: auto;
+  margin-right: 0;
+  border-color: #b9d7b4;
+  background: #e6efe2;
+}
+
+.mailbox-thread-message.is-other-grower,
+.mailbox-thread-message.is-public-user {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.mailbox-thread-message.is-public-user {
+  background: #fffaf0;
+}
+
+.mailbox-thread-message.is-grower {
+  margin-left: 28px;
+  border-color: rgba(47, 107, 63, 0.35);
+}
+
+.mailbox-thread-message-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.mailbox-thread-message.is-my-message .mailbox-thread-message-header {
+  text-align: right;
+}
+
+.mailbox-thread-message-header strong {
+  color: var(--text);
+  font-size: 11px;
+}
+
+.mailbox-thread-message-header span {
+  color: var(--muted);
+  font-size: 9px;
+  white-space: nowrap;
+}
+
+.mailbox-thread-message p {
+  margin: 0;
+  color: var(--text);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.mailbox-thread-message small {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.mailbox-reply-form {
+  display: grid;
+  flex-shrink: 0;
+  gap: 7px;
+  padding: 8px;
+  border-top: 1px solid var(--border);
+  background: var(--white);
+}
+
+.mailbox-reply-form label {
+  display: grid;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.mailbox-reply-form textarea {
+  min-height: 64px;
+}
+
+body:has(.mailbox-thread-drawer.is-open),
+body:has(.grower-drawer.is-open),
+body:has(.produce-editor-panel.is-open) {
+  overflow: hidden;
+}
+
+/* Mailbox page sizing */
+
+body:has(#mailboxList) .app-main {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: auto;
+  min-height: auto;
+  padding-bottom: 64px;
+  overflow: visible;
+}
+
+body:has(#mailboxList) .mailbox-layout {
+  height: auto;
+  min-height: 0;
+  display: grid;
+  gap: 6px;
+  padding-bottom: 0;
+  overflow: visible;
+}
+
+body:has(#mailboxList) .mailbox-content-card {
+  height: calc(100dvh - 185px);
+  min-height: 260px;
+  max-height: calc(100dvh - 185px);
+  margin-bottom: 0;
+  overflow: hidden;
+}
+
+body:has(#mailboxList) .mailbox-list {
+  min-height: 0;
+  padding-bottom: 10px;
+  overflow-y: auto;
+}
+
+/* =========================
+   Loading Overlay
+   ========================= */
+
+.global-loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(248, 245, 236, 0.82);
+  backdrop-filter: blur(3px);
+}
+
+.global-loading-overlay.is-active {
+  display: flex;
+}
+
+.loading-card {
+  width: min(100%, 210px);
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+}
+
+.loading-card p {
+  margin: 0;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.loading-spinner {
+  width: 26px;
+  height: 26px;
+  border: 4px solid var(--border);
+  border-top-color: var(--green);
+  border-radius: 50%;
+  animation: loading-spin 0.8s linear infinite;
+}
+
+@keyframes loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================
+   Desktop App Sidebar
+   ========================= */
+
+@media (min-width: 960px) {
+  .app-shell {
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "topbar topbar"
+      "nav main";
+    padding-bottom: 0;
+  }
+
+  .app-topbar {
+    grid-area: topbar;
+  }
+
+  .app-main {
+    grid-area: main;
+    max-width: none;
+    width: 100%;
+    padding: 10px;
+    padding-bottom: 8px;
+  }
+
+  .app-bottom-nav {
+    position: sticky;
+    top: 49px;
+    bottom: auto;
+    grid-area: nav;
+    align-self: start;
+    height: calc(100vh - 49px);
+    border-top: 0;
+    border-right: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.98);
+  }
+
+  .app-bottom-nav-inner {
+    width: 100%;
+    max-width: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 5px;
+    padding: 10px 8px;
+  }
+
+  .app-bottom-link {
+    min-height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 9px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+  }
+
+  .app-bottom-link.is-active {
+    background: var(--cream);
+    color: var(--green);
+  }
+
+  .app-bottom-link:hover {
+    background: var(--cream);
+  }
+
+  .app-bottom-link svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .app-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+  }
+
+  .app-page-header h1 {
+    font-size: 15px;
+  }
+
+  .dashboard-public-search {
+    margin-bottom: 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+}
+
+/* =========================
+   Tablet
+   ========================= */
+
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-header {
+    align-items: flex-start;
+  }
+
+  .dashboard-hero h1 {
+    font-size: 20px;
+  }
+
+  .public-search-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .directory-layout,
+  .public-directory-shell .directory-layout,
+  .dashboard-directory-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 210px minmax(0, 1fr);
+    height: calc(100dvh - 170px);
+    min-height: 0;
+    max-height: calc(100dvh - 170px);
+    overflow: hidden;
+  }
+
+  .directory-map,
+  .dashboard-directory-layout .directory-map,
+  .public-directory-shell .directory-map {
+    height: 210px;
+    min-height: 210px;
+  }
+
+  .directory-list-panel {
+    min-height: 0;
+    height: auto;
+    max-height: none;
+    padding: 8px;
+    overflow: hidden;
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .directory-list {
+    min-height: 0;
+    max-height: none;
+    overflow-y: auto;
+  }
+
+  .produce-layout {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .produce-list-panel {
+    padding-left: 0;
+    padding-top: 12px;
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .public-hero {
+    display: grid;
+    align-items: start;
+  }
+
+  .public-hero-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .public-hero-actions .primary-button,
+  .public-hero-actions .secondary-button {
+    width: 100%;
+  }
+
+  .mailbox-table-head {
+    grid-template-columns: 36px minmax(0, 1fr);
+    padding: 6px 0;
+  }
+
+  .mailbox-table-head > div {
+    display: none;
+  }
+
+  .mailbox-table-head .mailbox-head-check {
+    display: grid;
+  }
+
+  .mailbox-row {
+    grid-template-columns: 36px minmax(0, 1fr);
+  }
+
+  .mailbox-row-main {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px 8px;
+    padding: 7px 10px 7px 0;
+  }
+
+  .mailbox-row-sender {
+    grid-column: 1 / 2;
+  }
+
+  .mailbox-row-date {
+    grid-column: 2 / 3;
+    grid-row: 1;
+  }
+
+  .mailbox-row-message {
+    grid-column: 1 / -1;
+    display: block;
+    padding-right: 0;
+  }
+
+  .mailbox-row-message strong {
+    display: block;
+    max-width: 100%;
+    margin-bottom: 3px;
+  }
+
+  .mailbox-row-message span {
+    display: block;
+  }
+
+  .mailbox-row-status {
+    grid-column: 1 / -1;
+  }
+
+  .mailbox-content-card {
+    height: calc(100dvh - 210px);
+    min-height: 240px;
+    max-height: calc(100dvh - 210px);
+  }
+}
+
+/* =========================
+   Mobile
+   ========================= */
+
+@media (max-width: 640px) {
+  body {
+    font-size: 12px;
+  }
+
+  input,
+  select,
+  textarea,
+  .directory-search-input-wrap input,
+  .form-stack input,
+  .form-stack select,
+  .form-stack textarea {
+    min-height: 32px;
+    padding: 7px 9px;
+    font-size: 16px !important;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .auth-card {
+    padding: 18px;
+  }
+
+  .auth-card h1 {
+    font-size: 22px;
+  }
+
+  .public-header {
+    padding: 7px 10px;
+  }
+
+  .public-logo {
+    width: 86px;
+  }
+
+  .public-nav {
+    flex-shrink: 0;
+    gap: 6px;
+  }
+
+  .public-nav .primary-button,
+  .public-nav .secondary-button {
+    min-height: 28px;
+    padding: 5px 7px;
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  .public-hero,
+  .public-hero-compact {
+    padding: 9px 10px;
+  }
+
+  .public-hero h1,
+  .public-search-panel h1,
+  .public-hero-compact h1 {
+    font-size: 18px;
+  }
+
+  .public-directory-shell {
+    padding: 6px;
+  }
+
+  .public-search-panel,
+  .public-directory-shell .public-search-panel {
+    padding: 8px;
+    gap: 7px;
+    margin-bottom: 6px;
+    border-radius: var(--radius-md);
+  }
+
+  .public-search-controls {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .directory-search-input-wrap {
+    grid-template-columns: minmax(0, 1fr) 32px;
+  }
+
+  .directory-search-icon-button {
+    min-height: 32px;
+  }
+
+  .directory-location-actions,
+  .directory-search-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .directory-location-actions .secondary-button,
+  .directory-search-actions .primary-button,
+  .directory-search-actions .secondary-button {
+    width: 100%;
+    min-width: 0;
+    min-height: 28px;
+    padding: 5px 7px;
+    font-size: 10px;
+    text-align: center;
+  }
+
+  .directory-layout,
+  .public-directory-shell .directory-layout,
+  .dashboard-directory-layout {
+    grid-template-rows: 185px minmax(0, 1fr);
+    height: calc(100dvh - 155px);
+    max-height: calc(100dvh - 155px);
+  }
+
+  .directory-map,
+  .dashboard-directory-layout .directory-map,
+  .public-directory-shell .directory-map {
+    height: 185px;
+    min-height: 185px;
+  }
+
+  .directory-list-panel {
+    padding: 7px;
+  }
+
+  .directory-list {
+    gap: 5px;
+  }
+
+  .directory-grower-card {
+    padding: 7px;
+  }
+
+  .grower-drawer {
+    padding: 12px;
+  }
+
+  .grower-drawer-card {
+    width: min(94vw, 420px);
+    height: 52vh;
+    max-height: 52vh;
+    padding: 11px;
+    border-radius: 16px;
+  }
+
+  .drawer-close-button::before {
+    font-size: 23px;
+  }
+
+  .drawer-grower-title {
+    font-size: 15px;
+  }
+
+  .produce-editor-panel,
+  .mailbox-thread-drawer {
+    justify-content: center;
+  }
+
+  .produce-editor-card {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .app-topbar-inner {
+    padding: 7px 10px;
+  }
+
+  .app-topbar-logo {
+    width: 84px;
+  }
+
+  .app-screen-title {
+    font-size: 12px;
+  }
+
+  .app-main,
+  .app-page,
+  .dashboard-page,
+  .private-page {
+    padding: 6px 6px 56px;
+  }
+
+  .app-page-header {
+    padding: 8px;
+    margin-bottom: 6px;
+    border-radius: var(--radius-md);
+  }
+
+  .app-page-header h1 {
+    font-size: 15px;
+  }
+
+  .app-page-header .muted {
+    font-size: 11px;
+  }
+
+  .app-card-grid {
+    display: none;
+  }
+
+  .app-bottom-link {
+    min-height: 42px;
+    padding: 5px 4px;
+    font-size: 8.5px;
+  }
+
+  .app-bottom-link svg,
+  .app-nav-icon-img {
+    width: 15px;
+    height: 15px;
+  }
+
+  .content-card {
+    padding: 8px;
+    border-radius: var(--radius-md);
+  }
+
+  .location-picker {
+    padding: 8px;
+  }
+
+  .location-picker-header {
+    display: grid;
+  }
+
+  .location-picker-header .secondary-button {
+    width: 100%;
+  }
+
+  .profile-location-map {
+    height: 160px;
+    min-height: 160px;
+  }
+
+  .profile-preview-header {
+    display: grid;
+  }
+
+  .profile-preview-header h2 {
+    font-size: 15px;
+  }
+
+  .produce-toolbar {
+    display: grid;
+    gap: 7px;
+    padding: 8px;
+    border-radius: var(--radius-md);
+  }
+
+  .produce-toolbar h2 {
+    font-size: 15px;
+  }
+
+  .produce-toolbar .primary-button {
+    width: 100%;
+  }
+
+  .produce-crud-card {
+    padding: 7px;
+  }
+
+  .produce-crud-card-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .produce-crud-card h3 {
+    font-size: 12px;
+  }
+
+  .produce-editor-header {
+    display: grid;
+  }
+
+  .produce-editor-header .secondary-button {
+    width: 100%;
+  }
+
+  .mailbox-toolbar {
+    grid-template-columns: 1fr;
+    padding: 7px;
+  }
+
+  .mailbox-compact-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .mailbox-icon-select {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .mailbox-icon-select select {
+    width: 100%;
+  }
+
+  .mailbox-bulk-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .mailbox-bulk-actions .secondary-button {
+    padding-left: 6px;
+    padding-right: 6px;
+    font-size: 10px;
+  }
+
+  .mailbox-content-card,
+  body:has(#mailboxList) .mailbox-content-card {
+    height: calc(100dvh - 205px);
+    min-height: 220px;
+    max-height: calc(100dvh - 205px);
+    margin-bottom: 0;
+    border-radius: var(--radius-md);
+  }
+
+  .mailbox-list {
+    max-height: none;
+    padding-bottom: 10px;
+  }
+
+  body:has(#mailboxList) .app-main {
+    min-height: calc(100dvh - 64px);
+    padding-bottom: 58px;
+    overflow: visible;
+  }
+
+  .mailbox-row-main {
+    padding: 7px 9px 7px 0;
+  }
+
+  .mailbox-row-sender,
+  .mailbox-row-message span {
+    font-size: 11px;
+  }
+
+  .mailbox-thread-card {
+    width: 100%;
+    height: 100dvh;
+  }
+
+  .mailbox-thread-header {
+    padding: 9px;
+  }
+
+  .mailbox-thread-header h2 {
+    font-size: 16px;
+  }
+
+  .mailbox-thread-messages {
+    gap: 7px;
+    margin: 7px;
+    padding: 7px;
+  }
+
+  .mailbox-thread-message {
+    max-width: 88%;
+    padding: 8px;
+  }
+
+  .mailbox-thread-message.is-grower {
+    margin-left: 18px;
+  }
+
+  .mailbox-reply-form {
+    padding: 8px;
+  }
+
+  .mailbox-reply-form textarea {
+    min-height: 64px;
+  }
+}
+
+/* =========================
+   Small Mobile
+   ========================= */
+
+@media (max-width: 420px) {
+  .directory-layout,
+  .public-directory-shell .directory-layout,
+  .dashboard-directory-layout {
+    grid-template-rows: 165px minmax(0, 1fr);
+    height: calc(100dvh - 150px);
+    max-height: calc(100dvh - 150px);
+  }
+
+  .directory-map,
+  .dashboard-directory-layout .directory-map,
+  .public-directory-shell .directory-map {
+    height: 165px;
+    min-height: 165px;
+  }
+
+  .grower-drawer-card {
+    height: 54vh;
+    max-height: 54vh;
+  }
+
+  .directory-pagination,
+  .profile-produce-pagination {
+    grid-template-columns: auto 1fr auto;
+    gap: 4px;
+  }
+
+  .directory-pagination button,
+  .profile-produce-pagination button {
+    padding: 4px 5px;
+    font-size: 10px;
+  }
+
+  .directory-pagination .pagination-text,
+  .profile-produce-pagination .pagination-text {
+    font-size: 10px;
+  }
+
+  .mailbox-content-card,
+  body:has(#mailboxList) .mailbox-content-card {
+    max-height: calc(100dvh - 200px);
+  }
+}
+
+/* =========================
+   Remove Empty Bottom Space
+   ========================= */
+
+.footer,
+.public-app,
+.app-shell {
+  margin-bottom: 0;
+}
+
+body > *:last-child {
+  margin-bottom: 0 !important;
+}
