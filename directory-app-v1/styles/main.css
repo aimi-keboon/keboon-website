@@ -5015,66 +5015,63 @@ body:has(.local-stats-iframe-overlay.is-open) {
     font-size: 10px !important;
   }
 }
+
 /* =========================================================
-   Stats Overlay Above Bottom Navigation - 60% Height
+   Stats Overlay Height
+   Desktop: centered modal
+   Mobile: centered box
    ========================================================= */
 
-/* Mobile/tablet with bottom nav */
+/* Default */
 .local-stats-iframe-overlay {
-  top: 0 !important;
-  right: 0 !important;
-  bottom: 62px !important;
-  left: 0 !important;
+  inset: 0 !important;
   height: auto !important;
-  align-items: flex-end !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 18px !important;
 }
 
 .local-stats-iframe-card {
   width: min(100%, 760px) !important;
-  height: 60% !important;
-  max-height: 60% !important;
+  height: 60dvh !important;
+  max-height: 60dvh !important;
   overflow: hidden !important;
-  border-bottom: 0 !important;
-  border-radius: 26px 26px 0 0 !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 26px !important;
+  background: var(--cream);
+  box-shadow: 0 20px 60px rgba(31, 41, 51, 0.24) !important;
 }
 
-/* Desktop sidebar has no bottom nav */
-@media (min-width: 960px) {
-  .local-stats-iframe-overlay {
+/* App pages no longer need bottom nav offset because modal is centered */
+.local-stats-iframe-overlay-app {
+  inset: 0 !important;
+}
+
+/* Mobile centered box */
+@media (max-width: 640px) {
+  .local-stats-iframe-overlay,
+  .local-stats-iframe-overlay-app {
     inset: 0 !important;
     align-items: center !important;
-    padding: 20px !important;
+    justify-content: center !important;
+    padding: 16px !important;
   }
 
   .local-stats-iframe-card {
-    height: 60dvh !important;
-    max-height: 60dvh !important;
+    width: min(100%, 420px) !important;
+    height: 62dvh !important;
+    max-height: 62dvh !important;
     border: 1px solid var(--border) !important;
-    border-radius: 26px !important;
-  }
-}
-
-/* Mobile bottom nav */
-@media (max-width: 640px) {
-  .local-stats-iframe-overlay {
-    bottom: 58px !important;
-  }
-
-  .local-stats-iframe-card {
-    height: 60% !important;
-    max-height: 60% !important;
-    border-radius: 24px 24px 0 0 !important;
+    border-radius: 24px !important;
   }
 }
 
 /* Small mobile */
 @media (max-width: 420px) {
-  .local-stats-iframe-overlay {
-    bottom: 58px !important;
-  }
-
   .local-stats-iframe-card {
-    height: 60% !important;
-    max-height: 60% !important;
+    width: min(100%, 390px) !important;
+    height: 64dvh !important;
+    max-height: 64dvh !important;
+    border-radius: 22px !important;
   }
 }
