@@ -3474,3 +3474,631 @@ body:has(.mailbox-thread-drawer.is-open) {
     grid-template-columns: 1fr 1fr;
   }
 }
+/* =========================
+   Logged-in public-style dashboard nav
+   ========================= */
+
+.public-nav .app-icon-button {
+  min-height: 30px !important;
+  padding: 4px !important;
+}
+
+.public-nav .app-icon-button svg {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+@media (max-width: 640px) {
+  .public-nav {
+    gap: 4px;
+  }
+
+  .public-nav .secondary-button {
+    padding: 5px 7px;
+    font-size: 10px;
+  }
+
+  .public-nav .app-icon-button svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .public-nav .secondary-button {
+    padding: 5px 6px;
+    font-size: 9px;
+  }
+
+  .public-logo {
+    width: 78px;
+  }
+}
+
+/* =========================
+   Dashboard homepage style with app bottom nav
+   ========================= */
+
+.dashboard-home-main {
+  max-width: none;
+  padding: 0;
+  padding-bottom: 54px;
+}
+
+.dashboard-app-hero {
+  border-top: 0;
+}
+
+.dashboard-directory-shell {
+  padding: 8px;
+}
+
+.dashboard-directory-shell .public-search-panel {
+  margin-bottom: 8px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.dashboard-directory-shell .dashboard-directory-layout {
+  height: calc(100dvh - 215px);
+  min-height: 420px;
+  max-height: calc(100dvh - 215px);
+}
+
+/* Keep desktop sidebar app style */
+@media (min-width: 960px) {
+  .dashboard-home-main {
+    padding: 0;
+    padding-bottom: 0;
+  }
+
+  .dashboard-app-hero {
+    margin: 10px 10px 0;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+
+  .dashboard-directory-shell {
+    padding: 10px;
+  }
+
+  .dashboard-directory-shell .dashboard-directory-layout {
+    height: calc(100dvh - 190px);
+    min-height: 420px;
+    max-height: calc(100dvh - 190px);
+  }
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .dashboard-directory-shell .dashboard-directory-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 210px minmax(0, 1fr);
+    height: calc(100dvh - 210px);
+    min-height: 0;
+    max-height: calc(100dvh - 210px);
+  }
+}
+
+/* Mobile app look */
+@media (max-width: 640px) {
+  .dashboard-home-main {
+    padding-bottom: 48px;
+  }
+
+  .dashboard-app-hero {
+    padding: 9px 10px;
+  }
+
+  .dashboard-directory-shell {
+    padding: 6px;
+  }
+
+  .dashboard-directory-shell .public-search-panel {
+    padding: 8px;
+    margin-bottom: 6px;
+    border-radius: var(--radius-md);
+  }
+
+  .dashboard-directory-shell .dashboard-directory-layout {
+    grid-template-rows: 185px minmax(0, 1fr);
+    height: calc(100dvh - 205px);
+    max-height: calc(100dvh - 205px);
+  }
+}
+
+/* Small mobile */
+@media (max-width: 420px) {
+  .dashboard-directory-shell .dashboard-directory-layout {
+    grid-template-rows: 165px minmax(0, 1fr);
+    height: calc(100dvh - 195px);
+    max-height: calc(100dvh - 195px);
+  }
+}
+
+/* =========================
+   Dashboard homepage style with app bottom nav
+   ========================= */
+
+.dashboard-home-main {
+  max-width: none;
+  padding: 0;
+  padding-bottom: 54px;
+}
+
+.dashboard-app-hero {
+  border-top: 0;
+}
+
+.dashboard-directory-shell {
+  padding: 8px;
+}
+
+.dashboard-directory-shell .public-search-panel {
+  margin-bottom: 8px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.dashboard-directory-shell .dashboard-directory-layout {
+  height: calc(100dvh - 215px);
+  min-height: 420px;
+  max-height: calc(100dvh - 215px);
+}
+
+/* Desktop app sidebar layout */
+@media (min-width: 960px) {
+  .dashboard-home-main {
+    padding: 0;
+    padding-bottom: 0;
+  }
+
+  .dashboard-app-hero {
+    margin: 10px 10px 0;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+
+  .dashboard-directory-shell {
+    padding: 10px;
+  }
+
+  .dashboard-directory-shell .dashboard-directory-layout {
+    height: calc(100dvh - 190px);
+    min-height: 420px;
+    max-height: calc(100dvh - 190px);
+  }
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .dashboard-directory-shell .dashboard-directory-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 210px minmax(0, 1fr);
+    height: calc(100dvh - 210px);
+    min-height: 0;
+    max-height: calc(100dvh - 210px);
+  }
+}
+
+/* Mobile app look */
+@media (max-width: 640px) {
+  .dashboard-home-main {
+    padding-bottom: 48px;
+  }
+
+  .dashboard-app-hero {
+    padding: 9px 10px;
+  }
+
+  .dashboard-directory-shell {
+    padding: 6px;
+  }
+
+  .dashboard-directory-shell .public-search-panel {
+    padding: 8px;
+    margin-bottom: 6px;
+    border-radius: var(--radius-md);
+  }
+
+  .dashboard-directory-shell .dashboard-directory-layout {
+    grid-template-rows: 185px minmax(0, 1fr);
+    height: calc(100dvh - 205px);
+    max-height: calc(100dvh - 205px);
+  }
+}
+
+/* Small mobile */
+@media (max-width: 420px) {
+  .dashboard-directory-shell .dashboard-directory-layout {
+    grid-template-rows: 165px minmax(0, 1fr);
+    height: calc(100dvh - 195px);
+    max-height: calc(100dvh - 195px);
+  }
+}
+/* Disable scroll only inside Growers list */
+.dashboard-directory-shell .directory-list {
+  overflow-y: visible !important;
+  max-height: none !important;
+}
+
+.dashboard-directory-shell .directory-list-panel {
+  overflow: visible !important;
+}
+/* =========================================================
+   Dashboard homepage style with app bottom nav
+   Same style as public homepage, but keeps app navigation
+   ========================================================= */
+
+.dashboard-home-main {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+  padding-bottom: 54px;
+  overflow: visible;
+}
+
+.dashboard-app-hero {
+  border-top: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.dashboard-directory-shell {
+  padding: 8px;
+  overflow: visible;
+}
+
+.dashboard-directory-shell .public-search-panel {
+  margin-bottom: 8px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Main dashboard directory card */
+.dashboard-directory-shell .directory-layout,
+.dashboard-directory-shell .dashboard-directory-layout {
+  height: auto !important;
+  min-height: 420px;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* Map keeps a nice visible height */
+.dashboard-directory-shell .directory-map {
+  height: auto;
+  min-height: 420px;
+}
+
+/* Grower list panel should NOT scroll inside */
+.dashboard-directory-shell .directory-list-panel {
+  height: auto !important;
+  min-height: 0;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* Grower list should NOT have inner scroll */
+.dashboard-directory-shell .directory-list {
+  height: auto !important;
+  min-height: 0;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* Pagination should stay normal, not sticky inside box */
+.dashboard-directory-shell .directory-pagination {
+  position: static !important;
+  margin-top: 8px;
+  padding-top: 6px;
+  background: transparent;
+}
+
+/* =========================================================
+   Desktop app sidebar layout
+   ========================================================= */
+
+@media (min-width: 960px) {
+  .dashboard-home-main {
+    padding: 0;
+    padding-bottom: 0;
+    overflow: visible;
+  }
+
+  .dashboard-app-hero {
+    margin: 10px 10px 0;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+
+  .dashboard-directory-shell {
+    padding: 10px;
+    overflow: visible;
+  }
+
+  .dashboard-directory-shell .directory-layout,
+  .dashboard-directory-shell .dashboard-directory-layout {
+    height: auto !important;
+    min-height: 420px;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .dashboard-directory-shell .directory-map {
+    min-height: 420px;
+  }
+
+  .dashboard-directory-shell .directory-list-panel,
+  .dashboard-directory-shell .directory-list {
+    overflow: visible !important;
+    max-height: none !important;
+  }
+}
+
+/* =========================================================
+   Tablet
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .dashboard-directory-shell .directory-layout,
+  .dashboard-directory-shell .dashboard-directory-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 210px auto;
+    height: auto !important;
+    min-height: 0;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .dashboard-directory-shell .directory-map {
+    height: 210px;
+    min-height: 210px;
+  }
+
+  .dashboard-directory-shell .directory-list-panel {
+    height: auto !important;
+    overflow: visible !important;
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .dashboard-directory-shell .directory-list {
+    overflow: visible !important;
+    max-height: none !important;
+  }
+}
+
+/* =========================================================
+   Mobile app look
+   ========================================================= */
+
+@media (max-width: 640px) {
+  .dashboard-home-main {
+    padding-bottom: 48px;
+    overflow: visible;
+  }
+
+  .dashboard-app-hero {
+    padding: 9px 10px;
+  }
+
+  .dashboard-directory-shell {
+    padding: 6px;
+    overflow: visible;
+  }
+
+  .dashboard-directory-shell .public-search-panel {
+    padding: 8px;
+    margin-bottom: 6px;
+    border-radius: var(--radius-md);
+  }
+
+  .dashboard-directory-shell .directory-layout,
+  .dashboard-directory-shell .dashboard-directory-layout {
+    grid-template-rows: 185px auto;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .dashboard-directory-shell .directory-map {
+    height: 185px;
+    min-height: 185px;
+  }
+
+  .dashboard-directory-shell .directory-list-panel {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .dashboard-directory-shell .directory-list {
+    height: auto !important;
+    overflow: visible !important;
+    max-height: none !important;
+  }
+}
+
+/* =========================================================
+   Small mobile
+   ========================================================= */
+
+@media (max-width: 420px) {
+  .dashboard-directory-shell .directory-layout,
+  .dashboard-directory-shell .dashboard-directory-layout {
+    grid-template-rows: 165px auto;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .dashboard-directory-shell .directory-map {
+    height: 165px;
+    min-height: 165px;
+  }
+
+  .dashboard-directory-shell .directory-list {
+    overflow: visible !important;
+  }
+}
+
+/* =========================================================
+   Bigger App Header + Bottom Navigation
+   ========================================================= */
+
+/* Top header */
+.app-topbar-inner {
+  min-height: 64px;
+  padding: 12px 16px;
+}
+
+.app-topbar-logo {
+  width: 120px;
+}
+
+.app-topbar-left {
+  gap: 12px;
+}
+
+.app-screen-label {
+  font-size: 10px;
+}
+
+.app-screen-title {
+  font-size: 15px;
+}
+
+.app-topbar-actions {
+  gap: 12px;
+}
+
+.app-icon-button svg,
+.inbox-icon-link svg,
+#inboxButton svg {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.inbox-unread-dot {
+  width: 12px;
+  height: 12px;
+}
+
+/* Bottom nav */
+.app-bottom-link {
+  min-height: 62px;
+  gap: 5px;
+  padding: 8px 4px;
+  font-size: 11px;
+}
+
+.app-bottom-link svg,
+.app-nav-icon-img {
+  width: 22px;
+  height: 22px;
+}
+
+/* Give page enough bottom spacing so nav does not cover content */
+.app-shell {
+  padding-bottom: 70px;
+}
+
+.app-main,
+.app-page,
+.private-page {
+  padding-bottom: 72px;
+}
+
+/* Desktop sidebar version */
+@media (min-width: 960px) {
+  .app-shell {
+    padding-bottom: 0;
+  }
+
+  .app-topbar-inner {
+    min-height: 68px;
+    padding: 12px 18px;
+  }
+
+  .app-topbar-logo {
+    width: 125px;
+  }
+
+  .app-bottom-nav {
+    top: 69px;
+    height: calc(100vh - 69px);
+  }
+
+  .app-bottom-link {
+    min-height: 48px;
+    gap: 12px;
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+
+  .app-bottom-link svg,
+  .app-nav-icon-img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .app-main {
+    padding-bottom: 10px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .app-topbar-inner {
+    min-height: 60px;
+    padding: 10px 12px;
+  }
+
+  .app-topbar-logo {
+    width: 108px;
+  }
+
+  .app-screen-label {
+    font-size: 9.5px;
+  }
+
+  .app-screen-title {
+    font-size: 14px;
+  }
+
+  .app-icon-button svg,
+  .inbox-icon-link svg,
+  #inboxButton svg {
+    width: 23px !important;
+    height: 23px !important;
+  }
+
+  .app-bottom-link {
+    min-height: 58px;
+    gap: 5px;
+    padding: 7px 4px;
+    font-size: 10.5px;
+  }
+
+  .app-bottom-link svg,
+  .app-nav-icon-img {
+    width: 21px;
+    height: 21px;
+  }
+
+  .app-shell {
+    padding-bottom: 66px;
+  }
+
+  .app-main,
+  .app-page,
+  .dashboard-page,
+  .private-page {
+    padding-bottom: 68px;
+  }
+
+  .dashboard-home-main {
+    padding-bottom: 66px;
+  }
+}

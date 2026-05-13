@@ -15,6 +15,7 @@
 
     <link rel="stylesheet" href="../styles/main.css" />
   </head>
+
   <body>
     <div
       id="globalLoadingOverlay"
@@ -102,19 +103,20 @@
         </div>
       </header>
 
-      <main class="app-main">
-        <section class="app-page-header">
-          <p class="eyebrow">Dashboard</p>
-          <h1 id="dashboardTitle">Welcome</h1>
-          <p class="muted">
-            Manage your grower profile, produce listings, and preview the public
-            directory.
-          </p>
+      <main class="app-main dashboard-home-main">
+        <section class="public-hero public-hero-compact dashboard-app-hero">
+          <div class="public-hero-content">
+            <p class="eyebrow">Grower dashboard</p>
+            <h1 id="dashboardTitle">Welcome</h1>
+            <p class="muted">
+              Manage your grower profile, produce listings, and preview the
+              public directory.
+            </p>
+          </div>
         </section>
 
-        <section class="app-section">
-
-          <section class="public-search-panel dashboard-public-search">
+        <section class="public-directory-shell dashboard-directory-shell">
+          <section class="public-search-panel">
             <div class="public-search-controls">
               <div class="directory-search-box">
                 <label>
@@ -252,8 +254,7 @@
           class="drawer-close-button"
           type="button"
           aria-label="Close grower profile"
-        >
-        </button>
+        ></button>
 
         <div id="growerDrawerContent"></div>
       </div>
