@@ -1,5 +1,5 @@
 const APPS_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbxC2WivMUgPbq4T4P8h7eFmy-1tR7JGQy7UrTKFtFv4EzKt3nwkoENvbXZbGNMLj_nfEQ/exec";
+  "https://script.google.com/macros/s/AKfycbxOjHo_xp6kKcORY-kaIuGZztp0ucLZUQ3z3YLYxiIgccx8yDfVYVT4fYfc7ns4cV_b_A/exec";
 
 const COURSE_DURATION_MINUTES = 570;
 const MIN_DAYS_AHEAD = 5;
