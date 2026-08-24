@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (signinForm) {
     signinForm.addEventListener("submit", handleSigninSubmit);
   }
+
   if (forgotPasswordForm) {
     forgotPasswordForm.addEventListener("submit", handleForgotPasswordSubmit);
   }
@@ -52,8 +53,8 @@ async function handleSignupSubmit(event) {
       : formData.get("whatsapp");
 
     const payload = {
-      grower_name: formData.get("grower_name"),
-      contact_name: formData.get("contact_name"),
+      keboon_grower_name_v2: formData.get("keboon_grower_name_v2"),
+      keboon_contact_name_v2: formData.get("keboon_contact_name_v2"),
       email: formData.get("email"),
       password: formData.get("password"),
       phone_country_code: phoneCountryCode,
@@ -65,6 +66,7 @@ async function handleSignupSubmit(event) {
     const result = await apiPost("signup_grower", payload);
 
     messageEl.textContent = result.message || "Account created successfully.";
+
     messageEl.classList.add("success");
 
     form.reset();
@@ -72,16 +74,30 @@ async function handleSignupSubmit(event) {
     const mobileCountrySelect = form.querySelector(
       '[name="phone_country_code"]',
     );
+
     const whatsappCountrySelect = form.querySelector(
       '[name="whatsapp_country_code"]',
     );
+
     const checkbox = form.querySelector('[name="whatsapp_same_as_phone"]');
+
     const whatsappFieldsEl = document.getElementById("whatsappFields");
 
-    if (mobileCountrySelect) mobileCountrySelect.value = "+60";
-    if (whatsappCountrySelect) whatsappCountrySelect.value = "+60";
-    if (checkbox) checkbox.checked = true;
-    if (whatsappFieldsEl) whatsappFieldsEl.classList.add("hidden");
+    if (mobileCountrySelect) {
+      mobileCountrySelect.value = "+60";
+    }
+
+    if (whatsappCountrySelect) {
+      whatsappCountrySelect.value = "+60";
+    }
+
+    if (checkbox) {
+      checkbox.checked = true;
+    }
+
+    if (whatsappFieldsEl) {
+      whatsappFieldsEl.classList.add("hidden");
+    }
   } catch (error) {
     messageEl.textContent = error.message;
     messageEl.classList.add("error");
@@ -115,12 +131,16 @@ async function handleSigninSubmit(event) {
     });
 
     localStorage.setItem("keboon_session_token", result.session_token);
+
     localStorage.setItem(
       "keboon_session_expires_at",
       result.session_expires_at,
     );
+
     localStorage.setItem("keboon_grower_id", result.grower_id);
+
     localStorage.setItem("keboon_grower_name", result.grower_name || "");
+
     localStorage.setItem("keboon_grower_email", result.email || "");
 
     try {
@@ -139,7 +159,9 @@ async function handleSigninSubmit(event) {
   } catch (error) {
     messageEl.textContent = error.message;
     messageEl.classList.add("error");
+
     hideGlobalLoading();
+
     submitButton.disabled = false;
     submitButton.textContent = "Sign in";
   }
@@ -148,9 +170,13 @@ async function handleSigninSubmit(event) {
 function getStoredSession() {
   return {
     token: localStorage.getItem("keboon_session_token"),
+
     expires_at: localStorage.getItem("keboon_session_expires_at"),
+
     grower_id: localStorage.getItem("keboon_grower_id"),
+
     grower_name: localStorage.getItem("keboon_grower_name"),
+
     email: localStorage.getItem("keboon_grower_email"),
   };
 }
@@ -161,6 +187,7 @@ function clearStoredSession() {
   localStorage.removeItem("keboon_grower_id");
   localStorage.removeItem("keboon_grower_name");
   localStorage.removeItem("keboon_grower_email");
+
   clearStoredGrowerAppData();
 }
 
@@ -169,6 +196,7 @@ async function handleForgotPasswordSubmit(event) {
 
   const form = event.target;
   const messageEl = document.getElementById("forgotPasswordMessage");
+
   const submitButton = form.querySelector('button[type="submit"]');
 
   messageEl.textContent = "";
@@ -187,6 +215,7 @@ async function handleForgotPasswordSubmit(event) {
     messageEl.textContent =
       result.message ||
       "If an account exists for this email, a password reset link has been sent.";
+
     messageEl.classList.add("success");
 
     form.reset();
@@ -201,6 +230,7 @@ async function handleForgotPasswordSubmit(event) {
 
 function showGlobalLoading(message = "Loading...") {
   const overlay = document.getElementById("globalLoadingOverlay");
+
   const text = document.getElementById("globalLoadingText");
 
   if (!overlay) {
@@ -231,10 +261,12 @@ function storeGrowerAppData(data) {
     "keboon_current_grower",
     JSON.stringify(data.grower || null),
   );
+
   localStorage.setItem(
     "keboon_current_products",
     JSON.stringify(data.products || []),
   );
+
   localStorage.setItem("keboon_cached_at", new Date().toISOString());
 }
 
@@ -288,6 +320,7 @@ function isGrowerCacheFresh(maxAgeMs = 5 * 60 * 1000) {
 
 function storePublicDirectoryData(data) {
   localStorage.setItem("keboon_public_directory", JSON.stringify(data || null));
+
   localStorage.setItem(
     "keboon_public_directory_cached_at",
     new Date().toISOString(),
@@ -322,6 +355,7 @@ function getPublicDirectoryCacheAgeMs() {
 
 function hasPublicDirectoryCache() {
   const data = getStoredPublicDirectoryData();
+
   return Boolean(data && Array.isArray(data.growers));
 }
 
@@ -333,17 +367,20 @@ function isPublicDirectoryCacheFresh(maxAgeMs = 10 * 60 * 1000) {
 
 function clearPublicDirectoryCache() {
   localStorage.removeItem("keboon_public_directory");
+
   localStorage.removeItem("keboon_public_directory_cached_at");
 }
 
 async function refreshPublicDirectoryCacheQuietly() {
   try {
     const directoryData = await apiGet("public_directory");
+
     storePublicDirectoryData(directoryData);
   } catch (error) {
     // Do not block signin if public directory refresh fails.
   }
 }
+
 async function refreshGrowerAppDataQuietlyAfterSignin(sessionToken) {
   try {
     const appData = await apiPost("get_current_grower_app_data", {
@@ -358,6 +395,7 @@ async function refreshGrowerAppDataQuietlyAfterSignin(sessionToken) {
 
 function storeDirectoryLocationPreference(location) {
   localStorage.setItem("keboon_directory_location_preference", "nearby");
+
   localStorage.setItem(
     "keboon_directory_user_location",
     JSON.stringify(location),
@@ -381,8 +419,10 @@ function getStoredDirectoryUserLocation() {
     return null;
   }
 }
+
 function storeInboxData(data) {
   localStorage.setItem("keboon_current_inbox", JSON.stringify(data || null));
+
   localStorage.setItem(
     "keboon_current_inbox_cached_at",
     new Date().toISOString(),
@@ -399,8 +439,10 @@ function getStoredInboxData() {
 
 function clearStoredInboxData() {
   localStorage.removeItem("keboon_current_inbox");
+
   localStorage.removeItem("keboon_current_inbox_cached_at");
 }
+
 async function refreshInboxDataQuietly(sessionToken) {
   try {
     const inboxData = await apiPost("get_current_grower_inbox_data", {
@@ -412,6 +454,7 @@ async function refreshInboxDataQuietly(sessionToken) {
     // Do not block signin if inbox preload fails.
   }
 }
+
 function storeInboxThreadData(enquiryId, data) {
   if (!enquiryId) {
     return;
@@ -448,6 +491,7 @@ function clearStoredInboxThreadData(enquiryId) {
   }
 
   localStorage.removeItem(`keboon_inbox_thread_${enquiryId}`);
+
   localStorage.removeItem(`keboon_inbox_thread_${enquiryId}_cached_at`);
 }
 
@@ -458,6 +502,7 @@ function clearAllStoredInboxThreadData() {
     }
   });
 }
+
 async function preloadFullInboxData(sessionToken) {
   const inboxData = await apiPost("get_current_grower_inbox_data", {
     session_token: sessionToken,
@@ -466,6 +511,7 @@ async function preloadFullInboxData(sessionToken) {
   storeInboxData(inboxData);
 
   const enquiries = inboxData.enquiries || [];
+
   const threadResults = [];
 
   for (const enquiry of enquiries) {
@@ -481,6 +527,7 @@ async function preloadFullInboxData(sessionToken) {
       });
 
       storeInboxThreadData(enquiry.enquiry_id, threadData);
+
       threadResults.push(threadData);
     } catch (error) {
       // Continue loading the rest of the inbox even if one thread fails.
