@@ -825,7 +825,7 @@
        * Replace this with the real Stripe Payment Link later.
        */
       const STRIPE_EARLY_ACCESS_URL =
-        "REPLACE_WITH_YOUR_STRIPE_PAYMENT_LINK";
+        "https://buy.stripe.com/5kQcN60xf20x559cx7gw00v";
 
       let currentStep = 1;
 
@@ -1217,24 +1217,17 @@
       }
 
       function startStripePayment() {
-        if (
-          !STRIPE_EARLY_ACCESS_URL ||
-          STRIPE_EARLY_ACCESS_URL ===
-            "REPLACE_WITH_YOUR_STRIPE_PAYMENT_LINK"
-        ) {
-          alert(
-            "Stripe Payment Link has not been configured yet."
-          );
+  if (!STRIPE_EARLY_ACCESS_URL) {
+    alert("Stripe Payment Link has not been configured yet.");
+    return;
+  }
 
-          return;
-        }
-
-        window.open(
-          STRIPE_EARLY_ACCESS_URL,
-          "_blank",
-          "noopener,noreferrer"
-        );
-      }
+  window.open(
+    STRIPE_EARLY_ACCESS_URL,
+    "_blank",
+    "noopener,noreferrer"
+  );
+}
 
       function escapeHtml(value) {
         return String(value)
