@@ -1,0 +1,1272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Keboon Monitor | Grower App</title>
+
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+
+    <link rel="stylesheet" href="../styles/main.css" />
+
+    <style>
+      /* =========================================================
+         Keboon Monitor
+         Page-specific styles only.
+         Main app styling comes from ../styles/main.css
+         ========================================================= */
+
+      .monitor-page {
+        padding-bottom: 80px;
+      }
+
+      .monitor-prototype-banner {
+        margin-bottom: 10px;
+        padding: 8px 10px;
+        border: 1px solid #e8cfa0;
+        border-radius: 10px;
+        background: #fff7e6;
+        color: #76551a;
+      }
+
+      .monitor-prototype-banner strong {
+        color: #5d4312;
+      }
+
+      .monitor-section {
+        margin-top: 10px;
+      }
+
+      .monitor-section-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 7px;
+      }
+
+      .monitor-section-header h2 {
+        margin: 0;
+      }
+
+      .monitor-section-header p {
+        margin: 2px 0 0;
+      }
+
+      .monitor-sensor-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .monitor-sensor-card {
+        padding: 10px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        background: var(--white);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .monitor-sensor-card-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 9px;
+      }
+
+      .monitor-sensor-name {
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.2;
+      }
+
+      .monitor-sensor-id {
+        margin-top: 3px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .monitor-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 7px;
+        border-radius: 999px;
+        background: #edf8ea;
+        color: var(--green-dark);
+        font-size: 9px;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      .monitor-status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--success);
+      }
+
+      .monitor-reading-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+        margin-bottom: 8px;
+      }
+
+      .monitor-reading {
+        padding: 8px;
+        border-radius: 10px;
+        background: var(--cream);
+      }
+
+      .monitor-reading-label {
+        margin-bottom: 3px;
+        color: var(--muted);
+        font-size: 9px;
+      }
+
+      .monitor-reading-value {
+        font-size: 18px;
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .monitor-reading-unit {
+        color: var(--muted);
+        font-size: 9px;
+        font-weight: 700;
+      }
+
+      .monitor-location {
+        margin-bottom: 8px;
+        color: var(--muted);
+        font-size: 10px;
+        line-height: 1.35;
+      }
+
+      .monitor-location strong {
+        color: var(--text);
+      }
+
+      .monitor-card-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+
+      .monitor-card-actions .primary-button,
+      .monitor-card-actions .secondary-button {
+        flex: 1;
+        min-width: 90px;
+      }
+
+      .monitor-empty {
+        padding: 22px 14px;
+        border: 1px dashed var(--border);
+        border-radius: var(--radius-lg);
+        background: var(--white);
+        text-align: center;
+      }
+
+      .monitor-empty h3 {
+        margin: 0 0 4px;
+      }
+
+      .monitor-empty p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .monitor-early-access {
+        margin-top: 10px;
+        padding: 12px;
+        border-radius: var(--radius-lg);
+        background: var(--green);
+        color: var(--white);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .monitor-early-access-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .monitor-early-access h2 {
+        margin: 0 0 3px;
+        color: var(--white);
+      }
+
+      .monitor-early-access p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 11px;
+        line-height: 1.4;
+      }
+
+      .monitor-early-access .primary-button {
+        flex: 0 0 auto;
+        border: 0;
+        background: var(--white);
+        color: var(--green);
+        white-space: nowrap;
+      }
+
+      .monitor-early-access .primary-button:hover {
+        background: var(--cream);
+      }
+
+      /* Registration modal */
+
+      .monitor-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 2200;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 14px;
+        background: rgba(31, 41, 51, 0.45);
+      }
+
+      .monitor-modal.is-open {
+        display: flex;
+      }
+
+      .monitor-modal-card {
+        width: min(100%, 500px);
+        max-height: min(680px, calc(100dvh - 28px));
+        overflow-y: auto;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        background: var(--white);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .monitor-modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 11px 12px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .monitor-modal-header h2 {
+        margin: 0;
+      }
+
+      .monitor-modal-close {
+        width: 28px;
+        height: 28px;
+        display: grid;
+        place-items: center;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: var(--cream);
+        color: var(--text);
+        cursor: pointer;
+        font-size: 20px;
+        line-height: 1;
+      }
+
+      .monitor-modal-body {
+        padding: 12px;
+      }
+
+      .monitor-steps {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 4px;
+        margin-bottom: 12px;
+      }
+
+      .monitor-step {
+        height: 4px;
+        border-radius: 999px;
+        background: var(--border);
+      }
+
+      .monitor-step.is-active {
+        background: var(--green);
+      }
+
+      .monitor-step-content {
+        display: none;
+      }
+
+      .monitor-step-content.is-active {
+        display: block;
+      }
+
+      .monitor-step-content h3 {
+        margin: 0 0 4px;
+        font-size: 15px;
+      }
+
+      .monitor-step-content > p {
+        margin: 0 0 10px;
+        color: var(--muted);
+      }
+
+      .monitor-demo-note {
+        margin-top: 7px;
+        padding: 8px;
+        border-radius: 9px;
+        background: #edf8ea;
+        color: var(--green-dark);
+        font-size: 10px;
+        line-height: 1.4;
+      }
+
+      .monitor-check-card {
+        padding: 16px 10px;
+        border-radius: 12px;
+        background: var(--cream);
+        text-align: center;
+      }
+
+      .monitor-check-icon {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        margin: 0 auto 7px;
+        border-radius: 50%;
+        background: #edf8ea;
+        color: var(--green);
+        font-size: 22px;
+        font-weight: 900;
+      }
+
+      .monitor-check-card strong {
+        display: block;
+        margin-bottom: 2px;
+        font-size: 13px;
+      }
+
+      .monitor-location-box {
+        margin-top: 8px;
+        padding: 9px;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: var(--cream);
+        line-height: 1.45;
+      }
+
+      .monitor-modal-footer {
+        display: flex;
+        justify-content: space-between;
+        gap: 7px;
+        padding: 10px 12px;
+        border-top: 1px solid var(--border);
+      }
+
+      .monitor-success {
+        padding: 12px 0 6px;
+        text-align: center;
+      }
+
+      .monitor-success-icon {
+        width: 54px;
+        height: 54px;
+        display: grid;
+        place-items: center;
+        margin: 0 auto 9px;
+        border-radius: 50%;
+        background: #edf8ea;
+        color: var(--green);
+        font-size: 28px;
+        font-weight: 900;
+      }
+
+      .monitor-success h3 {
+        margin: 0 0 5px;
+        font-size: 18px;
+      }
+
+      .monitor-success p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      @media (max-width: 640px) {
+        .monitor-sensor-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .monitor-early-access-content {
+          align-items: stretch;
+          flex-direction: column;
+        }
+
+        .monitor-early-access .primary-button {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div
+      id="globalLoadingOverlay"
+      class="global-loading-overlay"
+      aria-hidden="true"
+    >
+      <div class="loading-card">
+        <div class="loading-spinner" aria-hidden="true"></div>
+        <p id="globalLoadingText">Loading...</p>
+      </div>
+    </div>
+
+    <div class="app-shell">
+      <!-- Existing Keboon app header -->
+      <header class="app-topbar">
+        <div class="app-topbar-inner">
+          <div class="app-topbar-left">
+            <a href="./dashboard.html">
+              <img
+                src="../assets/images/logo-writing.png"
+                alt="Keboon"
+                class="app-topbar-logo"
+              />
+            </a>
+
+            <div class="app-topbar-title">
+              <p class="app-screen-label">Grower app</p>
+              <p class="app-screen-title">Keboon Monitor</p>
+            </div>
+          </div>
+
+          <div class="app-topbar-actions">
+            <a
+              class="app-icon-button inbox-icon-link"
+              href="./inbox.html"
+              aria-label="Inbox"
+              title="Inbox"
+            >
+              <span class="inbox-unread-dot" aria-hidden="true"></span>
+
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M4 5h16v14H4V5Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M4 13h4l2 3h4l2-3h4"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+
+            <button
+              id="signoutButton"
+              class="app-icon-button"
+              type="button"
+              aria-label="Log out"
+              title="Log out"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M10 6H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h4"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M15 8l4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M19 12H9"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main class="app-main monitor-page">
+        <section class="app-page-header">
+          <p class="eyebrow">IoT membership</p>
+
+          <h1>Keboon Monitor</h1>
+
+          <p class="muted">
+            Monitor temperature and humidity from your Keboon sensors.
+          </p>
+        </section>
+
+        <section class="content-card">
+          <div class="monitor-prototype-banner">
+            <strong>PROTOTYPE ONLY</strong><br />
+            This Monitor is currently a frontend demonstration. Sensor
+            readings, registration and synchronization are simulated locally.
+            No real sensor, backend or database is connected.
+          </div>
+
+          <div class="monitor-section">
+            <div class="monitor-section-header">
+              <div>
+                <h2>Your Sensors</h2>
+                <p class="muted">
+                  Your prototype temperature and humidity sensors.
+                </p>
+              </div>
+
+              <button
+                class="primary-button"
+                type="button"
+                onclick="openRegisterModal()"
+              >
+                + Register Sensor
+              </button>
+            </div>
+
+            <div id="sensorGrid" class="monitor-sensor-grid"></div>
+          </div>
+        </section>
+
+        <section class="monitor-early-access">
+          <div class="monitor-early-access-content">
+            <div>
+              <h2>Get Keboon Monitor Early Access</h2>
+
+              <p>
+                RM50 including 1 IoT sensor capable of measuring humidity and
+                temperature. After payment, the Keboon team will contact you
+                for the next steps.
+              </p>
+            </div>
+
+            <button
+              class="primary-button"
+              type="button"
+              onclick="startStripePayment()"
+            >
+              Pre-order — RM50
+            </button>
+          </div>
+        </section>
+      </main>
+
+      <!-- Existing Keboon bottom navigation -->
+      <nav class="app-bottom-nav" aria-label="Grower app navigation">
+        <div class="app-bottom-nav-inner">
+          <a class="app-bottom-link" href="./dashboard.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z"
+                stroke="currentColor"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span>Home</span>
+          </a>
+
+          <a class="app-bottom-link" href="./edit-profile.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"
+                stroke="currentColor"
+              />
+              <path
+                d="M4 21a8 8 0 0 1 16 0"
+                stroke="currentColor"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span>Profile</span>
+          </a>
+
+          <a class="app-bottom-link" href="./manage-produce.html">
+            <img
+              src="../assets/icons/produce.svg"
+              alt=""
+              class="app-nav-icon-img"
+              aria-hidden="true"
+            />
+            <span>Produce</span>
+          </a>
+
+          <a class="app-bottom-link" href="./preview-profile.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
+                stroke="currentColor"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                stroke="currentColor"
+              />
+            </svg>
+            <span>Preview</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Register Sensor Modal -->
+    <div
+      id="registerModal"
+      class="monitor-modal"
+      aria-hidden="true"
+    >
+      <div
+        class="monitor-modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="registerModalTitle"
+      >
+        <div class="monitor-modal-header">
+          <h2 id="registerModalTitle">Register Sensor</h2>
+
+          <button
+            class="monitor-modal-close"
+            type="button"
+            onclick="closeRegisterModal()"
+            aria-label="Close"
+          >
+            ×
+          </button>
+        </div>
+
+        <div class="monitor-modal-body">
+          <div class="monitor-steps" aria-hidden="true">
+            <div id="stepIndicator1" class="monitor-step is-active"></div>
+            <div id="stepIndicator2" class="monitor-step"></div>
+            <div id="stepIndicator3" class="monitor-step"></div>
+            <div id="stepIndicator4" class="monitor-step"></div>
+            <div id="stepIndicator5" class="monitor-step"></div>
+          </div>
+
+          <!-- Step 1 -->
+          <section id="step1" class="monitor-step-content is-active">
+            <h3>Provide Device ID</h3>
+
+            <p>
+              Enter the Device ID printed on your Keboon IoT sensor.
+            </p>
+
+            <label>
+              Device ID
+              <input
+                id="deviceId"
+                type="text"
+                placeholder="Example: KB-DEMO-001"
+              />
+            </label>
+
+            <div class="monitor-demo-note">
+              Prototype demo sensor:
+              <strong>KB-DEMO-001</strong>
+            </div>
+          </section>
+
+          <!-- Step 2 -->
+          <section id="step2" class="monitor-step-content">
+            <h3>Check Sensor</h3>
+
+            <p>
+              The prototype will simulate checking whether the sensor can be
+              detected.
+            </p>
+
+            <div class="monitor-check-card">
+              <div class="monitor-check-icon">✓</div>
+
+              <strong>Sensor detected</strong>
+
+              <span class="muted">
+                The prototype sensor is ready to register.
+              </span>
+            </div>
+          </section>
+
+          <!-- Step 3 -->
+          <section id="step3" class="monitor-step-content">
+            <h3>Name Your Sensor</h3>
+
+            <p>
+              Give the sensor a name so you can identify it easily.
+            </p>
+
+            <label>
+              Sensor Name
+              <input
+                id="sensorName"
+                type="text"
+                value="Field A"
+                placeholder="Example: Field A"
+              />
+            </label>
+          </section>
+
+          <!-- Step 4 -->
+          <section id="step4" class="monitor-step-content">
+            <h3>Confirm Location</h3>
+
+            <p>
+              Confirm where this sensor is installed.
+            </p>
+
+            <button
+              class="secondary-button"
+              type="button"
+              onclick="useDemoLocation()"
+            >
+              Use My Current Location
+            </button>
+
+            <div id="locationBox" class="monitor-location-box">
+              <strong>Prototype location</strong><br />
+              Kuala Lumpur, Malaysia<br />
+              Latitude: 3.1390<br />
+              Longitude: 101.6869
+            </div>
+          </section>
+
+          <!-- Step 5 -->
+          <section id="step5" class="monitor-step-content">
+            <h3>Initial Synchronization</h3>
+
+            <p>
+              The prototype will create the sensor using simulated temperature
+              and humidity readings.
+            </p>
+
+            <div class="monitor-check-card">
+              <div class="monitor-check-icon">✓</div>
+
+              <strong>Ready to synchronize</strong>
+
+              <span class="muted">
+                Mock readings will be generated locally.
+              </span>
+            </div>
+          </section>
+
+          <!-- Success -->
+          <section id="successStep" class="monitor-step-content">
+            <div class="monitor-success">
+              <div class="monitor-success-icon">✓</div>
+
+              <h3>Sensor Registered</h3>
+
+              <p>
+                Your prototype sensor has been successfully registered and is
+                now available on your Monitor dashboard.
+              </p>
+            </div>
+          </section>
+        </div>
+
+        <div class="monitor-modal-footer">
+          <button
+            id="modalBackButton"
+            class="secondary-button"
+            type="button"
+            onclick="previousStep()"
+            style="visibility: hidden"
+          >
+            Back
+          </button>
+
+          <button
+            id="modalNextButton"
+            class="primary-button"
+            type="button"
+            onclick="nextStep()"
+          >
+            Check Sensor
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="../scripts/config.js"></script>
+    <script src="../scripts/api.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/app.js"></script>
+
+    <script>
+      /*
+       * ==========================================================
+       * KEBOON MONITOR — FRONTEND PROTOTYPE ONLY
+       * ==========================================================
+       *
+       * No backend.
+       * No API.
+       * No database.
+       * No real IoT sensor connection.
+       *
+       * Data is stored in localStorage only.
+       * ==========================================================
+       */
+
+      const STORAGE_KEY = "keboon_monitor_prototype_sensors";
+
+      /*
+       * Replace this with the real Stripe Payment Link later.
+       */
+      const STRIPE_EARLY_ACCESS_URL =
+        "REPLACE_WITH_YOUR_STRIPE_PAYMENT_LINK";
+
+      let currentStep = 1;
+
+      const defaultSensor = {
+        id: "KB-S-000001",
+        deviceId: "KB-DEMO-DEFAULT",
+        name: "Field A",
+        status: "connected",
+        temperature: 27.4,
+        humidity: 72,
+        latitude: 3.139,
+        longitude: 101.6869,
+        location: "Kuala Lumpur, Malaysia",
+        lastSync: new Date().toISOString()
+      };
+
+      function getSensors() {
+        const stored = localStorage.getItem(STORAGE_KEY);
+
+        if (!stored) {
+          const sensors = [defaultSensor];
+
+          localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(sensors)
+          );
+
+          return sensors;
+        }
+
+        try {
+          return JSON.parse(stored);
+        } catch (error) {
+          return [defaultSensor];
+        }
+      }
+
+      function saveSensors(sensors) {
+        localStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify(sensors)
+        );
+      }
+
+      function renderSensors() {
+        const grid = document.getElementById("sensorGrid");
+        const sensors = getSensors();
+
+        if (!sensors.length) {
+          grid.innerHTML = `
+            <div class="monitor-empty">
+              <h3>No sensors registered</h3>
+              <p>
+                Register your first prototype sensor to begin.
+              </p>
+            </div>
+          `;
+
+          return;
+        }
+
+        grid.innerHTML = sensors
+          .map(
+            (sensor) => `
+              <article class="monitor-sensor-card">
+
+                <div class="monitor-sensor-card-header">
+                  <div>
+                    <h3 class="monitor-sensor-name">
+                      ${escapeHtml(sensor.name)}
+                    </h3>
+
+                    <div class="monitor-sensor-id">
+                      ${escapeHtml(sensor.id)}
+                    </div>
+                  </div>
+
+                  <span class="monitor-status">
+                    <span class="monitor-status-dot"></span>
+                    Connected
+                  </span>
+                </div>
+
+                <div class="monitor-reading-grid">
+
+                  <div class="monitor-reading">
+                    <div class="monitor-reading-label">
+                      Temperature
+                    </div>
+
+                    <div class="monitor-reading-value">
+                      ${Number(sensor.temperature).toFixed(1)}
+                      <span class="monitor-reading-unit">°C</span>
+                    </div>
+                  </div>
+
+                  <div class="monitor-reading">
+                    <div class="monitor-reading-label">
+                      Humidity
+                    </div>
+
+                    <div class="monitor-reading-value">
+                      ${Number(sensor.humidity).toFixed(0)}
+                      <span class="monitor-reading-unit">%</span>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="monitor-location">
+                  <strong>Location</strong><br />
+                  ${escapeHtml(sensor.location)}
+                </div>
+
+                <div class="monitor-card-actions">
+
+                  <button
+                    class="primary-button"
+                    type="button"
+                    onclick="viewSensor('${escapeAttribute(sensor.id)}')"
+                  >
+                    View Monitor
+                  </button>
+
+                  <button
+                    class="secondary-button"
+                    type="button"
+                    onclick="syncSensor('${escapeAttribute(sensor.id)}')"
+                  >
+                    Sync
+                  </button>
+
+                </div>
+
+              </article>
+            `
+          )
+          .join("");
+      }
+
+      function openRegisterModal() {
+        currentStep = 1;
+
+        document
+          .getElementById("registerModal")
+          .classList.add("is-open");
+
+        document
+          .getElementById("registerModal")
+          .setAttribute("aria-hidden", "false");
+
+        document.getElementById("deviceId").value = "";
+        document.getElementById("sensorName").value = "Field A";
+
+        showStep(1);
+      }
+
+      function closeRegisterModal() {
+        document
+          .getElementById("registerModal")
+          .classList.remove("is-open");
+
+        document
+          .getElementById("registerModal")
+          .setAttribute("aria-hidden", "true");
+      }
+
+      function showStep(step) {
+        currentStep = step;
+
+        document
+          .querySelectorAll(".monitor-step-content")
+          .forEach((element) => {
+            element.classList.remove("is-active");
+          });
+
+        if (step >= 1 && step <= 5) {
+          document
+            .getElementById(`step${step}`)
+            .classList.add("is-active");
+        }
+
+        document
+          .getElementById("successStep")
+          .classList.remove("is-active");
+
+        for (let i = 1; i <= 5; i++) {
+          document
+            .getElementById(`stepIndicator${i}`)
+            .classList.toggle("is-active", i <= step);
+        }
+
+        const backButton =
+          document.getElementById("modalBackButton");
+
+        const nextButton =
+          document.getElementById("modalNextButton");
+
+        backButton.style.visibility =
+          step === 1 ? "hidden" : "visible";
+
+        nextButton.style.display = "inline-flex";
+
+        if (step === 1) {
+          nextButton.textContent = "Check Sensor";
+        }
+
+        if (step === 2 || step === 3) {
+          nextButton.textContent = "Continue";
+        }
+
+        if (step === 4) {
+          nextButton.textContent = "Confirm Location";
+        }
+
+        if (step === 5) {
+          nextButton.textContent = "Synchronize Sensor";
+        }
+
+        nextButton.onclick = nextStep;
+      }
+
+      function nextStep() {
+        if (currentStep === 1) {
+          const deviceId =
+            document.getElementById("deviceId").value.trim();
+
+          if (!deviceId) {
+            alert("Please enter the Device ID.");
+            return;
+          }
+
+          showStep(2);
+          return;
+        }
+
+        if (currentStep === 2) {
+          showStep(3);
+          return;
+        }
+
+        if (currentStep === 3) {
+          const sensorName =
+            document.getElementById("sensorName").value.trim();
+
+          if (!sensorName) {
+            alert("Please enter a sensor name.");
+            return;
+          }
+
+          showStep(4);
+          return;
+        }
+
+        if (currentStep === 4) {
+          showStep(5);
+          return;
+        }
+
+        if (currentStep === 5) {
+          registerSensor();
+        }
+      }
+
+      function previousStep() {
+        if (currentStep > 1) {
+          showStep(currentStep - 1);
+        }
+      }
+
+      function registerSensor() {
+        const deviceId =
+          document.getElementById("deviceId").value.trim();
+
+        const sensorName =
+          document.getElementById("sensorName").value.trim();
+
+        const sensors = getSensors();
+
+        const newSensor = {
+          id:
+            "KB-S-" +
+            String(sensors.length + 1).padStart(6, "0"),
+
+          deviceId,
+
+          name: sensorName,
+
+          status: "connected",
+
+          temperature: randomTemperature(),
+
+          humidity: randomHumidity(),
+
+          latitude: 3.139,
+
+          longitude: 101.6869,
+
+          location: "Kuala Lumpur, Malaysia",
+
+          lastSync: new Date().toISOString()
+        };
+
+        sensors.push(newSensor);
+
+        saveSensors(sensors);
+
+        document
+          .querySelectorAll(".monitor-step-content")
+          .forEach((element) => {
+            element.classList.remove("is-active");
+          });
+
+        document
+          .getElementById("successStep")
+          .classList.add("is-active");
+
+        for (let i = 1; i <= 5; i++) {
+          document
+            .getElementById(`stepIndicator${i}`)
+            .classList.add("is-active");
+        }
+
+        document
+          .getElementById("modalBackButton")
+          .style.visibility = "hidden";
+
+        const nextButton =
+          document.getElementById("modalNextButton");
+
+        nextButton.textContent = "Done";
+
+        nextButton.onclick = function () {
+          closeRegisterModal();
+          renderSensors();
+          nextButton.onclick = nextStep;
+        };
+      }
+
+      function useDemoLocation() {
+        document.getElementById("locationBox").innerHTML = `
+          <strong>Location confirmed</strong><br />
+          Kuala Lumpur, Malaysia<br />
+          Latitude: 3.1390<br />
+          Longitude: 101.6869
+        `;
+      }
+
+      function viewSensor(sensorId) {
+        window.location.href =
+          "./monitor-sensor.html?id=" +
+          encodeURIComponent(sensorId);
+      }
+
+      function syncSensor(sensorId) {
+        const sensors = getSensors();
+
+        const sensor = sensors.find(
+          (item) => item.id === sensorId
+        );
+
+        if (!sensor) {
+          return;
+        }
+
+        sensor.temperature = randomTemperature();
+        sensor.humidity = randomHumidity();
+        sensor.lastSync = new Date().toISOString();
+
+        saveSensors(sensors);
+
+        renderSensors();
+
+        alert(
+          "Prototype sync completed. New mock readings generated."
+        );
+      }
+
+      function randomTemperature() {
+        return Number(
+          (26 + Math.random() * 4).toFixed(1)
+        );
+      }
+
+      function randomHumidity() {
+        return Math.floor(
+          65 + Math.random() * 15
+        );
+      }
+
+      function startStripePayment() {
+        if (
+          !STRIPE_EARLY_ACCESS_URL ||
+          STRIPE_EARLY_ACCESS_URL ===
+            "REPLACE_WITH_YOUR_STRIPE_PAYMENT_LINK"
+        ) {
+          alert(
+            "Stripe Payment Link has not been configured yet."
+          );
+
+          return;
+        }
+
+        window.open(
+          STRIPE_EARLY_ACCESS_URL,
+          "_blank",
+          "noopener,noreferrer"
+        );
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function escapeAttribute(value) {
+        return String(value).replace(/'/g, "\\'");
+      }
+
+      document
+        .getElementById("registerModal")
+        .addEventListener("click", function (event) {
+          if (
+            event.target ===
+            document.getElementById("registerModal")
+          ) {
+            closeRegisterModal();
+          }
+        });
+
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          closeRegisterModal();
+        }
+      });
+
+      renderSensors();
+    </script>
+  </body>
+</html>

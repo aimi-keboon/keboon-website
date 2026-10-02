@@ -1,0 +1,1007 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Sensor Monitor | Keboon Grower App</title>
+
+    <link rel="icon" type="image/png" href="../assets/images/logo.png" />
+
+    <link rel="stylesheet" href="../styles/main.css" />
+
+    <style>
+      /* =========================================================
+         Keboon Sensor Monitor
+         Page-specific styles only.
+         ========================================================= */
+
+      .monitor-detail-page {
+        padding-bottom: 80px;
+      }
+
+      .monitor-detail-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 8px;
+      }
+
+      .monitor-detail-card {
+        margin-top: 10px;
+        padding: 11px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        background: var(--white);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .monitor-detail-card-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      .monitor-detail-card-header h2 {
+        margin: 0 0 3px;
+      }
+
+      .monitor-detail-card-header p {
+        margin: 0;
+      }
+
+      .monitor-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 7px;
+        border-radius: 999px;
+        background: #edf8ea;
+        color: var(--green-dark);
+        font-size: 9px;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      .monitor-status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--success);
+      }
+
+      .monitor-detail-readings {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+      }
+
+      .monitor-detail-reading {
+        padding: 11px;
+        border-radius: 12px;
+        background: var(--cream);
+      }
+
+      .monitor-detail-reading-label {
+        margin-bottom: 5px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .monitor-detail-reading-value {
+        font-size: 28px;
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .monitor-detail-reading-unit {
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .monitor-chart-wrap {
+        position: relative;
+        width: 100%;
+        height: 210px;
+        margin-top: 8px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--cream);
+      }
+
+      #sensorChart {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .monitor-chart-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 7px;
+      }
+
+      .monitor-legend-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        color: var(--muted);
+        font-size: 10px;
+      }
+
+      .monitor-legend-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--green);
+      }
+
+      .monitor-info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+      }
+
+      .monitor-info-item {
+        padding: 8px;
+        border-radius: 10px;
+        background: var(--cream);
+      }
+
+      .monitor-info-label {
+        margin-bottom: 2px;
+        color: var(--muted);
+        font-size: 9px;
+      }
+
+      .monitor-info-value {
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .monitor-detail-early-access {
+        margin-top: 10px;
+        padding: 12px;
+        border-radius: var(--radius-lg);
+        background: var(--green);
+        color: var(--white);
+      }
+
+      .monitor-detail-early-access h2 {
+        margin: 0 0 4px;
+        color: var(--white);
+      }
+
+      .monitor-detail-early-access p {
+        margin: 0 0 9px;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 11px;
+        line-height: 1.4;
+      }
+
+      .monitor-detail-early-access .primary-button {
+        border: 0;
+        background: var(--white);
+        color: var(--green);
+      }
+
+      .monitor-detail-early-access .primary-button:hover {
+        background: var(--cream);
+      }
+
+      .monitor-not-found {
+        padding: 20px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        background: var(--white);
+        text-align: center;
+      }
+
+      .monitor-not-found h2 {
+        margin: 0 0 5px;
+      }
+
+      .monitor-not-found p {
+        margin: 0 0 10px;
+        color: var(--muted);
+      }
+
+      @media (max-width: 640px) {
+        .monitor-detail-readings,
+        .monitor-info-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .monitor-detail-card-header {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div
+      id="globalLoadingOverlay"
+      class="global-loading-overlay"
+      aria-hidden="true"
+    >
+      <div class="loading-card">
+        <div class="loading-spinner" aria-hidden="true"></div>
+        <p id="globalLoadingText">Loading...</p>
+      </div>
+    </div>
+
+    <div class="app-shell">
+      <!-- Existing Keboon app header -->
+      <header class="app-topbar">
+        <div class="app-topbar-inner">
+          <div class="app-topbar-left">
+            <a href="./dashboard.html">
+              <img
+                src="../assets/images/logo-writing.png"
+                alt="Keboon"
+                class="app-topbar-logo"
+              />
+            </a>
+
+            <div class="app-topbar-title">
+              <p class="app-screen-label">Grower app</p>
+              <p class="app-screen-title">Sensor Monitor</p>
+            </div>
+          </div>
+
+          <div class="app-topbar-actions">
+            <a
+              class="app-icon-button inbox-icon-link"
+              href="./inbox.html"
+              aria-label="Inbox"
+              title="Inbox"
+            >
+              <span class="inbox-unread-dot" aria-hidden="true"></span>
+
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M4 5h16v14H4V5Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M4 13h4l2 3h4l2-3h4"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+
+            <button
+              id="signoutButton"
+              class="app-icon-button"
+              type="button"
+              aria-label="Log out"
+              title="Log out"
+            >
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M10 6H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h4"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M15 8l4 4-4 4"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M19 12H9"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main class="app-main monitor-detail-page">
+        <section class="app-page-header">
+          <p class="eyebrow">IoT membership</p>
+
+          <h1 id="pageTitle">Sensor Monitor</h1>
+
+          <p id="pageSubtitle" class="muted">
+            Prototype sensor readings.
+          </p>
+
+          <div class="monitor-detail-actions">
+            <a
+              class="secondary-button"
+              href="./monitor.html"
+            >
+              ← All Sensors
+            </a>
+
+            <button
+              id="syncButton"
+              class="primary-button"
+              type="button"
+              onclick="syncCurrentSensor()"
+            >
+              Sync Now
+            </button>
+          </div>
+        </section>
+
+        <section id="sensorContent"></section>
+
+        <section class="monitor-detail-early-access">
+          <h2>Get Keboon Monitor Early Access</h2>
+
+          <p>
+            RM50 including 1 IoT sensor capable of measuring humidity and
+            temperature. After payment, the Keboon team will contact you for
+            the next steps.
+          </p>
+
+          <button
+            class="primary-button"
+            type="button"
+            onclick="startStripePayment()"
+          >
+            Pre-order — RM50
+          </button>
+        </section>
+      </main>
+
+      <!-- Existing Keboon bottom navigation -->
+      <nav class="app-bottom-nav" aria-label="Grower app navigation">
+        <div class="app-bottom-nav-inner">
+          <a class="app-bottom-link" href="./dashboard.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1v-9.5Z"
+                stroke="currentColor"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <span>Home</span>
+          </a>
+
+          <a class="app-bottom-link" href="./edit-profile.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z"
+                stroke="currentColor"
+              />
+              <path
+                d="M4 21a8 8 0 0 1 16 0"
+                stroke="currentColor"
+                stroke-linecap="round"
+              />
+            </svg>
+            <span>Profile</span>
+          </a>
+
+          <a class="app-bottom-link" href="./manage-produce.html">
+            <img
+              src="../assets/icons/produce.svg"
+              alt=""
+              class="app-nav-icon-img"
+              aria-hidden="true"
+            />
+            <span>Produce</span>
+          </a>
+
+          <a class="app-bottom-link" href="./preview-profile.html">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"
+                stroke="currentColor"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                stroke="currentColor"
+              />
+            </svg>
+            <span>Preview</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+
+    <script src="../scripts/config.js"></script>
+    <script src="../scripts/api.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/app.js"></script>
+
+    <script>
+      /*
+       * ==========================================================
+       * KEBOON SENSOR MONITOR — FRONTEND PROTOTYPE ONLY
+       * ==========================================================
+       */
+
+      const STORAGE_KEY = "keboon_monitor_prototype_sensors";
+
+      const STRIPE_EARLY_ACCESS_URL =
+        "REPLACE_WITH_YOUR_STRIPE_PAYMENT_LINK";
+
+      let currentSensor = null;
+
+      function getSensors() {
+        const stored = localStorage.getItem(STORAGE_KEY);
+
+        if (!stored) {
+          const defaultSensor = {
+            id: "KB-S-000001",
+            deviceId: "KB-DEMO-DEFAULT",
+            name: "Field A",
+            status: "connected",
+            temperature: 27.4,
+            humidity: 72,
+            latitude: 3.139,
+            longitude: 101.6869,
+            location: "Kuala Lumpur, Malaysia",
+            lastSync: new Date().toISOString()
+          };
+
+          const sensors = [defaultSensor];
+
+          localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(sensors)
+          );
+
+          return sensors;
+        }
+
+        try {
+          return JSON.parse(stored);
+        } catch (error) {
+          return [];
+        }
+      }
+
+      function saveSensors(sensors) {
+        localStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify(sensors)
+        );
+      }
+
+      function getSensorIdFromUrl() {
+        const params = new URLSearchParams(
+          window.location.search
+        );
+
+        return params.get("id");
+      }
+
+      function loadSensor() {
+        const sensors = getSensors();
+
+        const requestedId =
+          getSensorIdFromUrl();
+
+        currentSensor =
+          sensors.find(
+            (sensor) => sensor.id === requestedId
+          ) || sensors[0] || null;
+
+        renderSensor();
+      }
+
+      function renderSensor() {
+        const container =
+          document.getElementById("sensorContent");
+
+        if (!currentSensor) {
+          container.innerHTML = `
+            <section class="monitor-not-found">
+              <h2>Sensor not found</h2>
+
+              <p>
+                This prototype sensor does not exist in this browser.
+              </p>
+
+              <a
+                class="primary-button"
+                href="./monitor.html"
+              >
+                Back to Sensors
+              </a>
+            </section>
+          `;
+
+          return;
+        }
+
+        document.getElementById("pageTitle").textContent =
+          currentSensor.name;
+
+        document.getElementById("pageSubtitle").textContent =
+          "Temperature and humidity monitoring — prototype only.";
+
+        container.innerHTML = `
+          <div class="monitor-detail-card">
+
+            <div class="monitor-detail-card-header">
+
+              <div>
+                <h2>Current Readings</h2>
+
+                <p class="muted">
+                  ${escapeHtml(currentSensor.id)}
+                </p>
+              </div>
+
+              <span class="monitor-status">
+                <span class="monitor-status-dot"></span>
+                Connected
+              </span>
+
+            </div>
+
+            <div class="monitor-detail-readings">
+
+              <div class="monitor-detail-reading">
+
+                <div class="monitor-detail-reading-label">
+                  Temperature
+                </div>
+
+                <div class="monitor-detail-reading-value">
+                  ${Number(currentSensor.temperature).toFixed(1)}
+                  <span class="monitor-detail-reading-unit">
+                    °C
+                  </span>
+                </div>
+
+              </div>
+
+              <div class="monitor-detail-reading">
+
+                <div class="monitor-detail-reading-label">
+                  Humidity
+                </div>
+
+                <div class="monitor-detail-reading-value">
+                  ${Number(currentSensor.humidity).toFixed(0)}
+                  <span class="monitor-detail-reading-unit">
+                    %
+                  </span>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="monitor-detail-card">
+
+            <div class="monitor-detail-card-header">
+
+              <div>
+                <h2>Recent Readings</h2>
+
+                <p class="muted">
+                  Simulated prototype history
+                </p>
+              </div>
+
+            </div>
+
+            <div class="monitor-chart-wrap">
+              <canvas id="sensorChart"></canvas>
+            </div>
+
+            <div class="monitor-chart-legend">
+              <span class="monitor-legend-item">
+                <span class="monitor-legend-dot"></span>
+                Temperature
+              </span>
+
+              <span class="monitor-legend-item">
+                <span
+                  class="monitor-legend-dot"
+                  style="background:#9a7b2f"
+                ></span>
+                Humidity
+              </span>
+            </div>
+
+          </div>
+
+          <div class="monitor-detail-card">
+
+            <div class="monitor-detail-card-header">
+              <div>
+                <h2>Sensor Information</h2>
+              </div>
+            </div>
+
+            <div class="monitor-info-grid">
+
+              <div class="monitor-info-item">
+                <div class="monitor-info-label">
+                  Device ID
+                </div>
+
+                <div class="monitor-info-value">
+                  ${escapeHtml(currentSensor.deviceId)}
+                </div>
+              </div>
+
+              <div class="monitor-info-item">
+                <div class="monitor-info-label">
+                  Status
+                </div>
+
+                <div class="monitor-info-value">
+                  Connected
+                </div>
+              </div>
+
+              <div class="monitor-info-item">
+                <div class="monitor-info-label">
+                  Measurement
+                </div>
+
+                <div class="monitor-info-value">
+                  Temperature + Humidity
+                </div>
+              </div>
+
+              <div class="monitor-info-item">
+                <div class="monitor-info-label">
+                  Last Sync
+                </div>
+
+                <div class="monitor-info-value">
+                  ${formatDate(currentSensor.lastSync)}
+                </div>
+              </div>
+
+              <div class="monitor-info-item">
+                <div class="monitor-info-label">
+                  Location
+                </div>
+
+                <div class="monitor-info-value">
+                  ${escapeHtml(currentSensor.location)}
+                </div>
+              </div>
+
+              <div class="monitor-info-item">
+                <div class="monitor-info-label">
+                  Coordinates
+                </div>
+
+                <div class="monitor-info-value">
+                  ${Number(currentSensor.latitude).toFixed(4)},
+                  ${Number(currentSensor.longitude).toFixed(4)}
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        `;
+
+        drawChart();
+      }
+
+      function syncCurrentSensor() {
+        if (!currentSensor) {
+          return;
+        }
+
+        const sensors = getSensors();
+
+        const sensor = sensors.find(
+          (item) => item.id === currentSensor.id
+        );
+
+        if (!sensor) {
+          return;
+        }
+
+        sensor.temperature = randomTemperature();
+        sensor.humidity = randomHumidity();
+        sensor.lastSync = new Date().toISOString();
+
+        saveSensors(sensors);
+
+        currentSensor = sensor;
+
+        renderSensor();
+
+        alert(
+          "Prototype sync completed. New mock readings generated."
+        );
+      }
+
+      function drawChart() {
+        const canvas =
+          document.getElementById("sensorChart");
+
+        if (!canvas || !currentSensor) {
+          return;
+        }
+
+        const rect =
+          canvas.getBoundingClientRect();
+
+        const dpr =
+          window.devicePixelRatio || 1;
+
+        canvas.width =
+          Math.max(1, Math.floor(rect.width * dpr));
+
+        canvas.height =
+          Math.max(1, Math.floor(rect.height * dpr));
+
+        const ctx =
+          canvas.getContext("2d");
+
+        ctx.setTransform(
+          dpr,
+          0,
+          0,
+          dpr,
+          0,
+          0
+        );
+
+        const width = rect.width;
+        const height = rect.height;
+
+        ctx.clearRect(
+          0,
+          0,
+          width,
+          height
+        );
+
+        const readings =
+          createMockHistory(currentSensor);
+
+        const padding = 24;
+
+        const chartWidth =
+          width - padding * 2;
+
+        const chartHeight =
+          height - padding * 2;
+
+        /* Background grid */
+        ctx.strokeStyle = "#d9decf";
+        ctx.lineWidth = 1;
+
+        for (let i = 0; i <= 4; i++) {
+          const y =
+            padding +
+            (chartHeight / 4) * i;
+
+          ctx.beginPath();
+          ctx.moveTo(padding, y);
+          ctx.lineTo(width - padding, y);
+          ctx.stroke();
+        }
+
+        /* Temperature line */
+        drawLine(
+          ctx,
+          readings.temperature,
+          padding,
+          chartWidth,
+          chartHeight,
+          24,
+          "#2f6b3f"
+        );
+
+        /* Humidity line */
+        drawLine(
+          ctx,
+          readings.humidity,
+          padding,
+          chartWidth,
+          chartHeight,
+          100,
+          "#9a7b2f"
+        );
+      }
+
+      function drawLine(
+        ctx,
+        values,
+        padding,
+        chartWidth,
+        chartHeight,
+        maxValue,
+        strokeColor
+      ) {
+        const minValue =
+          Math.min(...values) - 2;
+
+        const actualMax =
+          Math.max(...values) + 2;
+
+        const range =
+          Math.max(
+            1,
+            actualMax - minValue
+          );
+
+        ctx.strokeStyle = strokeColor;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+
+        values.forEach(
+          (value, index) => {
+            const x =
+              padding +
+              (chartWidth / (values.length - 1)) *
+                index;
+
+            const y =
+              padding +
+              chartHeight -
+              ((value - minValue) / range) *
+                chartHeight;
+
+            if (index === 0) {
+              ctx.moveTo(x, y);
+            } else {
+              ctx.lineTo(x, y);
+            }
+          }
+        );
+
+        ctx.stroke();
+
+        /*
+         * Small points
+         */
+        ctx.fillStyle = strokeColor;
+
+        values.forEach(
+          (value, index) => {
+            const x =
+              padding +
+              (chartWidth / (values.length - 1)) *
+                index;
+
+            const y =
+              padding +
+              chartHeight -
+              ((value - minValue) / range) *
+                chartHeight;
+
+            ctx.beginPath();
+            ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        );
+      }
+
+      function createMockHistory(sensor) {
+        const temperature = [];
+        const humidity = [];
+
+        for (let i = 0; i < 12; i++) {
+          const temperatureVariation =
+            Math.sin(i * 0.75) * 1.1;
+
+          const humidityVariation =
+            Math.cos(i * 0.6) * 4;
+
+          temperature.push(
+            Number(
+              (
+                Number(sensor.temperature) +
+                temperatureVariation
+              ).toFixed(1)
+            )
+          );
+
+          humidity.push(
+            Math.round(
+              Number(sensor.humidity) +
+                humidityVariation
+            )
+          );
+        }
+
+        return {
+          temperature,
+          humidity
+        };
+      }
+
+      function randomTemperature() {
+        return Number(
+          (26 + Math.random() * 4).toFixed(1)
+        );
+      }
+
+      function randomHumidity() {
+        return Math.floor(
+          65 + Math.random() * 15
+        );
+      }
+
+      function formatDate(value) {
+        if (!value) {
+          return "Not available";
+        }
+
+        const date =
+          new Date(value);
+
+        if (Number.isNaN(date.getTime())) {
+          return "Not available";
+        }
+
+        return date.toLocaleString(
+          undefined,
+          {
+            dateStyle: "medium",
+            timeStyle: "short"
+          }
+        );
+      }
+
+      function startStripePayment() {
+        if (
+          !STRIPE_EARLY_ACCESS_URL ||
+          STRIPE_EARLY_ACCESS_URL ===
+            "REPLACE_WITH_YOUR_STRIPE_PAYMENT_LINK"
+        ) {
+          alert(
+            "Stripe Payment Link has not been configured yet."
+          );
+
+          return;
+        }
+
+        window.open(
+          STRIPE_EARLY_ACCESS_URL,
+          "_blank",
+          "noopener,noreferrer"
+        );
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      window.addEventListener(
+        "resize",
+        function () {
+          if (currentSensor) {
+            drawChart();
+          }
+        }
+      );
+
+      loadSensor();
+    </script>
+  </body>
+</html>

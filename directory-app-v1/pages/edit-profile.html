@@ -14,7 +14,140 @@
     />
 
     <link rel="stylesheet" href="../styles/main.css" />
+
+    <style>
+      /* =========================================================
+         Keboon Monitor Prototype
+         ========================================================= */
+
+      .monitor-prototype-card {
+        position: relative;
+        display: grid;
+        gap: 18px;
+        margin-top: 24px;
+        padding: 22px;
+        border: 1px solid #d9decf;
+        border-radius: 22px;
+        background:
+          linear-gradient(
+            135deg,
+            rgba(237, 248, 234, 0.96),
+            rgba(255, 255, 255, 0.98)
+          );
+        box-shadow: 0 8px 24px rgba(31, 41, 51, 0.08);
+        overflow: hidden;
+      }
+
+      .monitor-prototype-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 120px;
+        height: 120px;
+        border-radius: 0 0 0 100%;
+        background: rgba(71, 145, 62, 0.08);
+        pointer-events: none;
+      }
+
+      .monitor-prototype-label {
+        display: inline-flex;
+        align-items: center;
+        width: fit-content;
+        padding: 5px 9px;
+        border-radius: 999px;
+        background: #fff4d6;
+        color: #8a5a00;
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .monitor-prototype-card h2 {
+        margin: 0;
+        font-size: 21px;
+      }
+
+      .monitor-prototype-card p {
+        margin: 0;
+      }
+
+      .monitor-prototype-price {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 13px 15px;
+        border-radius: 16px;
+        background: #ffffff;
+        border: 1px solid #d9decf;
+      }
+
+      .monitor-prototype-price strong {
+        color: #326b2c;
+        font-size: 21px;
+      }
+
+      .monitor-prototype-price span {
+        color: #69736a;
+        font-size: 12px;
+      }
+
+      .monitor-prototype-features {
+        display: grid;
+        gap: 8px;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+
+      .monitor-prototype-features li {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        color: #4e5a50;
+        font-size: 13px;
+      }
+
+      .monitor-prototype-features li::before {
+        content: "✓";
+        color: #3f8738;
+        font-weight: 900;
+      }
+
+      .monitor-prototype-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .monitor-prototype-note {
+        padding: 11px 13px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.72);
+        color: #69736a;
+        font-size: 11px;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 640px) {
+        .monitor-prototype-card {
+          padding: 18px;
+          border-radius: 18px;
+        }
+
+        .monitor-prototype-actions {
+          display: grid;
+        }
+
+        .monitor-prototype-actions a,
+        .monitor-prototype-actions button {
+          width: 100%;
+        }
+      }
+    </style>
   </head>
+
   <body>
     <div
       id="globalLoadingOverlay"
@@ -53,6 +186,7 @@
               title="Inbox"
             >
               <span class="inbox-unread-dot" aria-hidden="true"></span>
+
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path
                   d="M4 5h16v14H4V5Z"
@@ -207,6 +341,7 @@
                 placeholder="Example: Urban Grower, Hobbyist, Small-Scale Grower"
               />
             </label>
+
             <div class="profile-links-section">
               <div>
                 <h2>Links</h2>
@@ -264,10 +399,64 @@
               Make my profile public
             </label>
 
-            <button type="submit" class="primary-button">Save profile</button>
+            <button type="submit" class="primary-button">
+              Save profile
+            </button>
 
             <p id="editProfileMessage" class="form-message"></p>
           </form>
+        </section>
+
+        <!-- =====================================================
+             Keboon Monitor Prototype
+             ===================================================== -->
+
+        <section class="monitor-prototype-card">
+          <div>
+            <span class="monitor-prototype-label">
+              Prototype · Early Access
+            </span>
+          </div>
+
+          <div>
+            <h2>Keboon Monitor</h2>
+
+            <p class="muted" style="margin-top: 7px;">
+              A future Keboon feature for keeping an eye on temperature and
+              humidity around your growing space.
+            </p>
+          </div>
+
+          <div class="monitor-prototype-price">
+            <strong>RM50</strong>
+            <span>
+              Early Access · includes 1 IoT sensor
+            </span>
+          </div>
+
+          <ul class="monitor-prototype-features">
+            <li>One Keboon IoT sensor</li>
+            <li>Temperature reading</li>
+            <li>Humidity reading</li>
+            <li>Monitor your sensor from your Keboon account</li>
+            <li>Early access to the Monitor feature</li>
+          </ul>
+
+          <div class="monitor-prototype-actions">
+            <a
+              href="./monitor.html"
+              class="primary-button text-button-link"
+            >
+              Explore Monitor prototype
+            </a>
+          </div>
+
+          <p class="monitor-prototype-note">
+            <strong>Prototype notice:</strong>
+            The Monitor screens are currently a visual product prototype.
+            The sensors and readings shown there are simulated and are not
+            connected to a real device yet.
+          </p>
         </section>
       </main>
 
