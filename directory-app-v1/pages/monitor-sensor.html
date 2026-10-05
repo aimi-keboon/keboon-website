@@ -319,15 +319,10 @@
 
           <h1 id="pageTitle">Sensor Monitor</h1>
 
-          <p id="pageSubtitle" class="muted">
-            Prototype sensor readings.
-          </p>
+          <p id="pageSubtitle" class="muted">Prototype sensor readings.</p>
 
           <div class="monitor-detail-actions">
-            <a
-              class="secondary-button"
-              href="./monitor.html"
-            >
+            <a class="secondary-button" href="./monitor.html">
               ← All Sensors
             </a>
 
@@ -349,8 +344,8 @@
 
           <p>
             RM50 including 1 IoT sensor capable of measuring humidity and
-            temperature. After payment, the Keboon team will contact you for
-            the next steps.
+            temperature. After payment, the Keboon team will contact you for the
+            next steps.
           </p>
 
           <button
@@ -453,15 +448,12 @@
             latitude: 3.139,
             longitude: 101.6869,
             location: "Kuala Lumpur, Malaysia",
-            lastSync: new Date().toISOString()
+            lastSync: new Date().toISOString(),
           };
 
           const sensors = [defaultSensor];
 
-          localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(sensors)
-          );
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(sensors));
 
           return sensors;
         }
@@ -474,16 +466,11 @@
       }
 
       function saveSensors(sensors) {
-        localStorage.setItem(
-          STORAGE_KEY,
-          JSON.stringify(sensors)
-        );
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(sensors));
       }
 
       function getSensorIdFromUrl() {
-        const params = new URLSearchParams(
-          window.location.search
-        );
+        const params = new URLSearchParams(window.location.search);
 
         return params.get("id");
       }
@@ -491,20 +478,18 @@
       function loadSensor() {
         const sensors = getSensors();
 
-        const requestedId =
-          getSensorIdFromUrl();
+        const requestedId = getSensorIdFromUrl();
 
         currentSensor =
-          sensors.find(
-            (sensor) => sensor.id === requestedId
-          ) || sensors[0] || null;
+          sensors.find((sensor) => sensor.id === requestedId) ||
+          sensors[0] ||
+          null;
 
         renderSensor();
       }
 
       function renderSensor() {
-        const container =
-          document.getElementById("sensorContent");
+        const container = document.getElementById("sensorContent");
 
         if (!currentSensor) {
           container.innerHTML = `
@@ -527,8 +512,7 @@
           return;
         }
 
-        document.getElementById("pageTitle").textContent =
-          currentSensor.name;
+        document.getElementById("pageTitle").textContent = currentSensor.name;
 
         document.getElementById("pageSubtitle").textContent =
           "Temperature and humidity monitoring — prototype only.";
@@ -709,9 +693,7 @@
 
         const sensors = getSensors();
 
-        const sensor = sensors.find(
-          (item) => item.id === currentSensor.id
-        );
+        const sensor = sensors.find((item) => item.id === currentSensor.id);
 
         if (!sensor) {
           return;
@@ -727,72 +709,47 @@
 
         renderSensor();
 
-        alert(
-          "Prototype sync completed. New mock readings generated."
-        );
+        alert("Prototype sync completed. New mock readings generated.");
       }
 
       function drawChart() {
-        const canvas =
-          document.getElementById("sensorChart");
+        const canvas = document.getElementById("sensorChart");
 
         if (!canvas || !currentSensor) {
           return;
         }
 
-        const rect =
-          canvas.getBoundingClientRect();
+        const rect = canvas.getBoundingClientRect();
 
-        const dpr =
-          window.devicePixelRatio || 1;
+        const dpr = window.devicePixelRatio || 1;
 
-        canvas.width =
-          Math.max(1, Math.floor(rect.width * dpr));
+        canvas.width = Math.max(1, Math.floor(rect.width * dpr));
 
-        canvas.height =
-          Math.max(1, Math.floor(rect.height * dpr));
+        canvas.height = Math.max(1, Math.floor(rect.height * dpr));
 
-        const ctx =
-          canvas.getContext("2d");
+        const ctx = canvas.getContext("2d");
 
-        ctx.setTransform(
-          dpr,
-          0,
-          0,
-          dpr,
-          0,
-          0
-        );
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
         const width = rect.width;
         const height = rect.height;
 
-        ctx.clearRect(
-          0,
-          0,
-          width,
-          height
-        );
+        ctx.clearRect(0, 0, width, height);
 
-        const readings =
-          createMockHistory(currentSensor);
+        const readings = createMockHistory(currentSensor);
 
         const padding = 24;
 
-        const chartWidth =
-          width - padding * 2;
+        const chartWidth = width - padding * 2;
 
-        const chartHeight =
-          height - padding * 2;
+        const chartHeight = height - padding * 2;
 
         /* Background grid */
         ctx.strokeStyle = "#d9decf";
         ctx.lineWidth = 1;
 
         for (let i = 0; i <= 4; i++) {
-          const y =
-            padding +
-            (chartHeight / 4) * i;
+          const y = padding + (chartHeight / 4) * i;
 
           ctx.beginPath();
           ctx.moveTo(padding, y);
@@ -808,7 +765,7 @@
           chartWidth,
           chartHeight,
           24,
-          "#2f6b3f"
+          "#2f6b3f",
         );
 
         /* Humidity line */
@@ -819,7 +776,7 @@
           chartWidth,
           chartHeight,
           100,
-          "#9a7b2f"
+          "#9a7b2f",
         );
       }
 
@@ -830,44 +787,30 @@
         chartWidth,
         chartHeight,
         maxValue,
-        strokeColor
+        strokeColor,
       ) {
-        const minValue =
-          Math.min(...values) - 2;
+        const minValue = Math.min(...values) - 2;
 
-        const actualMax =
-          Math.max(...values) + 2;
+        const actualMax = Math.max(...values) + 2;
 
-        const range =
-          Math.max(
-            1,
-            actualMax - minValue
-          );
+        const range = Math.max(1, actualMax - minValue);
 
         ctx.strokeStyle = strokeColor;
         ctx.lineWidth = 2;
         ctx.beginPath();
 
-        values.forEach(
-          (value, index) => {
-            const x =
-              padding +
-              (chartWidth / (values.length - 1)) *
-                index;
+        values.forEach((value, index) => {
+          const x = padding + (chartWidth / (values.length - 1)) * index;
 
-            const y =
-              padding +
-              chartHeight -
-              ((value - minValue) / range) *
-                chartHeight;
+          const y =
+            padding + chartHeight - ((value - minValue) / range) * chartHeight;
 
-            if (index === 0) {
-              ctx.moveTo(x, y);
-            } else {
-              ctx.lineTo(x, y);
-            }
+          if (index === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
           }
-        );
+        });
 
         ctx.stroke();
 
@@ -876,24 +819,16 @@
          */
         ctx.fillStyle = strokeColor;
 
-        values.forEach(
-          (value, index) => {
-            const x =
-              padding +
-              (chartWidth / (values.length - 1)) *
-                index;
+        values.forEach((value, index) => {
+          const x = padding + (chartWidth / (values.length - 1)) * index;
 
-            const y =
-              padding +
-              chartHeight -
-              ((value - minValue) / range) *
-                chartHeight;
+          const y =
+            padding + chartHeight - ((value - minValue) / range) * chartHeight;
 
-            ctx.beginPath();
-            ctx.arc(x, y, 2.5, 0, Math.PI * 2);
-            ctx.fill();
-          }
-        );
+          ctx.beginPath();
+          ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+          ctx.fill();
+        });
       }
 
       function createMockHistory(sensor) {
@@ -901,45 +836,33 @@
         const humidity = [];
 
         for (let i = 0; i < 12; i++) {
-          const temperatureVariation =
-            Math.sin(i * 0.75) * 1.1;
+          const temperatureVariation = Math.sin(i * 0.75) * 1.1;
 
-          const humidityVariation =
-            Math.cos(i * 0.6) * 4;
+          const humidityVariation = Math.cos(i * 0.6) * 4;
 
           temperature.push(
             Number(
-              (
-                Number(sensor.temperature) +
-                temperatureVariation
-              ).toFixed(1)
-            )
+              (Number(sensor.temperature) + temperatureVariation).toFixed(1),
+            ),
           );
 
           humidity.push(
-            Math.round(
-              Number(sensor.humidity) +
-                humidityVariation
-            )
+            Math.round(Number(sensor.humidity) + humidityVariation),
           );
         }
 
         return {
           temperature,
-          humidity
+          humidity,
         };
       }
 
       function randomTemperature() {
-        return Number(
-          (26 + Math.random() * 4).toFixed(1)
-        );
+        return Number((26 + Math.random() * 4).toFixed(1));
       }
 
       function randomHumidity() {
-        return Math.floor(
-          65 + Math.random() * 15
-        );
+        return Math.floor(65 + Math.random() * 15);
       }
 
       function formatDate(value) {
@@ -947,40 +870,25 @@
           return "Not available";
         }
 
-        const date =
-          new Date(value);
+        const date = new Date(value);
 
         if (Number.isNaN(date.getTime())) {
           return "Not available";
         }
 
-        return date.toLocaleString(
-          undefined,
-          {
-            dateStyle: "medium",
-            timeStyle: "short"
-          }
-        );
+        return date.toLocaleString(undefined, {
+          dateStyle: "medium",
+          timeStyle: "short",
+        });
       }
 
       function startStripePayment() {
-        if (
-          !STRIPE_EARLY_ACCESS_URL ||
-          STRIPE_EARLY_ACCESS_URL ===
-            "https://buy.stripe.com/5kQcN60xf20x559cx7gw00v"
-        ) {
-          alert(
-            "Stripe Payment Link has not been configured yet."
-          );
-
+        if (!STRIPE_EARLY_ACCESS_URL) {
+          alert("Stripe Payment Link has not been configured yet.");
           return;
         }
 
-        window.open(
-          STRIPE_EARLY_ACCESS_URL,
-          "_blank",
-          "noopener,noreferrer"
-        );
+        window.open(STRIPE_EARLY_ACCESS_URL, "_blank", "noopener,noreferrer");
       }
 
       function escapeHtml(value) {
@@ -992,14 +900,11 @@
           .replace(/'/g, "&#039;");
       }
 
-      window.addEventListener(
-        "resize",
-        function () {
-          if (currentSensor) {
-            drawChart();
-          }
+      window.addEventListener("resize", function () {
+        if (currentSensor) {
+          drawChart();
         }
-      );
+      });
 
       loadSensor();
     </script>
