@@ -25,12 +25,14 @@ const DIRECTORY_RADIUS_KM = 20;
 async function requireValidSession() {
   const session = getStoredSession();
 
+  // No stored session → user must sign in
   if (!session || !session.token) {
     clearStoredSession();
     window.location.href = "./signin.html";
     return null;
   }
 
+  // Check the session expiry stored locally
   if (session.expires_at) {
     const expiresAt = new Date(session.expires_at);
 
@@ -41,10 +43,19 @@ async function requireValidSession() {
     }
   }
 
+  // Use locally cached grower/product data immediately.
+  // This prevents every page from waiting for Apps Script.
+  const grower = getStoredGrower();
+  const products = getStoredProducts();
+
   return {
     session,
-    grower: getStoredGrower(),
-    products: getStoredProducts(),
+    grower,
+    products,
+    appData: {
+      grower,
+      products,
+    },
   };
 }
 
@@ -68,33 +79,6 @@ async function refreshGrowerAppData(sessionToken) {
 function handleInvalidSession() {
   clearStoredSession();
   window.location.href = "./signin.html";
-}
-
-async function initDashboardPage() {
-  const dashboardTitle = document.getElementById("dashboardTitle");
-  const signoutButton = document.getElementById("signoutButton");
-
-  if (!dashboardTitle && !signoutButton) {
-    return;
-  }
-
-  const auth = await requireValidSession();
-
-  if (!auth) {
-    return;
-  }
-
-  if (dashboardTitle) {
-    dashboardTitle.textContent = `Welcome, ${auth.grower?.grower_name || auth.session.grower_name || "Grower"}`;
-  }
-
-  if (!isGrowerCacheFresh()) {
-    refreshGrowerAppDataQuietly(auth.session.token, (appData) => {
-      if (dashboardTitle) {
-        dashboardTitle.textContent = `Welcome, ${appData.grower?.grower_name || "Grower"}`;
-      }
-    });
-  }
 }
 
 async function initEditProfilePage() {
