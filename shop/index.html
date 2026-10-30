@@ -123,62 +123,168 @@
     @media(max-width:390px){.product-grid{grid-template-columns:1fr}.product-visual{height:290px}.product-info p{min-height:0}.hero-art{height:285px}.hero-bottle{height:220px}.hero-bottle.middle{height:275px}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 
-    /* Main landing-page navigation: the same floating glass pill, logo and responsive menu. */
-    body { padding-top: 82px; }
-    .site-header { position: static; background: transparent; border: 0; }
-    .site-header .nav.container {
-      position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
-      width: min(1040px, calc(100% - 28px)); height: auto; min-height: 56px; margin: 0;
-      z-index: 100; display: flex; align-items: center; justify-content: space-between;
-      gap: 9px; padding: 9px 11px 9px 14px;
-      border: 1px solid rgba(46,125,50,.14); border-radius: 999px;
-      background: rgba(255,255,255,.78); backdrop-filter: blur(18px);
-      box-shadow: 0 10px 28px rgba(31,42,36,.08);
-    }
-    .site-header .brand { display: flex; align-items: center; gap: 8px; line-height: 1; }
-    .site-header .brand-icon { width: 28px; height: 28px; object-fit: contain; display: block; }
-    .site-header .brand-wordmark { width: auto; height: 19px; object-fit: contain; display: block; }
-    .site-header .nav-links { display: flex; align-items: center; gap: 5px; margin-left: auto; }
-    .site-header .nav-links a {
-      padding: 8px 10px; border-radius: 999px; color: #395146;
-      font-size: 11px; font-weight: 400; transition: .25s ease; white-space: nowrap;
-    }
-    .site-header .nav-links a:hover,
-    .site-header .nav-links .assistant-nav-link { background: #e8f5e9; color: #1b5e20; }
-    .site-header .nav-links .assistant-nav-link { font-weight: 800; }
-    .shop-nav-link { display: inline-flex; align-items: center; gap: 6px; }
-    .shop-soon {
-      display: inline-block; border: 1px solid #eedda8; background: #fff2ce;
-      color: #785514; padding: 3px 6px; border-radius: 999px;
-      font-size: 9px; font-weight: 850; line-height: 1.1; letter-spacing: .01em;
-    }
-    .site-header .menu-btn {
-      display: none; border: 0; background: #e8f5e9; color: #1b5e20;
-      border-radius: 999px; padding: 8px 10px; cursor: pointer;
-    }
-    .site-header .nav-actions { display:flex; align-items:center; gap: 5px; margin-left: 2px; }
-    .site-header .icon-btn { width: 35px; height: 35px; flex: 0 0 35px; }
-    .site-header .cart-count { z-index: 1; }
-    .preview-note { line-height: 1.6; }
-    #products, #about, #footer { scroll-margin-top: 94px; }
-    @media(max-width:960px) {
-      .site-header .nav-links {
-        position: absolute; top: calc(100% + 10px); right: 0; width: min(300px, 90vw);
-        display: none; flex-direction: column; align-items: stretch; gap: 5px;
-        padding: 10px; margin-left: 0; border: 1px solid rgba(46,125,50,.14);
-        border-radius: 18px; background: white; box-shadow: 0 12px 34px rgba(28,82,42,.12);
-      }
-      .site-header .nav-links.open { display: flex; }
-      .site-header .nav-links a { display: flex; justify-content: flex-start; }
-      .site-header .menu-btn { display: inline-flex; margin-left: auto; }
-      .site-header .nav-actions { margin-left: 0; }
-    }
-    @media(max-width:390px) {
-      .site-header .nav.container { gap: 4px; padding-left: 10px; padding-right: 7px; }
-      .site-header .brand-icon { width: 25px; height: 25px; }
-      .site-header .brand-wordmark { height: 16px; }
-      .site-header .icon-btn { width: 32px; height: 32px; flex-basis: 32px; }
-    }
+/* ===========================================================
+   KEBOON SHOP UI REFINEMENT — 2026-10-30
+   Same floating navigation system as the main Keboon website.
+   =========================================================== */
+html { scroll-padding-top: 96px; }
+body { padding-top: 84px; overflow-x: clip; }
+.site-header { position: static; height: 0; background: transparent; border: 0; backdrop-filter: none; box-shadow: none; }
+.site-header .nav.container {
+  position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+  width: min(1040px, calc(100% - 28px)); max-width: calc(100vw - 28px);
+  height: auto; min-height: 56px; margin: 0;
+  padding: 9px 11px 9px 14px; gap: 8px;
+  display: flex; align-items: center; justify-content: space-between;
+  border: 1px solid rgba(46,125,50,.14); border-radius: 999px;
+  background: rgba(255,255,255,.94); backdrop-filter: blur(18px);
+  box-shadow: 0 10px 28px rgba(31,42,36,.1); z-index: 40;
+}
+.site-header .brand { display:flex; flex: 0 0 auto; min-width:0; align-items:center; gap:8px; line-height:1; }
+.site-header .brand-icon { width: 28px; height: 28px; flex: 0 0 auto; object-fit:contain; display:block; }
+.site-header .brand-wordmark { height:19px; width:auto; max-width:122px; object-fit:contain; display:block; }
+.site-header .nav-links { display:flex; align-items:center; gap:3px; margin-left:auto; min-width:0; }
+.site-header .nav-links a {
+  padding: 8px 9px; border-radius:999px; color:#395146;
+  font-size:11px; font-weight:450; white-space:nowrap;
+  transition: background .2s, color .2s;
+}
+.site-header .nav-links a:hover,
+.site-header .nav-links .assistant-nav-link { background:#e8f5e9; color:#1b5e20; }
+.site-header .nav-links .assistant-nav-link { font-weight:800; }
+.site-header .nav-links a[aria-current="page"] { background:#dcefdc; color:#174f26; }
+.site-header .shop-nav-link { display:inline-flex; align-items:center; gap:6px; }
+.site-header .shop-soon {
+  padding:3px 6px; border:1px solid #eedda8; border-radius:999px;
+  background:#fff2ce; color:#785514; font-size:9px;
+  font-weight:850; line-height:1.1; white-space:nowrap;
+}
+.site-header .menu-btn {
+  display:none; margin-left:auto; border:0; border-radius:999px;
+  padding:8px 10px; background:#e8f5e9; color:#1b5e20;
+  cursor:pointer; line-height:1; font-size:20px;
+}
+.site-header .nav-actions { display:flex; flex:0 0 auto; align-items:center; gap:6px; margin-left:2px; }
+.site-header .icon-btn { width:35px; height:35px; flex:0 0 35px; }
+.site-header .cart-count { z-index:1; }
+.preview-note {
+  width:min(1040px, calc(100% - 28px)); margin:0 auto 14px;
+  padding:12px 18px; border:1px solid #eedda8;
+  border-radius:14px; background:#fff8e6; color:#76571b;
+  text-align:center; line-height:1.6;
+}
+#statusMessage.visible { width:min(1040px,calc(100% - 28px)); margin:0 auto 14px; border-radius:12px; }
+.hero-inner { grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr); }
+.hero-content, .hero-art { min-width:0; }
+.hero-content { position:relative; z-index:2; }
+.hero-content p { max-width:510px; }
+.hero-art { max-width:100%; }
+.float-label { right:8px; top:40px; }
+.hero-bottle.middle { transform:translateY(0); }
+.hero-bottle.left { transform:translateY(10px) rotate(-7deg); }
+.hero-bottle.right { transform:translateY(10px) rotate(7deg); }
+.shop-section { padding-top:68px; padding-bottom:80px; }
+#products, #about, #footer { scroll-margin-top:96px; }
+.product-grid { align-items:stretch; }
+.product-card { display:flex; flex-direction:column; height:100%; }
+.product-visual { height:clamp(245px,24vw,296px); flex-shrink:0; }
+.product-info { display:flex; flex-direction:column; flex:1; min-width:0; }
+.product-info p { min-height:0; }
+.product-bottom { margin-top:auto; }
+.product-card .pill { max-width:calc(100% - 30px); }
+.cart-drawer { z-index:51; width:min(440px,100%); height:100dvh; bottom:auto; }
+.cart-list { min-height:0; }
+.cart-item { grid-template-columns:76px minmax(0,1fr); gap:8px 12px; }
+.cart-item img { grid-row:1 / span 2; width:76px; height:92px; }
+.cart-price { grid-column:2; grid-row:2; white-space:normal; font-size:13px; }
+.cart-footer { padding-bottom:max(24px,env(safe-area-inset-bottom)); }
+.detail-modal { max-height:calc(100dvh - 28px); overflow-y:auto; }
+.detail-copy { max-height:none; overflow:visible; }
+.detail-actions { flex-wrap:wrap; }
+@media (max-width:1120px) {
+  .site-header .menu-btn { display:inline-flex; align-items:center; justify-content:center; flex:0 0 38px; }
+  .site-header .nav-links {
+    position:absolute; top:calc(100% + 10px); right:0;
+    width:min(320px,calc(100vw - 28px));
+    display:none; flex-direction:column; align-items:stretch; gap:4px;
+    margin:0; padding:10px; border:1px solid rgba(46,125,50,.14);
+    border-radius:18px; background:#fff; box-shadow:0 14px 32px rgba(31,42,36,.15);
+    max-height:calc(100dvh - 94px); overflow-y:auto;
+  }
+  .site-header .nav-links.open { display:flex; }
+  .site-header .nav-links a { display:flex; align-items:center; justify-content:flex-start; gap:7px; padding:11px 12px; font-size:13px; }
+  .site-header .nav-links .shop-nav-link { display:flex; }
+  .float-label { display:none; }
+}
+@media (max-width:900px) {
+  .hero-inner { display:grid; grid-template-columns:minmax(0,1fr); gap:0; min-height:0; }
+  .hero-content { padding:46px 0 12px; text-align:center; }
+  .hero-content .eyebrow { justify-content:center; }
+  .hero-content h1 { margin:17px auto; max-width:620px; }
+  .hero-content p { max-width:600px; margin:0 auto 23px; }
+  .hero-actions { justify-content:center; }
+  .hero-art { height:370px; width:min(100%,540px); margin:0 auto; padding-bottom:0; }
+  .hero-art::before { width:min(345px,80%); height:345px; max-height:95%; top:12px; left:50%; transform:translateX(-50%); }
+  .hero-bottle { height:270px; max-width:150px; }
+  .hero-bottle.middle { height:330px; max-width:180px; margin:0 -25px; transform:translateY(0); }
+  .hero-bottle.left { transform:translateY(5px) rotate(-7deg); }
+  .hero-bottle.right { transform:translateY(5px) rotate(7deg); }
+  .product-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .product-visual { height:280px; }
+}
+@media (max-width:600px) {
+  body { padding-top:80px; }
+  .site-header .nav.container { min-height:55px; padding:8px 9px 8px 11px; gap:5px; }
+  .site-header .brand-icon { width:26px; height:26px; }
+  .site-header .brand-wordmark { height:17px; max-width:103px; }
+  .site-header .menu-btn { flex-basis:35px; min-width:35px; padding:7px; }
+  .site-header .nav-actions { gap:4px; margin-left:0; }
+  .site-header .icon-btn { width:34px; height:34px; flex-basis:34px; }
+  .preview-note { margin-bottom:10px; padding:10px 12px; font-size:12px; }
+  .hero-content { padding:35px 0 8px; }
+  .hero-content h1 { font-size:clamp(35px,9vw,48px); line-height:1.05; }
+  .hero-content p { font-size:14px; line-height:1.65; }
+  .hero-actions { gap:9px; }
+  .hero-actions .primary-btn, .hero-actions .secondary-btn { padding:11px 14px; font-size:12px; }
+  .hero-art { height:320px; width:min(100%,400px); padding-bottom:22px; }
+  .hero-art::before { width:270px; height:270px; top:6px; }
+  .hero-bottle { height:224px; max-width:124px; }
+  .hero-bottle.middle { height:273px; max-width:153px; margin:0 -22px; }
+  .trust-inner { grid-template-columns:repeat(3,minmax(0,1fr)); gap:5px; }
+  .trust-item { min-width:0; }
+  .shop-section { padding:50px 0 58px; }
+  .section-top { gap:9px; }
+  .section-top h2 { font-size:clamp(28px,7vw,36px); }
+  .tools { gap:13px; }
+  .filters { gap:7px; }
+  .filter-chip { padding:9px 12px; }
+  .product-grid { grid-template-columns:minmax(0,1fr); gap:18px; }
+  .product-visual { height:clamp(270px,77vw,355px); }
+  .product-card { border-radius:20px; }
+  .product-info { padding:20px; }
+  .product-info p { min-height:0; font-size:13px; }
+  .product-bottom { padding-top:17px; margin-top:17px; }
+  .footer-inner { align-items:flex-start; }
+  .detail-modal { width:calc(100% - 20px); max-height:calc(100dvh - 20px); }
+  .detail-grid { display:flex; flex-direction:column; }
+  .detail-image { height:min(33dvh,270px); min-height:150px; }
+  .detail-copy { padding:20px 23px 26px; }
+  .detail-copy h2 { font-size:30px; }
+  .detail-actions { align-items:stretch; }
+}
+@media (max-width:370px) {
+  .site-header .brand-wordmark { max-width:87px; height:15px; }
+  .site-header .brand-icon { width:24px; height:24px; }
+  .site-header .menu-btn { flex-basis:32px; min-width:32px; }
+  .site-header .icon-btn { width:31px; height:31px; flex-basis:31px; }
+  .hero-art { height:290px; padding-bottom:20px; }
+  .hero-art::before { width:246px; height:246px; }
+  .hero-bottle { height:206px; }
+  .hero-bottle.middle { height:250px; }
+  .cart-list { padding:12px 16px; }
+  .cart-footer { padding:18px 16px 24px; }
+  .drawer-top { padding:17px 16px; }
+}
   </style>
 </head>
 <body>
