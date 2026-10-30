@@ -122,26 +122,90 @@
     @media(max-width:700px){.container{width:min(100% - 30px,1160px)}.nav{height:69px}.brand-copy b{font-size:20px}.brand-mark{width:35px;height:35px}.nav-links{display:none}.nav-actions{margin-left:auto}.hero-inner{display:flex;flex-direction:column;gap:0}.hero-content{padding:48px 0 0;align-self:stretch}.hero-content p{max-width:540px}.hero-art{height:320px;width:100%;padding-bottom:4px}.hero-art::before{height:290px;width:290px;top:20px;left:calc(50% - 145px)}.hero-bottle{height:240px;max-width:130px}.hero-bottle.middle{height:295px;max-width:158px;margin:0 -20px}.float-label{top:5px;right:5px}.trust-inner{gap:8px;padding:18px 0}.trust-item{gap:6px;flex-direction:column;text-align:center}.trust-item b{font-size:10px}.trust-item span{font-size:9px}.shop-section{padding:57px 0}.section-top{align-items:start}.results-count{display:none}.tools{display:flex;flex-direction:column;align-items:stretch}.search-box{width:100%}.product-grid{gap:13px}.product-visual{height:240px}.product-info{padding:15px}.product-info h3{font-size:20px}.product-info p{min-height:58px}.product-bottom{margin-top:12px}.price{font-size:18px}.add-btn{width:38px;height:38px}.about-section{padding-bottom:55px}.about-panel{grid-template-columns:1fr;padding:30px 25px;gap:10px}.about-tags{justify-content:flex-start}.detail-grid{grid-template-columns:1fr}.detail-image{height:270px}.detail-copy{padding:20px 25px 26px}.detail-copy h2{font-size:30px}}
     @media(max-width:390px){.product-grid{grid-template-columns:1fr}.product-visual{height:290px}.product-info p{min-height:0}.hero-art{height:285px}.hero-bottle{height:220px}.hero-bottle.middle{height:275px}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+
+    /* Main landing-page navigation: the same floating glass pill, logo and responsive menu. */
+    body { padding-top: 82px; }
+    .site-header { position: static; background: transparent; border: 0; }
+    .site-header .nav.container {
+      position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+      width: min(1040px, calc(100% - 28px)); height: auto; min-height: 56px; margin: 0;
+      z-index: 100; display: flex; align-items: center; justify-content: space-between;
+      gap: 9px; padding: 9px 11px 9px 14px;
+      border: 1px solid rgba(46,125,50,.14); border-radius: 999px;
+      background: rgba(255,255,255,.78); backdrop-filter: blur(18px);
+      box-shadow: 0 10px 28px rgba(31,42,36,.08);
+    }
+    .site-header .brand { display: flex; align-items: center; gap: 8px; line-height: 1; }
+    .site-header .brand-icon { width: 28px; height: 28px; object-fit: contain; display: block; }
+    .site-header .brand-wordmark { width: auto; height: 19px; object-fit: contain; display: block; }
+    .site-header .nav-links { display: flex; align-items: center; gap: 5px; margin-left: auto; }
+    .site-header .nav-links a {
+      padding: 8px 10px; border-radius: 999px; color: #395146;
+      font-size: 11px; font-weight: 400; transition: .25s ease; white-space: nowrap;
+    }
+    .site-header .nav-links a:hover,
+    .site-header .nav-links .assistant-nav-link { background: #e8f5e9; color: #1b5e20; }
+    .site-header .nav-links .assistant-nav-link { font-weight: 800; }
+    .shop-nav-link { display: inline-flex; align-items: center; gap: 6px; }
+    .shop-soon {
+      display: inline-block; border: 1px solid #eedda8; background: #fff2ce;
+      color: #785514; padding: 3px 6px; border-radius: 999px;
+      font-size: 9px; font-weight: 850; line-height: 1.1; letter-spacing: .01em;
+    }
+    .site-header .menu-btn {
+      display: none; border: 0; background: #e8f5e9; color: #1b5e20;
+      border-radius: 999px; padding: 8px 10px; cursor: pointer;
+    }
+    .site-header .nav-actions { display:flex; align-items:center; gap: 5px; margin-left: 2px; }
+    .site-header .icon-btn { width: 35px; height: 35px; flex: 0 0 35px; }
+    .site-header .cart-count { z-index: 1; }
+    .preview-note { line-height: 1.6; }
+    #products, #about, #footer { scroll-margin-top: 94px; }
+    @media(max-width:960px) {
+      .site-header .nav-links {
+        position: absolute; top: calc(100% + 10px); right: 0; width: min(300px, 90vw);
+        display: none; flex-direction: column; align-items: stretch; gap: 5px;
+        padding: 10px; margin-left: 0; border: 1px solid rgba(46,125,50,.14);
+        border-radius: 18px; background: white; box-shadow: 0 12px 34px rgba(28,82,42,.12);
+      }
+      .site-header .nav-links.open { display: flex; }
+      .site-header .nav-links a { display: flex; justify-content: flex-start; }
+      .site-header .menu-btn { display: inline-flex; margin-left: auto; }
+      .site-header .nav-actions { margin-left: 0; }
+    }
+    @media(max-width:390px) {
+      .site-header .nav.container { gap: 4px; padding-left: 10px; padding-right: 7px; }
+      .site-header .brand-icon { width: 25px; height: 25px; }
+      .site-header .brand-wordmark { height: 16px; }
+      .site-header .icon-btn { width: 32px; height: 32px; flex-basis: 32px; }
+    }
   </style>
 </head>
 <body>
-  <div class="top-strip">KEBOON GROW &nbsp;•&nbsp; HEALTHIER PLANTS, BETTER HARVESTS</div>
-  <div id="previewNote" class="preview-note">Preview storefront — prices are examples only. Set final prices before connecting live Stripe payments.</div>
-  <div id="statusMessage" class="status-message" role="status"></div>
-
   <header class="site-header">
     <nav class="nav container" aria-label="Main navigation">
-      <a href="#home" class="brand" aria-label="KEBOON GROW home">
-        <span class="brand-mark"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M19 4C10 5 5 10 5 17c7 2 13-3 14-13Z"/><path d="M4 21c3-7 7-10 12-13"/></svg></span>
-        <span class="brand-copy"><b>KEBOON</b><small>GROW</small></span>
+      <a href="/" class="brand" aria-label="Keboon home">
+        <img src="/assets/img/ICN-LOGO-1.png" alt="Keboon icon" class="brand-icon" />
+        <img src="/assets/img/keboon-writing.png" alt="Keboon" class="brand-wordmark" />
       </a>
-      <div class="nav-links"><a href="#products">Shop Products</a><a href="#about">Why KEBOON</a><a href="#footer">Contact</a></div>
+
+      <button type="button" class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">☰</button>
+      <div class="nav-links" id="navLinks">
+        <a href="/directory-app-v1/" class="assistant-nav-link">Directory App</a>
+        <a href="/keboon-assist/" class="assistant-nav-link">Garden Setup</a>
+        <a href="#products" class="assistant-nav-link shop-nav-link" aria-current="page">Shop <span class="shop-soon">Coming Soon</span></a>
+        <a href="/#about">About Us</a>
+        <a href="/#contact">Contact Us</a>
+        <a href="/services" class="assistant-nav-link">Our Developer</a>
+      </div>
       <div class="nav-actions">
         <button class="icon-btn" id="navSearch" aria-label="Search products" title="Search"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg></button>
         <button class="icon-btn" id="openCart" aria-label="Open shopping cart" title="Shopping cart"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h2l2.2 11h11.6l2-8H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg><span id="cartCount" class="cart-count">0</span></button>
       </div>
     </nav>
   </header>
+  <div id="previewNote" class="preview-note" role="status"><strong>Shop Coming Soon!</strong> Explore our KEBOON GROW collection and try the cart preview. Prices are examples; checkout is not open yet.</div>
+  <div id="statusMessage" class="status-message" role="status"></div>
 
   <main>
     <section class="hero" id="home">
@@ -185,7 +249,7 @@
   <aside class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Shopping cart" aria-hidden="true">
     <div class="drawer-top"><h2>Your cart <span id="cartTitleCount" style="font-size:13px;color:var(--muted)"></span></h2><button class="close-btn" id="closeCart" aria-label="Close cart">✕</button></div>
     <div class="cart-list" id="cartList"></div>
-    <div class="cart-footer"><div class="cart-row"><span>Subtotal</span><strong class="cart-total" id="cartSubtotal">RM 0.00</strong></div><div class="cart-row"><span>Shipping / delivery</span><span>At checkout (if configured)</span></div><button class="primary-btn" id="checkoutBtn">Proceed to Stripe Checkout <span aria-hidden="true">↗</span></button><div class="cart-help"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg> Secure payment on Stripe's hosted checkout page</div></div>
+    <div class="cart-footer"><div class="cart-row"><span>Subtotal</span><strong class="cart-total" id="cartSubtotal">RM 0.00</strong></div><div class="cart-row"><span>Shipping / delivery</span><span>At checkout (if configured)</span></div><button class="primary-btn" id="checkoutBtn" disabled>Checkout Coming Soon</button><div class="cart-help">The shop is in preview. Payments and orders are not being accepted yet.</div></div>
   </aside>
   <section class="detail-modal" id="detailModal" role="dialog" aria-modal="true" aria-label="Product details" aria-hidden="true"><button class="close-btn modal-x" id="closeDetail" aria-label="Close details">✕</button><div id="detailBody"></div></section>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
@@ -209,10 +273,11 @@
   // ================================================================
   const SHOP_CONFIG = {
     currency: 'MYR',
-    pricesConfirmed: false,        // Change to true ONLY after you set REAL selling prices below.
+    pricesConfirmed: false,        // Set real prices before launch.
+    shopComingSoon: true,          // Keep true until the checkout backend has been deployed and tested.
     checkoutEndpoint: '/api/checkout', // Change if your Stripe server uses a different URL.
-    contactEmail: 'hello@example.com',    // REPLACE with your business email.
-    whatsappUrl: 'https://wa.me/60123456789' // REPLACE with your business WhatsApp number.
+    contactEmail: 'keboon@keboon.net',
+    whatsappUrl: ''                  // Add your real WhatsApp link when ready; hidden until then.
   };
 
   // ================================================================
@@ -255,8 +320,8 @@
     $('#cartCount').textContent=String(cartQuantity());
     $('#cartTitleCount').textContent='('+cartQuantity()+' items)';
     $('#cartSubtotal').textContent=money(cartTotal());
-    $('#checkoutBtn').disabled=!entries.length||busy;
-    $('#checkoutBtn').innerHTML=busy?'Connecting to Stripe…':'Proceed to Stripe Checkout <span aria-hidden="true">↗</span>';
+    $('#checkoutBtn').disabled=SHOP_CONFIG.shopComingSoon || !SHOP_CONFIG.pricesConfirmed || !entries.length || busy;
+    $('#checkoutBtn').innerHTML=SHOP_CONFIG.shopComingSoon?'Checkout Coming Soon':busy?'Connecting to Stripe…':'Proceed to Stripe Checkout <span aria-hidden="true">↗</span>';
     $('#cartList').innerHTML=entries.length?entries.map(([id,quantity])=>{const p=byId(id);return `<div class="cart-item"><img src="${p.image}" alt="${esc(p.name)} bottle"><div><b>${esc(p.name)}</b><small>${esc(p.size)} · ${esc(p.category)}</small><div class="qty"><button data-change="${esc(id)}" data-step="-1" aria-label="Decrease ${esc(p.name)} quantity">−</button><span>${quantity}</span><button data-change="${esc(id)}" data-step="1" aria-label="Increase ${esc(p.name)} quantity">+</button></div><button class="remove-btn" data-remove="${esc(id)}">Remove</button></div><div class="cart-price">${money(quantity*p.price)}</div></div>`}).join(''):
     `<div class="empty-cart">${icons.cart}<h3>Your cart is empty</h3><p>Explore our plant nutrition solutions and add something to get started.</p><button class="secondary-btn" id="startShopping">Explore products</button></div>`;
   }
@@ -270,6 +335,7 @@
   async function checkout(){
     const items=Object.entries(cart).map(([id,quantity])=>({id,quantity})).filter(i=>byId(i.id));
     if(!items.length)return;
+    if(SHOP_CONFIG.shopComingSoon){toast('Checkout is coming soon. We are not accepting orders yet.');return;}
     if(!SHOP_CONFIG.pricesConfirmed){toast('Demo prices are not final. Edit prices and set pricesConfirmed to true first.');return;}
     if(location.protocol==='file:'){toast('Open this shop through your server (localhost or HTTPS) to use Stripe.');return;}
     busy=true;renderCart();
@@ -295,8 +361,9 @@
   function init(){
     $('#year').textContent=new Date().getFullYear();
     $('#heroZinc').src=PRODUCT_IMAGES.zinc;$('#heroAmino').src=PRODUCT_IMAGES.amino;$('#heroCrop').src=PRODUCT_IMAGES.crop;
-    $('#contactEmail').href='mailto:'+SHOP_CONFIG.contactEmail;$('#contactWhatsapp').href=SHOP_CONFIG.whatsappUrl;
-    if(SHOP_CONFIG.pricesConfirmed)$('#previewNote').hidden=true;
+    $('#contactEmail').href='mailto:'+SHOP_CONFIG.contactEmail;
+    if(SHOP_CONFIG.whatsappUrl){$('#contactWhatsapp').href=SHOP_CONFIG.whatsappUrl;}else{$('#contactWhatsapp').hidden=true;}
+    if(SHOP_CONFIG.pricesConfirmed && !SHOP_CONFIG.shopComingSoon)$('#previewNote').hidden=true;
     renderProducts();renderCart();showReturnStatus();
     $('#filters').addEventListener('click',e=>{const btn=e.target.closest('[data-filter]');if(!btn)return;currentFilter=btn.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>{const active=x===btn;x.classList.toggle('active',active);x.setAttribute('aria-pressed',String(active))});renderProducts();});
     $('#searchInput').addEventListener('input',e=>{currentQuery=e.target.value.trim().toLowerCase();renderProducts()});
@@ -305,6 +372,17 @@
     $('#productGrid').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.hasAttribute('data-detail')){e.preventDefault();showDetail(e.target.dataset.detail)}});
     $('#cartList').addEventListener('click',e=>{const change=e.target.closest('[data-change]');const remove=e.target.closest('[data-remove]');if(change)changeQty(change.dataset.change,Number(change.dataset.step));else if(remove)removeItem(remove.dataset.remove);else if(e.target.closest('#startShopping')){closeAll();$('#products').scrollIntoView()}});
     $('#detailModal').addEventListener('click',e=>{const add=e.target.closest('[data-modal-add]');if(add){addToCart(add.dataset.modalAdd);openCart()}});
+    const menuBtn=$('#menuBtn'), navLinks=$('#navLinks');
+    menuBtn.addEventListener('click',()=>{
+      const isOpen=navLinks.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded',String(isOpen));
+      menuBtn.setAttribute('aria-label',isOpen?'Close menu':'Open menu');
+    });
+    navLinks.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{
+      navLinks.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded','false');
+      menuBtn.setAttribute('aria-label','Open menu');
+    }));
     $('#openCart').addEventListener('click',openCart);$('#closeCart').addEventListener('click',closeAll);$('#closeDetail').addEventListener('click',closeAll);$('#overlay').addEventListener('click',closeAll);$('#checkoutBtn').addEventListener('click',checkout);
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll()});
   }
