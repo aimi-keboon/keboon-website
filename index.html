@@ -181,6 +181,15 @@
     font-weight: 800;
   }
 
+  /* Shop is viewable as a preview, but not yet taking orders. */
+  .shop-nav-link { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .shop-soon {
+    display: inline-block; padding: 3px 6px; border-radius: 999px;
+    background: #fff2ce; border: 1px solid #eedda8; color: #785514;
+    font-size: 0.54rem; font-weight: 850; line-height: 1.1;
+    letter-spacing: 0.01em;
+  }
+
   .menu-btn {
     display: none;
     border: none;
@@ -1892,6 +1901,7 @@
       <div class="nav-links" id="navLinks">
         <a href="https://keboon.net/directory-app-v1/" class="assistant-nav-link">Directory App</a>
         <a href="https://keboon.net/keboon-assist/" class="assistant-nav-link">Garden Setup</a>
+        <a href="/shop/" class="assistant-nav-link shop-nav-link">Shop <span class="shop-soon">Coming Soon</span></a>
         <a href="#about">About Us</a>
         <a href="#contact">Contact Us</a>
         <a href="https://keboon.net/services" class="assistant-nav-link">Our Developer</a>
