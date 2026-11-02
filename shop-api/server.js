@@ -2,7 +2,9 @@ import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 import Stripe from 'stripe';
-import { PRODUCT_IDS, validateCart } from './cart.js';
+import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { validateCart } from './cart.js';
 
 const app = express();
 app.disable('x-powered-by');
@@ -12,13 +14,20 @@ const shopUrl = new URL(process.env.SHOP_URL || 'http://localhost:5500/shop/');
 const allowedOrigins = (process.env.ALLOWED_ORIGINS || shopUrl.origin)
   .split(',').map(origin => origin.trim()).filter(Boolean);
 const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY) : null;
-const priceIds = {
-  zinc: process.env.STRIPE_PRICE_ZINC,
-  amino: process.env.STRIPE_PRICE_AMINO,
-  chito: process.env.STRIPE_PRICE_CHITO,
-  soil: process.env.STRIPE_PRICE_SOIL,
-  crop: process.env.STRIPE_PRICE_CROP,
-};
+const cataloguePath = fileURLToPath(new URL('../shop/catalog.json', import.meta.url));
+async function getCatalogue() {
+  const data = JSON.parse(await readFile(cataloguePath, 'utf8'));
+  if (data.currency !== 'MYR' || !Array.isArray(data.products)) throw new Error('Invalid catalogue');
+  const products = new Map();
+  for (const product of data.products) {
+    if (!product || typeof product.id !== 'string' || !/^[a-z0-9-]{1,40}$/.test(product.id) ||
+        typeof product.name !== 'string' || !product.name.trim() || product.name.length > 120 ||
+        !Number.isSafeInteger(product.unitAmount) || product.unitAmount < 100 ||
+        product.unitAmount > 100000000 || products.has(product.id)) throw new Error('Invalid catalogue product');
+    products.set(product.id, product);
+  }
+  return products;
+}
 
 // The webhook MUST receive a raw body, before express.json() is installed.
 app.post('/api/webhook', express.raw({ type: 'application/json', limit: '100kb' }), (req, res) => {
@@ -64,7 +73,6 @@ app.use(express.json({ limit: '10kb' }));
 const configured = () => Boolean(
   stripe && process.env.STRIPE_WEBHOOK_SECRET &&
   process.env.STRIPE_SHIPPING_RATE_ID?.startsWith('shr_') &&
-  PRODUCT_IDS.every(id => priceIds[id]?.startsWith('price_')) &&
   (process.env.NODE_ENV !== 'production' ||
     (process.env.SHOP_URL && shopUrl.protocol === 'https:'))
 );
@@ -78,11 +86,12 @@ app.post('/api/checkout', async (req, res) => {
     return res.status(503).json({ error: 'Checkout is not open yet.' });
   }
 
-  let items;
+  let items, products;
   try {
-    items = validateCart(req.body?.items);
+    products = await getCatalogue();
+    items = validateCart(req.body?.items, products);
   } catch (err) {
-    return res.status(400).json({ error: err.message });
+    return res.status(400).json({ error: 'Invalid cart or catalogue.' });
   }
 
   // Prices and shipping are owned by Stripe, never by customer-side JavaScript.
@@ -90,7 +99,14 @@ app.post('/api/checkout', async (req, res) => {
     const returnUrl = `${shopUrl.origin}${shopUrl.pathname}`;
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
-      line_items: items.map(({ id, quantity }) => ({ price: priceIds[id], quantity })),
+      line_items: items.map(({ id, quantity }) => ({
+        price_data: {
+          currency: 'myr',
+          unit_amount: products.get(id).unitAmount,
+          product_data: { name: products.get(id).name },
+        },
+        quantity,
+      })),
       shipping_address_collection: { allowed_countries: ['MY'] },
       shipping_options: [{ shipping_rate: process.env.STRIPE_SHIPPING_RATE_ID }],
       phone_number_collection: { enabled: true },
