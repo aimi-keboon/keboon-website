@@ -1,3 +1,8 @@
 .DS_Store
 node_modules/
 .vscode/
+
+# Private payment credentials
+.env
+.env.*
+!.env.example
