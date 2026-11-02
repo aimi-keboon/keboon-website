@@ -381,7 +381,8 @@ body { padding-top: 84px; overflow-x: clip; }
     currency: 'MYR',
     pricesConfirmed: false,        // Set real prices before launch.
     shopComingSoon: true,          // Keep true until the checkout backend has been deployed and tested.
-    checkoutEndpoint: '/api/checkout', // Change if your Stripe server uses a different URL.
+    checkoutEndpoint: '/api/checkout', // Replace with deployed HTTPS API URL before launch.
+    sessionStatusEndpoint: '/api/session-status', // Replace with deployed HTTPS API URL before launch.
     contactEmail: 'keboon@keboon.net',
     whatsappUrl: ''                  // Add your real WhatsApp link when ready; hidden until then.
   };
@@ -457,7 +458,7 @@ body { padding-top: 84px; overflow-x: clip; }
     if(checkout==='cancel'){const el=$('#statusMessage');el.classList.add('visible','warning');el.textContent='Checkout was cancelled. Your cart is still here when you are ready.';}
     if(checkout==='success' && session && /^cs_(test_)?[A-Za-z0-9_]+$/.test(session)){
       const el=$('#statusMessage');el.classList.add('visible');el.textContent='Checking the payment status with Stripe…';
-      try{const res=await fetch('/api/session-status?session_id='+encodeURIComponent(session));const data=await res.json();if(!res.ok)throw Error(data.error||'Could not verify payment');
+      try{const res=await fetch(SHOP_CONFIG.sessionStatusEndpoint+'?session_id='+encodeURIComponent(session));const data=await res.json();if(!res.ok)throw Error(data.error||'Could not verify payment');
         if(data.payment_status==='paid'){el.textContent='Payment verified — thank you! Please keep your Stripe receipt for your records.';cart={};saveCart();renderCart();}
         else{el.textContent='Your checkout has returned. Payment is '+(data.payment_status||'being processed')+'. Please check your Stripe receipt.';}
       }catch(e){el.classList.add('warning');el.textContent='Returned from checkout. Payment could not be verified here — please check Stripe or your receipt before considering the order paid.';}
