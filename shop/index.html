@@ -393,13 +393,20 @@ body { padding-top: 84px; overflow-x: clip; }
   // 'id' values must match server.js's Stripe price mapping.
   // Change 'image' to any image URL if you prefer your own files.
   // ================================================================
-  const PRODUCTS = [
-    {id:'zinc', name:'Zinc+', category:'Micronutrient Liquid Fertiliser', group:'growth', badge:'Plant growth', size:'1L', price:38.00, image:PRODUCT_IMAGES.zinc, description:'Micronutrient support for plant growth, health and resilience.', benefits:['Supports strong plant growth','Helps improve plant resilience','Supports crop quality and yield']},
-    {id:'amino', name:'Amino+', category:'Amino Acid & Calcium Fertiliser', group:'growth', badge:'Roots & growth', size:'1L', price:42.00, image:PRODUCT_IMAGES.amino, description:'Amino acid and calcium liquid fertiliser for root development and stronger plant growth.', benefits:['Stimulates root development','Supports plant growth and flowering','Helps plants cope with stress']},
-    {id:'chito', name:'Chito+', category:'Chitooligosaccharide & Calcium', group:'health', badge:'Plant defence', size:'1L', price:45.00, image:PRODUCT_IMAGES.chito, description:'A chitosan-based formula developed to support natural plant defence and healthier growth.', benefits:['Supports plant defence','Helps improve stress tolerance','Supports root and plant health']},
-    {id:'soil', name:'Soil+ 4-in-1', category:'Humic Acid, Amino Acids & NPK', group:'soil', badge:'Soil care', size:'1L', price:52.00, image:PRODUCT_IMAGES.soil, description:'4-in-1 soil and root nutrition formula to support soil fertility and nutrient uptake.', benefits:['Supports soil fertility','Promotes root development','Helps nutrient uptake']},
-    {id:'crop', name:'CropVital', category:'Advanced Plant Nutrition', group:'health', badge:'Crop support', size:'1L', price:48.00, image:PRODUCT_IMAGES.crop, description:'Advanced plant nutrition and stress support for strong crops, flowering and quality yields.', benefits:['Supports healthy plant growth','Supports flowering and quality yield','Helps plant stress tolerance']}
-  ];
+  // Edit shop/catalog.json to add, remove, or reprice products.
+  // This same catalogue is read by the Stripe backend to validate checkout totals.
+  let PRODUCTS = [];
+  async function loadCatalogue() {
+    const response = await fetch('./catalog.json', { cache: 'no-store' });
+    if (!response.ok) throw new Error('Unable to load product catalogue.');
+    const catalogue = await response.json();
+    if (catalogue.currency !== 'MYR' || !Array.isArray(catalogue.products)) throw new Error('Invalid product catalogue.');
+    PRODUCTS = catalogue.products.map(p => ({
+      ...p,
+      price: p.unitAmount / 100,
+      image: PRODUCT_IMAGES[p.imageKey] || p.imageUrl || '',
+    }));
+  }
 
   // Everything after this line is site logic; you usually do not need to edit it.
   const $ = s => document.querySelector(s);
@@ -465,7 +472,14 @@ body { padding-top: 84px; overflow-x: clip; }
     }
     if(checkout)window.history.replaceState({},'',url.pathname+url.hash);
   }
-  function init(){
+  async function init(){
+    try { await loadCatalogue(); } catch(e) {
+      const notice = document.querySelector('#previewNote');
+      notice.hidden = false;
+      notice.textContent = 'Shop products are temporarily unavailable. Please try again later.';
+      console.error('Catalogue load failed');
+      return;
+    }
     $('#year').textContent=new Date().getFullYear();
     $('#heroZinc').src=PRODUCT_IMAGES.zinc;$('#heroAmino').src=PRODUCT_IMAGES.amino;$('#heroCrop').src=PRODUCT_IMAGES.crop;
     $('#contactEmail').href='mailto:'+SHOP_CONFIG.contactEmail;
