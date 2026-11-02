@@ -1,32 +1,28 @@
-# KEBOON GROW — Stripe Checkout API
+# KEBOON GROW — dynamic Stripe Checkout
 
-The storefront at https://keboon.net/shop/ is a static site. Deploy this Node.js API separately (Render, Railway, or another Node host), and configure the storefront API URLs.
+The storefront at https://keboon.net/shop/ uses **shop/catalog.json** as the editable product catalogue. Add, remove or edit product entries in that file: no Stripe product or Price ID setup is needed. All prices are in integer sen (`unitAmount: 3800` means RM38.00). The displayed price is derived from the catalogue; at checkout, the API **re-reads that same trusted server-side file** and builds Stripe Checkout `price_data` for the selected product IDs and quantities.
 
-## Required private backend environment variables
-Copy .env.example for local testing only. Never commit a real .env file or paste API keys into chat.
+Do not accept a client-supplied total or unit amount. Customers can edit browser JavaScript, and Stripe will charge exactly what your server requests, not what you intended.
 
-- STRIPE_SECRET_KEY: test-mode first; live key only after testing.
-- STRIPE_WEBHOOK_SECRET: Stripe webhook signing secret for POST /api/webhook.
-- STRIPE_PRICE_ZINC, STRIPE_PRICE_AMINO, STRIPE_PRICE_CHITO, STRIPE_PRICE_SOIL, STRIPE_PRICE_CROP: MYR one-time Stripe Price IDs for each 1L product. Stripe prices are authoritative, not frontend display prices.
-- STRIPE_SHIPPING_RATE_ID: Stripe Shipping Rate ID (shr_...) in MYR; a free shipping rate works if intended.
-- SHOP_URL: https://keboon.net/shop/
-- ALLOWED_ORIGINS: https://keboon.net (add https://www.keboon.net if it hosts the shop too).
-- ACCEPT_ORDERS: false until ready.
+## Hosting and credentials
+GitHub Pages cannot run server-side Stripe code. Deploy the Node service on a separate HTTPS host. Deploy the same Git commit of `shop/catalog.json` with that service and the storefront to keep product prices synchronized. The production backend should be rebuilt/redeployed whenever the catalogue changes.
 
-## Setup
-1. Create test-mode Stripe products, prices and shipping rate.
-2. Run Node.js 20+: npm install, npm test, npm start.
-3. Deploy to an HTTPS Node host and set environment variables in its secret manager.
-4. Configure a Stripe webhook pointing to https://YOUR-API-HOST/api/webhook; subscribe to checkout.session.completed, checkout.session.async_payment_succeeded and checkout.session.async_payment_failed.
-5. Set SHOP_CONFIG.checkoutEndpoint and SHOP_CONFIG.sessionStatusEndpoint in shop/index.html to the deployed HTTPS endpoints.
-6. On a staging storefront, enable pricesConfirmed and disable shopComingSoon; set backend ACCEPT_ORDERS=true in test mode and test successful/cancelled payments, shipping, and webhook handling.
-7. After confirmation of product amounts, shipping rules, tax requirements, and fulfillment procedures, switch to matching live Price IDs and live credentials and enable the live storefront.
+Copy `.env.example` for local testing. Never commit actual secrets. Set on your backend hosting provider:
+- `STRIPE_SECRET_KEY`: Stripe test key initially.
+- `STRIPE_WEBHOOK_SECRET`: Stripe signing secret for POST /api/webhook.
+- `STRIPE_SHIPPING_RATE_ID`: existing Stripe Shipping Rate (shr_...). The shop currently requires a single Malaysia-wide shipping rate; ask before activating if shipping varies by region.
+- `SHOP_URL=https://keboon.net/shop/`
+- `ALLOWED_ORIGINS=https://keboon.net`
+- `ACCEPT_ORDERS=false` until test mode is ready.
 
-## Notes
-This MVP allows shipping to Malaysia only, with **one** Stripe Shipping Rate nationwide. Region-dependent shipping will need separate logic before launch.
+Run Node.js 20+ in `shop-api` via `npm install`, `npm test`, `npm start`. Set the browser's `SHOP_CONFIG.checkoutEndpoint` and `SHOP_CONFIG.sessionStatusEndpoint` to the deployed HTTPS API URLs.
 
-The signed webhook logs paid Checkout Session IDs; it does not yet automate fulfillment, email dispatch or external order databases. Process paid orders in the Stripe Dashboard until fulfillment storage is implemented. Do not fulfill from browser redirects alone.
+Register the Stripe webhook for `checkout.session.completed`, `checkout.session.async_payment_succeeded`, and `checkout.session.async_payment_failed`. The signed webhook logs paid session IDs; use Stripe Dashboard to manage fulfillment until a durable order database/notifications are implemented. **Do not fulfill from browser redirects.**
 
-POST /api/checkout takes only product IDs and quantities and uses server-side Price IDs. GET /api/session-status returns minimal payment status. GET /api/health reports readiness without revealing credentials.
+After payment and shipping testing in Stripe test mode, confirm real product prices and shipping/tax requirements, update credentials and webhooks to live mode, and only then set `shopComingSoon: false`, `pricesConfirmed: true`, and backend `ACCEPT_ORDERS=true`.
 
-Before public launch, configure production availability monitoring and rate limiting.
+## Limitations before production launch
+- One fixed Stripe Shipping Rate for Malaysia, no regional shipping logic yet.
+- No automated fulfillment or persistent order database.
+- Add rate limits and hosting uptime monitoring before public launch.
+- The product catalogue must be deployed consistently to both frontend and backend.
