@@ -36,12 +36,12 @@ Reference: https://docs.stripe.com/checkout/quickstart , https://docs.stripe.com
 
 ## Dedicated Google Apps Script for paid shop orders
 
-The standalone Apps Script source is at `shop/apps-script/Code.gs`. It creates a **separate, private KEBOON Shop — Paid Orders spreadsheet**, with one row per verified paid Stripe Checkout Session. This is not connected to any existing Apps Script project or spreadsheet.
+The standalone Apps Script source is at `shop/apps-script/Code.gs`. It uses the **existing KEBOON Shop Google Sheet supplied by the owner**, adding a dedicated `Paid Orders` tab with one row per verified paid Stripe Checkout Session. It does not rename, replace or delete existing tabs. The Apps Script project itself is separate from other projects.
 
 1. Go to https://script.google.com/ and create a **new standalone project** called `KEBOON Shop — Order Register`.
 2. Replace `Code.gs` with the code in `shop/apps-script/Code.gs`.
-3. Open Project Settings → Script properties. Add `SHOP_SHARED_SECRET` with a securely generated, random 32+ character secret. Do **not** commit it anywhere.
-4. Run `setupShopOrders()` once and authorize Sheets access. The execution log shows a new spreadsheet URL; keep that sheet private. The function is idempotent and will reuse its own Sheet on later runs.
+3. Open Project Settings → Script properties. Add **`SHOP_SPREADSHEET_ID`** = `1InMg53GIhbM3cLIZVH8U-NS-OyvWAA_WlByqoGo5cw0` (the Sheet ID provided by the shop owner), and **`SHOP_SHARED_SECRET`** = a securely generated random 32+ character secret. Do **not** commit the secret anywhere.
+4. Run `setupShopOrders()` once from an Apps Script Google account that can **edit the linked spreadsheet**, and authorize Sheets access. The function creates a new `Paid Orders` tab only when missing, without altering other tabs. If an existing `Paid Orders` tab has incompatible headers, setup refuses to overwrite it. Keep the spreadsheet private.
 5. Deploy → New deployment → **Web app**, execute as **Me**, access **Anyone** (needed for your trusted payment server to post). Copy its `https://script.google.com/macros/s/.../exec` URL.
 6. Set the following **private** environment variables on your deployed Node payment server:
    - `SHOP_APPS_SCRIPT_URL` = the deployed Apps Script Web App `/exec` URL
@@ -57,4 +57,4 @@ Google Apps Script serializes writes with `LockService`, and deduplicates on Str
 
 The Google Sheet is for fulfillment operations, while Stripe remains the system of record for actual payment status and invoices. Editing the Sheet never changes a Stripe payment. Customers' names, emails, phone numbers and shipping addresses are personal information; keep access limited to trusted KEBOON staff. A real customer email invoice is configured in Stripe (successful-payment customer emails), not sent by Apps Script.
 
-**Status: setup code provided, but no standalone Apps Script project, live Sheet, script deployment or live payment webhook has been created.**
+**Status: The owner supplied an existing Google Sheet link. Direct Google Drive connector access returned 403, so its tab structure and permissions could not be verified. The Apps Script code is prepared to use that Sheet after its owner configures `SHOP_SPREADSHEET_ID` and grants the script-running account edit access. No Apps Script project or web app deployment, payment server deployment, or live webhook has been created.**
