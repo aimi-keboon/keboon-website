@@ -16,13 +16,14 @@
       1) Product names, specifications, suggested retail prices (MYR), images
       2) Contact email and WhatsApp link
       3) SHOP_CONFIG.pricesConfirmed (SRPs from the 2026 distributor catalog)
-      4) SHOP_CONFIG.checkoutEndpoint (default: /api/checkout)
+      4) SHOP_CONFIG.appsScriptUrl (the deployed Google Apps Script /exec URL)
 
     IMPORTANT STRIPE SECURITY:
       Never paste a sk_test_ / sk_live_ secret key into this HTML!
-      A separate backend (see shop/payment-server/) creates Stripe Checkout Sessions.
-      Store Stripe secrets only in the backend environment. Never commit them.
-      The browser sends product IDs, quantities, email and phone; the server recalculates prices.
+      A separate Google Apps Script project creates Checkout Sessions and checks
+      Stripe payments. Secret keys must stay in Apps Script Script Properties.
+      Product IDs, quantities, email and phone are sent by an ordinary form POST;
+      server-side Apps Script validates the cart and recalculates prices.
   -->
   <style>
     :root {--deep:#0c3324;--forest:#155438;--green:#187b4e;--lime:#d5e9a1;--cream:#f7f8f2;--paper:#fff;--pale:#e9f2e6;--ink:#1b3025;--muted:#687b6c;--line:#e2e9df;--shadow:0 20px 60px rgba(16,54,35,.12);--radius:18px;}
@@ -360,7 +361,7 @@ body { padding-top: 84px; overflow-x: clip; }
   <aside class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Shopping cart" aria-hidden="true">
     <div class="drawer-top"><h2>Your cart <span id="cartTitleCount" style="font-size:13px;color:var(--muted)"></span></h2><button class="close-btn" id="closeCart" aria-label="Close cart">✕</button></div>
     <div class="cart-list" id="cartList"></div>
-    <div class="cart-footer"><form id="orderContactForm" class="order-contact" novalidate><label for="orderEmail">Email address <span aria-hidden="true">*</span></label><input id="orderEmail" type="email" name="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required maxlength="254"><label for="orderPhone">Phone / WhatsApp number <span aria-hidden="true">*</span></label><input id="orderPhone" type="tel" name="phone" autocomplete="tel" placeholder="+60 12 345 6789" required maxlength="24" minlength="7"><small>Required for your order and Stripe invoice. Your payment is completed securely on Stripe.</small></form><div class="cart-row"><span>Subtotal</span><strong class="cart-total" id="cartSubtotal">RM 0.00</strong></div><div class="cart-row"><span>Shipping / delivery</span><span>At checkout (if configured)</span></div><button class="primary-btn" id="checkoutBtn" disabled>Checkout Coming Soon</button><div class="cart-help">Checkout is not live yet. After payment, Stripe can email your paid invoice to the address above.</div></div>
+    <div class="cart-footer"><form id="orderContactForm" class="order-contact" novalidate><label for="orderEmail">Email address <span aria-hidden="true">*</span></label><input id="orderEmail" type="email" name="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required maxlength="254"><label for="orderPhone">Phone / WhatsApp number <span aria-hidden="true">*</span></label><input id="orderPhone" type="tel" name="phone" autocomplete="tel" placeholder="+60 12 345 6789" required maxlength="24" minlength="7"><small>Required for your order. We will open a secure Stripe payment link after you submit your details.</small></form><div class="cart-row"><span>Subtotal</span><strong class="cart-total" id="cartSubtotal">RM 0.00</strong></div><div class="cart-row"><span>Shipping / delivery</span><span>At checkout (if configured)</span></div><button class="primary-btn" id="checkoutBtn" disabled>Checkout Coming Soon</button><div class="cart-help">When checkout is enabled, you will be taken to KEBOON&#39;s Apps Script payment handoff and then Stripe. Stripe can email a paid invoice when customer emails are enabled.</div></div>
   </aside>
   <section class="detail-modal" id="detailModal" role="dialog" aria-modal="true" aria-label="Product details" aria-hidden="true"><button class="close-btn modal-x" id="closeDetail" aria-label="Close details">✕</button><div id="detailBody"></div></section>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
@@ -409,8 +410,8 @@ body { padding-top: 84px; overflow-x: clip; }
   const SHOP_CONFIG = {
     currency: 'MYR',
     pricesConfirmed: true,         // 2026 catalog SRPs; checkout stays disabled below.
-    shopComingSoon: true,          // Keep true until backend, webhook, invoices and test payments are verified.
-    checkoutEndpoint: '',          // HTTPS URL of deployed backend, e.g. https://YOUR-SERVICE.onrender.com/api/checkout.
+    shopComingSoon: true,          // Keep true until Apps Script, Stripe, Sheets, invoices and testing are verified.
+    appsScriptUrl: '',            // Deploy shop/apps-script/Code.gs, then paste its /exec URL here.
     contactEmail: 'keboon@keboon.net',
     whatsappUrl: ''                  // Add your real WhatsApp link when ready; hidden until then.
   };
@@ -486,8 +487,8 @@ body { padding-top: 84px; overflow-x: clip; }
     $('#cartCount').textContent=String(cartQuantity());
     $('#cartTitleCount').textContent='('+cartQuantity()+' items)';
     $('#cartSubtotal').textContent=money(cartTotal());
-    $('#checkoutBtn').disabled=SHOP_CONFIG.shopComingSoon || !SHOP_CONFIG.checkoutEndpoint || !SHOP_CONFIG.pricesConfirmed || !entries.length || busy;
-    $('#checkoutBtn').innerHTML=SHOP_CONFIG.shopComingSoon?'Checkout Coming Soon':busy?'Connecting to Stripe…':'Proceed to Stripe Checkout <span aria-hidden="true">↗</span>';
+    $('#checkoutBtn').disabled=SHOP_CONFIG.shopComingSoon || !SHOP_CONFIG.appsScriptUrl || !SHOP_CONFIG.pricesConfirmed || !entries.length || busy;
+    $('#checkoutBtn').innerHTML=SHOP_CONFIG.shopComingSoon?'Checkout Coming Soon':busy?'Opening secure checkout…':'Submit Order &amp; Continue to Payment <span aria-hidden="true">↗</span>';
     $('#cartList').innerHTML=entries.length?entries.map(([id,quantity])=>{const p=byId(id);return `<div class="cart-item"><img src="${p.image}" alt="Illustration of ${esc(p.name)} bottle"><div><b>${esc(p.name)}</b><small>${esc(p.size)} · ${esc(p.category)}</small><div class="qty"><button data-change="${esc(id)}" data-step="-1" aria-label="Decrease ${esc(p.name)} quantity">−</button><span>${quantity}</span><button data-change="${esc(id)}" data-step="1" aria-label="Increase ${esc(p.name)} quantity">+</button></div><button class="remove-btn" data-remove="${esc(id)}">Remove</button></div><div class="cart-price">${money(quantity*p.price)}</div></div>`}).join(''):
     `<div class="empty-cart">${icons.cart}<h3>Your cart is empty</h3><p>Explore our plant nutrition solutions and add something to get started.</p><button class="secondary-btn" id="startShopping">Explore products</button></div>`;
   }
@@ -498,35 +499,48 @@ body { padding-top: 84px; overflow-x: clip; }
   function closeAll(){ $('#cartDrawer').classList.remove('open');$('#detailModal').classList.remove('open');$('#cartDrawer').setAttribute('aria-hidden','true');$('#detailModal').setAttribute('aria-hidden','true');$('#overlay').classList.remove('open');document.body.style.overflow=''; }
   function openCart(){closeAll();showOverlay();renderCart();$('#cartDrawer').classList.add('open');$('#cartDrawer').setAttribute('aria-hidden','false');$('#closeCart').focus();}
   function showDetail(id){const p=byId(id);if(!p)return;closeAll();$('#detailBody').innerHTML=`<div class="detail-grid"><div class="detail-image"><img src="${p.image}" alt="Illustration of ${esc(p.name)} bottle"></div><div class="detail-copy"><div class="eyebrow">${esc(p.category)}</div><h2>${esc(p.name)}</h2><p>${esc(p.description)}</p><ul>${p.benefits.map(b=>`<li>${esc(b)}</li>`).join('')}</ul><div class="detail-specs"><p><strong>Suitable crops:</strong> ${esc(p.targetCrops)}</p><p><strong>Active composition</strong></p><ul>${p.activeComposition.map(item=>`<li>${esc(item)}</li>`).join('')}</ul><p><strong>Application & dosing</strong></p><ul>${p.directions.map(item=>`<li>${esc(item)}</li>`).join('')}</ul><p><strong>Distributor packaging:</strong> ${p.cartonQty} bottles per carton · Label ${esc(p.labelSize)}</p></div><div class="detail-actions"><div><span class="price">${money(p.price)}</span><span class="price-label">SRP per bottle</span></div><button class="primary-btn" data-modal-add="${esc(id)}">${icons.plus} Add to cart</button></div></div></div>`;showOverlay();$('#detailModal').classList.add('open');$('#detailModal').setAttribute('aria-hidden','false');$('#closeDetail').focus();}
-  async function checkout(){
+  function checkout(){
     const items=Object.entries(cart).map(([id,quantity])=>({id,quantity})).filter(i=>byId(i.id));
     if(!items.length)return;
     if(SHOP_CONFIG.shopComingSoon){toast('Checkout is coming soon. We are not accepting orders yet.');return;}
     if(!SHOP_CONFIG.pricesConfirmed){toast('Please confirm catalog prices before checkout.');return;}
-    if(!SHOP_CONFIG.checkoutEndpoint){toast('Payment server is not configured.');return;}
-    const form=$('#orderContactForm');
-    if(!form.reportValidity())return;
+    if(!/^https:\/\/script\.google\.com\/macros\/s\/[^/?#]+\/exec$/.test(SHOP_CONFIG.appsScriptUrl)){
+      toast('Payment service is not configured.');return;
+    }
+    const contact=$('#orderContactForm');
+    if(!contact.reportValidity())return;
     const email=$('#orderEmail').value.trim();
     const phone=$('#orderPhone').value.trim();
-    if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)||!/^\\+?[0-9 ()-]{7,24}$/.test(phone)){toast('Enter a valid email address and phone number.');return;}
-    if(location.protocol==='file:'){toast('Open this shop through your server (localhost or HTTPS) to use Stripe.');return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||!/^\+?[0-9 ()-]{7,24}$/.test(phone)){
+      toast('Enter a valid email and phone number.');return;
+    }
+    // Use a browser-native form POST: fetch() would fail for cross-origin Apps
+    // Script web apps and would not allow navigating to their HTML responses.
+    const submitForm=document.createElement('form');
+    submitForm.method='POST';
+    submitForm.action=SHOP_CONFIG.appsScriptUrl;
+    submitForm.target='_self';
+    submitForm.style.display='none';
+    for(const [name,value] of Object.entries({email,phone,items:JSON.stringify(items)})){
+      const input=document.createElement('input');
+      input.type='hidden';input.name=name;input.value=value;
+      submitForm.appendChild(input);
+    }
+    document.body.appendChild(submitForm);
     busy=true;renderCart();
-    try {
-      const response=await fetch(SHOP_CONFIG.checkoutEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items,email,phone})});
-      const data=await response.json();
-      if(!response.ok || !data.url || !/^https:\/\/checkout\.stripe\.com\//.test(data.url)) throw new Error(data.error||'Stripe checkout is not available.');
-      window.location.assign(data.url);
-    } catch(err){busy=false;renderCart();toast(err.message||'Unable to connect to Stripe. Please try again.');}
+    submitForm.submit();
   }
-  async function showReturnStatus(){
-    const url=new URL(window.location.href), checkout=url.searchParams.get('checkout'), session=url.searchParams.get('session_id');
-    if(checkout==='cancel'){const el=$('#statusMessage');el.classList.add('visible','warning');el.textContent='Checkout was cancelled. Your cart is still here when you are ready.';}
-    if(checkout==='success' && session && /^cs_(test_)?[A-Za-z0-9_]+$/.test(session)){
-      const el=$('#statusMessage');el.classList.add('visible');el.textContent='Checking the payment status with Stripe…';
-      try{const res=await fetch(new URL('/api/session-status?session_id='+encodeURIComponent(session),SHOP_CONFIG.checkoutEndpoint));const data=await res.json();if(!res.ok)throw Error(data.error||'Could not verify payment');
-        if(data.payment_status==='paid'){el.textContent='Payment verified — thank you! Stripe will send your invoice by email if payment emails are enabled in your Stripe settings.';cart={};saveCart();renderCart();}
-        else{el.textContent='Your checkout has returned. Payment is '+(data.payment_status||'being processed')+'. Please check your Stripe receipt.';}
-      }catch(e){el.classList.add('warning');el.textContent='Returned from checkout. Payment could not be verified here — please check Stripe or your receipt before considering the order paid.';}
+  function showReturnStatus(){
+    const url=new URL(window.location.href), checkout=url.searchParams.get('checkout');
+    const status=$('#statusMessage');
+    if(checkout==='cancel'){
+      status.classList.add('visible','warning');
+      status.textContent='Checkout cancelled. You have not been charged for this attempt. Your cart is still here.';
+    }
+    if(checkout==='success'){
+      status.classList.add('visible');
+      status.textContent='Thanks! Stripe returned you to the shop. Your payment will be verified separately in the KEBOON order register. If you paid, Stripe can email your invoice when enabled. Avoid placing a duplicate order while confirmation is pending.';
+      // Never infer that payment was successful from the browser URL.
     }
     if(checkout)window.history.replaceState({},'',url.pathname+url.hash);
   }
