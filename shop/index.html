@@ -10,7 +10,7 @@
     KEBOON GROW — SELF-CONTAINED STOREFRONT
     ------------------------------------------------------------
     ALL website CSS and JavaScript are inside this single HTML file.
-    Product illustrations are created directly in this file; replace with approved packaging photos when available.
+    Product photos are sourced from the KEBOON artwork supplied by the shop owner; Imuno+ uses an illustration until approved photos arrive.
 
     FIND 'EDIT HERE' near the bottom of this HTML to change:
       1) Product names, specifications, suggested retail prices (MYR), images
@@ -304,7 +304,7 @@ body { padding-top: 84px; overflow-x: clip; }
       <div class="nav-links" id="navLinks">
         <a href="/directory-app-v1/" class="assistant-nav-link">Directory App</a>
         <a href="/keboon-assist/" class="assistant-nav-link">Garden Setup</a>
-        <a href="#products" class="assistant-nav-link shop-nav-link" aria-current="page">Shop <span class="shop-soon">Coming Soon</span></a>
+        <a href="#products" class="assistant-nav-link shop-nav-link" aria-current="page">Shop</a>
         <a href="/#about">About Us</a>
         <a href="/#contact">Contact Us</a>
         <a href="/services" class="assistant-nav-link">Our Developer</a>
@@ -315,7 +315,6 @@ body { padding-top: 84px; overflow-x: clip; }
       </div>
     </nav>
   </header>
-  <div id="previewNote" class="preview-note" role="status"><strong>Shop Coming Soon!</strong> 2026 catalog suggested retail prices (SRP) are shown. Checkout is not open yet; bottle images are illustrations.</div>
   <div id="statusMessage" class="status-message" role="status"></div>
 
   <main>
@@ -410,7 +409,7 @@ body { padding-top: 84px; overflow-x: clip; }
   const SHOP_CONFIG = {
     currency: 'MYR',
     pricesConfirmed: true,         // 2026 catalog SRPs; checkout stays disabled below.
-    shopComingSoon: false,          // Keep true until Apps Script, Stripe, Sheets, invoices and testing are verified.
+    shopComingSoon: false,          // Live shop: use true to pause customer checkout.
     appsScriptUrl: 'https://script.google.com/macros/s/AKfycby3kGzUyLeQBtk0NDtVTAQTubcZHqoDMnsB41xWvCBRJSegqUpFyE98tkKZ8RGncFHTIw/exec', // Deployed KEBOON Shop Apps Script web app.
     contactEmail: 'keboon@keboon.net',
     whatsappUrl: ''                  // Add your real WhatsApp link when ready; hidden until then.
@@ -549,7 +548,6 @@ body { padding-top: 84px; overflow-x: clip; }
     $('#heroImuno').src=PRODUCT_IMAGES.imuno;$('#heroSoil').src=PRODUCT_IMAGES.soil;$('#heroVital').src=PRODUCT_IMAGES.vital;
     $('#contactEmail').href='mailto:'+SHOP_CONFIG.contactEmail;
     if(SHOP_CONFIG.whatsappUrl){$('#contactWhatsapp').href=SHOP_CONFIG.whatsappUrl;}else{$('#contactWhatsapp').hidden=true;}
-    if(SHOP_CONFIG.pricesConfirmed && !SHOP_CONFIG.shopComingSoon)$('#previewNote').hidden=true;
     renderProducts();renderCart();showReturnStatus();
     $('#filters').addEventListener('click',e=>{const btn=e.target.closest('[data-filter]');if(!btn)return;currentFilter=btn.dataset.filter;document.querySelectorAll('[data-filter]').forEach(x=>{const active=x===btn;x.classList.toggle('active',active);x.setAttribute('aria-pressed',String(active))});renderProducts();});
     $('#searchInput').addEventListener('input',e=>{currentQuery=e.target.value.trim().toLowerCase();renderProducts()});
