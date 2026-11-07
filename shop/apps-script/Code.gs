@@ -6,11 +6,13 @@
  * Stripe-Signature, then forwards an HMAC-authenticated paid-order summary here.
  *
  * Before deploying:
- *   1. Run setupShopOrders() once to create a separate Google Sheet.
- *   2. Project Settings > Script properties:
- *      SHOP_SHARED_SECRET = an independently generated random secret (32+ chars).
+ *   1. In Project Settings > Script properties, set:
+ *      SHOP_SPREADSHEET_ID = ID of your existing private KEBOON Shop spreadsheet
+ *      SHOP_SHARED_SECRET = a random independent secret (32+ characters)
+ *   2. Run setupShopOrders() to add a dedicated "Paid Orders" tab, preserving
+ *      all existing spreadsheet tabs and their data.
  *   3. Deploy > New deployment > Web app; execute as Me; access Anyone.
- *   4. Put deployment URL and same secret in your payment server's private env.
+ *   4. Put deployment URL and the same secret in your payment server's private env.
  * Never put the shared secret in GitHub, web pages, or a Sheet cell.
  */
 const SHOP_TAB = 'Paid Orders';
@@ -23,25 +25,27 @@ const SHOP_HEADERS = [
 
 function setupShopOrders() {
   const properties = PropertiesService.getScriptProperties();
-  let spreadsheetId = properties.getProperty('SHOP_SPREADSHEET_ID');
-  let book;
-
-  if (spreadsheetId) {
-    book = SpreadsheetApp.openById(spreadsheetId);
-  } else {
-    book = SpreadsheetApp.create('KEBOON Shop — Paid Orders');
-    spreadsheetId = book.getId();
-    properties.setProperty('SHOP_SPREADSHEET_ID', spreadsheetId);
+  // Keep the user's spreadsheet ID in private Apps Script properties, not GitHub.
+  const spreadsheetId = (properties.getProperty('SHOP_SPREADSHEET_ID') || '').trim();
+  if (!/^[A-Za-z0-9_-]{20,}$/.test(spreadsheetId)) {
+    throw new Error('First set SHOP_SPREADSHEET_ID to the existing Google Sheet ID in Script properties.');
   }
+  const book = SpreadsheetApp.openById(spreadsheetId);
 
+  // Create a *new tab* without replacing or renaming any existing tabs.
   let sheet = book.getSheetByName(SHOP_TAB);
-  if (!sheet) {
-    const initial = book.getSheets();
-    sheet = (initial.length === 1 && initial[0].getLastRow() === 0)
-      ? initial[0].setName(SHOP_TAB)
-      : book.insertSheet(SHOP_TAB);
+  if (!sheet) sheet = book.insertSheet(SHOP_TAB);
+  if (sheet.getMaxColumns() < SHOP_HEADERS.length) {
+    sheet.insertColumnsAfter(sheet.getMaxColumns(), SHOP_HEADERS.length - sheet.getMaxColumns());
   }
-  if (sheet.getLastRow() === 0) {
+
+  if (sheet.getLastRow() > 0) {
+    // Never overwrite a pre-existing tab that happens to have the same name.
+    const currentHeaders = sheet.getRange(1, 1, 1, SHOP_HEADERS.length).getValues()[0];
+    if (currentHeaders.some((v, i) => String(v) !== SHOP_HEADERS[i])) {
+      throw new Error('Existing Paid Orders tab has different columns. Nothing was overwritten.');
+    }
+  } else {
     sheet.getRange(1, 1, 1, SHOP_HEADERS.length).setValues([SHOP_HEADERS]);
     sheet.getRange(1, 1, 1, SHOP_HEADERS.length)
       .setBackground('#14563d').setFontColor('#ffffff').setFontWeight('bold');
@@ -63,11 +67,9 @@ function setupShopOrders() {
         .setAllowInvalid(false).build());
   }
 
-  // The sheet is private to your Google account by default.
-  console.log('KEBOON Shop orders spreadsheet: ' + book.getUrl());
+  console.log('KEBOON Shop Paid Orders tab: ' + book.getUrl());
   return book.getUrl();
 }
-
 function doPost(e) {
   try {
     const input = e && e.postData && e.postData.contents;
