@@ -369,6 +369,8 @@ body { padding-top: 84px; overflow-x: clip; }
   // Representative product illustrations; the distributor PDF has no bottle photographs.
   function bottleArtwork(name, size, accent, subtitle) {
     const fontSize = name.length > 9 ? 23 : 43;
+    // Escape SVG text content: unescaped '&' in the Soil+ subtitle breaks SVG parsing.
+    const escapeSvgText = value => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="440" height="520" viewBox="0 0 440 520">
       <defs>
         <linearGradient id="bottle" x1="0" x2="1"><stop offset="0" stop-color="#e9f0e6"/><stop offset=".47" stop-color="#ffffff"/><stop offset="1" stop-color="#d7e6d8"/></linearGradient>
@@ -383,10 +385,10 @@ body { padding-top: 84px; overflow-x: clip; }
       <text x="220" y="212" font-family="Arial,sans-serif" font-weight="800" fill="#ffffff" font-size="17" text-anchor="middle">KEBOON</text>
       <text x="220" y="233" font-family="Arial,sans-serif" font-weight="700" fill="#d9edb3" font-size="13" text-anchor="middle" letter-spacing="3">GROW</text>
       <rect x="150" y="256" width="140" height="5" rx="2" fill="${accent}"/>
-      <text x="220" y="311" font-family="Arial,sans-serif" font-size="${fontSize}" font-weight="800" text-anchor="middle" fill="#163a29">${name}</text>
-      <text x="220" y="343" font-family="Arial,sans-serif" font-size="10" text-anchor="middle" fill="#52705a">${subtitle}</text>
+      <text x="220" y="311" font-family="Arial,sans-serif" font-size="${fontSize}" font-weight="800" text-anchor="middle" fill="#163a29">${escapeSvgText(name)}</text>
+      <text x="220" y="343" font-family="Arial,sans-serif" font-size="10" text-anchor="middle" fill="#52705a">${escapeSvgText(subtitle)}</text>
       <path d="M166 361H274" stroke="#d5e2d4" stroke-width="2"/>
-      <text x="220" y="392" font-family="Arial,sans-serif" font-size="20" font-weight="700" text-anchor="middle" fill="${accent}">${size}</text>
+      <text x="220" y="392" font-family="Arial,sans-serif" font-size="20" font-weight="700" text-anchor="middle" fill="${accent}">${escapeSvgText(size)}</text>
       <text x="220" y="502" font-family="Arial,sans-serif" font-size="13" text-anchor="middle" fill="#738676">ILLUSTRATION · NOT FINAL PACKAGING</text>
     </svg>`;
     return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
