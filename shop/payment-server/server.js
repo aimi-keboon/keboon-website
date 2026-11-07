@@ -1,6 +1,7 @@
 import express from 'express';
 import rateLimit from 'express-rate-limit';
 import Stripe from 'stripe';
+import {createHmac} from 'node:crypto';
 
 const app = express();
 app.disable('x-powered-by');
@@ -20,6 +21,75 @@ const shopUrl = process.env.PUBLIC_SHOP_URL || 'https://keboon.net/shop/';
 const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'https://keboon.net,https://www.keboon.net')
   .split(',').map(x => x.trim()).filter(Boolean);
 const checkoutEnabled = process.env.CHECKOUT_ENABLED === 'true';
+const appsScriptUrl = process.env.SHOP_APPS_SCRIPT_URL || '';
+const appsScriptSecret = process.env.SHOP_APPS_SCRIPT_SECRET || '';
+if (appsScriptUrl && !/^https:\/\/script\.google\.com\/macros\/s\/[^/?#]+\/exec$/.test(appsScriptUrl)) {
+  throw new Error('SHOP_APPS_SCRIPT_URL must be the deployed /exec HTTPS URL');
+}
+if (appsScriptUrl && appsScriptSecret.length < 32) {
+  throw new Error('SHOP_APPS_SCRIPT_SECRET must be 32 or more characters when Apps Script is configured');
+}
+if (checkoutEnabled && !appsScriptUrl) {
+  throw new Error('Configure SHOP_APPS_SCRIPT_URL before enabling checkout');
+}
+
+const safeText = value => String(value || '').slice(0, 3800);
+function postalAddress(address) {
+  if (!address) return '';
+  return [
+    address.line1, address.line2, address.city,
+    address.state, address.postal_code, address.country
+  ].filter(Boolean).map(safeText).join(', ');
+}
+
+async function syncPaidOrderToAppsScript(session, eventId) {
+  if (!appsScriptUrl) return;
+
+  // Stripe is the source of truth; never trust payment-status fields from the browser.
+  const [lineItems, customer, invoice] = await Promise.all([
+    stripe.checkout.sessions.listLineItems(session.id, {limit:100}),
+    session.customer ? stripe.customers.retrieve(session.customer) : null,
+    session.invoice ? stripe.invoices.retrieve(session.invoice) : null
+  ]);
+  const details = session.customer_details || {};
+  const shipping = session.collected_information?.shipping_details || session.shipping_details || {};
+  const shippingCents = session.total_details?.amount_shipping ??
+    session.shipping_cost?.amount_total ?? 0;
+  const subtotalCents = session.amount_subtotal ??
+    Math.max(0,(session.amount_total || 0)-shippingCents);
+
+  const message = JSON.stringify({
+    sessionId:session.id,
+    eventId,
+    sentAt:Date.now(),
+    paymentStatus:session.payment_status,
+    paidAt:new Date().toISOString(),
+    currency:session.currency,
+    email:details.email || (customer && !customer.deleted ? customer.email : '') || '',
+    phone:details.phone || (customer && !customer.deleted ? customer.phone : '') || '',
+    customerName:details.name || shipping.name || '',
+    shippingAddress:postalAddress(shipping.address || details.address),
+    customerId:typeof session.customer === 'string' ? session.customer : session.customer?.id || '',
+    invoiceUrl:invoice?.hosted_invoice_url || '',
+    amountSubtotal:subtotalCents,
+    amountShipping:shippingCents,
+    amountTotal:session.amount_total,
+    items:lineItems.data.map(item => ({name:safeText(item.description),quantity:item.quantity}))
+  });
+  const signature = createHmac('sha256', appsScriptSecret).update(message,'utf8').digest('hex');
+  const response = await fetch(appsScriptUrl, {
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify({message,signature}),
+    redirect:'follow',
+    signal:AbortSignal.timeout(15000)
+  });
+  if (!response.ok) throw new Error('Apps Script returned HTTP ' + response.status);
+  const result = await response.json();
+  if (!result.ok || result.sessionId !== session.id) {
+    throw new Error('Apps Script did not confirm order entry');
+  }
+}
 const feeRaw = process.env.SHIPPING_FEE_MYR;
 const shippingFee = feeRaw === undefined || !/^(0|[1-9]\d*)(\.\d{1,2})?$/.test(feeRaw)
   ? null : Math.round(Number(feeRaw) * 100);
@@ -52,10 +122,10 @@ app.post('/webhook', express.raw({type:'application/json', limit:'256kb'}), asyn
         event.type === 'checkout.session.async_payment_succeeded') {
       const session = event.data.object;
       if (session.payment_status === 'paid') {
-        // Stripe creates and emails the paid invoice using invoice_creation in Checkout.
-        // Fulfill orders only after this verified paid event; add an idempotent
-        // database/fulfillment job here before automating shipping.
-        console.info('Paid order recorded in Stripe', {session:session.id, amount:session.amount_total});
+        // Stripe creates the paid invoice; customer emails depend on Stripe settings.
+        // Retry delivery of verified orders to the dedicated Google Sheet if needed.
+        await syncPaidOrderToAppsScript(session, event.id);
+        console.info('Paid order verified and synced', {session:session.id, amount:session.amount_total});
       }
     } else if (event.type === 'checkout.session.async_payment_failed') {
       console.info('Payment failed', {session:event.data.object.id});
