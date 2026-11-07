@@ -326,10 +326,10 @@ body { padding-top: 84px; overflow-x: clip; }
           <p>Discover the KEBOON GROW collection — thoughtfully developed liquid fertiliser and plant nutrition solutions for healthier roots, resilient plants and thriving gardens.</p>
           <div class="hero-actions"><a class="primary-btn" href="#products">Explore Products <span aria-hidden="true">↗</span></a><a class="secondary-btn" href="#about">Our Promise</a></div>
         </div>
-        <div class="hero-art" aria-label="Illustrations of Imuno+, Soil+ 4-in-1 and Vital+ products">
+        <div class="hero-art" aria-label="KEBOON GROW Imuno+, Soil+ 4-in-1 and Vital+ packaging">
           <img class="hero-bottle left" id="heroImuno" alt="Imuno+ 250 mL bottle illustration">
-          <img class="hero-bottle middle" id="heroSoil" alt="Soil+ 4-in-1 1 litre bottle illustration">
-          <img class="hero-bottle right" id="heroVital" alt="Vital+ 1 litre bottle illustration">
+          <img class="hero-bottle middle" id="heroSoil" alt="Soil+ 4-in-1 product packaging">
+          <img class="hero-bottle right" id="heroVital" alt="Vital+ product packaging shown as CropVital">
           <div class="float-label"><b>4 plant solutions</b><small>One greener future</small></div>
         </div>
       </div>
@@ -347,7 +347,7 @@ body { padding-top: 84px; overflow-x: clip; }
           <button class="filter-chip active" data-filter="all" aria-pressed="true">All products</button><button class="filter-chip" data-filter="growth" aria-pressed="false">Plant growth</button><button class="filter-chip" data-filter="soil" aria-pressed="false">Roots &amp; soil</button><button class="filter-chip" data-filter="health" aria-pressed="false">Plant health</button>
         </div><label class="search-box"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg><input id="searchInput" type="search" placeholder="Search products..." aria-label="Search products"></label></div>
         <div class="product-grid" id="productGrid" aria-live="polite"></div>
-        <p class="catalog-source-note">Specifications and suggested retail prices are from the KEBOON GROW 2026 distributor catalog. Always follow the directions and precautions on the final product label. Bottle artwork is illustrative.</p>
+        <p class="catalog-source-note">Prices and technical specifications follow the KEBOON GROW 2026 distributor catalog. Product photos were provided by KEBOON; Zinc+ artwork shows a 1 L bottle while this listing is for 250 mL, and Vital+ uses CropVital artwork. Imuno+ still uses an illustration. Confirm packaging and follow the final product label.</p>
       </div>
     </section>
 
@@ -366,7 +366,7 @@ body { padding-top: 84px; overflow-x: clip; }
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script>
-  // Representative product illustrations; the distributor PDF has no bottle photographs.
+  // Imuno+ uses a temporary illustration; other product photos are cropped from owner-provided artwork.
   function bottleArtwork(name, size, accent, subtitle) {
     const fontSize = name.length > 9 ? 23 : 43;
     // Escape SVG text content: unescaped '&' in the Soil+ subtitle breaks SVG parsing.
@@ -395,9 +395,9 @@ body { padding-top: 84px; overflow-x: clip; }
   }
   const PRODUCT_IMAGES = {
     imuno: bottleArtwork('Imuno+', '250 mL', '#275bba', 'PLANT IMMUNE PROTEIN'),
-    zinc: bottleArtwork('Zinc+', '250 mL', '#178b57', 'MICRONUTRIENT ZINC'),
-    soil: bottleArtwork('Soil+ 4-in-1', '1 Litre', '#915533', 'SOIL CONDITIONER & NPK'),
-    vital: bottleArtwork('Vital+', '1 Litre', '#df8510', 'PLANT IMMUNE INDUCER')
+    zinc: '/shop/images/zinc.webp',
+    soil: '/shop/images/soil.webp',
+    vital: '/shop/images/vital.webp' // Owner confirmed CropVital artwork represents Vital+.
   };
   </script>
   <script>
@@ -408,7 +408,7 @@ body { padding-top: 84px; overflow-x: clip; }
   // ================================================================
   const SHOP_CONFIG = {
     currency: 'MYR',
-    pricesConfirmed: true,         // 2026 catalog SRPs; checkout stays disabled below.
+    pricesConfirmed: true,         // Confirmed 2026 catalogue retail prices.
     shopComingSoon: false,          // Live shop: use true to pause customer checkout.
     appsScriptUrl: 'https://script.google.com/macros/s/AKfycby3kGzUyLeQBtk0NDtVTAQTubcZHqoDMnsB41xWvCBRJSegqUpFyE98tkKZ8RGncFHTIw/exec', // Deployed KEBOON Shop Apps Script web app.
     contactEmail: 'keboon@keboon.net',
@@ -418,8 +418,8 @@ body { padding-top: 84px; overflow-x: clip; }
   // ================================================================
   // EDIT HERE #2 — PRODUCT CATALOGUE / DISPLAY PRICES
   // Official suggested retail prices (SRP), from the 2026 distributor catalog.
-  // Map product IDs to the checkout backend only when it is ready.
-  // Replace illustrations with approved product photography when available.
+  // IDs and prices must match the Google Apps Script Stripe Checkout catalog.
+  // The zinc photo depicts a 1 L bottle; the product sold here is 250 mL.
   // ================================================================
   const PRODUCTS = [
     {
