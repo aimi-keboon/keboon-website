@@ -51,7 +51,7 @@ The browser **does not call Stripe APIs directly** and cannot alter prices: the 
 ## 3. Test in Stripe's test/sandbox environment
 
 1. Verify Stripe account setup. Open https://dashboard.stripe.com/test/apikeys (or select the appropriate sandbox in your Dashboard) and use the **test** secret key in Script Properties. Do not use your live secret for testing.
-2. Confirm the Shopify/Apps Script `SHOP_SHIPPING_FEE_MYR` value and tax requirements. This example does **not** calculate taxes automatically.
+2. Confirm the Apps Script `SHOP_SHIPPING_FEE_MYR` value and tax requirements. This example does **not** calculate taxes automatically.
 3. Change Script Property `SHOP_CHECKOUT_ENABLED` to `true` so the Apps Script can create **test** sessions. Keep the GitHub shop in coming-soon mode while you conduct an isolated test, then toggle `shopComingSoon:false` temporarily on a test branch/page if desired. **Never allow a live customer to use a test Stripe key thinking they are paying for an order.**
 4. With a properly configured test storefront, add a product and enter a valid email and phone. Submit; a Google Apps Script page should show a **Continue to secure Stripe payment** button. Click it, then pay with a Stripe test card.
 5. Return to the website. The return page intentionally does not mark the order paid just because you were redirected. Check the **Shop Orders** tab; within roughly 5 minutes (plus trigger timing), Apps Script should query Stripe directly and change `Payment Status` from `Pending` to `Paid`. It records the Stripe customer and invoice link when available, and only then changes fulfillment status to `New`.
