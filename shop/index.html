@@ -359,25 +359,25 @@ body { padding-top: 84px; overflow-x: clip; }
   .hero-banner-image { border-radius:9px; }
 }
   </style>
+  <link rel="stylesheet" href="/assets/keboon-nav.css">
 </head>
 <body>
-  <header class="site-header">
-    <nav class="nav container" aria-label="Main navigation">
-      <a href="/" class="brand" aria-label="Keboon home">
-        <img src="/assets/img/ICN-LOGO-1.png" alt="Keboon icon" class="brand-icon" />
-        <img src="/assets/img/keboon-writing.png" alt="Keboon" class="brand-wordmark" />
+  <header class="kb-site-header">
+    <nav class="kb-site-nav" aria-label="Main navigation">
+      <a class="kb-site-home" href="/" aria-label="KEBOON home">
+        <img class="kb-site-home-icon" src="/assets/img/ICN-LOGO-1.png" alt="" width="28" height="28">
+        <img class="kb-site-home-wordmark" src="/assets/img/keboon-writing.png" alt="KEBOON">
       </a>
-
-      <button type="button" class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">☰</button>
-      <div class="nav-links" id="navLinks">
-        <a href="/directory-app-v1/" class="assistant-nav-link">Directory App</a>
-        <a href="/keboon-assist/" class="assistant-nav-link">Garden Setup</a>
-        <a href="#products" class="assistant-nav-link shop-nav-link" aria-current="page">Shop</a>
+      <button class="kb-site-menu-toggle" type="button" aria-controls="kbSiteLinks" aria-expanded="false" aria-label="Open navigation menu">☰</button>
+      <div class="kb-site-links" id="kbSiteLinks">
+        <a class="kb-site-feature" href="/directory-app-v1/">Directory App</a>
+        <a class="kb-site-feature" href="/keboon-assist/">Garden Setup</a>
+        <a class="kb-site-feature" href="/shop/" aria-current="page">Shop</a>
         <a href="/#about">About Us</a>
         <a href="/#contact">Contact Us</a>
-        <a href="/services" class="assistant-nav-link">Our Developer</a>
+        <a class="kb-site-feature" href="/services/">Our Developer</a>
       </div>
-      <div class="nav-actions">
+      <div class="kb-site-actions">
         <button class="icon-btn" id="navSearch" aria-label="Search products" title="Search"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg></button>
         <button class="icon-btn" id="openCart" aria-label="Open shopping cart" title="Shopping cart"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h2l2.2 11h11.6l2-8H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg><span id="cartCount" class="cart-count">0</span></button>
       </div>
@@ -627,21 +627,11 @@ body { padding-top: 84px; overflow-x: clip; }
     $('#productGrid').addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.hasAttribute('data-detail')){e.preventDefault();showDetail(e.target.dataset.detail)}});
     $('#cartList').addEventListener('click',e=>{const change=e.target.closest('[data-change]');const remove=e.target.closest('[data-remove]');if(change)changeQty(change.dataset.change,Number(change.dataset.step));else if(remove)removeItem(remove.dataset.remove);else if(e.target.closest('#startShopping')){closeAll();$('#products').scrollIntoView()}});
     $('#detailModal').addEventListener('click',e=>{const add=e.target.closest('[data-modal-add]');if(add){addToCart(add.dataset.modalAdd);openCart()}});
-    const menuBtn=$('#menuBtn'), navLinks=$('#navLinks');
-    menuBtn.addEventListener('click',()=>{
-      const isOpen=navLinks.classList.toggle('open');
-      menuBtn.setAttribute('aria-expanded',String(isOpen));
-      menuBtn.setAttribute('aria-label',isOpen?'Close menu':'Open menu');
-    });
-    navLinks.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{
-      navLinks.classList.remove('open');
-      menuBtn.setAttribute('aria-expanded','false');
-      menuBtn.setAttribute('aria-label','Open menu');
-    }));
     $('#openCart').addEventListener('click',openCart);$('#closeCart').addEventListener('click',closeAll);$('#closeDetail').addEventListener('click',closeAll);$('#overlay').addEventListener('click',closeAll);$('#checkoutBtn').addEventListener('click',checkout);
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll()});
   }
   init();
   </script>
+  <script src="/assets/keboon-nav.js" defer></script>
 </body>
 </html>
