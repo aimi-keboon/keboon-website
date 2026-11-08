@@ -1816,7 +1816,8 @@
   }
 }
 </style>
-  </head>
+    <link rel="stylesheet" href="/assets/keboon-nav.css">
+</head>
 
   <body>
     <!-- Spaces That Grow Event Poster Popup -->
@@ -1890,23 +1891,24 @@
       </symbol>
     </svg>
 
-    <nav class="nav" aria-label="Main navigation">
-      <a href="#top" class="brand" aria-label="Keboon home">
-        <img src="/assets/img/ICN-LOGO-1.png" alt="Keboon icon" class="brand-icon" />
-        <img src="/assets/img/keboon-writing.png" alt="Keboon" class="brand-wordmark" />
-      </a>
-
-      <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
-
-      <div class="nav-links" id="navLinks">
-        <a href="https://keboon.net/directory-app-v1/" class="assistant-nav-link">Directory App</a>
-        <a href="https://keboon.net/keboon-assist/" class="assistant-nav-link">Garden Setup</a>
-        <a href="/shop/" class="assistant-nav-link shop-nav-link">Shop</a>
-        <a href="#about">About Us</a>
-        <a href="#contact">Contact Us</a>
-        <a href="https://keboon.net/services" class="assistant-nav-link">Our Developer</a>
-      </div>
-    </nav>
+    <header class="kb-site-header">
+      <nav class="kb-site-nav" aria-label="Main navigation">
+        <a class="kb-site-home" href="/" aria-label="KEBOON home">
+          <img class="kb-site-home-icon" src="/assets/img/ICN-LOGO-1.png" alt="" width="28" height="28">
+          <img class="kb-site-home-wordmark" src="/assets/img/keboon-writing.png" alt="KEBOON">
+        </a>
+        <button class="kb-site-menu-toggle" type="button" aria-controls="kbSiteLinks" aria-expanded="false" aria-label="Open navigation menu">☰</button>
+        <div class="kb-site-links" id="kbSiteLinks">
+          <a class="kb-site-feature" href="/directory-app-v1/">Directory App</a>
+          <a class="kb-site-feature" href="/keboon-assist/">Garden Setup</a>
+          <a class="kb-site-feature" href="/shop/">Shop</a>
+          <a href="/#about">About Us</a>
+          <a href="/#contact">Contact Us</a>
+          <a class="kb-site-feature" href="/services/">Our Developer</a>
+        </div>
+        
+      </nav>
+    </header>
 
     <main id="top">
       <header class="hero">
@@ -2321,19 +2323,7 @@
     <div class="toast" id="toast">Keboon local food signal selected.</div>
 
     <script>
-      const navLinks = document.getElementById("navLinks");
-      const menuBtn = document.getElementById("menuBtn");
       const toast = document.getElementById("toast");
-
-      menuBtn.addEventListener("click", () => {
-        navLinks.classList.toggle("open");
-      });
-
-      navLinks.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => {
-          navLinks.classList.remove("open");
-        });
-      });
 
       document.querySelectorAll(".tab").forEach((tab) => {
         tab.addEventListener("click", () => {
@@ -2463,5 +2453,6 @@
         });
       });
     </script>
-  </body>
+    <script src="/assets/keboon-nav.js" defer></script>
+</body>
 </html>
