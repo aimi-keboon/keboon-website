@@ -671,54 +671,34 @@
         }
       }
     </style>
+    <link rel="stylesheet" href="/assets/keboon-nav.css" />
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg fixed-top navbar-dark">
-      <div class="container">
-        <a
-          class="navbar-brand d-flex align-items-center"
-          href="#top"
-          aria-label="Keboon Technology Solution home"
-        >
-          <img
-            src="/assets/img/keboon-writing.png"
-            alt="Keboon Technology Solution logo"
-            class="site-logo"
-          />
+    <header class="kb-site-header">
+      <nav class="kb-site-nav" aria-label="Main navigation">
+        <a class="kb-site-home" href="/" aria-label="KEBOON home">
+          <img class="kb-site-home-icon" src="/assets/img/ICN-LOGO-1.png" alt="" width="28" height="28">
+          <img class="kb-site-home-wordmark" src="/assets/img/keboon-writing.png" alt="KEBOON">
         </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#mainNav"
-          aria-controls="mainNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="mainNav">
-          <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-            <li class="nav-item">
-              <a class="nav-link" href="#services">Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#pricing">Fees</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#portfolio">Portfolio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#addons">Support</a>
-            </li>
-            <li class="nav-item">
-              <a class="btn btn-primary ms-lg-2" href="#contact">Get Quote</a>
-            </li>
-          </ul>
+        <button class="kb-site-menu-toggle" type="button" aria-controls="kbSiteLinks" aria-expanded="false" aria-label="Open navigation menu">☰</button>
+        <div class="kb-site-links" id="kbSiteLinks">
+          <a class="kb-site-feature" href="/directory-app-v1/">Directory App</a>
+          <a class="kb-site-feature" href="/keboon-assist/">Garden Setup</a>
+          <a class="kb-site-feature" href="/shop/">Shop</a>
+          <a href="/#about">About Us</a>
+          <a href="/#contact">Contact Us</a>
+          <a class="kb-site-feature" href="/services/" aria-current="page">Our Developer</a>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </header>
+    <div style="padding-top:84px"><nav class="kb-local-links" aria-label="Page sections">
+  <a href="#services">Services</a>
+  <a href="#pricing">Fees</a>
+  <a href="#portfolio">Portfolio</a>
+  <a href="#addons">Support</a>
+  <a href="#contact">Get Quote</a>
+</nav></div>
 
     <main id="top">
       <section class="hero">
@@ -1300,5 +1280,6 @@
         setSubject();
       });
     </script>
+    <script src="/assets/keboon-nav.js" defer></script>
   </body>
 </html>
