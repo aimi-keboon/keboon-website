@@ -113,9 +113,27 @@
     </script>
 
     <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="/assets/keboon-nav.css" />
   </head>
 
-  <body>
+  <body class="kb-site-layout">
+    <header class="kb-site-header">
+      <nav class="kb-site-nav" aria-label="Main navigation">
+        <a class="kb-site-home" href="/" aria-label="KEBOON home">
+          <img class="kb-site-home-icon" src="/assets/img/ICN-LOGO-1.png" alt="" width="28" height="28">
+          <img class="kb-site-home-wordmark" src="/assets/img/keboon-writing.png" alt="KEBOON">
+        </a>
+        <button class="kb-site-menu-toggle" type="button" aria-controls="kbSiteLinks" aria-expanded="false" aria-label="Open navigation menu">☰</button>
+        <div class="kb-site-links" id="kbSiteLinks">
+          <a class="kb-site-feature" href="/directory-app-v1/">Directory App</a>
+          <a class="kb-site-feature" href="/keboon-assist/">Garden Setup</a>
+          <a class="kb-site-feature" href="/shop/">Shop</a>
+          <a href="/#about">About Us</a>
+          <a href="/#contact">Contact Us</a>
+          <a class="kb-site-feature" href="/services/">Our Developer</a>
+        </div>
+      </nav>
+    </header>
     <div id="site-scale-wrapper">
       <div id="site-content">
         <header class="navbar">
@@ -598,5 +616,6 @@
     </div>
 
     <script src="./script.js"></script>
+    <script src="/assets/keboon-nav.js" defer></script>
   </body>
 </html>
