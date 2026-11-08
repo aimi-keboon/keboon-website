@@ -7,37 +7,33 @@
     <title>Vibe Coding Bootcamp Booking</title>
 
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="/assets/keboon-nav.css" />
   </head>
 
-  <body>
+  <body class="kb-site-layout">
+    <header class="kb-site-header">
+      <nav class="kb-site-nav" aria-label="Main navigation">
+        <a class="kb-site-home" href="/" aria-label="KEBOON home">
+          <img class="kb-site-home-icon" src="/assets/img/ICN-LOGO-1.png" alt="" width="28" height="28">
+          <img class="kb-site-home-wordmark" src="/assets/img/keboon-writing.png" alt="KEBOON">
+        </a>
+        <button class="kb-site-menu-toggle" type="button" aria-controls="kbSiteLinks" aria-expanded="false" aria-label="Open navigation menu">☰</button>
+        <div class="kb-site-links" id="kbSiteLinks">
+          <a class="kb-site-feature" href="/directory-app-v1/">Directory App</a>
+          <a class="kb-site-feature" href="/keboon-assist/">Garden Setup</a>
+          <a class="kb-site-feature" href="/shop/">Shop</a>
+          <a href="/#about">About Us</a>
+          <a href="/#contact">Contact Us</a>
+          <a class="kb-site-feature" href="/services/">Our Developer</a>
+        </div>
+      </nav>
+    </header>
     <main class="page">
-      <nav class="nav">
-        <div class="brand">
-          <div class="brand-icon" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M5 16.5L3 21l4.5-2M15.5 3.5c-3.8 1-7.1 4.3-9.4 8.7l5.7 5.7c4.4-2.3 7.7-5.6 8.7-9.4.4-1.5.4-3 .1-4.2-1.2-.3-2.7-.3-4.2.1z"
-                stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M14 7.5a2.5 2.5 0 1 0 3.5 3.5A2.5 2.5 0 0 0 14 7.5z"
-                stroke="white"
-                stroke-width="2"
-              />
-            </svg>
-          </div>
-          <span>Vibe Coding Bootcamp</span>
-        </div>
-
-        <div class="nav-links">
-          <a href="#benefits">Benefits</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#partner">Referral Partner</a>
-          <a class="nav-cta" href="#booking">Reserve Seat</a>
-        </div>
+      <nav class="kb-local-links" aria-label="Page sections">
+        <a href="#benefits">Benefits</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#partner">Referral Partner</a>
+        <a href="#booking">Reserve Seat</a>
       </nav>
 
       <section class="hero">
@@ -1121,5 +1117,6 @@
     </main>
 
     <script src="script.js"></script>
+    <script src="/assets/keboon-nav.js" defer></script>
   </body>
 </html>
