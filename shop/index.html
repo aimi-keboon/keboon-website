@@ -10,7 +10,7 @@
     KEBOON GROW — SELF-CONTAINED STOREFRONT
     ------------------------------------------------------------
     ALL website CSS and JavaScript are inside this single HTML file.
-    Product photos are sourced from the KEBOON artwork supplied by the shop owner; Imuno+ uses an illustration until approved photos arrive.
+    Product photos are sourced from the KEBOON artwork supplied by the shop owner.
 
     FIND 'EDIT HERE' near the bottom of this HTML to change:
       1) Product names, specifications, suggested retail prices (MYR), images
@@ -356,7 +356,7 @@ body { padding-top: 84px; overflow-x: clip; }
           <div class="hero-actions"><a class="primary-btn" href="#products">Explore Products <span aria-hidden="true">↗</span></a><a class="secondary-btn" href="#about">Our Promise</a></div>
         </div>
         <div class="hero-art" aria-label="KEBOON GROW Imuno+, Soil+ 4-in-1 and Vital+ packaging">
-          <img class="hero-bottle left" id="heroImuno" alt="Imuno+ 250 mL bottle illustration">
+          <img class="hero-bottle left" id="heroImuno" alt="Imuno+ 250 mL product packaging">
           <img class="hero-bottle middle" id="heroSoil" alt="Soil+ 4-in-1 product packaging">
           <img class="hero-bottle right" id="heroVital" alt="Vital+ product packaging shown as CropVital">
         </div>
@@ -394,7 +394,7 @@ body { padding-top: 84px; overflow-x: clip; }
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <script>
-  // Imuno+ uses a temporary illustration; other product photos are cropped from owner-provided artwork.
+  // Owner-provided product photos are stored under /shop/images/.
   function bottleArtwork(name, size, accent, subtitle) {
     const fontSize = name.length > 9 ? 23 : 43;
     // Escape SVG text content: unescaped '&' in the Soil+ subtitle breaks SVG parsing.
@@ -422,7 +422,7 @@ body { padding-top: 84px; overflow-x: clip; }
     return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
   }
   const PRODUCT_IMAGES = {
-    imuno: bottleArtwork('Imuno+', '250 mL', '#275bba', 'PLANT IMMUNE PROTEIN'),
+    imuno: '/shop/images/imuno.webp',
     zinc: '/shop/images/zinc.webp',
     soil: '/shop/images/soil.webp',
     vital: '/shop/images/vital.webp' // Owner confirmed CropVital artwork represents Vital+.
@@ -505,7 +505,7 @@ body { padding-top: 84px; overflow-x: clip; }
     const filtered=PRODUCTS.filter(p=>(currentFilter==='all'||p.group===currentFilter) && (p.name+' '+p.category+' '+p.description+' '+p.targetCrops+' '+p.activeComposition.join(' ')).toLowerCase().includes(currentQuery));
     $('#resultsCount').textContent=filtered.length+' product'+(filtered.length===1?'':'s');
     $('#productGrid').innerHTML=filtered.length?filtered.map(p=>`<article class="product-card">
-      <div class="product-visual" role="button" tabindex="0" data-detail="${esc(p.id)}" aria-label="View ${esc(p.name)} details"><span class="pill">${esc(p.badge)}</span><img src="${p.image}" loading="lazy" alt="Illustration of ${esc(p.name)} ${esc(p.size)} bottle"></div>
+      <div class="product-visual" role="button" tabindex="0" data-detail="${esc(p.id)}" aria-label="View ${esc(p.name)} details"><span class="pill">${esc(p.badge)}</span><img src="${p.image}" loading="lazy" alt="${esc(p.name)} ${esc(p.size)} product photo"></div>
       <div class="product-info"><div class="product-kicker">${esc(p.size)} &nbsp;·&nbsp; ${esc(p.category)}</div><h3 data-detail="${esc(p.id)}" tabindex="0" role="button">${esc(p.name)}</h3><p>${esc(p.description)}</p>
       <div class="product-bottom"><div><span class="price">${money(p.price)}</span><span class="price-label">SRP per bottle</span></div><button class="add-btn" data-add="${esc(p.id)}" aria-label="Add ${esc(p.name)} to cart" title="Add to cart">${icons.plus}</button></div></div></article>`).join(''):'<div class="no-products">No matching products. Try another search or category.</div>';
   }
@@ -516,7 +516,7 @@ body { padding-top: 84px; overflow-x: clip; }
     $('#cartSubtotal').textContent=money(cartTotal());
     $('#checkoutBtn').disabled=SHOP_CONFIG.shopComingSoon || !SHOP_CONFIG.appsScriptUrl || !SHOP_CONFIG.pricesConfirmed || !entries.length || busy;
     $('#checkoutBtn').innerHTML=SHOP_CONFIG.shopComingSoon?'Checkout Coming Soon':busy?'Opening secure checkout…':'Submit Order &amp; Continue to Payment <span aria-hidden="true">↗</span>';
-    $('#cartList').innerHTML=entries.length?entries.map(([id,quantity])=>{const p=byId(id);return `<div class="cart-item"><img src="${p.image}" alt="Illustration of ${esc(p.name)} bottle"><div><b>${esc(p.name)}</b><small>${esc(p.size)} · ${esc(p.category)}</small><div class="qty"><button data-change="${esc(id)}" data-step="-1" aria-label="Decrease ${esc(p.name)} quantity">−</button><span>${quantity}</span><button data-change="${esc(id)}" data-step="1" aria-label="Increase ${esc(p.name)} quantity">+</button></div><button class="remove-btn" data-remove="${esc(id)}">Remove</button></div><div class="cart-price">${money(quantity*p.price)}</div></div>`}).join(''):
+    $('#cartList').innerHTML=entries.length?entries.map(([id,quantity])=>{const p=byId(id);return `<div class="cart-item"><img src="${p.image}" alt="${esc(p.name)} product photo"><div><b>${esc(p.name)}</b><small>${esc(p.size)} · ${esc(p.category)}</small><div class="qty"><button data-change="${esc(id)}" data-step="-1" aria-label="Decrease ${esc(p.name)} quantity">−</button><span>${quantity}</span><button data-change="${esc(id)}" data-step="1" aria-label="Increase ${esc(p.name)} quantity">+</button></div><button class="remove-btn" data-remove="${esc(id)}">Remove</button></div><div class="cart-price">${money(quantity*p.price)}</div></div>`}).join(''):
     `<div class="empty-cart">${icons.cart}<h3>Your cart is empty</h3><p>Explore our plant nutrition solutions and add something to get started.</p><button class="secondary-btn" id="startShopping">Explore products</button></div>`;
   }
   function addToCart(id){if(!byId(id))return;cart[id]=Math.min(20,(cart[id]||0)+1);saveCart();renderCart();toast(byId(id).name+' added to cart')}
@@ -525,7 +525,7 @@ body { padding-top: 84px; overflow-x: clip; }
   function showOverlay(){ $('#overlay').classList.add('open');document.body.style.overflow='hidden'; }
   function closeAll(){ $('#cartDrawer').classList.remove('open');$('#detailModal').classList.remove('open');$('#cartDrawer').setAttribute('aria-hidden','true');$('#detailModal').setAttribute('aria-hidden','true');$('#overlay').classList.remove('open');document.body.style.overflow=''; }
   function openCart(){closeAll();showOverlay();renderCart();$('#cartDrawer').classList.add('open');$('#cartDrawer').setAttribute('aria-hidden','false');$('#closeCart').focus();}
-  function showDetail(id){const p=byId(id);if(!p)return;closeAll();$('#detailBody').innerHTML=`<div class="detail-grid"><div class="detail-image"><img src="${p.image}" alt="Illustration of ${esc(p.name)} bottle"></div><div class="detail-copy"><div class="eyebrow">${esc(p.category)}</div><h2>${esc(p.name)}</h2><p>${esc(p.description)}</p><ul>${p.benefits.map(b=>`<li>${esc(b)}</li>`).join('')}</ul><div class="detail-specs"><p><strong>Suitable crops:</strong> ${esc(p.targetCrops)}</p><p><strong>Active composition</strong></p><ul>${p.activeComposition.map(item=>`<li>${esc(item)}</li>`).join('')}</ul><p><strong>Application & dosing</strong></p><ul>${p.directions.map(item=>`<li>${esc(item)}</li>`).join('')}</ul><p><strong>Distributor packaging:</strong> ${p.cartonQty} bottles per carton · Label ${esc(p.labelSize)}</p></div><div class="detail-actions"><div><span class="price">${money(p.price)}</span><span class="price-label">SRP per bottle</span></div><button class="primary-btn" data-modal-add="${esc(id)}">${icons.plus} Add to cart</button></div></div></div>`;showOverlay();$('#detailModal').classList.add('open');$('#detailModal').setAttribute('aria-hidden','false');$('#closeDetail').focus();}
+  function showDetail(id){const p=byId(id);if(!p)return;closeAll();$('#detailBody').innerHTML=`<div class="detail-grid"><div class="detail-image"><img src="${p.image}" alt="${esc(p.name)} product photo"></div><div class="detail-copy"><div class="eyebrow">${esc(p.category)}</div><h2>${esc(p.name)}</h2><p>${esc(p.description)}</p><ul>${p.benefits.map(b=>`<li>${esc(b)}</li>`).join('')}</ul><div class="detail-specs"><p><strong>Suitable crops:</strong> ${esc(p.targetCrops)}</p><p><strong>Active composition</strong></p><ul>${p.activeComposition.map(item=>`<li>${esc(item)}</li>`).join('')}</ul><p><strong>Application & dosing</strong></p><ul>${p.directions.map(item=>`<li>${esc(item)}</li>`).join('')}</ul><p><strong>Distributor packaging:</strong> ${p.cartonQty} bottles per carton · Label ${esc(p.labelSize)}</p></div><div class="detail-actions"><div><span class="price">${money(p.price)}</span><span class="price-label">SRP per bottle</span></div><button class="primary-btn" data-modal-add="${esc(id)}">${icons.plus} Add to cart</button></div></div></div>`;showOverlay();$('#detailModal').classList.add('open');$('#detailModal').setAttribute('aria-hidden','false');$('#closeDetail').focus();}
   function checkout(){
     const items=Object.entries(cart).map(([id,quantity])=>({id,quantity})).filter(i=>byId(i.id));
     if(!items.length)return;
