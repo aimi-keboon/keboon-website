@@ -319,6 +319,45 @@ body { padding-top: 84px; overflow-x: clip; }
   .cart-footer { padding:18px 16px 24px; }
   .drawer-top { padding:17px 16px; }
 }
+
+/* The owner's 2172 x 724 product lineup banner uses the full hero width. */
+.hero-inner {
+  grid-template-columns:minmax(0,1fr);
+  min-height:0;
+  gap:0;
+}
+.hero-content {
+  width:100%;
+  padding:36px 0 22px;
+}
+.hero-content h1 {
+  max-width:none;
+  margin:14px 0 14px;
+  font-size:clamp(36px,4.7vw,56px);
+}
+.hero-content p { max-width:740px; margin-bottom:18px; }
+.hero-banner { width:100%; min-width:0; margin:0 auto 28px; }
+.hero-banner-image {
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio:3 / 1;
+  object-fit:contain;
+  border-radius:16px;
+  box-shadow:0 14px 32px rgba(14,65,34,.12);
+}
+@media (max-width:900px) {
+  .hero-content { padding:28px 0 19px; }
+  .hero-content h1 { max-width:740px; margin:12px auto; }
+  .hero-content p { max-width:650px; margin:0 auto 18px; }
+  .hero-banner { margin-bottom:22px; }
+}
+@media (max-width:600px) {
+  .hero-content { padding:24px 0 18px; }
+  .hero-content h1 { font-size:clamp(32px,8vw,43px); }
+  .hero-banner { margin-bottom:17px; }
+  .hero-banner-image { border-radius:9px; }
+}
   </style>
 </head>
 <body>
@@ -355,10 +394,15 @@ body { padding-top: 84px; overflow-x: clip; }
           <p>Discover the KEBOON GROW collection — thoughtfully developed liquid fertiliser and plant nutrition solutions for healthier roots, resilient plants and thriving gardens.</p>
           <div class="hero-actions"><a class="primary-btn" href="#products">Explore Products <span aria-hidden="true">↗</span></a><a class="secondary-btn" href="#about">Our Promise</a></div>
         </div>
-        <div class="hero-art" aria-label="KEBOON GROW Imuno+, Soil+ 4-in-1 and Vital+ packaging">
-          <img class="hero-bottle left" id="heroImuno" alt="Imuno+ 250 mL product packaging">
-          <img class="hero-bottle middle" id="heroSoil" alt="Soil+ 4-in-1 product packaging">
-          <img class="hero-bottle right" id="heroVital" alt="Vital+ product packaging shown as CropVital">
+        <div class="hero-banner">
+          <img
+            class="hero-banner-image"
+            src="/shop/images/shop-banner.png"
+            alt="KEBOON GROW complete plant care lineup: Soil+, Vital+, Imuno+ and Zinc+"
+            width="2172"
+            height="724"
+            fetchpriority="high"
+            decoding="async">
         </div>
       </div>
     </section>
@@ -573,7 +617,6 @@ body { padding-top: 84px; overflow-x: clip; }
   }
   function init(){
     $('#year').textContent=new Date().getFullYear();
-    $('#heroImuno').src=PRODUCT_IMAGES.imuno;$('#heroSoil').src=PRODUCT_IMAGES.soil;$('#heroVital').src=PRODUCT_IMAGES.vital;
     $('#contactEmail').href='mailto:'+SHOP_CONFIG.contactEmail;
     if(SHOP_CONFIG.whatsappUrl){$('#contactWhatsapp').href=SHOP_CONFIG.whatsappUrl;}else{$('#contactWhatsapp').hidden=true;}
     renderProducts();renderCart();showReturnStatus();
