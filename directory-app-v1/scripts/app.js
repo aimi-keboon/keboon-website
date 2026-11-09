@@ -121,7 +121,7 @@ async function initEditProfilePage() {
 
   if (!isGrowerCacheFresh()) {
     refreshGrowerAppDataQuietly(auth.session.token, (appData) => {
-      if (appData.grower) {
+      if (appData.grower && !form.matches(":focus-within")) {
         fillEditProfileForm(form, appData.grower);
 
         if (!profileMap) {
@@ -211,7 +211,7 @@ async function initManageProducePage() {
   currentProducts = auth.products || [];
   renderProduceList(currentProducts);
 
-  if (!currentProducts.length) {
+  if (!hasGrowerAppCache() && !currentProducts.length) {
     try {
       showGlobalLoading("Loading your produce...");
       currentProducts = await refreshCurrentGrowerProducts(auth.session.token);
@@ -224,7 +224,7 @@ async function initManageProducePage() {
     }
   }
 
-  if (!hasGrowerAppCache()) {
+  if (!hasGrowerAppCache() && currentProducts.length === 0) {
     showGlobalLoading("Loading your produce...");
 
     try {
@@ -1354,7 +1354,8 @@ async function refreshGrowerAppDataQuietly(sessionToken, onSuccess) {
 
     return appData;
   } catch (error) {
-    handleInvalidSession();
+    // Transient network failures are not proof of session expiry.
+    console.warn("Unable to refresh grower data", error);
     return null;
   }
 }
@@ -1954,15 +1955,16 @@ async function initInboxPage() {
 
       renderInbox();
       updateInboxUnreadDots(result.unread_count || 0);
-      preloadInboxThreadsQuietly(auth.session.token, currentInboxEnquiries);
+      // Threads load on demand; avoid 10 background Apps Script calls per visit.
     } catch (error) {
       console.error("Inbox load failed", error);
-
-      mailboxList.innerHTML = `
-        <p class="form-message error">
-          ${escapeHtml(error.message || "Unable to load inbox.")}
-        </p>
-      `;
+      if (!currentInboxEnquiries.length) {
+        mailboxList.innerHTML = `
+          <p class="form-message error">
+            ${escapeHtml(error.message || "Unable to load inbox.")}
+          </p>
+        `;
+      }
     } finally {
       hideGlobalLoading();
     }
@@ -1977,7 +1979,11 @@ async function initInboxPage() {
   }
 
   if (searchInput) {
-    searchInput.oninput = renderInbox;
+    let searchTimer;
+    searchInput.oninput = () => {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(renderInbox, 160);
+    };
   }
 
   if (refreshButton) {
@@ -2010,7 +2016,8 @@ async function initInboxPage() {
     currentInboxEnquiries = cachedInbox.enquiries || [];
     renderInbox();
     updateInboxUnreadDots(cachedInbox.unread_count || 0);
-
+    // Cached messages show instantly, while an update happens without a blocking overlay.
+    void loadInbox(false);
     return;
   }
 
