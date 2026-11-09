@@ -13,6 +13,10 @@ let profileMarker = null;
 let currentProducts = [];
 let directoryMap = null;
 let directoryMarkers = [];
+const directoryMarkerById = new Map();
+let directoryMarkerIcon = null;
+let directoryUserMarker = null;
+let directoryLocationRequestPending = false;
 let publicDirectoryGrowers = [];
 let currentDirectoryResults = [];
 let currentUserLocation = null;
@@ -659,6 +663,38 @@ async function initPublicDirectoryPage() {
   setDirectoryStatus("Loading directory...");
 
   initDirectoryMap();
+  applySavedDirectoryLocationPreference();
+
+  // Controls must work even while the Apps Script endpoint is loading.
+  if (searchButton) searchButton.onclick = () => applyDirectoryFilters(1);
+  if (searchInput) {
+    searchInput.onkeydown = (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        applyDirectoryFilters(1);
+      }
+    };
+  }
+  if (useLocationButton) {
+    useLocationButton.onclick = () => trySetDirectoryLocationFromBrowser(true);
+  }
+  if (showAllButton) {
+    showAllButton.onclick = () => {
+      currentUserLocation = null;
+      storeDirectoryShowAllPreference();
+      applyDirectoryFilters(1);
+      setDirectoryStatus("Showing all public growers.");
+    };
+  }
+  if (closeDrawerButton) {
+    closeDrawerButton.addEventListener("click", closeGrowerDrawer);
+  }
+  const drawer = document.getElementById("growerDrawer");
+  if (drawer) {
+    drawer.addEventListener("click", (event) => {
+      if (event.target === drawer) closeGrowerDrawer();
+    });
+  }
 
   const cachedDirectory = getStoredPublicDirectoryData();
 
@@ -666,13 +702,15 @@ async function initPublicDirectoryPage() {
     publicDirectoryGrowers = cachedDirectory.growers || [];
     currentDirectoryResults = publicDirectoryGrowers;
 
-    trySetDirectoryLocationFromBrowser(true);
     applyDirectoryFilters(1);
 
     setDirectoryStatus(
       `Showing cached directory data from ${formatDisplayDateTime(cachedDirectory.generated_at)}.`,
     );
   }
+
+  // A fresh cache needs no network request on this visit.
+  if (cachedDirectory && isPublicDirectoryCacheFresh()) return;
 
   try {
     const shouldShowLoadingState = !cachedDirectory;
@@ -688,7 +726,6 @@ async function initPublicDirectoryPage() {
     publicDirectoryGrowers = result.growers || [];
     currentDirectoryResults = publicDirectoryGrowers;
 
-    trySetDirectoryLocationFromBrowser(true);
     applyDirectoryFilters(1);
 
     setDirectoryStatus(
@@ -705,63 +742,7 @@ async function initPublicDirectoryPage() {
     }
   }
 
-  if (searchButton) {
-    searchButton.onclick = () => {
-      applyDirectoryFilters(1);
-    };
-  }
 
-  if (searchInput) {
-    searchInput.onkeydown = (event) => {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        applyDirectoryFilters(1);
-      }
-    };
-  }
-
-  if (useLocationButton) {
-    useLocationButton.onclick = () => {
-      trySetDirectoryLocationFromBrowser(true);
-    };
-  }
-
-  if (showAllButton) {
-    showAllButton.onclick = () => {
-      currentUserLocation = null;
-      storeDirectoryShowAllPreference();
-
-      currentDirectoryResults = filterDirectoryGrowers(
-        searchInput ? searchInput.value : "",
-      );
-
-      renderDirectory(currentDirectoryResults, 1);
-      setDirectoryStatus("Showing all public growers.");
-
-      if (directoryMap && directoryMarkers.length) {
-        const group = L.featureGroup(directoryMarkers);
-        directoryMap.fitBounds(group.getBounds().pad(0.18));
-      }
-    };
-  }
-
-  if (cachedDirectory && isPublicDirectoryCacheFresh()) {
-    return;
-  }
-
-  if (closeDrawerButton) {
-    closeDrawerButton.addEventListener("click", closeGrowerDrawer);
-  }
-
-  const drawer = document.getElementById("growerDrawer");
-
-  if (drawer) {
-    drawer.addEventListener("click", (event) => {
-      if (event.target === drawer) {
-        closeGrowerDrawer();
-      }
-    });
-  }
 }
 
 function initDirectoryMap() {
@@ -793,7 +774,6 @@ function renderDirectory(growers, page = 1) {
   renderDirectoryMarkers(growers);
   updateDirectoryCount(growers.length);
   renderDirectoryPagination(growers);
-  zoomToCurrentUserLocation();
 }
 
 function renderDirectoryList(growers, page = 1) {
@@ -851,36 +831,53 @@ function renderDirectoryList(growers, page = 1) {
 }
 
 function renderDirectoryMarkers(growers) {
-  if (!directoryMap) {
-    return;
-  }
+  if (!directoryMap) return;
 
-  directoryMarkers.forEach((marker) => marker.remove());
-  directoryMarkers = [];
+  const visibleIds = new Set();
+  let markersChanged = false;
+  const icon = getGreenMapMarkerIcon();
 
   growers.forEach((grower) => {
     const lat = Number(grower.latitude);
     const lng = Number(grower.longitude);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng) || !grower.grower_id) return;
 
-    if (Number.isNaN(lat) || Number.isNaN(lng)) {
-      return;
+    const id = String(grower.grower_id);
+    visibleIds.add(id);
+    let marker = directoryMarkerById.get(id);
+    if (!marker) {
+      marker = L.marker([lat, lng], { icon, growerId: grower.grower_id });
+      marker.addTo(directoryMap);
+      directoryMarkerById.set(id, marker);
+      markersChanged = true;
+    } else {
+      const existing = marker.getLatLng();
+      if (existing.lat !== lat || existing.lng !== lng) {
+        marker.setLatLng([lat, lng]);
+        markersChanged = true;
+      }
+      if (!directoryMap.hasLayer(marker)) {
+        marker.addTo(directoryMap);
+        markersChanged = true;
+      }
     }
-
-    const marker = L.marker([lat, lng], {
-      icon: getGreenMapMarkerIcon(),
-      growerId: grower.grower_id,
-    }).addTo(directoryMap);
-
-    marker.bindPopup(renderMarkerPopup(grower));
-
-    directoryMarkers.push(marker);
+    // Refresh popup contents if grower details changed in the latest response.
+    const popupHtml = renderMarkerPopup(grower);
+    if (marker.getPopup()?.getContent() !== popupHtml) marker.bindPopup(popupHtml);
   });
 
-  const isNearbyMode = getDirectoryLocationPreference() === "nearby";
+  directoryMarkerById.forEach((marker, id) => {
+    if (!visibleIds.has(id)) {
+      marker.remove();
+      directoryMarkerById.delete(id);
+      markersChanged = true;
+    }
+  });
+  directoryMarkers = Array.from(directoryMarkerById.values());
 
-  if (directoryMarkers.length && !currentUserLocation && !isNearbyMode) {
-    const group = L.featureGroup(directoryMarkers);
-    directoryMap.fitBounds(group.getBounds().pad(0.18));
+  const isNearbyMode = getDirectoryLocationPreference() === "nearby";
+  if (markersChanged && directoryMarkers.length && !currentUserLocation && !isNearbyMode) {
+    directoryMap.fitBounds(L.featureGroup(directoryMarkers).getBounds().pad(0.18));
   }
 }
 
@@ -1163,12 +1160,16 @@ function trySetDirectoryLocationFromBrowser(showMessage) {
     return;
   }
 
+  if (directoryLocationRequestPending) return;
+  directoryLocationRequestPending = true;
+
   if (showMessage) {
     setDirectoryStatus("Getting your current location...");
   }
 
   navigator.geolocation.getCurrentPosition(
     (position) => {
+      directoryLocationRequestPending = false;
       currentUserLocation = {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
@@ -1184,11 +1185,11 @@ function trySetDirectoryLocationFromBrowser(showMessage) {
           14,
         );
 
-        L.circleMarker([currentUserLocation.lat, currentUserLocation.lng], {
-          radius: 7,
-        })
-          .addTo(directoryMap)
-          .bindPopup("Your location");
+        if (directoryUserMarker) directoryUserMarker.remove();
+        directoryUserMarker = L.circleMarker(
+          [currentUserLocation.lat, currentUserLocation.lng],
+          { radius: 7 },
+        ).addTo(directoryMap).bindPopup("Your location");
       }
 
       setDirectoryStatus(
@@ -1196,6 +1197,7 @@ function trySetDirectoryLocationFromBrowser(showMessage) {
       );
     },
     () => {
+      directoryLocationRequestPending = false;
       if (showMessage) {
         setDirectoryStatus(
           "Unable to get current location. You can still browse all growers.",
@@ -1216,15 +1218,6 @@ function sortDirectoryByDistance() {
   if (!currentUserLocation) {
     return;
   }
-
-  publicDirectoryGrowers.forEach((grower) => {
-    grower.distance_km = calculateDistanceKm(
-      currentUserLocation.lat,
-      currentUserLocation.lng,
-      Number(grower.latitude),
-      Number(grower.longitude),
-    );
-  });
 
   currentDirectoryResults = currentDirectoryResults
     .map((grower) => {
@@ -1542,7 +1535,8 @@ function openGrowerFromPopup(growerId) {
 }
 window.openGrowerFromPopup = openGrowerFromPopup;
 function getGreenMapMarkerIcon() {
-  return L.divIcon({
+  if (directoryMarkerIcon) return directoryMarkerIcon;
+  directoryMarkerIcon = L.divIcon({
     className: "keboon-map-marker",
     html: `
       <svg viewBox="0 0 32 42" width="32" height="42" aria-hidden="true">
@@ -1559,6 +1553,7 @@ function getGreenMapMarkerIcon() {
     iconAnchor: [16, 42],
     popupAnchor: [0, -40],
   });
+  return directoryMarkerIcon;
 }
 function openProduceEditor() {
   const panel = document.getElementById("produceEditorPanel");
@@ -1717,11 +1712,11 @@ function applySavedDirectoryLocationPreference() {
       14,
     );
 
-    L.circleMarker([currentUserLocation.lat, currentUserLocation.lng], {
-      radius: 7,
-    })
-      .addTo(directoryMap)
-      .bindPopup("Your location");
+    if (directoryUserMarker) directoryUserMarker.remove();
+    directoryUserMarker = L.circleMarker(
+      [currentUserLocation.lat, currentUserLocation.lng],
+      { radius: 7 },
+    ).addTo(directoryMap).bindPopup("Your location");
   }
 
   setDirectoryStatus(
@@ -1808,18 +1803,7 @@ function zoomToCurrentUserLocation() {
 
   directoryMap.setView(latLng, 14);
 
-  setTimeout(() => {
-    if (directoryMap && currentUserLocation) {
-      directoryMap.invalidateSize();
-      directoryMap.setView(latLng, 14);
-    }
-  }, 250);
-
-  setTimeout(() => {
-    if (directoryMap && currentUserLocation) {
-      directoryMap.setView(latLng, 14);
-    }
-  }, 600);
+  // A single pan is enough; repeated delayed setView calls interrupt users.
 }
 
 function renderPaginatedProfileProducts(products, contextId, emptyMessage) {
