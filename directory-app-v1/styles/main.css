@@ -5397,3 +5397,31 @@ body:has(.local-stats-iframe-overlay.is-open) {
   .mailbox-toolbar { grid-template-columns: minmax(0, 1fr) auto auto; }
   .mailbox-bulk-actions { grid-column: 1 / -1; }
 }
+
+/* Inline, non-blocking confirmation for save and message actions. */
+.app-feedback-toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(82px + env(safe-area-inset-bottom, 0px));
+  z-index: 3000;
+  max-width: min(90vw, 420px);
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: var(--green-dark);
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 10px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.app-feedback-toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+@media (min-width: 960px) {
+  .app-feedback-toast { bottom: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-feedback-toast { transition: none; }
+}
