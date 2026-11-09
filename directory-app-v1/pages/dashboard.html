@@ -115,6 +115,37 @@
           </div>
         </section>
 
+        <section class="grower-overview" aria-label="Your grower overview">
+          <div class="grower-overview-heading">
+            <div>
+              <p class="eyebrow">At a glance</p>
+              <h2>Your grower overview</h2>
+            </div>
+            <p class="muted">Quickly see what needs attention.</p>
+          </div>
+          <div class="grower-overview-cards">
+            <a class="grower-overview-card" href="./edit-profile.html">
+              <span class="grower-overview-label">Profile</span>
+              <strong id="dashboardProfileStatus">Checking...</strong>
+              <span class="grower-overview-caption">Manage visibility</span>
+            </a>
+            <a class="grower-overview-card" href="./manage-produce.html">
+              <span class="grower-overview-label">Produce listings</span>
+              <strong id="dashboardProduceCount">—</strong>
+              <span class="grower-overview-caption">Edit your produce</span>
+            </a>
+            <a class="grower-overview-card" href="./inbox.html">
+              <span class="grower-overview-label">Unread enquiries</span>
+              <strong id="dashboardUnreadCount">Checking...</strong>
+              <span class="grower-overview-caption">Open your inbox</span>
+            </a>
+          </div>
+          <div class="grower-overview-actions">
+            <a class="primary-button text-button-link" href="./manage-produce.html">+ Add produce</a>
+            <a class="secondary-button text-button-link" href="./inbox.html">View enquiries</a>
+          </div>
+        </section>
+
         <section class="public-directory-shell dashboard-directory-shell">
           <section class="public-search-panel">
             <div class="public-search-controls">
@@ -174,6 +205,10 @@
             <p id="directoryStatus" class="small-text">Loading directory...</p>
           </section>
 
+          <div class="directory-view-switch" role="group" aria-label="Directory view">
+            <button type="button" class="directory-view-button is-active" data-directory-view="list" aria-pressed="true">List</button>
+            <button type="button" class="directory-view-button" data-directory-view="map" aria-pressed="false">Map</button>
+          </div>
           <section class="directory-layout dashboard-directory-layout">
             <div id="directoryMap" class="directory-map"></div>
 
