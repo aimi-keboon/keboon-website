@@ -1897,7 +1897,11 @@ function initPrivateTopbarActions() {
     clearAllStoredInboxThreadData();
     window.location.href = "./signin.html";
   };
-  refreshInboxUnreadCountQuietly();
+  // Inbox page loads its own fresh data; other private pages refresh the
+  // unread indicator without delaying navigation or rendering.
+  if (!document.getElementById("mailboxList")) {
+    void refreshInboxUnreadCountQuietly();
+  }
 }
 let currentInboxEnquiries = [];
 
@@ -2613,25 +2617,46 @@ function closeMailboxThreadDrawer() {
   renderInbox();
 }
 async function refreshInboxUnreadCountQuietly() {
-  const inboxDot = document.querySelector(".inbox-unread-dot");
+  if (!document.querySelector(".inbox-unread-dot")) return;
 
-  if (!inboxDot) {
-    return;
-  }
+  const getUnreadCount = (data) => {
+    const serverCount = Number(data?.unread_count);
+    if (data?.unread_count !== undefined && data?.unread_count !== null &&
+        Number.isFinite(serverCount)) {
+      return serverCount;
+    }
+    return (data?.enquiries || []).filter((enquiry) =>
+      String(enquiry.read_status || "unread").toLowerCase() !== "read"
+    ).length;
+  };
 
+  // Show previously known status immediately when navigating between pages.
   const cachedInbox = getStoredInboxData();
-
-  if (!cachedInbox || !Array.isArray(cachedInbox.enquiries)) {
-    updateInboxUnreadDots(0);
-    return;
+  if (cachedInbox && Array.isArray(cachedInbox.enquiries)) {
+    updateInboxUnreadDots(getUnreadCount(cachedInbox));
   }
 
-  const unreadCount = cachedInbox.enquiries.filter((enquiry) => {
-    return String(enquiry.read_status || "unread").toLowerCase() !== "read";
-  }).length;
+  const session = getStoredSession();
+  if (!session?.token) return;
 
-  updateInboxUnreadDots(unreadCount);
+  // After sign-in the inbox cache was intentionally cleared. Fetch fresh
+  // unread status in the background rather than blocking the dashboard.
+  try {
+    const inboxData = await apiPost("get_current_grower_inbox_data", {
+      session_token: session.token,
+    });
+
+    // A sign-out or account switch may happen while the request is pending.
+    if (getStoredSession()?.token !== session.token) return;
+
+    storeInboxData(inboxData);
+    updateInboxUnreadDots(getUnreadCount(inboxData));
+  } catch (error) {
+    // Keep any cached indicator when temporarily offline.
+    console.warn("Unable to refresh inbox unread status", error);
+  }
 }
+
 function cleanPhoneDisplay(value) {
   return String(value || "").replace(/^'/, "");
 }
@@ -2766,7 +2791,7 @@ async function initDashboardPage() {
   if (!auth) {
     return;
   }
-  refreshInboxUnreadCountQuietly();
+  // The topbar already started a background unread-status refresh.
 
   if (dashboardTitle) {
     dashboardTitle.textContent = `Welcome, ${auth.grower?.grower_name || auth.session.grower_name || "Grower"}`;
