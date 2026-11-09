@@ -2045,9 +2045,27 @@ async function initInboxPage() {
     }
   }
 
+  const quickFilterButtons = Array.from(document.querySelectorAll("[data-inbox-filter]"));
+  const syncInboxQuickFilters = () => {
+    const value = filterSelect?.value || "all";
+    quickFilterButtons.forEach((button) => {
+      const active = button.dataset.inboxFilter === value;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+  };
+  quickFilterButtons.forEach((button) => button.addEventListener("click", () => {
+    if (filterSelect) filterSelect.value = button.dataset.inboxFilter;
+    syncInboxQuickFilters();
+    renderInbox();
+  }));
   if (filterSelect) {
-    filterSelect.onchange = renderInbox;
+    filterSelect.onchange = () => {
+      syncInboxQuickFilters();
+      renderInbox();
+    };
   }
+  syncInboxQuickFilters();
 
   if (sortSelect) {
     sortSelect.onchange = renderInbox;
@@ -2180,7 +2198,7 @@ function renderInbox() {
     if (selectAll) {
       selectAll.checked = false;
     }
-
+    updateMailboxSelectionActions();
     return;
   }
 
@@ -2283,6 +2301,7 @@ function renderInbox() {
   if (selectAll) {
     selectAll.checked = false;
   }
+  updateMailboxSelectionActions();
 
   mailboxList.querySelectorAll(".mailbox-row-main").forEach((button) => {
     button.onclick = () => {
@@ -2302,6 +2321,14 @@ function getSelectedInboxEnquiryIds() {
   return Array.from(document.querySelectorAll(".mailbox-checkbox:checked"))
     .map((checkbox) => checkbox.value)
     .filter(Boolean);
+}
+
+function updateMailboxSelectionActions() {
+  const count = getSelectedInboxEnquiryIds().length;
+  const actions = document.querySelector(".mailbox-bulk-actions");
+  const label = document.getElementById("mailboxSelectedCount");
+  if (actions) actions.classList.toggle("has-selection", count > 0);
+  if (label) label.textContent = count ? `${count} selected` : "";
 }
 
 async function updateSelectedInboxEnquiries(sessionToken, action) {
@@ -2356,6 +2383,7 @@ async function updateSelectedInboxEnquiries(sessionToken, action) {
 }
 
 function updateInboxUnreadDots(unreadCount) {
+  updateDashboardUnreadCount(unreadCount);
   document.querySelectorAll(".inbox-unread-dot").forEach((dot) => {
     dot.classList.toggle("is-visible", Number(unreadCount) > 0);
   });
@@ -2761,6 +2789,7 @@ document.addEventListener("change", (event) => {
   mailboxList.querySelectorAll(".mailbox-checkbox").forEach((checkbox) => {
     checkbox.checked = selectAll.checked;
   });
+  updateMailboxSelectionActions();
 });
 
 document.addEventListener("change", (event) => {
@@ -2783,6 +2812,7 @@ document.addEventListener("change", (event) => {
 
   selectAll.checked =
     checkboxes.length > 0 && checkboxes.every((item) => item.checked);
+  updateMailboxSelectionActions();
 });
 async function preloadInboxThreadsQuietly(sessionToken, enquiries, limit = 10) {
   if (!sessionToken || !Array.isArray(enquiries) || !enquiries.length) {
@@ -2881,12 +2911,20 @@ async function initDashboardPage() {
   if (dashboardTitle) {
     dashboardTitle.textContent = `Welcome, ${auth.grower?.grower_name || auth.session.grower_name || "Grower"}`;
   }
+  updateDashboardOverview(auth.grower, auth.products);
+  const cachedInbox = getStoredInboxData();
+  if (cachedInbox?.enquiries) updateDashboardUnreadCount(
+    cachedInbox.unread_count ?? cachedInbox.enquiries.filter(
+      (item) => String(item.read_status || "unread").toLowerCase() !== "read"
+    ).length
+  );
 
   if (!isGrowerCacheFresh()) {
     refreshGrowerAppDataQuietly(auth.session.token, (appData) => {
       if (dashboardTitle) {
         dashboardTitle.textContent = `Welcome, ${appData.grower?.grower_name || "Grower"}`;
       }
+      updateDashboardOverview(appData.grower, appData.products);
     });
   }
 }
