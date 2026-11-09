@@ -211,30 +211,16 @@ async function initManageProducePage() {
   currentProducts = auth.products || [];
   renderProduceList(currentProducts);
 
-  if (!hasGrowerAppCache() && !currentProducts.length) {
-    try {
-      showGlobalLoading("Loading your produce...");
-      currentProducts = await refreshCurrentGrowerProducts(auth.session.token);
-      renderProduceList(currentProducts);
-    } catch (error) {
-      messageEl.textContent = error.message;
-      messageEl.classList.add("error");
-    } finally {
-      hideGlobalLoading();
-    }
-  }
-
-  if (!hasGrowerAppCache() && currentProducts.length === 0) {
+  if (!hasGrowerAppCache()) {
+    // Load grower and products together once when there is no complete cache.
     showGlobalLoading("Loading your produce...");
-
     try {
       const appData = await refreshGrowerAppData(auth.session.token);
-
       currentProducts = appData.products || [];
       renderProduceList(currentProducts);
     } catch (error) {
-      handleInvalidSession();
-      return;
+      messageEl.textContent = error.message || "Unable to load produce.";
+      messageEl.classList.add("error");
     } finally {
       hideGlobalLoading();
     }
