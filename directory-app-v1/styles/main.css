@@ -5343,7 +5343,16 @@ body:has(.local-stats-iframe-overlay.is-open) {
   body:has(#mailboxList) .mailbox-toolbar {
     grid-template-areas: "search" "filters" "controls" "actions";
   }
-  body:has(#mailboxList) .mailbox-compact-controls { display: none; }
+  body:has(#mailboxList) .mailbox-compact-controls {
+    display: flex;
+    justify-content: flex-start;
+  }
+  body:has(#mailboxList) .mailbox-compact-controls .mailbox-icon-select:first-child {
+    display: none;
+  }
+  body:has(#mailboxList) .mailbox-compact-controls .mailbox-icon-select:last-child {
+    min-height: 44px;
+  }
   body:has(#mailboxList) .mailbox-bulk-actions.has-selection { display: grid !important; }
   body:has(#mailboxList) .mailbox-bulk-actions .secondary-button {
     min-height: 44px;
@@ -5380,4 +5389,11 @@ body:has(.local-stats-iframe-overlay.is-open) {
 }
 @media (prefers-reduced-motion: reduce) {
   .grower-overview-card, .directory-view-button { transition: none !important; }
+}
+
+/* Keep the explicit quick-filter row in the normal desktop toolbar flow. */
+@media (min-width: 641px) {
+  .mailbox-quick-filters { grid-area: auto; }
+  .mailbox-toolbar { grid-template-columns: minmax(0, 1fr) auto auto; }
+  .mailbox-bulk-actions { grid-column: 1 / -1; }
 }
