@@ -327,6 +327,7 @@ async function initManageProducePage() {
 
       messageEl.textContent = result.message || "Produce saved.";
       messageEl.classList.add("success");
+      produceEditorSavedSnapshot = getProduceEditorSnapshot();
       closeProduceEditor();
     } catch (error) {
       messageEl.textContent = error.message;
@@ -1627,6 +1628,13 @@ function getGreenMapMarkerIcon() {
   });
   return directoryMarkerIcon;
 }
+let produceEditorSavedSnapshot = null;
+function getProduceEditorSnapshot() {
+  const form = document.getElementById("produceForm");
+  if (!form) return "";
+  return Array.from(new FormData(form).entries()).map(([key, value]) => `${key}=${value}`).join("&")
+    + "|public=" + Boolean(form.elements.is_public?.checked);
+}
 function openProduceEditor() {
   const panel = document.getElementById("produceEditorPanel");
 
@@ -1634,6 +1642,7 @@ function openProduceEditor() {
     return;
   }
 
+  produceEditorSavedSnapshot = getProduceEditorSnapshot();
   panel.classList.add("is-open");
   panel.setAttribute("aria-hidden", "false");
 }
@@ -1645,6 +1654,12 @@ function closeProduceEditor() {
     return;
   }
 
+  if (panel.classList.contains("is-open") &&
+      produceEditorSavedSnapshot !== null &&
+      getProduceEditorSnapshot() !== produceEditorSavedSnapshot &&
+      !window.confirm("Discard your unsaved produce changes?")) return;
+
+  produceEditorSavedSnapshot = null;
   panel.classList.remove("is-open");
   panel.setAttribute("aria-hidden", "true");
 }
