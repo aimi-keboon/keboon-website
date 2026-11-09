@@ -26,6 +26,22 @@ const PROFILE_PRODUCE_PAGE_SIZE = 4;
 const profileProducePages = {};
 const DIRECTORY_RADIUS_KM = 20;
 let directoryView = "list";
+function showAppToast(message) {
+  if (!message) return;
+  let toast = document.getElementById("keboonFeedbackToast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "keboonFeedbackToast";
+    toast.className = "app-feedback-toast";
+    toast.setAttribute("role", "status");
+    toast.setAttribute("aria-live", "polite");
+    document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  toast.classList.add("is-visible");
+  clearTimeout(showAppToast.dismissTimer);
+  showAppToast.dismissTimer = setTimeout(() => toast.classList.remove("is-visible"), 3500);
+}
 function initDirectoryViewSwitch() {
   const buttons = Array.from(document.querySelectorAll("[data-directory-view]"));
   const layout = document.querySelector(".directory-layout");
@@ -57,10 +73,13 @@ function initProfileProgress(form) {
     ["latitude", "map location"], ["categories", "categories"],
   ];
   const update = () => {
-    const complete = fields.filter(([name]) => String(form.elements[name]?.value || "").trim()).length;
+    const isFilled = ([name]) => name === "latitude"
+      ? String(form.elements.latitude?.value || "").trim() && String(form.elements.longitude?.value || "").trim()
+      : String(form.elements[name]?.value || "").trim();
+    const complete = fields.filter(isFilled).length;
     bar.value = complete;
     count.textContent = `${complete} of ${fields.length}`;
-    const missing = fields.find(([name]) => !String(form.elements[name]?.value || "").trim());
+    const missing = fields.find((field) => !isFilled(field));
     hint.textContent = missing ? `Next: add your ${missing[1]}.` : "All profile basics completed!";
   };
   form.addEventListener("input", update);
@@ -232,6 +251,7 @@ async function initEditProfilePage() {
 
       messageEl.textContent = result.message || "Profile saved.";
       messageEl.classList.add("success");
+      showAppToast("Your profile was saved.");
     } catch (error) {
       messageEl.textContent = error.message;
       messageEl.classList.add("error");
@@ -327,6 +347,7 @@ async function initManageProducePage() {
 
       messageEl.textContent = result.message || "Produce saved.";
       messageEl.classList.add("success");
+      showAppToast("Your produce listing was saved.");
       produceEditorSavedSnapshot = getProduceEditorSnapshot();
       closeProduceEditor();
     } catch (error) {
@@ -1210,6 +1231,7 @@ function initPublicEnquiryForm() {
 
       messageEl.textContent = result.message || "Your enquiry has been sent.";
       messageEl.classList.add("success");
+      showAppToast("Enquiry sent successfully.");
 
       form.reset();
     } catch (error) {
@@ -2376,6 +2398,7 @@ async function updateSelectedInboxEnquiries(sessionToken, action) {
       messageEl.textContent = result.message || "Inbox updated.";
       messageEl.classList.add("success");
     }
+    showAppToast(result.message || "Inbox updated.");
 
     const inboxResult = await apiPost("get_current_grower_inbox_data", {
       session_token: sessionToken,
