@@ -25,6 +25,77 @@ const DIRECTORY_PAGE_SIZE = 5;
 const PROFILE_PRODUCE_PAGE_SIZE = 4;
 const profileProducePages = {};
 const DIRECTORY_RADIUS_KM = 20;
+let directoryView = "list";
+function showAppToast(message) {
+  if (!message) return;
+  let toast = document.getElementById("keboonFeedbackToast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "keboonFeedbackToast";
+    toast.className = "app-feedback-toast";
+    toast.setAttribute("role", "status");
+    toast.setAttribute("aria-live", "polite");
+    document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  toast.classList.add("is-visible");
+  clearTimeout(showAppToast.dismissTimer);
+  showAppToast.dismissTimer = setTimeout(() => toast.classList.remove("is-visible"), 3500);
+}
+function initDirectoryViewSwitch() {
+  const buttons = Array.from(document.querySelectorAll("[data-directory-view]"));
+  const layout = document.querySelector(".directory-layout");
+  if (!buttons.length || !layout) return;
+  const selectView = (view) => {
+    directoryView = view;
+    layout.classList.toggle("directory-show-map", view === "map");
+    layout.classList.toggle("directory-show-list", view === "list");
+    buttons.forEach((button) => {
+      const active = button.dataset.directoryView === view;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+    if (view === "map" && directoryMap) {
+      requestAnimationFrame(() => directoryMap.invalidateSize());
+    }
+  };
+  buttons.forEach((button) => button.addEventListener("click", () => selectView(button.dataset.directoryView)));
+  selectView("list");
+}
+function initProfileProgress(form) {
+  const bar = document.getElementById("profileProgressBar");
+  const count = document.getElementById("profileProgressCount");
+  const hint = document.getElementById("profileProgressHint");
+  if (!bar || !count || !hint) return;
+  const fields = [
+    ["grower_name", "garden name"], ["contact_name", "contact name"],
+    ["location_label", "location"], ["description", "description"],
+    ["latitude", "map location"], ["categories", "categories"],
+  ];
+  const update = () => {
+    const isFilled = ([name]) => name === "latitude"
+      ? String(form.elements.latitude?.value || "").trim() && String(form.elements.longitude?.value || "").trim()
+      : String(form.elements[name]?.value || "").trim();
+    const complete = fields.filter(isFilled).length;
+    bar.value = complete;
+    count.textContent = `${complete} of ${fields.length}`;
+    const missing = fields.find((field) => !isFilled(field));
+    hint.textContent = missing ? `Next: add your ${missing[1]}.` : "All profile basics completed!";
+  };
+  form.addEventListener("input", update);
+  form.addEventListener("change", update);
+  update();
+}
+function updateDashboardOverview(grower = getStoredGrower(), products = getStoredProducts()) {
+  const profileEl = document.getElementById("dashboardProfileStatus");
+  const produceEl = document.getElementById("dashboardProduceCount");
+  if (profileEl) profileEl.textContent = grower ? getProfilePublicStatusText(grower) : "Not set up";
+  if (produceEl) produceEl.textContent = String((products || []).length);
+}
+function updateDashboardUnreadCount(count) {
+  const el = document.getElementById("dashboardUnreadCount");
+  if (el) el.textContent = String(Math.max(0, Number(count) || 0));
+}
 
 async function requireValidSession() {
   const session = getStoredSession();
@@ -104,6 +175,7 @@ async function initEditProfilePage() {
   if (auth.grower) {
     fillEditProfileForm(form, auth.grower);
     initProfileLocationMap(form, auth.grower);
+    initProfileProgress(form);
   } else {
     showGlobalLoading("Loading your profile...");
 
@@ -111,6 +183,7 @@ async function initEditProfilePage() {
       const appData = await refreshGrowerAppData(auth.session.token);
       fillEditProfileForm(form, appData.grower);
       initProfileLocationMap(form, appData.grower);
+      initProfileProgress(form);
     } catch (error) {
       handleInvalidSession();
       return;
@@ -123,7 +196,7 @@ async function initEditProfilePage() {
     refreshGrowerAppDataQuietly(auth.session.token, (appData) => {
       if (appData.grower && !form.matches(":focus-within")) {
         fillEditProfileForm(form, appData.grower);
-
+        form.dispatchEvent(new Event("change"));
         if (!profileMap) {
           initProfileLocationMap(form, appData.grower);
         } else {
@@ -170,6 +243,7 @@ async function initEditProfilePage() {
 
       if (appData.grower) {
         fillEditProfileForm(form, appData.grower);
+        form.dispatchEvent(new Event("change"));
       }
 
       clearPublicDirectoryCache();
@@ -177,6 +251,7 @@ async function initEditProfilePage() {
 
       messageEl.textContent = result.message || "Profile saved.";
       messageEl.classList.add("success");
+      showAppToast("Your profile was saved.");
     } catch (error) {
       messageEl.textContent = error.message;
       messageEl.classList.add("error");
@@ -272,6 +347,8 @@ async function initManageProducePage() {
 
       messageEl.textContent = result.message || "Produce saved.";
       messageEl.classList.add("success");
+      showAppToast("Your produce listing was saved.");
+      produceEditorSavedSnapshot = getProduceEditorSnapshot();
       closeProduceEditor();
     } catch (error) {
       messageEl.textContent = error.message;
@@ -344,10 +421,16 @@ function renderProduceList(products) {
 
   if (!products.length) {
     produceList.innerHTML = `
-      <div class="content-card">
-        <p class="muted">No produce added yet. Use the Add produce button to create your first listing.</p>
+      <div class="content-card helpful-empty-state">
+        <h3>Your first produce listing starts here</h3>
+        <p class="muted">Add what you're growing so people can discover and enquire about it.</p>
+        <button type="button" class="primary-button" id="emptyAddProduceButton">+ Add your first produce</button>
       </div>
     `;
+    produceList.querySelector("#emptyAddProduceButton")?.addEventListener("click", () => {
+      clearProduceForm(document.getElementById("produceForm"));
+      openProduceEditor();
+    });
     return;
   }
 
@@ -649,11 +732,17 @@ async function initPublicDirectoryPage() {
   setDirectoryStatus("Loading directory...");
 
   initDirectoryMap();
+  initDirectoryViewSwitch();
   applySavedDirectoryLocationPreference();
 
   // Controls must work even while the Apps Script endpoint is loading.
   if (searchButton) searchButton.onclick = () => applyDirectoryFilters(1);
   if (searchInput) {
+    let directorySearchTimer;
+    searchInput.addEventListener("input", () => {
+      clearTimeout(directorySearchTimer);
+      directorySearchTimer = setTimeout(() => applyDirectoryFilters(1), 200);
+    });
     searchInput.onkeydown = (event) => {
       if (event.key === "Enter") {
         event.preventDefault();
@@ -770,7 +859,18 @@ function renderDirectoryList(growers, page = 1) {
   }
 
   if (!growers.length) {
-    listEl.innerHTML = '<p class="muted">No growers found.</p>';
+    listEl.innerHTML = `<div class="helpful-empty-state">
+      <h3>No growers found</h3>
+      <p class="muted">Try another search or browse all growers.</p>
+      <button type="button" class="secondary-button" id="resetDirectorySearchButton">Show all growers</button>
+    </div>`;
+    listEl.querySelector("#resetDirectorySearchButton")?.addEventListener("click", () => {
+      const searchInput = document.getElementById("directorySearchInput");
+      if (searchInput) searchInput.value = "";
+      currentUserLocation = null;
+      storeDirectoryShowAllPreference();
+      applyDirectoryFilters(1);
+    });
     return;
   }
 
@@ -796,6 +896,9 @@ function renderDirectoryList(growers, page = 1) {
           <span class="meta-pill">${productCount} produce listed</span>
           <span class="meta-pill">${escapeHtml(distanceText)}</span>
         </div>
+        ${grower.products?.length
+          ? `<p class="grower-card-produce">Growing: ${escapeHtml(grower.products.slice(0, 3).map((product) => product.product_name).filter(Boolean).join(", "))}</p>`
+          : ""}
       </button>
     `;
     })
@@ -809,8 +912,12 @@ function renderDirectoryList(growers, page = 1) {
       );
 
       if (grower) {
-        focusDirectoryGrower(grower);
-        openDirectoryMarkerPopup(grower.grower_id);
+        if (window.matchMedia("(max-width: 900px)").matches) {
+          openGrowerDrawer(grower);
+        } else {
+          focusDirectoryGrower(grower);
+          openDirectoryMarkerPopup(grower.grower_id);
+        }
       }
     });
   });
@@ -1124,6 +1231,7 @@ function initPublicEnquiryForm() {
 
       messageEl.textContent = result.message || "Your enquiry has been sent.";
       messageEl.classList.add("success");
+      showAppToast("Enquiry sent successfully.");
 
       form.reset();
     } catch (error) {
@@ -1542,6 +1650,13 @@ function getGreenMapMarkerIcon() {
   });
   return directoryMarkerIcon;
 }
+let produceEditorSavedSnapshot = null;
+function getProduceEditorSnapshot() {
+  const form = document.getElementById("produceForm");
+  if (!form) return "";
+  return Array.from(new FormData(form).entries()).map(([key, value]) => `${key}=${value}`).join("&")
+    + "|public=" + Boolean(form.elements.is_public?.checked);
+}
 function openProduceEditor() {
   const panel = document.getElementById("produceEditorPanel");
 
@@ -1549,6 +1664,7 @@ function openProduceEditor() {
     return;
   }
 
+  produceEditorSavedSnapshot = getProduceEditorSnapshot();
   panel.classList.add("is-open");
   panel.setAttribute("aria-hidden", "false");
 }
@@ -1560,6 +1676,12 @@ function closeProduceEditor() {
     return;
   }
 
+  if (panel.classList.contains("is-open") &&
+      produceEditorSavedSnapshot !== null &&
+      getProduceEditorSnapshot() !== produceEditorSavedSnapshot &&
+      !window.confirm("Discard your unsaved produce changes?")) return;
+
+  produceEditorSavedSnapshot = null;
   panel.classList.remove("is-open");
   panel.setAttribute("aria-hidden", "true");
 }
@@ -1960,9 +2082,27 @@ async function initInboxPage() {
     }
   }
 
+  const quickFilterButtons = Array.from(document.querySelectorAll("[data-inbox-filter]"));
+  const syncInboxQuickFilters = () => {
+    const value = filterSelect?.value || "all";
+    quickFilterButtons.forEach((button) => {
+      const active = button.dataset.inboxFilter === value;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+  };
+  quickFilterButtons.forEach((button) => button.addEventListener("click", () => {
+    if (filterSelect) filterSelect.value = button.dataset.inboxFilter;
+    syncInboxQuickFilters();
+    renderInbox();
+  }));
   if (filterSelect) {
-    filterSelect.onchange = renderInbox;
+    filterSelect.onchange = () => {
+      syncInboxQuickFilters();
+      renderInbox();
+    };
   }
+  syncInboxQuickFilters();
 
   if (sortSelect) {
     sortSelect.onchange = renderInbox;
@@ -2095,7 +2235,7 @@ function renderInbox() {
     if (selectAll) {
       selectAll.checked = false;
     }
-
+    updateMailboxSelectionActions();
     return;
   }
 
@@ -2198,6 +2338,7 @@ function renderInbox() {
   if (selectAll) {
     selectAll.checked = false;
   }
+  updateMailboxSelectionActions();
 
   mailboxList.querySelectorAll(".mailbox-row-main").forEach((button) => {
     button.onclick = () => {
@@ -2217,6 +2358,14 @@ function getSelectedInboxEnquiryIds() {
   return Array.from(document.querySelectorAll(".mailbox-checkbox:checked"))
     .map((checkbox) => checkbox.value)
     .filter(Boolean);
+}
+
+function updateMailboxSelectionActions() {
+  const count = getSelectedInboxEnquiryIds().length;
+  const actions = document.querySelector(".mailbox-bulk-actions");
+  const label = document.getElementById("mailboxSelectedCount");
+  if (actions) actions.classList.toggle("has-selection", count > 0);
+  if (label) label.textContent = count ? `${count} selected` : "";
 }
 
 async function updateSelectedInboxEnquiries(sessionToken, action) {
@@ -2249,6 +2398,7 @@ async function updateSelectedInboxEnquiries(sessionToken, action) {
       messageEl.textContent = result.message || "Inbox updated.";
       messageEl.classList.add("success");
     }
+    showAppToast(result.message || "Inbox updated.");
 
     const inboxResult = await apiPost("get_current_grower_inbox_data", {
       session_token: sessionToken,
@@ -2271,6 +2421,7 @@ async function updateSelectedInboxEnquiries(sessionToken, action) {
 }
 
 function updateInboxUnreadDots(unreadCount) {
+  updateDashboardUnreadCount(unreadCount);
   document.querySelectorAll(".inbox-unread-dot").forEach((dot) => {
     dot.classList.toggle("is-visible", Number(unreadCount) > 0);
   });
@@ -2676,6 +2827,7 @@ document.addEventListener("change", (event) => {
   mailboxList.querySelectorAll(".mailbox-checkbox").forEach((checkbox) => {
     checkbox.checked = selectAll.checked;
   });
+  updateMailboxSelectionActions();
 });
 
 document.addEventListener("change", (event) => {
@@ -2698,6 +2850,7 @@ document.addEventListener("change", (event) => {
 
   selectAll.checked =
     checkboxes.length > 0 && checkboxes.every((item) => item.checked);
+  updateMailboxSelectionActions();
 });
 async function preloadInboxThreadsQuietly(sessionToken, enquiries, limit = 10) {
   if (!sessionToken || !Array.isArray(enquiries) || !enquiries.length) {
@@ -2796,12 +2949,20 @@ async function initDashboardPage() {
   if (dashboardTitle) {
     dashboardTitle.textContent = `Welcome, ${auth.grower?.grower_name || auth.session.grower_name || "Grower"}`;
   }
+  updateDashboardOverview(auth.grower, auth.products);
+  const cachedInbox = getStoredInboxData();
+  if (cachedInbox?.enquiries) updateDashboardUnreadCount(
+    cachedInbox.unread_count ?? cachedInbox.enquiries.filter(
+      (item) => String(item.read_status || "unread").toLowerCase() !== "read"
+    ).length
+  );
 
   if (!isGrowerCacheFresh()) {
     refreshGrowerAppDataQuietly(auth.session.token, (appData) => {
       if (dashboardTitle) {
         dashboardTitle.textContent = `Welcome, ${appData.grower?.grower_name || "Grower"}`;
       }
+      updateDashboardOverview(appData.grower, appData.products);
     });
   }
 }

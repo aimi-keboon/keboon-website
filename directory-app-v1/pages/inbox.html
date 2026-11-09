@@ -171,6 +171,12 @@
             </svg>
           </div>
 
+          <div class="mailbox-quick-filters" role="group" aria-label="Filter messages">
+            <button type="button" data-inbox-filter="all" class="is-active" aria-pressed="true">All</button>
+            <button type="button" data-inbox-filter="unread" aria-pressed="false">Unread</button>
+            <button type="button" data-inbox-filter="read" aria-pressed="false">Read</button>
+          </div>
+
           <div class="mailbox-compact-controls">
             <label class="mailbox-icon-select" title="Filter messages">
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -219,7 +225,8 @@
             </label>
           </div>
 
-          <div class="mailbox-bulk-actions">
+          <div class="mailbox-bulk-actions" aria-live="polite">
+            <span id="mailboxSelectedCount" class="mailbox-selected-count"></span>
             <button
               id="mailboxMarkReadButton"
               class="secondary-button"
