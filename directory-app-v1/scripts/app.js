@@ -25,6 +25,58 @@ const DIRECTORY_PAGE_SIZE = 5;
 const PROFILE_PRODUCE_PAGE_SIZE = 4;
 const profileProducePages = {};
 const DIRECTORY_RADIUS_KM = 20;
+let directoryView = "list";
+function initDirectoryViewSwitch() {
+  const buttons = Array.from(document.querySelectorAll("[data-directory-view]"));
+  const layout = document.querySelector(".directory-layout");
+  if (!buttons.length || !layout) return;
+  const selectView = (view) => {
+    directoryView = view;
+    layout.classList.toggle("directory-show-map", view === "map");
+    layout.classList.toggle("directory-show-list", view === "list");
+    buttons.forEach((button) => {
+      const active = button.dataset.directoryView === view;
+      button.classList.toggle("is-active", active);
+      button.setAttribute("aria-pressed", String(active));
+    });
+    if (view === "map" && directoryMap) {
+      requestAnimationFrame(() => directoryMap.invalidateSize());
+    }
+  };
+  buttons.forEach((button) => button.addEventListener("click", () => selectView(button.dataset.directoryView)));
+  selectView("list");
+}
+function initProfileProgress(form) {
+  const bar = document.getElementById("profileProgressBar");
+  const count = document.getElementById("profileProgressCount");
+  const hint = document.getElementById("profileProgressHint");
+  if (!bar || !count || !hint) return;
+  const fields = [
+    ["grower_name", "garden name"], ["contact_name", "contact name"],
+    ["location_label", "location"], ["description", "description"],
+    ["latitude", "map location"], ["categories", "categories"],
+  ];
+  const update = () => {
+    const complete = fields.filter(([name]) => String(form.elements[name]?.value || "").trim()).length;
+    bar.value = complete;
+    count.textContent = `${complete} of ${fields.length}`;
+    const missing = fields.find(([name]) => !String(form.elements[name]?.value || "").trim());
+    hint.textContent = missing ? `Next: add your ${missing[1]}.` : "All profile basics completed!";
+  };
+  form.addEventListener("input", update);
+  form.addEventListener("change", update);
+  update();
+}
+function updateDashboardOverview(grower = getStoredGrower(), products = getStoredProducts()) {
+  const profileEl = document.getElementById("dashboardProfileStatus");
+  const produceEl = document.getElementById("dashboardProduceCount");
+  if (profileEl) profileEl.textContent = grower ? getProfilePublicStatusText(grower) : "Not set up";
+  if (produceEl) produceEl.textContent = String((products || []).length);
+}
+function updateDashboardUnreadCount(count) {
+  const el = document.getElementById("dashboardUnreadCount");
+  if (el) el.textContent = String(Math.max(0, Number(count) || 0));
+}
 
 async function requireValidSession() {
   const session = getStoredSession();
@@ -104,6 +156,7 @@ async function initEditProfilePage() {
   if (auth.grower) {
     fillEditProfileForm(form, auth.grower);
     initProfileLocationMap(form, auth.grower);
+    initProfileProgress(form);
   } else {
     showGlobalLoading("Loading your profile...");
 
@@ -111,6 +164,7 @@ async function initEditProfilePage() {
       const appData = await refreshGrowerAppData(auth.session.token);
       fillEditProfileForm(form, appData.grower);
       initProfileLocationMap(form, appData.grower);
+      initProfileProgress(form);
     } catch (error) {
       handleInvalidSession();
       return;
@@ -123,7 +177,7 @@ async function initEditProfilePage() {
     refreshGrowerAppDataQuietly(auth.session.token, (appData) => {
       if (appData.grower && !form.matches(":focus-within")) {
         fillEditProfileForm(form, appData.grower);
-
+        form.dispatchEvent(new Event("change"));
         if (!profileMap) {
           initProfileLocationMap(form, appData.grower);
         } else {
@@ -170,6 +224,7 @@ async function initEditProfilePage() {
 
       if (appData.grower) {
         fillEditProfileForm(form, appData.grower);
+        form.dispatchEvent(new Event("change"));
       }
 
       clearPublicDirectoryCache();
@@ -344,10 +399,16 @@ function renderProduceList(products) {
 
   if (!products.length) {
     produceList.innerHTML = `
-      <div class="content-card">
-        <p class="muted">No produce added yet. Use the Add produce button to create your first listing.</p>
+      <div class="content-card helpful-empty-state">
+        <h3>Your first produce listing starts here</h3>
+        <p class="muted">Add what you're growing so people can discover and enquire about it.</p>
+        <button type="button" class="primary-button" id="emptyAddProduceButton">+ Add your first produce</button>
       </div>
     `;
+    produceList.querySelector("#emptyAddProduceButton")?.addEventListener("click", () => {
+      clearProduceForm(document.getElementById("produceForm"));
+      openProduceEditor();
+    });
     return;
   }
 
@@ -649,11 +710,17 @@ async function initPublicDirectoryPage() {
   setDirectoryStatus("Loading directory...");
 
   initDirectoryMap();
+  initDirectoryViewSwitch();
   applySavedDirectoryLocationPreference();
 
   // Controls must work even while the Apps Script endpoint is loading.
   if (searchButton) searchButton.onclick = () => applyDirectoryFilters(1);
   if (searchInput) {
+    let directorySearchTimer;
+    searchInput.addEventListener("input", () => {
+      clearTimeout(directorySearchTimer);
+      directorySearchTimer = setTimeout(() => applyDirectoryFilters(1), 200);
+    });
     searchInput.onkeydown = (event) => {
       if (event.key === "Enter") {
         event.preventDefault();
@@ -770,7 +837,18 @@ function renderDirectoryList(growers, page = 1) {
   }
 
   if (!growers.length) {
-    listEl.innerHTML = '<p class="muted">No growers found.</p>';
+    listEl.innerHTML = `<div class="helpful-empty-state">
+      <h3>No growers found</h3>
+      <p class="muted">Try another search or browse all growers.</p>
+      <button type="button" class="secondary-button" id="resetDirectorySearchButton">Show all growers</button>
+    </div>`;
+    listEl.querySelector("#resetDirectorySearchButton")?.addEventListener("click", () => {
+      const searchInput = document.getElementById("directorySearchInput");
+      if (searchInput) searchInput.value = "";
+      currentUserLocation = null;
+      storeDirectoryShowAllPreference();
+      applyDirectoryFilters(1);
+    });
     return;
   }
 
@@ -796,6 +874,9 @@ function renderDirectoryList(growers, page = 1) {
           <span class="meta-pill">${productCount} produce listed</span>
           <span class="meta-pill">${escapeHtml(distanceText)}</span>
         </div>
+        ${grower.products?.length
+          ? `<p class="grower-card-produce">Growing: ${escapeHtml(grower.products.slice(0, 3).map((product) => product.product_name).filter(Boolean).join(", "))}</p>`
+          : ""}
       </button>
     `;
     })
@@ -809,8 +890,12 @@ function renderDirectoryList(growers, page = 1) {
       );
 
       if (grower) {
-        focusDirectoryGrower(grower);
-        openDirectoryMarkerPopup(grower.grower_id);
+        if (window.matchMedia("(max-width: 900px)").matches) {
+          openGrowerDrawer(grower);
+        } else {
+          focusDirectoryGrower(grower);
+          openDirectoryMarkerPopup(grower.grower_id);
+        }
       }
     });
   });
