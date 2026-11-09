@@ -130,6 +130,11 @@ async function handleSigninSubmit(event) {
       password: formData.get("password"),
     });
 
+    // Avoid displaying another account's cached data after a new sign-in.
+    clearStoredGrowerAppData();
+    clearStoredInboxData();
+    clearAllStoredInboxThreadData();
+
     localStorage.setItem("keboon_session_token", result.session_token);
 
     localStorage.setItem(
@@ -143,15 +148,8 @@ async function handleSigninSubmit(event) {
 
     localStorage.setItem("keboon_grower_email", result.email || "");
 
-    try {
-      const inboxData = await apiPost("get_current_grower_inbox_data", {
-        session_token: result.session_token,
-      });
-
-      storeInboxData(inboxData);
-    } catch (error) {
-      // Do not block signin if unread count preload fails.
-    }
+    // Inbox data is fetched in the background after the dashboard opens.
+    // Authentication success should not wait for a second Apps Script request.
 
     messageEl.textContent = "Signed in successfully. Redirecting...";
 
